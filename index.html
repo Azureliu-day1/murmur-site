@@ -1,0 +1,653 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- 收款还挂在 Stripe 沙盒链接上,页面能用但不该进搜索引擎。
+     换正式链接那天连同这一行一起删。 -->
+<meta name="robots" content="noindex">
+<title>Murmur</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,300&family=IBM+Plex+Mono:wght@400;500&display=swap">
+
+<style>
+/* ─────────────────────────────────────────────────────────────
+   配色直接取自 App 的 DesignSystem.swift —— 不另发明一套。
+   其中那条铁律照搬:珊瑚色是唯一的品牌色,只用在链接、圆点、
+   小标记上,绝不铺面积。
+   ───────────────────────────────────────────────────────────── */
+:root {
+  --paper:  #F7F7F8;
+  --card:   #FFFFFF;
+  --ink:    #1B1B1F;
+  --second: #55555C;
+  --faint:  #8E8E96;
+  --line:   #E9E9EC;
+  --line2:  #D6D6DC;
+  --coral:  #E2531F;
+  --coral-tint: #FBEFE9;
+  --green:  #2E7D4F;
+  --shadow: 0 1px 2px rgba(27,27,31,.04), 0 8px 24px rgba(27,27,31,.05);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper:  #161618;
+    --card:   #1E1E21;
+    --ink:    #F2F2F4;
+    --second: #A0A0A8;
+    --faint:  #6E6E76;
+    --line:   #2C2C31;
+    --line2:  #3A3A41;
+    --coral:  #FF6B35;
+    --coral-tint: #3A2118;
+    --green:  #5FBF87;
+    --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 24px rgba(0,0,0,.35);
+  }
+}
+:root[data-theme="dark"] {
+  --paper:  #161618;
+  --card:   #1E1E21;
+  --ink:    #F2F2F4;
+  --second: #A0A0A8;
+  --faint:  #6E6E76;
+  --line:   #2C2C31;
+  --line2:  #3A3A41;
+  --coral:  #FF6B35;
+  --coral-tint: #3A2118;
+  --green:  #5FBF87;
+  --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 24px rgba(0,0,0,.35);
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB",
+               "Microsoft YaHei", system-ui, sans-serif;
+  font-size: 17px;
+  line-height: 1.75;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* 英文显示字面:编辑部那一半 */
+.serif { font-family: "Newsreader", Georgia, "Times New Roman", serif; font-weight: 300; }
+/* 数据与标签:工具面板那一半 */
+.mono  { font-family: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace; }
+
+.wrap { max-width: 46rem; margin: 0 auto; padding: 0 1.5rem; }
+
+/* ── 眉标:小号等宽 + 一道细线,不用 emoji、不用数字编号 ── */
+.eyebrow {
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-size: .72rem;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--faint);
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+  margin: 0 0 1.25rem;
+}
+.eyebrow::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--line);
+}
+
+section { padding: 4.5rem 0; border-top: 1px solid var(--line); }
+section:first-of-type { border-top: none; }
+
+h1, h2, h3 { text-wrap: balance; margin: 0; font-weight: 400; }
+h2 { font-size: 1.6rem; line-height: 1.4; letter-spacing: -.01em; margin-bottom: 1rem; }
+h3 { font-size: 1.05rem; margin-bottom: .35rem; }
+p  { margin: 0 0 1.1rem; }
+p:last-child { margin-bottom: 0; }
+.lede { font-size: 1.12rem; color: var(--second); }
+.note { font-size: .9rem; color: var(--faint); line-height: 1.7; }
+
+a { color: var(--coral); text-decoration: none; border-bottom: 1px solid transparent; }
+a:hover { border-bottom-color: var(--coral); }
+a:focus-visible { outline: 2px solid var(--coral); outline-offset: 3px; border-radius: 2px; }
+
+/* ─────────────  头部  ───────────── */
+header { padding: 3rem 0 0; }
+.brand { display: flex; align-items: center; gap: .8rem; }
+.brand svg { display: block; border-radius: 22%; box-shadow: var(--shadow); }
+.brand-name {
+  font-family: "Newsreader", Georgia, serif;
+  font-size: 1.5rem;
+  font-weight: 400;
+  letter-spacing: -.005em;
+}
+.brand-by { font-size: .8rem; color: var(--faint); margin-left: auto; }
+
+/* ─────────────  首屏:App 自己的胶囊  ───────────── */
+.hero { padding: 3.5rem 0 4rem; }
+.hero h1 {
+  font-size: clamp(2rem, 5.5vw, 2.9rem);
+  line-height: 1.3;
+  letter-spacing: -.02em;
+  margin-bottom: 1.1rem;
+}
+.hero h1 .en { font-family: "Newsreader", Georgia, serif; font-style: italic; font-weight: 300; }
+
+.capsule {
+  margin: 2.75rem 0 1rem;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 28px;
+  box-shadow: var(--shadow);
+  padding: .9rem 1.1rem;
+  display: flex;
+  align-items: center;
+  gap: .9rem;
+  max-width: 30rem;
+}
+.capsule .dot {
+  width: 9px; height: 9px; border-radius: 50%;
+  background: var(--coral); flex: none;
+}
+.capsule canvas { flex: 1; display: block; width: 100%; height: 44px; }
+.capsule .timer {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: .82rem; color: var(--faint); flex: none;
+  font-variant-numeric: tabular-nums;
+}
+.capsule-cap {
+  font-size: .82rem; color: var(--faint);
+  font-family: "IBM Plex Mono", monospace;
+}
+
+/* ─────────────  仪表:真实数字  ───────────── */
+.readout {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(9.5rem, 1fr));
+  gap: 0;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  overflow: hidden;
+  background: var(--card);
+}
+.readout > div { padding: 1.15rem 1.25rem; border-right: 1px solid var(--line); }
+.readout > div:last-child { border-right: none; }
+.readout dt {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: .68rem; letter-spacing: .1em; text-transform: uppercase;
+  color: var(--faint); margin-bottom: .45rem;
+}
+.readout dd {
+  margin: 0;
+  font-family: "Newsreader", Georgia, serif;
+  font-size: 1.75rem; line-height: 1.1;
+  font-variant-numeric: tabular-nums;
+}
+.readout dd small { font-size: .8rem; color: var(--second); font-family: inherit; }
+
+/* ─────────────  条目  ───────────── */
+.items { display: grid; gap: 2.1rem; }
+.item { display: grid; grid-template-columns: 1.4rem 1fr; gap: .9rem; align-items: start; }
+.item .mark {
+  width: 7px; height: 7px; border-radius: 50%;
+  background: var(--coral); margin-top: .62rem;
+}
+.item p { color: var(--second); margin: 0; font-size: .97rem; }
+
+/* ─────────────  模型表  ───────────── */
+.table-scroll { overflow-x: auto; margin: 0 -.25rem; }
+table { border-collapse: collapse; width: 100%; font-size: .92rem; min-width: 30rem; }
+th, td { text-align: left; padding: .62rem .8rem; border-bottom: 1px solid var(--line); }
+th {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: .68rem; letter-spacing: .1em; text-transform: uppercase;
+  color: var(--faint); font-weight: 400;
+  border-bottom-color: var(--line2);
+}
+td.num { font-family: "IBM Plex Mono", monospace; font-variant-numeric: tabular-nums; text-align: right; }
+tr.here td { color: var(--ink); }
+tr.here td:first-child::after {
+  content: "在用";
+  font-family: "IBM Plex Mono", monospace;
+  font-size: .62rem; letter-spacing: .08em;
+  color: var(--coral); background: var(--coral-tint);
+  padding: .1rem .4rem; border-radius: 3px; margin-left: .5rem;
+  vertical-align: middle;
+}
+td:not(.num) { color: var(--second); }
+
+/* ─────────────  诚实声明块  ───────────── */
+.plain {
+  border-left: 2px solid var(--coral);
+  padding: .1rem 0 .1rem 1.15rem;
+  color: var(--second);
+  font-size: .97rem;
+}
+.plain strong { color: var(--ink); font-weight: 500; }
+
+/* ─────────────  定价 / 购买  ───────────── */
+.plans {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  gap: 0;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  overflow: hidden;
+  background: var(--card);
+  margin-bottom: 1.75rem;
+}
+.plan { padding: 1.5rem 1.35rem; border-right: 1px solid var(--line); }
+.plan:last-child { border-right: none; }
+.plan h3 {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: .7rem; letter-spacing: .11em; text-transform: uppercase;
+  color: var(--faint); margin-bottom: .7rem;
+}
+.plan .price {
+  font-family: "Newsreader", Georgia, serif;
+  font-size: 2rem; line-height: 1.1;
+  font-variant-numeric: tabular-nums;
+  margin-bottom: .1rem;
+}
+.plan .price small { font-size: .78rem; color: var(--second); font-family: inherit; }
+.plan ul { list-style: none; margin: 1rem 0 0; padding: 0; font-size: .92rem; color: var(--second); }
+.plan li { padding-left: 1rem; position: relative; margin-bottom: .38rem; line-height: 1.6; }
+.plan li::before {
+  content: ""; position: absolute; left: 0; top: .62rem;
+  width: 5px; height: 5px; border-radius: 50%; background: var(--coral); opacity: .55;
+}
+
+.buy {
+  display: inline-flex; align-items: center; gap: .5rem;
+  background: var(--coral); color: #fff;
+  font-size: .95rem; font-weight: 500;
+  padding: .68rem 1.4rem; border-radius: 999px;
+  border-bottom: none;
+}
+.buy:hover { border-bottom: none; filter: brightness(1.06); }
+.buy:focus-visible { outline: 2px solid var(--coral); outline-offset: 3px; }
+
+.sandbox {
+  display: none;
+  font-family: "IBM Plex Mono", monospace; font-size: .72rem;
+  letter-spacing: .08em; text-transform: uppercase;
+  color: var(--coral); background: var(--coral-tint);
+  padding: .22rem .55rem; border-radius: 3px; margin-left: .7rem;
+  vertical-align: middle;
+}
+body.is-sandbox .sandbox { display: inline-block; }
+
+/* ─────────────  状态 / 页脚  ───────────── */
+.status {
+  display: inline-flex; align-items: center; gap: .55rem;
+  font-family: "IBM Plex Mono", monospace; font-size: .8rem;
+  color: var(--second);
+  border: 1px solid var(--line2); border-radius: 999px;
+  padding: .38rem .9rem;
+}
+.status .pulse { width: 7px; height: 7px; border-radius: 50%; background: var(--green); }
+
+footer {
+  border-top: 1px solid var(--line);
+  padding: 2.5rem 0 3.5rem;
+  display: flex; flex-wrap: wrap; gap: 1rem 2rem;
+  align-items: baseline;
+  font-size: .85rem; color: var(--faint);
+}
+footer .mono { font-size: .78rem; }
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; transition: none !important; }
+}
+@media (max-width: 34rem) {
+  body { font-size: 16px; }
+  section { padding: 3.25rem 0; }
+  .readout > div { border-right: none; border-bottom: 1px solid var(--line); }
+  .readout > div:last-child { border-bottom: none; }
+}
+</style>
+
+<div class="wrap">
+
+<header>
+  <div class="brand">
+    <svg width="34" height="34" viewBox="0 0 64 64" aria-label="Murmur">
+      <rect width="64" height="64" rx="14" fill="var(--card)" stroke="var(--line)"/>
+      <g fill="var(--coral)">
+        <rect x="11" y="27" width="5.5" height="10" rx="2.75" opacity=".42"/>
+        <rect x="20" y="21" width="5.5" height="22" rx="2.75" opacity=".78"/>
+        <rect x="29.5" y="16" width="5.5" height="32" rx="2.75"/>
+        <rect x="39" y="21" width="5.5" height="22" rx="2.75" opacity=".78"/>
+        <rect x="48" y="27" width="5.5" height="10" rx="2.75" opacity=".42"/>
+      </g>
+    </svg>
+    <span class="brand-name">Murmur</span>
+    <span class="brand-by mono">OTHERS&nbsp;STUDIO</span>
+  </div>
+</header>
+
+<div class="hero">
+  <h1>说话,然后它<span class="en">&nbsp;just appears&nbsp;</span>在光标处。</h1>
+  <p class="lede">
+    给中英夹着说的人做的 macOS 听写工具。你不用先想「这句该用中文还是英文」——
+    说出来是什么样,写下来就是什么样。
+  </p>
+
+  <div class="capsule" role="img" aria-label="Murmur 录音时的胶囊界面">
+    <span class="dot"></span>
+    <canvas id="wave" width="640" height="88"></canvas>
+    <span class="timer">0:08</span>
+  </div>
+  <p class="capsule-cap">↑ 录音时它就长这样 —— 不抢焦点,不挡你正在打字的窗口</p>
+</div>
+
+<section>
+  <p class="eyebrow">Why</p>
+  <h2>它先是我自己每天在用的工具。</h2>
+  <p>
+    市面上的听写工具几乎都把中英混说当成边角料:要么把你的英文词硬翻成中文,
+    要么因为你一句话开头说了个 <span class="mono">Okay</span>
+    就把整段中文当成英文处理。
+  </p>
+  <p>
+    而这恰恰是我说话的方式 —— 一句话里夹着
+    <span class="mono">prompt</span>、<span class="mono">deploy</span>、<span class="mono">landing page</span>。
+    Murmur 是先为这件事做的,别的功能都排在它后面。
+  </p>
+</section>
+
+<section>
+  <p class="eyebrow">Measured</p>
+  <h2>这几个数字是量出来的,不是估的。</h2>
+  <dl class="readout">
+    <div>
+      <dt>松手到出字</dt>
+      <dd>0.33<small>&nbsp;秒</small></dd>
+    </div>
+    <div>
+      <dt>识别模型</dt>
+      <dd>11<small>&nbsp;家</small></dd>
+    </div>
+    <div>
+      <dt>每小时成本</dt>
+      <dd>$0.04<small>&nbsp;起</small></dd>
+    </div>
+    <div>
+      <dt>断网可用</dt>
+      <dd>是</dd>
+    </div>
+  </dl>
+  <p class="note" style="margin-top:1.1rem">
+    「松手到出字」是实时流路径的实测中位数(音频边说边传,松手只剩一次收尾握手)。
+    云端不通时自动落到端上识别 —— 慢一点,但你的话不会丢。
+  </p>
+</section>
+
+<section>
+  <p class="eyebrow">What it does</p>
+  <h2>四件它认真做了的事。</h2>
+  <div class="items">
+    <div class="item">
+      <span class="mark"></span>
+      <div>
+        <h3>逐词保留你说的语言</h3>
+        <p>
+          中文的地方是中文,英文的地方是英文,位置一模一样。
+          不会因为开头一个 <span class="mono">So</span> 就把整段翻掉。
+        </p>
+      </div>
+    </div>
+    <div class="item">
+      <span class="mark"></span>
+      <div>
+        <h3>用你自己的录音,决定用哪个模型</h3>
+        <p>
+          内置多模型横评:拿你真实说过的话跑多家识别模型,分
+          纯中文 / 中英混说 / 纯英文 三桶排名 —— <strong>绝不做平均</strong>,
+          因为把三种场景平均起来的排名对谁都没用。样本不够就明说不给结论。
+        </p>
+      </div>
+    </div>
+    <div class="item">
+      <span class="mark"></span>
+      <div>
+        <h3>绝不丢话</h3>
+        <p>
+          每一次听写都留着录音和一条历史。云端挂了、识别为空、模型选错了 ——
+          回历史里换个模型重跑就行。没有哪条路径会让你说过的话凭空消失。
+        </p>
+      </div>
+    </div>
+    <div class="item">
+      <span class="mark"></span>
+      <div>
+        <h3>失败时说实话</h3>
+        <p>
+          降级了会告诉你降级了,没翻译成会告诉你没翻,麦克风没出声会当场说
+          ——而不是把一段兜底出来的乱码悄悄插进你正在打字的窗口。
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <p class="eyebrow">Models</p>
+  <h2>识别这一步是可换的。</h2>
+  <p class="lede" style="margin-bottom:1.75rem">
+    没有哪家模型在所有场景都最好。所以 Murmur 不替你锁死一家,
+    而是让你用自己的声音去比。
+  </p>
+  <div class="table-scroll">
+    <table>
+      <thead>
+        <tr><th>模型</th><th class="num">每小时</th><th>特点</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>本机识别</td><td class="num">$0</td><td>离线,断网兜底</td></tr>
+        <tr><td>Groq · Whisper v3 Turbo</td><td class="num">$0.04</td><td>最便宜</td></tr>
+        <tr class="here"><td>Soniox · 实时流</td><td class="num">$0.12</td><td>边说边传,松手即出字</td></tr>
+        <tr><td>OpenAI · GPT-4o Transcribe</td><td class="num">$0.36</td><td>长句稳</td></tr>
+        <tr><td>ElevenLabs · Scribe v2</td><td class="num">$0.22</td><td>中文 WER 好</td></tr>
+        <tr><td>AssemblyAI · Universal 3.5</td><td class="num">$0.21</td><td>说话人分离</td></tr>
+        <tr><td>Mistral · Voxtral Mini</td><td class="num">$0.18</td><td>—</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="note" style="margin-top:1.1rem">节选。价格随各家官方定价变动。</p>
+</section>
+
+<section>
+  <p class="eyebrow">Privacy</p>
+  <h2>音频去哪了,界面上写清楚。</h2>
+  <div class="plain">
+    <p>
+      <strong>选云端模型时,音频会传给那一家。</strong> 用实时流的话,是
+      <strong>你说话的同时就在传</strong>,不是松手后才上传 —— 中途按 Esc 取消,
+      只是不再继续传,已经传出去的几秒收不回来。
+    </p>
+    <p>
+      <strong>选本机识别时,音频一个字节都不出这台电脑。</strong>
+    </p>
+    <p style="margin-bottom:0">
+      词典里的词(可能包含你的地址、公司名)每次识别都会随请求一起发给识别厂商。
+      这条也写在设置里,不是藏在条款第八页。
+    </p>
+  </div>
+</section>
+
+<section id="pricing">
+  <p class="eyebrow">Pricing</p>
+  <h2>额度用完之前,不用付钱。<span class="sandbox">沙盒测试中</span></h2>
+  <p class="lede" style="margin-bottom:2rem">
+    免费额度是我们替你付的云端账单 —— 用完了它会自动切回本机识别,不会停在那里问你要钱。
+  </p>
+
+  <div class="plans">
+    <div class="plan">
+      <h3>Free</h3>
+      <div class="price">0<small> / 月</small></div>
+      <ul>
+        <li>每周一定额度的云端听写与整理</li>
+        <li>每月一定时长的长录音</li>
+        <li>额度用完自动切本机识别,继续能用</li>
+        <li>也可以填自己的 API Key,直连不经我们</li>
+      </ul>
+    </div>
+    <div class="plan">
+      <h3>Pro</h3>
+      <div class="price" id="pro-price">AU$9<small> / 月</small></div>
+      <ul>
+        <li>听写、整理、翻译不限量</li>
+        <li>长录音不限时长</li>
+        <li>随时可取消,取消后用到当期结束</li>
+      </ul>
+    </div>
+  </div>
+
+  <p style="margin-bottom:1.2rem">
+    <a class="buy" id="buy" href="#">订阅 Pro</a>
+  </p>
+
+  <div class="plain">
+    <p style="margin-bottom:.7rem">
+      <strong>从这里买的话,用同一个邮箱在 App 里登录就会自动到账。</strong>
+      网页上付款时我们还不知道你是谁 —— 收银台填的那个邮箱就是认领凭据,
+      所以两边要用同一个。
+    </p>
+    <p style="margin-bottom:0">
+      已经在用 App 的话更省事:直接在 App 里点「升级 Pro」,
+      付完回到 App 档位自己就变了,不用手动做任何事。
+    </p>
+  </div>
+
+  <p style="margin-top:2rem">
+    <span class="status"><span class="pulse"></span>内测中 · macOS 26+</span>
+  </p>
+</section>
+
+<section>
+  <p class="eyebrow">Status</p>
+  <h2>它还在动。</h2>
+  <p>
+    Murmur 是我每天在用的工具。界面、模型清单、价格都还会变 ——
+    定价现在是内测价,正式定价还没定死。
+  </p>
+  <p style="margin-bottom:0">
+    有话要说:<a href="https://othersstudio.tech">从 Others Studio 找到我</a>。
+  </p>
+</section>
+
+<footer>
+  <span>Murmur</span>
+  <span class="mono">OTHERS STUDIO</span>
+  <span style="margin-left:auto"><a href="https://othersstudio.tech">othersstudio.tech</a></span>
+</footer>
+
+</div>
+
+<script>
+// ── 收款链接:整页唯一一处 ───────────────────────────────────────────────
+// 换成正式链接时**只改这一行**。文案不用动 —— 沙盒标记是从链接里认出来的,
+// 不是手写的,所以不会出现「已经上线了页面还挂着测试中」这种事。
+var PAY_LINK = "https://buy.stripe.com/test_dRm28rgoe44655lgXkcs800";
+
+(function () {
+  var buy = document.getElementById('buy');
+  if (buy) buy.href = PAY_LINK;
+  // Stripe 的测试模式链接一律带 /test_ —— 拿它当判据,比人肉维护一个开关可靠
+  if (PAY_LINK.indexOf('/test_') !== -1) document.body.classList.add('is-sandbox');
+})();
+</script>
+
+<script>
+// 首屏那条波形不是装饰素材,是 App 里 HUD.liquidPath / liquidOffset 的同一套数学:
+// 两个频率叠加(0.30·sin(7k+φ) + 0.18·sin(13.5k−0.7φ))才有液体感 ——
+// 单一正弦画出来是一枚透镜,不像被声音推着走的一团东西;
+// 两端用 taper = 0.4 + 0.6·sin(πk) 收细;上下两条边给不同相位偏移,所以它不对称。
+(function () {
+  var canvas = document.getElementById('wave');
+  if (!canvas) return;
+  var ctx = canvas.getContext('2d');
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function offset(k, phase, amp, height, side) {
+    var taper = 0.4 + 0.6 * Math.sin(Math.PI * k);
+    var ripple = 0.52
+      + 0.30 * Math.sin(k * 7 + phase + side)
+      + 0.18 * Math.sin(k * 13.5 - phase * 0.7 + side * 1.4);
+    return (height * 0.5) * (0.3 + 0.7 * amp) * taper * ripple;
+  }
+
+  function ink() {
+    return getComputedStyle(document.body).getPropertyValue('color').trim();
+  }
+  function coral() {
+    return getComputedStyle(document.documentElement).getPropertyValue('--coral').trim();
+  }
+
+  // 按真实显示尺寸 × 像素密度铺 backing store。
+  // 不做这一步的话:①在 Retina 上是糊的;②宽高比和 CSS 不一致,
+  // 波形会被横向压扁成一条抹痕,读不出「液体」的意思。
+  var cssW = 0, cssH = 0;
+  function resize() {
+    var r = canvas.getBoundingClientRect();
+    var dpr = window.devicePixelRatio || 1;
+    if (r.width === cssW && r.height === cssH) return;
+    cssW = r.width; cssH = r.height;
+    canvas.width = Math.round(r.width * dpr);
+    canvas.height = Math.round(r.height * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+  window.addEventListener('resize', resize);
+
+  function draw(phase, amp) {
+    resize();
+    var w = cssW, h = cssH, mid = h / 2, step = 3;
+    ctx.clearRect(0, 0, w, h);
+    ctx.beginPath();
+    for (var x = 0; x <= w; x += step) {
+      var y = mid - offset(x / w, phase, amp, h, 0);
+      x === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+    }
+    for (var x2 = w; x2 >= 0; x2 -= step) {
+      ctx.lineTo(x2, mid + offset(x2 / w, phase, amp, h, 1.7));
+    }
+    ctx.closePath();
+
+    // 珊瑚光晕:只在振幅够大时透出来一点,面积极小 —— 遵守 App 里那条
+    // 「珊瑚色不铺面积」的规矩
+    if (amp > 0.12) {
+      ctx.save();
+      ctx.filter = 'blur(9px)';
+      ctx.globalAlpha = (amp - 0.12) * 0.5;
+      ctx.fillStyle = coral();
+      ctx.fill();
+      ctx.restore();
+    }
+    ctx.globalAlpha = 0.16;
+    ctx.fillStyle = ink();
+    ctx.fill();
+    ctx.globalAlpha = 0.38;
+    ctx.strokeStyle = ink();
+    ctx.lineWidth = 1.4;
+    ctx.stroke();
+    ctx.globalAlpha = 1;
+  }
+
+  if (reduced) {
+    draw(1.7, 0.62);          // 静止时给一帧有内容的形状,别留一条直线
+    return;
+  }
+
+  var t0 = performance.now();
+  function frame(now) {
+    var t = (now - t0) / 1000;
+    // 让振幅缓慢起伏,像有人在说话,但不做成假的「音量条」
+    var amp = 0.62 + 0.3 * Math.sin(t * 0.9) + 0.12 * Math.sin(t * 2.3);
+    draw(t * 5.5, Math.max(0.25, Math.min(1, amp)));
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+})();
+</script>

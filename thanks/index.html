@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>付款成功 · Murmur</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* 配色与主站同源(DesignSystem.swift)—— 珊瑚只做小面积 */
+:root {
+  --paper:#F7F7F8; --card:#FFFFFF; --ink:#1B1B1F; --second:#55555C;
+  --faint:#8E8E96; --line:#E9E9EC; --line2:#D6D6DC;
+  --coral:#E2531F; --coral-tint:#FBEFE9; --green:#2E7D4F;
+  --shadow: 0 1px 2px rgba(27,27,31,.04), 0 8px 24px rgba(27,27,31,.05);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper:#161618; --card:#1E1E21; --ink:#F2F2F4; --second:#A0A0A8;
+    --faint:#6E6E76; --line:#2C2C31; --line2:#3A3A41;
+    --coral:#FF6B35; --coral-tint:#3A2118; --green:#5FBF87;
+    --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 24px rgba(0,0,0,.35);
+  }
+}
+:root[data-theme="dark"] {
+  --paper:#161618; --card:#1E1E21; --ink:#F2F2F4; --second:#A0A0A8;
+  --faint:#6E6E76; --line:#2C2C31; --line2:#3A3A41;
+  --coral:#FF6B35; --coral-tint:#3A2118; --green:#5FBF87;
+  --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 24px rgba(0,0,0,.35);
+}
+*, *::before, *::after { box-sizing: border-box; }
+body {
+  margin:0; min-height:100vh; background:var(--paper); color:var(--ink);
+  font-family:-apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB",
+              "Microsoft YaHei", system-ui, sans-serif;
+  font-size:17px; line-height:1.75; -webkit-font-smoothing:antialiased;
+  display:flex; align-items:center; justify-content:center; padding:2rem 1.5rem;
+}
+.card {
+  background:var(--card); border:1px solid var(--line); border-radius:6px;
+  box-shadow:var(--shadow); max-width:34rem; width:100%; padding:2.75rem 2.25rem;
+}
+.eyebrow {
+  font-family:"IBM Plex Mono", ui-monospace, monospace;
+  font-size:.72rem; letter-spacing:.14em; text-transform:uppercase;
+  color:var(--faint); display:flex; align-items:center; gap:.75rem; margin:0 0 1.4rem;
+}
+.eyebrow::after { content:""; flex:1; height:1px; background:var(--line); }
+.tick {
+  width:34px; height:34px; border-radius:50%; background:var(--green);
+  display:flex; align-items:center; justify-content:center; margin-bottom:1.25rem;
+}
+.tick svg { display:block; }
+h1 {
+  margin:0 0 .8rem; font-weight:400; font-size:1.65rem; line-height:1.35;
+  letter-spacing:-.01em; text-wrap:balance;
+}
+p { margin:0 0 1.05rem; color:var(--second); font-size:.98rem; }
+p:last-child { margin-bottom:0; }
+.back {
+  display:inline-flex; align-items:center; gap:.5rem;
+  background:var(--coral); color:#fff; text-decoration:none;
+  font-size:.95rem; font-weight:500; padding:.7rem 1.45rem; border-radius:999px;
+  margin:.5rem 0 1.4rem;
+}
+.back:hover { filter:brightness(1.06); }
+.back:focus-visible { outline:2px solid var(--coral); outline-offset:3px; }
+.note { font-size:.86rem; color:var(--faint); line-height:1.7; }
+.note strong { color:var(--second); font-weight:500; }
+hr { border:none; border-top:1px solid var(--line); margin:1.6rem 0; }
+a.plainlink { color:var(--coral); text-decoration:none; border-bottom:1px solid transparent; }
+a.plainlink:hover { border-bottom-color:var(--coral); }
+@media (prefers-reduced-motion: reduce) { * { animation:none !important; transition:none !important; } }
+</style>
+</head>
+<body>
+
+<div class="card">
+  <p class="eyebrow">Murmur</p>
+
+  <div class="tick" aria-hidden="true">
+    <svg width="17" height="17" viewBox="0 0 17 17" fill="none">
+      <path d="M3.5 9l3.2 3.2L13.5 5.4" stroke="#fff" stroke-width="2.1"
+            stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </div>
+
+  <h1>付款成功。</h1>
+
+  <p>Pro 已经开通。回到 Murmur,档位会自己变过来。</p>
+
+  <!-- 自定义 scheme 不能靠自动跳转:浏览器会拦、也可能弹一个吓人的确认框。
+       主路径是这个按钮(用户的点击就是那个必需的手势)。 -->
+  <a class="back" id="back" href="murmur://upgraded">
+    回到 Murmur
+  </a>
+
+  <p class="note" id="hint">
+    按钮没反应也不要紧 —— <strong>直接切回 Murmur 就行</strong>,
+    它会自己去服务器确认,一两分钟内档位就变了。
+  </p>
+
+  <hr>
+
+  <p class="note" id="claim-note">
+    <strong>如果你是在网页上买的、还没在 App 里登录过:</strong>
+    用付款时填的那个邮箱去 App 里登录,这笔订阅会自动认到你名下。
+    邮箱不一样的话认不上 —— 那种情况
+    <a class="plainlink" href="https://othersstudio.tech">找我们</a>,我们手动接。
+  </p>
+</div>
+
+<script>
+// Stripe 会把 session_id 拼在成功地址后面。它只用来在这一页做一件事:
+// 确认这个人**确实是从收银台过来的**,而不是有人直接开了这个 URL。
+// ⛔ 不拿它做任何鉴权 —— 真正开通会员的唯一依据是 Stripe 打给服务器的
+//    带签名的 webhook。这一页是纯展示,连一个请求都不发。
+(function () {
+  var q = new URLSearchParams(location.search);
+  if (!q.get('session_id')) {
+    document.getElementById('hint').innerHTML =
+      '看起来你不是从收银台过来的 —— 这一页只是付款完成后的落地页。';
+  }
+})();
+</script>
+
+</body>
+</html>
