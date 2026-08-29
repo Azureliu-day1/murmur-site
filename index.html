@@ -519,6 +519,12 @@ footer .mono { font-size: .78rem; }
       已经在用 App 的话更省事:直接在 App 里点「升级 Pro」,
       付完回到 App 档位自己就变了,不用手动做任何事。
     </p>
+    <p style="margin-bottom:0">
+      <strong>取消也不用找人。</strong>
+      <a id="manage" href="#">管理订阅</a> ——
+      输入付款时用的邮箱,Stripe 会发一条直达链接给你,在那儿自己取消或换卡。
+      取消后用到当期结束,不退当期。
+    </p>
   </div>
 
   <p style="margin-top:2rem">
@@ -550,11 +556,16 @@ footer .mono { font-size: .78rem; }
 // ── 收款链接:整页唯一一处 ───────────────────────────────────────────────
 // 换成正式链接时**只改这一行**。文案不用动 —— 沙盒标记是从链接里认出来的,
 // 不是手写的,所以不会出现「已经上线了页面还挂着测试中」这种事。
-var PAY_LINK = "https://buy.stripe.com/test_dRm28rgoe44655lgXkcs800";
+var PAY_LINK    = "https://buy.stripe.com/test_dRm28rgoe44655lgXkcs800";
+// 客户门户的无代码登录链接。它和 PAY_LINK 一样,换正式账号时要一起换。
+// ⚠️ 这两条也存在服务端的 murmur_config 里(App 从那儿取)—— **一共两处,别漏**。
+var MANAGE_LINK = "https://billing.stripe.com/p/login/test_dRm28rgoe44655lgXkcs800";
 
 (function () {
   var buy = document.getElementById('buy');
   if (buy) buy.href = PAY_LINK;
+  var manage = document.getElementById('manage');
+  if (manage) manage.href = MANAGE_LINK;
   // Stripe 的测试模式链接一律带 /test_ —— 拿它当判据,比人肉维护一个开关可靠
   if (PAY_LINK.indexOf('/test_') !== -1) document.body.classList.add('is-sandbox');
 })();
