@@ -1,14 +1,14 @@
 <!doctype html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Murmur — 说完,字已经落在光标处</title>
-<meta name="description" content="给中英夹着说话的人做的 macOS 听写工具。说完,整理好的文字已经落在光标处。">
-<link rel="alternate" hreflang="zh-Hans" href="index.html">
-<link rel="alternate" hreflang="en" href="en/index.html">
-<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<title>Murmur — the words are already at your cursor</title>
+<meta name="description" content="A macOS dictation tool: hold a key, say it, and finished text lands wherever your cursor is. On-device or cloud recognition, your choice.">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="alternate" hreflang="zh-Hans" href="../index.html">
+<link rel="alternate" hreflang="en" href="index.html">
 
 <style>
 /* 字体自托管(D2):零第三方请求,「官网也不追踪你」字面成立 */
@@ -17,7 +17,7 @@
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src: url('fonts/IBMPlexMono-normal-400-latin-ext.woff2') format('woff2');
+  src: url('../fonts/IBMPlexMono-normal-400-latin-ext.woff2') format('woff2');
   unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
 @font-face {
@@ -25,7 +25,7 @@
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src: url('fonts/IBMPlexMono-normal-400-latin.woff2') format('woff2');
+  src: url('../fonts/IBMPlexMono-normal-400-latin.woff2') format('woff2');
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 @font-face {
@@ -33,7 +33,7 @@
   font-style: normal;
   font-weight: 500;
   font-display: swap;
-  src: url('fonts/IBMPlexMono-normal-500-latin-ext.woff2') format('woff2');
+  src: url('../fonts/IBMPlexMono-normal-500-latin-ext.woff2') format('woff2');
   unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
 @font-face {
@@ -41,7 +41,7 @@
   font-style: normal;
   font-weight: 500;
   font-display: swap;
-  src: url('fonts/IBMPlexMono-normal-500-latin.woff2') format('woff2');
+  src: url('../fonts/IBMPlexMono-normal-500-latin.woff2') format('woff2');
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 @font-face {
@@ -49,7 +49,7 @@
   font-style: italic;
   font-weight: 300;
   font-display: swap;
-  src: url('fonts/Newsreader-italic-300-latin-ext.woff2') format('woff2');
+  src: url('../fonts/Newsreader-italic-300-latin-ext.woff2') format('woff2');
   unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
 @font-face {
@@ -57,7 +57,7 @@
   font-style: italic;
   font-weight: 300;
   font-display: swap;
-  src: url('fonts/Newsreader-italic-300-latin.woff2') format('woff2');
+  src: url('../fonts/Newsreader-italic-300-latin.woff2') format('woff2');
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 @font-face {
@@ -65,7 +65,7 @@
   font-style: normal;
   font-weight: 300;
   font-display: swap;
-  src: url('fonts/Newsreader-normal-300-latin-ext.woff2') format('woff2');
+  src: url('../fonts/Newsreader-normal-300-latin-ext.woff2') format('woff2');
   unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
 @font-face {
@@ -73,7 +73,7 @@
   font-style: normal;
   font-weight: 300;
   font-display: swap;
-  src: url('fonts/Newsreader-normal-300-latin.woff2') format('woff2');
+  src: url('../fonts/Newsreader-normal-300-latin.woff2') format('woff2');
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 @font-face {
@@ -81,7 +81,7 @@
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src: url('fonts/Newsreader-normal-400-latin-ext.woff2') format('woff2');
+  src: url('../fonts/Newsreader-normal-400-latin-ext.woff2') format('woff2');
   unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
 @font-face {
@@ -89,7 +89,7 @@
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src: url('fonts/Newsreader-normal-400-latin.woff2') format('woff2');
+  src: url('../fonts/Newsreader-normal-400-latin.woff2') format('woff2');
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 @font-face {
@@ -97,7 +97,7 @@
   font-style: normal;
   font-weight: 500;
   font-display: swap;
-  src: url('fonts/Newsreader-normal-500-latin-ext.woff2') format('woff2');
+  src: url('../fonts/Newsreader-normal-500-latin-ext.woff2') format('woff2');
   unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
 @font-face {
@@ -105,7 +105,7 @@
   font-style: normal;
   font-weight: 500;
   font-display: swap;
-  src: url('fonts/Newsreader-normal-500-latin.woff2') format('woff2');
+  src: url('../fonts/Newsreader-normal-500-latin.woff2') format('woff2');
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 @font-face {
@@ -113,7 +113,7 @@
   font-style: normal;
   font-weight: 600;
   font-display: swap;
-  src: url('fonts/Newsreader-normal-600-latin-ext.woff2') format('woff2');
+  src: url('../fonts/Newsreader-normal-600-latin-ext.woff2') format('woff2');
   unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
 @font-face {
@@ -121,7 +121,7 @@
   font-style: normal;
   font-weight: 600;
   font-display: swap;
-  src: url('fonts/Newsreader-normal-600-latin.woff2') format('woff2');
+  src: url('../fonts/Newsreader-normal-600-latin.woff2') format('woff2');
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 
@@ -528,39 +528,38 @@ body.is-sandbox .sandbox { display: inline-block; }
 </style>
 </head>
 <body>
-
 <nav>
   <div class="wrap navrow">
     <a class="brand" href="#top"><svg width="30" height="15" viewBox="0 0 200 100" aria-hidden="true"><path d="M12.0 50.0 L14.0 40.1 L16.0 31.7 L18.0 25.2 L20.0 21.0 L22.0 19.0 L24.0 19.2 L26.0 21.3 L28.0 25.2 L30.0 30.3 L32.0 36.2 L34.0 42.4 L36.0 48.5 L38.0 54.2 L40.0 59.0 L42.0 62.7 L44.0 65.2 L46.0 66.5 L48.0 66.5 L50.0 65.5 L52.0 63.5 L54.0 60.9 L56.0 57.8 L58.0 54.6 L60.0 51.5 L62.0 48.6 L64.0 46.2 L66.0 44.4 L68.0 43.2 L70.0 42.7 L72.0 42.7 L74.0 43.2 L76.0 44.1 L78.0 45.3 L80.0 46.7 L82.0 48.0 L84.0 49.2 L86.0 50.2 L88.0 51.0 L90.0 51.5 L92.0 51.8 L94.0 51.8 L96.0 51.6 L98.0 51.3 L100.0 50.9 L102.0 50.5 L104.0 50.2 L106.0 50.0 L190 50" fill="none" stroke="var(--coral)" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/></svg>Murmur</a>
     <div class="navlinks">
-      <a href="en/index.html" hreflang="en" lang="en">English</a>
-      <a href="#demo">演示</a>
-      <a href="#features">功能</a>
-      <a href="#promises">承诺</a>
-<!-- 定价段下架期间,导航也去掉这一项(否则点了滚到空处) -->
-      <a class="nav-cta" href="#download">下载</a>
+      <a href="#demo">Demo</a>
+      <a href="#features">Features</a>
+      <a href="#promises">Promises</a>
+      <a href="../index.html" hreflang="zh-Hans" lang="zh-Hans">中文</a>
+      <a class="nav-cta" href="#download">Download</a>
     </div>
   </div>
 </nav>
 
 <!-- ── Hero:全页最大的一场动画只留给「说完,字落下」── -->
 <header class="hero wrap" id="top">
-  <h1 class="reveal">说完,字已经<br>落在<span class="serif">光标</span>处。</h1>
-  <p class="lede reveal">说话的时候,想法是自己冒出来的——打字才需要第二道工序。
-  对着任何输入框说,口语进,整理好的文字出。微信、邮件、代码注释,光标在哪,落在哪。</p>
+  <h1 class="reveal">Stop talking. The words<br>are already at your <span class="serif">cursor</span>.</h1>
+  <p class="lede reveal">Talking is the fast part. Typing is the second pass — and so is cleaning up
+  what a transcriber hands back. Hold a key, say it, and finished text lands in whatever field the
+  cursor is already in: a chat box, an email, a commit message, a prompt.</p>
   <div class="cta-row reveal">
-    <a class="btn btn-primary" href="#download">下载 macOS 版</a>
-    <a class="btn btn-quiet" href="#demo">看它怎么工作</a>
+    <a class="btn btn-primary" href="#download">Download for macOS</a>
+    <a class="btn btn-quiet" href="#demo">See how it works</a>
   </div>
   <div class="keys reveal">
-    <span><kbd>右 ⌘</kbd>听写</span>
-    <span><kbd>右 ⌥</kbd>翻译</span>
-    <span><kbd>fn</kbd>随心问</span>
-    <span><kbd>Esc</kbd>取消</span>
+    <span><kbd>Right ⌘</kbd>Dictate</span>
+    <span><kbd>Right ⌥</kbd>Translate</span>
+    <span><kbd>fn</kbd>Ask</span>
+    <span><kbd>Esc</kbd>Cancel</span>
   </div>
 
   <div class="stage reveal" id="demo">
-    <div class="fake-input"><span class="ph">光标在这里</span><span class="out"></span><span class="cursor"></span></div>
+    <div class="fake-input"><span class="ph">your cursor is here</span><span class="out"></span><span class="cursor"></span></div>
     <div class="capsule-row">
       <div class="capsule hidden">
         <div class="round">✕</div>
@@ -570,78 +569,78 @@ body.is-sandbox .sandbox { display: inline-block; }
       </div>
     </div>
     <div class="caption"></div>
-    <p class="stage-note">这段演示是代码画的,不是视频——App 里的胶囊长什么样,这里就是什么样。</p>
+    <p class="stage-note">This demo is drawn in code, not recorded — the capsule here is the one you get in the app.</p>
   </div>
 </header>
 
 <!-- ── 少一道工序:打字 vs 说话,双演示对照 ── -->
 <section class="wrap">
-  <div class="eyebrow reveal">Subtract · 少一道工序</div>
-  <h2 class="reveal">同一句话,两种写完的方式。</h2>
+  <div class="eyebrow reveal">Subtract · One step fewer</div>
+  <h2 class="reveal">One sentence, two ways to finish it.</h2>
   <div class="compare reveal">
     <div class="panel type" id="panelType">
       <div class="head">
-        <span class="tag">打字</span>
+        <span class="tag">Typing</span>
         <span class="timer mono">0:00</span>
       </div>
       <div class="fake-input"><span class="out"></span><span class="cursor"></span></div>
-      <div class="caption"><span class="volatile">敲,回头看,删掉,重排……</span></div>
+      <div class="caption"><span class="volatile">Type, reread, delete, rearrange…</span></div>
     </div>
     <div class="panel speak" id="panelSpeak">
       <div class="head">
-        <span class="tag">说话</span>
+        <span class="tag">Speaking</span>
         <span class="timer mono">0:00</span>
       </div>
-      <div class="fake-input"><span class="ph">光标在这里</span><span class="out"></span><span class="cursor"></span></div>
+      <div class="fake-input"><span class="ph">your cursor is here</span><span class="out"></span><span class="cursor"></span></div>
       <div class="capsule-row">
         <div class="capsule mini hidden">
           <div class="round">✕</div>
           <canvas width="220" height="44"></canvas>
           <div class="round go">✓</div>
         </div>
-        <span class="done-chip">✓ 已插入,先干别的去了</span>
+        <span class="done-chip">✓ Inserted. On to the next thing.</span>
       </div>
       <div class="caption"></div>
     </div>
   </div>
-  <p class="subtract-note reveal">一天几十次输入,每次省下的那一两分钟,就是这个页面想说的全部。</p>
+  <p class="subtract-note reveal">A few dozen inputs a day, and a minute or two saved on each one. That is the whole argument this page is making.</p>
 </section>
 
-<!-- ── 三个核心功能 + 各自的展示区 ── -->
+<!-- ── 四个核心功能 + 各自的展示区 ── -->
 <section class="wrap" id="features">
-  <div class="eyebrow reveal">Three Things · 三件事</div>
-  <h2 class="reveal">三个键,三件事。</h2>
+  <div class="eyebrow reveal">Four Things · What the keys do</div>
+  <h2 class="reveal">Four keys, four things.</h2>
   <div class="features">
     <div class="feature reveal">
       <div class="num">01</div>
-      <div class="name">听写</div>
-      <p>说什么,写什么。口语里的「嗯、那个、就是说」会被 AI 清理掉,落下的是通顺的书面文字。</p>
-      <kbd>右 ⌘</kbd>
+      <div class="name">Dictate</div>
+      <p>Say it, get it written. The “um”, the “you know”, the false start get cleaned out on the way; what lands is a sentence you would have typed.</p>
+      <kbd>Right ⌘</kbd>
     </div>
     <div class="feature reveal">
       <div class="num">02</div>
-      <div class="name">翻译</div>
-      <p>说中文,落下的是英文;说英文,落下的是中文。方向自动判断,发消息给外国同事是说一句话的事。</p>
-      <kbd>右 ⌥</kbd>
+      <div class="name">Translate</div>
+      <p>Speak English, Chinese lands; speak Chinese, English lands. The direction is worked out for you, so a message to a colleague in another language is one held key.</p>
+      <kbd>Right ⌥</kbd>
     </div>
     <div class="feature reveal">
       <div class="num">03</div>
-      <div class="name">随心问</div>
-      <p>把问题说出来,落下的不是你的话,是答案。查个词、算个数,不用切去浏览器。</p>
+      <div class="name">Ask</div>
+      <p>Say the question and what lands is the answer, not your question. A flag you half-remember, a conversion, a spelling — without leaving the window.</p>
       <kbd>fn</kbd>
     </div>
     <div class="feature reveal">
       <div class="num">04</div>
-      <div class="name">口述编辑</div>
-      <p>选中一段文字,说怎么改 —— 落回去的是改完的样子。说完还能用嘴改,才算闭环。</p>
-      <kbd>右 ⌃</kbd>
+      <div class="name">Edit by voice</div>
+      <p>Select a paragraph and say how it should change — what lands back is the changed version. Being able to revise by mouth is what closes the loop.</p>
+      <kbd>Right ⌃</kbd>
     </div>
   </div>
 
   <div class="feature-demos">
     <div class="fdemo reveal" id="fdemoDictate">
-      <div class="head"><span class="name">听写</span><kbd>右 ⌘</kbd></div>
-      <div class="fake-input"><span class="ph">光标在这里</span><span class="out"></span><span class="cursor"></span></div>
+      <div class="head"><span class="name">Dictate</span><kbd>Right ⌘</kbd></div>
+      <div class="fake-input"><span class="ph">your cursor is here</span><span class="out"></span><span class="cursor"></span></div>
       <div class="capsule-row">
         <div class="capsule mini hidden">
           <div class="round">✕</div>
@@ -652,8 +651,8 @@ body.is-sandbox .sandbox { display: inline-block; }
       <div class="caption"></div>
     </div>
     <div class="fdemo reveal" id="fdemoTranslate">
-      <div class="head"><span class="name">翻译</span><kbd>右 ⌥</kbd></div>
-      <div class="fake-input"><span class="ph">光标在这里</span><span class="out"></span><span class="cursor"></span></div>
+      <div class="head"><span class="name">Translate</span><kbd>Right ⌥</kbd></div>
+      <div class="fake-input"><span class="ph">your cursor is here</span><span class="out"></span><span class="cursor"></span></div>
       <div class="capsule-row">
         <div class="capsule mini hidden">
           <div class="round">✕</div>
@@ -664,8 +663,8 @@ body.is-sandbox .sandbox { display: inline-block; }
       <div class="caption"></div>
     </div>
     <div class="fdemo reveal" id="fdemoAsk">
-      <div class="head"><span class="name">随心问</span><kbd>fn</kbd></div>
-      <div class="fake-input"><span class="ph">光标在这里</span><span class="out"></span><span class="cursor"></span></div>
+      <div class="head"><span class="name">Ask</span><kbd>fn</kbd></div>
+      <div class="fake-input"><span class="ph">your cursor is here</span><span class="out"></span><span class="cursor"></span></div>
       <div class="capsule-row">
         <div class="capsule mini hidden">
           <div class="round">✕</div>
@@ -680,111 +679,114 @@ body.is-sandbox .sandbox { display: inline-block; }
 
 <!-- ── Vibe Coding:对着 AI 编码工具口述 —— 只写系统级听写真做得到的 ── -->
 <section class="wrap" id="vibe">
-  <div class="eyebrow reveal">Vibe Coding · 对着 AI 说话</div>
-  <h2 class="reveal">跟 Claude Code、Cursor、Codex 提需求,<br>本来就是口语活儿。</h2>
+  <div class="eyebrow reveal">Vibe Coding · Talking to the tools</div>
+  <h2 class="reveal">Telling Claude Code, Cursor or Codex what you want<br>was always a spoken job.</h2>
   <p class="sub reveal">
-    你不是在一个字一个字地写代码,你是在跟它讲清楚要什么 ——
-    「把这个 function 改成 async,然后加个 retry」。
-    这句话说出来三秒,敲出来要三十秒。
-    Murmur 没有插件,没有集成,也不需要你配什么 ——
-    它就是个系统级听写,落在任何光标处,包括终端里那个正等你输入的提示符。
+    You are not writing the code character by character any more — you are explaining what you want.
+    “Make this function async, then put a retry around it.”
+    Three seconds to say; thirty to type.
+    Murmur has no plugin, no integration and nothing to set up —
+    it is system-level dictation, and it lands at any cursor, including the prompt in your terminal that is waiting for input.
   </p>
   <div class="detail-list reveal">
-    <div><strong>中英混着说,不给你强行统一。</strong>变量名、库名、报错本来就是英文,中间夹的是中文 —— 落下来还是你说的那样。</div>
-    <div><strong>专名错一次,纠正一次,就不再错。</strong>把听岔的库名或 API 名改对,它自动进词典,下次直接听对 —— 保守优先,宁漏不乱。</div>
-    <div><strong>常用 prompt 存成快捷短语。</strong>说一句触发词,落下的是整段模板 —— 那些每天要重复交代的规矩,不用再敲一遍。</div>
-    <div><strong>查个 API 名字不用切窗口。</strong>随心问按下去把问题说完,落下的不是你的话,是答案,手不离开编辑器。</div>
-    <div><strong>选中一段代码,说怎么改。</strong>口述编辑把改完的样子落回原处 —— 想法不用先敲成字。</div>
-    <div><strong>落进代码编辑器,不动你的标识符。</strong>分应用语气认得出你在编辑器里,跟落进聊天软件是两套规矩。</div>
+    <div><strong>A long prompt stops costing you anything.</strong>The constraint you normally leave out because typing it was tedious — say it instead. A spoken paragraph takes about as long as a spoken line.</div>
+    <div><strong>Get a name wrong once, correct it once, never again.</strong>Fix the library or API name it misheard and it goes into your dictionary; next time it is heard right — conservative on purpose: it would rather miss one than invent one.</div>
+    <div><strong>Your standing prompt, saved as a phrase.</strong>Say the trigger word and the whole block lands — the rules you re-explain every single day, typed out once and only once.</div>
+    <div><strong>Check an API name without switching windows.</strong>Hold Ask, say the question, and what lands is the answer, not your question — hands never leave the editor.</div>
+    <div><strong>Select some code and say how to change it.</strong>Edit by voice puts the changed version back where it was — the thought never has to be typed first.</div>
+    <div><strong>In an editor it leaves your identifiers alone.</strong>Tone per app can tell an editor from a chat window, and does not apply the same rules to both.</div>
   </div>
 </section>
 
 <!-- ── 模型提供表:不报厂商名 —— 场景才重要(口径同 App 内模型页) ── -->
 <section class="wrap" id="models">
-  <div class="eyebrow reveal">Engines · 提供表</div>
-  <h2 class="reveal">识别引擎可以换。<br>这是我们替你试完之后的推荐表。</h2>
+  <div class="eyebrow reveal">Engines · What is behind the switch</div>
+  <h2 class="reveal">The recognition engine is swappable.<br>This is the shortlist, after we did the testing.</h2>
   <p class="sub reveal">
-    市面上的识别模型,我们在产品团队内部做了一整套测评,选出三个最主要的提供给你。
-    没有哪一家在所有场景都最好 —— 你怎么说话才重要,所以按场景分成三档:
-    优缺点写在明面上,一层菜单直接切,换挡不用懂任何术语。
+    We put the recognition models we could get our hands on through one internal evaluation and kept three.
+    None of them wins everywhere — how you talk is what decides it — so they are split by situation:
+    strengths and weaknesses printed on the front, one menu to switch, no terminology to learn first.
   </p>
 
   <div class="tiers">
     <article class="tier reveal">
-      <div class="tier-top"><h3>标准</h3><span class="tier-cost">额度 ×1</span></div>
-      <div class="tier-for">日常混说的默认之选</div>
+      <div class="tier-top"><h3>Standard</h3><span class="tier-cost">1× quota</span></div>
+      <div class="tier-for">The default for everyday speech</div>
       <div class="stars">
-        <div><span>日常使用</span><i><b>●●●●●</b></i></div>
-        <div><span>中文为主</span><i><b>●●●●</b><s>●</s></i></div>
-        <div><span>英文为主</span><i><b>●●●</b><s>●●</s></i></div>
+        <div><span>Everyday use</span><i><b>●●●●●</b></i></div>
+        <div><span>Chinese-heavy</span><i><b>●●●●</b><s>●</s></i></div>
+        <div><span>English-heavy</span><i><b>●●●</b><s>●●</s></i></div>
       </div>
       <ul class="tier-good">
-        <li>实时字幕,松手秒出</li>
-        <li>中英混说最稳(亲测基准)</li>
-        <li>额度消耗最低</li>
+        <li>Live captions; final text the moment you let go</li>
+        <li>Steadiest when languages are mixed mid-sentence (our own testing)</li>
+        <li>Lightest on quota</li>
       </ul>
       <ul class="tier-bad">
-        <li>纯英文长句的公开流式基准中游</li>
+        <li>Mid-pack on public streaming benchmarks for long English sentences</li>
       </ul>
     </article>
 
     <article class="tier reveal">
-      <div class="tier-top"><h3>中文优先</h3><span class="tier-cost">额度 ×1</span></div>
-      <div class="tier-for">中文为主、带方言口音</div>
-      <div class="tier-soon">内测中 · 逐步开放</div>
+      <div class="tier-top"><h3>Chinese-first</h3><span class="tier-cost">1× quota</span></div>
+      <div class="tier-for">Mostly Chinese, regional accents</div>
+      <div class="tier-soon">In closed beta · rolling out</div>
       <div class="stars">
-        <div><span>日常使用</span><i><b>●●●●</b><s>●</s></i></div>
-        <div><span>中文为主</span><i><b>●●●●●</b></i></div>
-        <div><span>英文为主</span><i><b>●●●</b><s>●●</s></i></div>
+        <div><span>Everyday use</span><i><b>●●●●</b><s>●</s></i></div>
+        <div><span>Chinese-heavy</span><i><b>●●●●●</b></i></div>
+        <div><span>English-heavy</span><i><b>●●●</b><s>●●</s></i></div>
       </div>
       <ul class="tier-good">
-        <li>中文与混说公开实测最强档</li>
-        <li>方言底子好(粤/川渝/吴)</li>
-        <li>实时字幕,松手秒出</li>
+        <li>Best published results on Chinese and on mixed speech</li>
+        <li>Holds up on regional accents (Cantonese, Sichuanese, Wu)</li>
+        <li>Live captions; final text the moment you let go</li>
       </ul>
       <ul class="tier-bad">
-        <li>实时字幕的专名偏置暂缺(终稿由词典兜底)</li>
+        <li>No proper-noun biasing in the live captions yet (your dictionary still fixes the final text)</li>
       </ul>
     </article>
 
     <article class="tier reveal">
-      <div class="tier-top"><h3>精准</h3><span class="tier-cost">额度 ×2</span></div>
-      <div class="tier-for">英文为主、专有名词多</div>
-      <div class="tier-soon">内测中 · 逐步开放</div>
+      <div class="tier-top"><h3>Precision</h3><span class="tier-cost">2× quota</span></div>
+      <div class="tier-for">Mostly English, dense with names</div>
+      <div class="tier-soon">In closed beta · rolling out</div>
       <div class="stars">
-        <div><span>日常使用</span><i><b>●●●</b><s>●●</s></i></div>
-        <div><span>中文为主</span><i><b>●●●</b><s>●●</s></i></div>
-        <div><span>英文为主</span><i><b>●●●●●</b></i></div>
+        <div><span>Everyday use</span><i><b>●●●</b><s>●●</s></i></div>
+        <div><span>Chinese-heavy</span><i><b>●●●</b><s>●●</s></i></div>
+        <div><span>English-heavy</span><i><b>●●●●●</b></i></div>
       </div>
       <ul class="tier-good">
-        <li>英文与混说的公开基准第一梯队</li>
-        <li>复杂口音、专有名词最稳</li>
+        <li>Front rank on public English and mixed-speech benchmarks</li>
+        <li>Steadiest on heavy accents and on proper nouns</li>
       </ul>
       <ul class="tier-bad">
-        <li>没有实时字幕(说完等整段)</li>
-        <li>中文输出偶有简繁混杂</li>
-        <li>额度消耗高</li>
+        <li>No live captions (you wait for the whole passage)</li>
+        <li>Chinese output occasionally mixes simplified and traditional</li>
+        <li>Heaviest on quota</li>
       </ul>
     </article>
   </div>
 
   <p class="tier-note reveal">
-    <strong>现在就能用的是「标准」档</strong>,另外两档正在内测里逐步放开。
-    「额度 ×2」的意思是:同一份额度,这一档消耗按两倍计 —— 比如长录音录 1 分钟,
-    从时长池里扣 2 分钟,消耗写在档位旁边,没有隐藏折算。断网或额度用完时
-    自动落回本机识别:慢一点、混说弱一点,但不变砖,你的话也不会丢。
+    <strong>Standard is the tier open to everyone today</strong>; the other two are opening up through the
+    closed beta. “2× quota” means exactly that: on that tier a minute of long recording takes two minutes
+    out of the monthly pool, and dictation draws from your weekly allowance at twice the rate. The
+    multiplier is printed next to the tier; there is no hidden conversion. Lose the network or run out of
+    allowance and it falls back to on-device recognition by itself: slower, weaker when you mix languages,
+    but never a brick, and never a lost sentence.
   </p>
 </section>
 
 <!-- ── 数据在哪:全站最硬的一句话 ── -->
 <section class="wrap" id="local">
-  <div class="eyebrow reveal">Local · 数据在哪</div>
-  <h2 class="reveal">我们的服务器只认识「你是谁」,<br>永远不知道「你说了什么」。</h2>
-  <p class="sub reveal">账号、登录、订阅——这是我们服务器仅有的工作。你的录音、转写、历史、词典,
-  一个字都不上传,全部只存在你的 Mac 上。云端识别时,音频直连你自己选的那家模型商,
-  不经过我们;选本机识别,则一个字节都不出这台电脑。</p>
+  <div class="eyebrow reveal">Local · Where your data is</div>
+  <h2 class="reveal">Our server knows who you are.<br>It never learns what you said.</h2>
+  <p class="sub reveal">Accounts, sign-in, subscriptions — that is the entire job our server does. Your
+  recordings, transcripts, history and dictionary are never uploaded; they exist on your Mac only. For
+  cloud recognition the audio goes straight from your Mac to the provider you picked, not through us.
+  Choose on-device recognition and not one byte leaves this computer.</p>
   <div class="flowstage reveal">
-    <svg viewBox="0 0 760 250" aria-label="数据从你的 Mac 直连模型商,跳过我们的服务器">
+    <svg viewBox="0 0 760 250" aria-label="Audio goes from your Mac straight to the provider you picked, skipping our server">
       <!-- 航线(常显,极淡) -->
       <path id="goPath"   d="M196 118 C 300 26, 460 26, 564 118" fill="none" stroke="var(--line2)" stroke-width="1.5" stroke-dasharray="3 6"/>
       <path id="backPath" d="M564 138 C 460 226, 300 226, 196 138" fill="none" stroke="var(--line2)" stroke-width="1.5" stroke-dasharray="3 6"/>
@@ -792,20 +794,20 @@ body.is-sandbox .sandbox { display: inline-block; }
       <!-- 你的 Mac -->
       <g>
         <rect x="36" y="86" width="160" height="84" rx="14" fill="var(--paper)" stroke="var(--line2)"/>
-        <text class="node-label" x="116" y="122" text-anchor="middle">你的 Mac</text>
-        <text class="node-sub" x="116" y="144" text-anchor="middle">录音·历史·词典都在这</text>
+        <text class="node-label" x="116" y="122" text-anchor="middle">Your Mac</text>
+        <text class="node-sub" x="116" y="144" text-anchor="middle">audio, history, dictionary</text>
         <rect id="macGlow" x="36" y="86" width="160" height="84" rx="14" fill="none" stroke="var(--coral)" stroke-width="2.5" opacity="0"/>
         <g id="savedChip" opacity="0">
           <rect x="52" y="176" width="128" height="26" rx="13" fill="var(--coral-tint)"/>
-          <text x="116" y="194" text-anchor="middle" style="font-size:12px; font-weight:600" fill="var(--coral)">✓ 已存在本地</text>
+          <text x="116" y="194" text-anchor="middle" style="font-size:12px; font-weight:600" fill="var(--coral)">✓ Stored locally</text>
         </g>
       </g>
 
       <!-- 我们的服务器(虚位) -->
       <g id="ghost" opacity=".8">
         <rect x="304" y="92" width="152" height="72" rx="14" fill="none" stroke="var(--line2)" stroke-dasharray="5 5"/>
-        <text class="ghost-label" x="380" y="122" text-anchor="middle">我们的服务器</text>
-        <text class="node-sub" x="380" y="142" text-anchor="middle">只认识「你是谁」</text>
+        <text class="ghost-label" x="380" y="122" text-anchor="middle">Our server</text>
+        <text class="node-sub" x="380" y="142" text-anchor="middle">knows only who you are</text>
         <g id="ghostX" opacity="0">
           <circle cx="380" cy="76" r="13" fill="var(--coral)"/>
           <text x="380" y="81" text-anchor="middle" style="font-size:13px; font-weight:700" fill="#fff">✕</text>
@@ -815,8 +817,8 @@ body.is-sandbox .sandbox { display: inline-block; }
       <!-- 你选的模型商 -->
       <g>
         <rect x="564" y="86" width="160" height="84" rx="14" fill="var(--paper)" stroke="var(--line2)"/>
-        <text class="node-label" x="644" y="122" text-anchor="middle">你选的模型商</text>
-        <text class="node-sub" x="644" y="144" text-anchor="middle">选哪一档,就只连那一家</text>
+        <text class="node-label" x="644" y="122" text-anchor="middle">Your provider</text>
+        <text class="node-sub" x="644" y="144" text-anchor="middle">one tier, one destination</text>
         <rect id="provGlow" x="564" y="86" width="160" height="84" rx="14" fill="none" stroke="var(--coral)" stroke-width="2.5" opacity="0"/>
       </g>
 
@@ -824,111 +826,116 @@ body.is-sandbox .sandbox { display: inline-block; }
       <circle id="pktGo"   r="7" fill="var(--coral)" opacity="0"/>
       <circle id="pktBack" r="7" fill="var(--ink)"  opacity="0"/>
     </svg>
-    <p class="cap" id="flowCap">你说话 —— 音频只从你的 Mac 出发</p>
+    <p class="cap" id="flowCap">You speak — the audio leaves from your Mac and nowhere else</p>
   </div>
 
   <p class="local-path reveal"><span class="mono">~/Library/Application Support/Murmur/</span><br>
-  <span class="path-note">录音和你说过的每一个字,都在这个文件夹里,不信随时自己打开看。删掉,就是真的删掉了。</span></p>
+  <span class="path-note">The recordings, and every word you have said, are in that folder. Open it whenever you like. Delete it and it is actually deleted.</span></p>
 </section>
 
 <!-- ── 敢写下来的承诺 ── -->
 <section class="wrap" id="promises">
-  <div class="eyebrow reveal">Promises · 敢写下来的事</div>
-  <h2 class="reveal">这四条,写下来就要兑现。</h2>
+  <div class="eyebrow reveal">Promises · Things we will put in writing</div>
+  <h2 class="reveal">Four of them. Written down means kept.</h2>
   <div class="promises">
     <div class="promise reveal">
-      <h3>绝不丢话</h3>
-      <p>每次听写都留着录音和一条历史。云端挂了、识别错了?回历史里换个模型重跑——没有哪条路径会让你说过的话凭空消失。</p>
+      <h3>Never lose what you said</h3>
+      <p>Every dictation keeps the audio and a history entry. Cloud down, recognition wrong? Open the history and run it again on another engine. No path through this app makes a sentence you said disappear.</p>
     </div>
     <div class="promise reveal">
-      <h3>失败就明说</h3>
-      <p>没翻译成,会告诉你没翻译成;麦克风没收到声,当场就说。不会把一段兜底出来的乱码,悄悄塞进你正在打字的窗口。</p>
+      <h3>Failure gets said out loud</h3>
+      <p>If the translation did not happen, it tells you it did not happen. If the microphone heard nothing, it says so on the spot. It will not quietly push some fallback mess into the window you are typing in.</p>
     </div>
     <div class="promise reveal">
-      <h3>音频去哪,写在明面</h3>
-      <p>选本机识别,音频一个字节不出这台电脑;选云端,用了哪家、发了什么,设置里白纸黑字——不藏在条款第八页。</p>
+      <h3>Where the audio goes is on the surface</h3>
+      <p>On-device: not one byte leaves this computer. Cloud: which provider, and what got sent, is written in Settings in plain words — not on page eight of the terms.</p>
     </div>
     <div class="promise reveal">
-      <h3>数字是量出来的</h3>
-      <p>「松手到出字」的延迟是实测中位数,不是文案写的。识别档位的优缺点也写在明面上 —— 不合适就换一档,你的耳朵说了算。</p>
+      <h3>The numbers are measured</h3>
+      <p>The “release the key to text on screen” latency is a measured median, not a number a copywriter picked. Each engine's weak spots are printed next to its strong ones — switch if it does not suit you; your ears decide.</p>
     </div>
   </div>
 </section>
 
-<!-- ── FAQ ── -->
 <!-- ── 长录音:实时字幕(可牺牲预览)+ 整段转写(说话人分离) ── -->
 <section class="wrap" id="lecture">
-  <div class="eyebrow reveal">Lecture · 长录音</div>
-  <h2 class="reveal">上课开着,字幕像弹幕一样浮在屏幕上。</h2>
+  <div class="eyebrow reveal">Lecture · Long recordings</div>
+  <h2 class="reveal">Leave it running; captions float over whatever is on screen.</h2>
   <p class="sub reveal">
-    长录音是另一条管线:实时字幕浮窗盖在任何全屏窗口上面 —— 网课照常放,字幕自己跟;
-    想看译文就开双栏。字幕只是可牺牲的预览,它断了课不断:完整版录完照常落历史,
-    还分得出谁在说话。
+    Long recording is a separate pipeline. The caption window floats above any full-screen window — the
+    talk keeps playing, the captions keep up; turn on the second column if you want a translation beside
+    them. Captions are an expendable preview: if they drop, the recording does not. The full transcript
+    lands in your history when you stop, with the speakers told apart.
   </p>
-  <div class="cap-demo reveal" id="capDemo" aria-label="实时字幕演示">
-    <div class="cap-head"><span class="cap-dot"></span>实时字幕<span class="cap-tag">预览 · 完整版录完照常落历史</span></div>
+  <div class="cap-demo reveal" id="capDemo" aria-label="Live caption demo">
+    <div class="cap-head"><span class="cap-dot"></span>Live captions<span class="cap-tag">preview · the full transcript still lands in history</span></div>
     <div class="cap-lines" id="capLines"></div>
   </div>
   <p class="stage-note reveal" style="margin-top:14px">
-    这段演示是代码画的,不是视频。长录音免费档每月 30 分钟。
+    Drawn in code, not recorded. Free tier: 30 minutes a month. Pro: no limit on length.
   </p>
 </section>
 
 <!-- ── 定价(嫁接自 v1;IDs #pricing #buy #manage #pro-price 保留勿改) ── -->
-<!-- ⛔ 定价段暂时下架(2026-09-10,Wei:「收钱这条不做,现在」)。
-     原因:Stripe 还挂在沙盒链接上,页面会自己挂「沙盒测试中」徽章 ——
-     给人试用时,一个标着「测试中」的价格比没有价格更糟。
+<!-- ⛔ 定价段暂时下架(2026-09-12,与中文页 index.html 同步)。
+     ⚠️ 这一段是 2026-09-10 中文页下架时**漏掉的** —— 英文页一直挂着可点的沙盒收银台
+     (#buy 会被底部 JS 赋上 buy.stripe.com/test_…,body 还会加 is-sandbox 让「测试中」徽章亮起来)。
+     原因同中文页:给人试用时,一个标着「测试中」的价格比没有价格更糟。
      恢复方法:删掉本段首尾这两行注释即可,里面一个字没动;
-     恢复之前先把底部 PAY_LINK 换成正式链接并删掉 <meta robots noindex>。 -->
+     恢复之前先把底部 PAY_LINK / MANAGE_LINK 换成正式链接。 -->
 <!--
 <section class="wrap" id="pricing">
-  <div class="eyebrow reveal">Pricing · 定价</div>
-  <h2 class="reveal">额度用完之前,不用付钱。<span class="sandbox">沙盒测试中</span></h2>
+  <div class="eyebrow reveal">Pricing</div>
+  <h2 class="reveal">Nothing to pay until the free allowance runs out.<span class="sandbox">sandbox mode</span></h2>
   <p class="sub reveal">
-    免费额度是我们替你付的云端账单 —— 用完了自动切回本机识别,不会停在那里问你要钱。
-    云端额度现阶段是<strong>内测邀请制</strong>:下载免费、本机识别不用登录,
-    要云端名额,<a href="https://othersstudio.tech" rel="noopener">来找我们</a>要一个。
+    The free allowance is a cloud bill we pay on your behalf — when it runs out the app switches back to
+    on-device recognition instead of stopping to ask you for money. Cloud allowance is
+    <strong>invite-only during the closed beta</strong>: the download is free, on-device recognition needs
+    no account at all, and for a cloud seat, <a href="https://othersstudio.tech" rel="noopener">come and ask us</a>.
   </p>
 
   <div class="plans reveal">
     <div class="plan">
       <h3>Free</h3>
-      <div class="price">0<small> / 月</small></div>
+      <div class="price">0<small> / month</small></div>
       <ul>
-        <li>每周 2000 字的云端听写与整理</li>
-        <li>每月 30 分钟长录音</li>
-        <li>额度用完自动切本机识别,继续能用</li>
+        <li>2,000 words a week of cloud dictation and cleanup</li>
+        <li>30 minutes a month of long recording</li>
+        <li>Allowance gone: it switches to on-device and keeps working</li>
       </ul>
     </div>
     <div class="plan">
       <h3>Pro</h3>
-      <div class="price" id="pro-price">AU$9<small> / 月</small></div>
+      <div class="price" id="pro-price">AU$9<small> / month</small></div>
       <ul>
-        <li>听写、整理、翻译不限量</li>
-        <li>长录音不限时长</li>
-        <li>随时可取消,取消后用到当期结束</li>
+        <li>Dictation, cleanup and translation, unmetered</li>
+        <li>Long recording with no limit on length</li>
+        <li>Cancel any time; it runs to the end of the period</li>
       </ul>
     </div>
   </div>
 
   <p class="reveal" style="margin-bottom:8px">
-    <a class="buy" id="buy" href="#">订阅 Pro</a>
+    <a class="buy" id="buy" href="#">Subscribe to Pro</a>
   </p>
 
   <div class="pricing-plain reveal">
     <p>
-      <strong>从这里买的话,用同一个邮箱在 App 里登录就会自动到账。</strong>
-      网页上付款时我们还不知道你是谁 —— 收银台填的那个邮箱就是认领凭据,所以两边要用同一个。
+      <strong>Buy here, then sign in to the app with the same email and it upgrades itself.</strong>
+      At the checkout we still do not know who you are — the email you type there is the claim ticket, so
+      it has to match. Prices are charged in Australian dollars; your bank may apply its own conversion rate.
     </p>
     <p>
-      已经在用 App 的话更省事:直接在 App 里点「升级 Pro」,付完回到 App,档位自己就变了。
+      Already running the app? Simpler still: hit “Upgrade to Pro” inside it, pay, come back, and the tier
+      has changed on its own.
     </p>
     <p>
-      <strong>取消也不用找人。</strong>
-      <a id="manage" href="#">管理订阅</a> —— 输入付款时用的邮箱,Stripe 会发一条直达链接给你,
-      在那儿自己取消或换卡。取消后用到当期结束,不退当期。
-      用<strong>兑换码</strong>开通的 Pro 不经收银台,门户里会查无此订阅 ——
-      它的到期与续期在 App 的账号页里看;拿到兑换码就在那里输入,不用走这里。
+      <strong>Cancelling does not involve talking to anyone.</strong>
+      <a id="manage" href="#">Manage subscription</a> — enter the email you paid with and Stripe sends you a
+      direct link; cancel or change the card there. After cancelling it runs to the end of the period; the
+      current period is not refunded. Pro opened with a <strong>redemption code</strong> never went through
+      the checkout, so the portal will find no subscription for it — its expiry and renewal live on the
+      account page inside the app, which is also where you type the code in. You never need this link for that.
     </p>
   </div>
 </section>
@@ -936,62 +943,64 @@ body.is-sandbox .sandbox { display: inline-block; }
 
 <!-- ── 细节合集:句句是已交付行为,不许吹 ── -->
 <section class="wrap" id="details">
-  <div class="eyebrow reveal">Details · 顺手的小事</div>
-  <h2 class="reveal">没写进大标题,但每天都在干活的。</h2>
+  <div class="eyebrow reveal">Details · Small things that pull their weight</div>
+  <h2 class="reveal">Not in the headlines, but working every day.</h2>
   <div class="detail-list reveal">
-    <div><strong>词典会自己长大。</strong>被你纠正过的专有名词自动进词典,下次直接听对 —— 保守优先,宁漏不乱。</div>
-    <div><strong>快捷短语。</strong>说一句触发词,落下的是整段模板 —— 地址、收款信息、常用回复,一步不经大模型。</div>
-    <div><strong>分应用语气。</strong>落进聊天软件是口语,落进邮件是正式,落进代码编辑器不动你的标识符。</div>
-    <div><strong>说错了,回历史改。</strong>每条听写都留着原文和录音;改一个字,它就是以后的参照。</div>
-    <div><strong>悄悄话模式。</strong>图书馆里用气声说,采集端放大之后照常识别。</div>
-    <div><strong>「半小时后提醒我」。</strong>顺嘴一句就挂上提醒,到点弹出来 —— 本地就地处理,不花额度、断网也灵。</div>
-    <div><strong>屏幕上的专名帮忙听对。</strong>录音那一刻读一次前台窗口的可见文字抽专有名词(不截屏,屏幕词绝不进词典)—— 细节在<a href="privacy.html">「你的数据在哪」</a>。</div>
+    <div><strong>The dictionary grows itself.</strong> Proper nouns you have corrected go into the dictionary and are heard right next time — conservative on purpose: it would rather miss one than invent one.</div>
+    <div><strong>Quick phrases.</strong> Say the trigger word and a whole block lands — an address, payment details, a reply you send twice a week. That path never touches a large model.</div>
+    <div><strong>Tone per app.</strong> It lands in a chat app as speech, in an email as prose, and in a code editor without touching your identifiers.</div>
+    <div><strong>Said it wrong? Fix it in the history.</strong> Every dictation keeps its original text and its audio; change one word and that becomes the reference from then on.</div>
+    <div><strong>Under-your-breath mode.</strong> Say it almost silently in a library; the capture end amplifies and recognises it as usual.</div>
+    <div><strong>“Remind me in half an hour.”</strong> Say it in passing and the reminder is set; it turns up on time — handled on-device, so it costs no allowance and works offline.</div>
+    <div><strong>Names on your screen help it hear right.</strong> At the moment you start recording it reads the visible text of the front window once to pull out proper nouns (no screenshot; screen words never enter your dictionary) — the details are in <a href="privacy.html">“Where your data lives”</a>.</div>
   </div>
 </section>
 
 <section class="wrap">
-  <div class="eyebrow reveal">Questions · 你会想问的</div>
+  <div class="eyebrow reveal">Questions · The ones you are about to ask</div>
   <div class="faq reveal">
     <details>
-      <summary>我的录音会被传到哪里?</summary>
-      <p class="a">你的录音、转写、历史、词典全存在你的 Mac 本地,我们的服务器只处理账号和订阅。云端识别时,音频直连那一家识别服务,不经我们的服务器——用免费额度(我们代付)时也一样。唯一的例外要说清:用免费额度时,整理环节的<strong>文字</strong>会先经我们的服务器再转给模型厂商。选本机识别,一个字节都不出电脑。词典里的专有名词会随请求发给识别服务(为了听对它们)——这些都写在设置里,不是藏在条款里。</p>
+      <summary>Where does my audio get sent?</summary>
+      <p class="a">Your recordings, transcripts, history and dictionary all live on your Mac; our server only handles accounts and subscriptions. For cloud recognition the audio connects straight to that one recognition service and does not pass through our server — that holds while you are on the free allowance we pay for, too. One exception, stated plainly: on the free allowance the <strong>text</strong> for the cleanup step goes through our server before it reaches the model provider. Pick on-device recognition and nothing leaves the computer at all. Proper nouns from your dictionary are sent along with the request, so that they get heard correctly — all of this is written in Settings, not buried in terms.</p>
     </details>
     <details>
-      <summary>断网了怎么办?</summary>
-      <p class="a">断网或额度用完,都自动落回本机识别——慢一点、混说弱一点,但你的话不会丢。恢复之后,历史里的任何一条都可以换云端档位重跑。</p>
+      <summary>What happens when I am offline?</summary>
+      <p class="a">Offline, or out of allowance, it falls back to on-device recognition by itself — slower, weaker when you mix languages, but your words are not lost. Once you are back, any entry in the history can be run again on a cloud tier.</p>
     </details>
     <details>
-      <summary>支持哪些语言?</summary>
-      <p class="a">中文、英文,以及它们夹在一起说——最后这种恰恰是它做得最认真的。中文带方言口音(粤/川渝/吴)也有专门的档位(内测中,逐步开放)。</p>
+      <summary>Which languages does it handle?</summary>
+      <p class="a">English, Chinese, and the two of them mixed inside one sentence — that last case is the one it was built to take seriously. Chinese with a regional accent (Cantonese, Sichuanese, Wu) has a tier of its own, in closed beta and rolling out.</p>
     </details>
     <details>
-      <summary>需要自己配 API Key 吗?</summary>
-      <p class="a">不需要。云端额度现阶段是内测邀请制:拿到名额、登录,免费额度就在 —— 那是我们替你付的云端账单,用完自动切回本机识别,不会停下来问你要钱。</p>
+      <summary>Do I have to bring my own API key?</summary>
+      <p class="a">No. Cloud allowance is invite-only for now: get a seat, sign in, and the free allowance is there — it is a cloud bill we pay for you, and when it runs out the app returns to on-device recognition rather than stopping to ask you for money.</p>
     </details>
   </div>
 </section>
 
 <!-- ── 收尾 ── -->
 <section class="wrap outro" id="download">
-  <h2 class="reveal">下一句话,<span class="serif">说</span>出来试试。</h2>
+  <h2 class="reveal">Try saying the next one <span class="serif">out loud</span>.</h2>
   <div class="cta-row reveal">
-    <a class="btn btn-primary" href="https://github.com/Azureliu-day1/murmur-site/releases/latest/download/Murmur.zip">下载 macOS 版</a>
+    <a class="btn btn-primary" href="https://github.com/Azureliu-day1/murmur-site/releases/latest/download/Murmur.zip">Download for macOS</a>
   </div>
-  <p class="stage-note reveal">macOS 26+ · Apple Silicon · 免费开始 · 云端额度内测邀请制</p>
-  <p class="stage-note reveal">下载免费,<b>本机识别不用登录就能用</b>。要云端额度的话,现在是内测邀请制 ——
-  写封信到 <a href="mailto:foraiandfocus+murmur@gmail.com?subject=Murmur%20%E5%86%85%E6%B5%8B%E5%90%8D%E9%A2%9D">foraiandfocus+murmur@gmail.com</a>
-  要一个,说一句你想用它做什么就行。</p>
-  <p class="stage-note reveal">解压后把 Murmur 拖进「应用程序」。首次使用会请求麦克风与辅助功能权限 ——
-  前者听你说话,后者把字落进光标处。</p>
+  <p class="stage-note reveal">macOS 26+ · Apple Silicon · Free to start · Cloud allowance by invite</p>
+  <p class="stage-note reveal">The download is free and <b>on-device recognition works without an account</b>.
+  The cloud allowance is invite-only for now — email
+  <a href="mailto:foraiandfocus+murmur@gmail.com?subject=Murmur%20beta%20invite">foraiandfocus+murmur@gmail.com</a>
+  and tell us in one line what you'd use it for.</p>
+  <p class="stage-note reveal">Unzip it and drag Murmur into Applications. On first run it asks for the
+  microphone and for accessibility — the first to hear you, the second to put the words at your cursor.</p>
 </section>
 
 <footer class="wrap">
   <span class="brand"><svg width="30" height="15" viewBox="0 0 200 100" aria-hidden="true"><path d="M12.0 50.0 L14.0 40.1 L16.0 31.7 L18.0 25.2 L20.0 21.0 L22.0 19.0 L24.0 19.2 L26.0 21.3 L28.0 25.2 L30.0 30.3 L32.0 36.2 L34.0 42.4 L36.0 48.5 L38.0 54.2 L40.0 59.0 L42.0 62.7 L44.0 65.2 L46.0 66.5 L48.0 66.5 L50.0 65.5 L52.0 63.5 L54.0 60.9 L56.0 57.8 L58.0 54.6 L60.0 51.5 L62.0 48.6 L64.0 46.2 L66.0 44.4 L68.0 43.2 L70.0 42.7 L72.0 42.7 L74.0 43.2 L76.0 44.1 L78.0 45.3 L80.0 46.7 L82.0 48.0 L84.0 49.2 L86.0 50.2 L88.0 51.0 L90.0 51.5 L92.0 51.8 L94.0 51.8 L96.0 51.6 L98.0 51.3 L100.0 50.9 L102.0 50.5 L104.0 50.2 L106.0 50.0 L190 50" fill="none" stroke="var(--coral)" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/></svg>Murmur</span>
-  <span>Others Studio 出品</span>
+  <span>Made by Others Studio</span>
   <div class="links">
     <a href="https://othersstudio.tech">othersstudio.tech</a>
-    <a href="privacy.html">隐私</a>
-  <a href="tos.html">条款</a>
+    <a href="privacy.html">Privacy</a>
+    <a href="tos.html">Terms</a>
+    <a href="../index.html" hreflang="zh-Hans" lang="zh-Hans">中文</a>
   </div>
 </footer>
 
@@ -1002,10 +1011,10 @@ body.is-sandbox .sandbox { display: inline-block; }
   var box = document.getElementById('capLines');
   if (!box) return;
   var lines = [
-    ['说话人 1', '今天我们讲 attention 机制,先回顾上节课的 embedding。'],
-    ['说话人 1', '这里 query 和 key 做点积,除以 √d 防止数值跑飞。'],
-    ['说话人 2', '老师,这个 scaling 是必须的吗?'],
-    ['说话人 1', '好问题 —— 维度一高点积方差就大,softmax 会饱和。']
+    ['Speaker 1', 'Today we get to attention; first a quick recap of embeddings.'],
+    ['Speaker 1', 'Query and key go through a dot product, divided by \u221Ad to keep the numbers sane.'],
+    ['Speaker 2', 'Is that scaling step actually necessary?'],
+    ['Speaker 1', 'Good question — high dimensions blow up the variance, and softmax saturates.']
   ];
   var reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
   function render(n) {
@@ -1140,7 +1149,7 @@ function speakDemo(root, { words, result, per = 420, hold = 2600, cycleOverride 
       wave.draw(now, 0.9);
       onPhase && onPhase('listen', doneAt, t);
     } else if (t < t0 + listen + proc) {                // 整理
-      caption.innerHTML = '<span class="volatile">整理中…</span>';
+      caption.innerHTML = '<span class="volatile">Cleaning up…</span>';
       wave.draw(now, 0);
       onPhase && onPhase('process', doneAt, t);
     } else {                                            // 落字 → 停留
@@ -1183,8 +1192,8 @@ function typeDemo(root, ops, { cycleOverride = 0, onPhase }) {
 
 /* ── Hero:一场就够,讲清「说完,字落下」── */
 speakDemo(document.getElementById('demo'), {
-  words: ['今天的', '会议纪要', '我', '晚点', '发给', '大家'],
-  result: '今天的会议纪要,我晚点发给大家。',
+  words: ['so ', "let's ship ", 'the fix ', 'behind a flag ', 'and roll it out ', 'Monday'],
+  result: "Let's ship the fix behind a flag and roll it out Monday.",
 });
 
 /* ── 少一道工序:同一句话,两边同一个循环、同时开跑 ── */
@@ -1202,8 +1211,8 @@ function timerPhase(panel) {
 }
 const speakChip = speakPanel.querySelector('.done-chip');
 speakDemo(speakPanel, {
-  words: ['明天', '下午三点', '老地方', '见'],
-  result: '明天下午三点,老地方见。',
+  words: ['tomorrow ', 'at three, ', 'the usual ', 'place'],
+  result: 'Tomorrow at three, the usual place.',
   cycleOverride: SAME_CYCLE,
   onPhase: (phase, doneAt, t) => {
     timerPhase(speakPanel)(phase, doneAt, t);
@@ -1211,25 +1220,24 @@ speakDemo(speakPanel, {
   },
 });
 typeDemo(typePanel, [
-  { type: '明天下午三点我们' }, { pause: 1100 },
-  { del: 2 }, { type: '在老地方' }, { pause: 1000 },
-  { del: 4 }, { pause: 800 },
-  { type: ',老地方见' }, { pause: 800 },
-  { type: '。' },
+  { type: 'Tomorrow at 3pm,' }, { pause: 1000 },
+  { del: 5 }, { pause: 700 },
+  { type: ' three, the usual' }, { pause: 600 },
+  { type: ' place.' },
 ], { cycleOverride: SAME_CYCLE, onPhase: timerPhase(typePanel) });
 
 /* ── 三个核心功能的展示区 ── */
 speakDemo(document.getElementById('fdemoDictate'), {
-  words: ['嗯…', '那个,', '明天上午十点', '提醒我', '给妈妈', '打个电话'],
-  result: '明天上午十点,提醒我给妈妈打个电话。',   // 口水词在字幕里,不在成品里
+  words: ['um… ', 'remind me ', 'to call Mum ', 'at ten ', 'tomorrow'],
+  result: 'Remind me to call Mum at ten tomorrow.',   // 口水词在字幕里,不在成品里
 });
 speakDemo(document.getElementById('fdemoTranslate'), {
-  words: ['这个周末', '我们', '去看电影', '怎么样'],
-  result: 'How about we go see a movie this weekend?',
+  words: ['how about ', 'we grab ', 'coffee ', 'on Friday'],
+  result: '周五一起喝杯咖啡怎么样?',            // 说英文,落下的是中文
 });
 speakDemo(document.getElementById('fdemoAsk'), {
-  words: ['一英里', '等于', '多少', '公里'],
-  result: '1 英里 ≈ 1.609 公里',                    // 落下的是答案,不是问题
+  words: ['what undoes ', 'the last ', 'commit'],
+  result: 'git reset --soft HEAD~1',                 // 落下的是答案,不是问题
 });
 
 
@@ -1241,11 +1249,11 @@ speakDemo(document.getElementById('fdemoAsk'), {
   const goPath = g('goPath'), backPath = g('backPath');
   const goLen = goPath.getTotalLength(), backLen = backPath.getTotalLength();
   const CAPS = [
-    '你说话 —— 音频只从你的 Mac 出发',
-    '直连你选的那家 —— 跳过任何中间站',
-    '云端转写完成',
-    '文字回到你的 Mac',
-    '存进本地,到此为止。',
+    'You speak — the audio leaves from your Mac and nowhere else',
+    'Straight to the provider you picked — no stop in between',
+    'Transcribed on their side',
+    'Text comes back to your Mac',
+    'Stored locally. That is the end of it.',
   ];
   let capIdx = -1;
   function setCap(i) {
@@ -1259,7 +1267,7 @@ speakDemo(document.getElementById('fdemoAsk'), {
   if (reduced) {
     g('ghostX').setAttribute('opacity', 1);
     g('savedChip').setAttribute('opacity', 1);
-    g('flowCap').textContent = '音频直连你选的服务商,跳过我们;文字回来,存进本地。';
+    g('flowCap').textContent = 'Audio goes straight to the provider you picked, skipping us; the text comes back and stays on your Mac.';
     return;
   }
   const CYCLE = 7600;

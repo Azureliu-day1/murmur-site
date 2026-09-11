@@ -1,0 +1,401 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Murmur — 使用条款</title>
+<meta name="description" content="Murmur 的使用条款:内测阶段、额度与订阅、退款与取消、不保证什么。">
+<link rel="alternate" hreflang="zh-Hans" href="tos.html">
+<link rel="alternate" hreflang="en" href="en/tos.html">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+
+<style>
+/* 字体自托管(D2):零第三方请求,「官网也不追踪你」字面成立 */
+@font-face {
+  font-family: 'IBM Plex Mono';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('fonts/IBMPlexMono-normal-400-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'IBM Plex Mono';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('fonts/IBMPlexMono-normal-400-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'IBM Plex Mono';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('fonts/IBMPlexMono-normal-500-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'IBM Plex Mono';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('fonts/IBMPlexMono-normal-500-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Newsreader';
+  font-style: italic;
+  font-weight: 300;
+  font-display: swap;
+  src: url('fonts/Newsreader-italic-300-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Newsreader';
+  font-style: italic;
+  font-weight: 300;
+  font-display: swap;
+  src: url('fonts/Newsreader-italic-300-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Newsreader';
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url('fonts/Newsreader-normal-300-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Newsreader';
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url('fonts/Newsreader-normal-300-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Newsreader';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('fonts/Newsreader-normal-400-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Newsreader';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('fonts/Newsreader-normal-400-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Newsreader';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('fonts/Newsreader-normal-500-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Newsreader';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('fonts/Newsreader-normal-500-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Newsreader';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('fonts/Newsreader-normal-600-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Newsreader';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('fonts/Newsreader-normal-600-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+:root {
+  --paper:  #F7F7F8; --card: #FFFFFF; --ink: #1B1B1F; --second: #55555C;
+  --faint:  #8E8E96; --line: #E9E9EC; --line2: #D6D6DC;
+  --coral:  #E2531F; --coral-tint: #FBEFE9; --green: #2E7D4F;
+  --shadow: 0 1px 2px rgba(27,27,31,.04), 0 12px 32px rgba(27,27,31,.07);
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --paper: #161618; --card: #1E1E21; --ink: #F2F2F4; --second: #A0A0A8;
+    --faint: #6E6E76; --line: #2C2C31; --line2: #3A3A41;
+    --coral: #FF6B35; --coral-tint: #3A2118; --green: #5FBF87;
+    --shadow: 0 1px 2px rgba(0,0,0,.3), 0 12px 32px rgba(0,0,0,.4);
+  }
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; }
+body {
+  background: var(--paper); color: var(--ink);
+  font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", sans-serif;
+  font-size: 16px; line-height: 1.75; -webkit-font-smoothing: antialiased;
+}
+.serif { font-family: "Newsreader", Georgia, serif; }
+.mono  { font-family: "IBM Plex Mono", ui-monospace, monospace; }
+.wrap { max-width: 880px; margin: 0 auto; padding-left: 32px; padding-right: 32px; }
+a { color: var(--coral); text-decoration: none; }
+a:hover { text-decoration: underline; text-underline-offset: 3px; }
+
+nav {
+  position: sticky; top: 0; z-index: 10;
+  background: color-mix(in srgb, var(--paper) 86%, transparent);
+  backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--line);
+}
+.navrow { display: flex; align-items: center; gap: 28px; height: 60px; }
+.brand { display: flex; align-items: center; gap: 9px; font-family: "Newsreader", serif; font-weight: 600; font-size: 19px; color: var(--ink); }
+.brand:hover { text-decoration: none; }
+.dot { width: 9px; height: 9px; border-radius: 50%; background: var(--coral); }
+.navlinks { margin-left: auto; }
+.navlinks a { color: var(--second); font-size: 13.5px; }
+
+.eyebrow { font-size: 12px; font-weight: 600; letter-spacing: .18em; text-transform: uppercase; color: var(--faint); margin-bottom: 14px; }
+header.page { padding: 88px 0 0; }
+h1 { font-size: clamp(30px, 4.4vw, 42px); font-weight: 600; line-height: 1.3; }
+.lede { color: var(--second); font-size: 16.5px; max-width: 40em; margin-top: 18px; }
+.lede b { color: var(--ink); }
+
+section { padding-top: 88px; }
+h2 { font-size: clamp(22px, 2.8vw, 27px); font-weight: 600; line-height: 1.4; }
+.sub { color: var(--second); font-size: 15px; margin-top: 10px; max-width: 46em; }
+
+/* 数据的旅程:每类数据一行,三列(它是什么/去哪/怎么删) */
+.journey { margin-top: 40px; border-top: 1px solid var(--line); }
+.jrow { display: grid; grid-template-columns: 150px 1fr 1fr; gap: 24px; padding: 26px 0; border-bottom: 1px solid var(--line); }
+.jrow .what { font-size: 15.5px; font-weight: 600; }
+.jrow .what .mono { display: block; font-size: 11.5px; color: var(--faint); font-weight: 400; margin-top: 4px; }
+.jrow p { font-size: 14px; color: var(--second); }
+.jrow p b { color: var(--ink); font-weight: 600; }
+.jhead { display: grid; grid-template-columns: 150px 1fr 1fr; gap: 24px; padding: 14px 0 10px; }
+.jhead span { font-size: 11.5px; letter-spacing: .14em; text-transform: uppercase; font-weight: 600; color: var(--faint); }
+
+/* 不做的事 */
+.nots { margin-top: 36px; display: grid; grid-template-columns: 1fr 1fr; gap: 18px 40px; }
+.not { display: flex; gap: 12px; align-items: baseline; }
+.not .x { color: var(--coral); font-family: "Newsreader", serif; font-weight: 600; font-size: 18px; flex: none; }
+.not p { color: var(--second); font-size: 14.5px; }
+.not p b { color: var(--ink); }
+
+/* 收据卡 */
+.receipt {
+  margin-top: 36px; background: var(--card); border: 1px solid var(--line);
+  border-radius: 14px; padding: 22px 26px; box-shadow: var(--shadow);
+}
+.receipt + .receipt { margin-top: 14px; }
+.receipt .how { font-size: 13px; color: var(--faint); margin-top: 6px; }
+.receipt .mono { font-size: 13.5px; }
+.receipt b { font-size: 14.5px; }
+
+.future {
+  margin-top: 40px; background: var(--coral-tint); border-radius: 16px; padding: 26px 30px;
+}
+.future p { color: var(--ink); font-size: 15px; max-width: 52em; }
+.future .eyebrow { color: var(--coral); margin-bottom: 8px; }
+
+footer {
+  margin-top: 110px; border-top: 1px solid var(--line);
+  padding-top: 36px; padding-bottom: 48px; color: var(--faint); font-size: 13px;
+  display: flex; gap: 24px; flex-wrap: wrap; align-items: center;
+}
+footer a { color: var(--faint); }
+
+/* ── 数据旅程动画:一颗包裹跳过「我们的服务器」── */
+.flowstage {
+  margin-top: 48px; background: var(--card); border: 1px solid var(--line);
+  border-radius: 16px; padding: 28px 24px 18px; box-shadow: var(--shadow);
+}
+.flowstage svg { display: block; width: 100%; height: auto; }
+.flowstage .cap {
+  text-align: center; font-size: 13.5px; color: var(--second);
+  min-height: 24px; margin-top: 6px; transition: opacity .22s ease;
+}
+.node-label { font-size: 14px; font-weight: 600; fill: var(--ink); }
+.node-sub { font-size: 11px; fill: var(--faint); }
+.ghost-label { font-size: 13px; font-weight: 600; fill: var(--faint); }
+
+/* ── 入场(与首页同一套) ── */
+.reveal { opacity: 0; transform: translateY(12px); transition: opacity .5s ease, transform .5s ease; }
+.reveal.on { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) {
+  .reveal { opacity: 1; transform: none; transition: none; }
+}
+
+@media (max-width: 720px) {
+  .jrow, .jhead { grid-template-columns: 1fr; gap: 8px; padding: 20px 0; }
+  .jhead { display: none; }
+  .nots { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap navrow">
+    <a class="brand" href="index.html"><span class="dot"></span>Murmur</a>
+    <div class="navlinks">
+      <a href="en/tos.html" hreflang="en" lang="en">English</a><a href="index.html">← 回首页</a></div>
+  </div>
+</nav>
+
+<header class="page wrap">
+  <div class="eyebrow">Terms · 使用条款</div>
+  <h1>用人话写的条款,<br>每一条都对得上产品实况。</h1>
+  <p class="lede">这是你和 Others Studio 之间关于 Murmur 的约定。
+  <b>它现在处在内测阶段</b> —— 软件会变、可能出错、可能停;下面把「我们保证什么、不保证什么、钱怎么算、出了事怎么办」写清楚。
+  数据去向不在这页,在<a href="privacy.html">「你的数据在哪」</a>那页,写得比这里细。</p>
+</header>
+
+<section class="wrap">
+  <h2>一、这是什么,谁做的</h2>
+  <p class="sub">Murmur 是一个 macOS 上的听写工具:你按住快捷键说话,它把话变成文字落在光标处。
+  提供者是 <b>Others Studio</b>(<span class="mono">ABN 待填</span>),运营地在澳大利亚维多利亚州。
+  下载和安装 Murmur、或在 App 里登录,就表示你接受这份条款。</p>
+</section>
+
+<section class="wrap">
+  <h2>二、内测阶段意味着什么</h2>
+  <div class="nots">
+    <div class="not"><span class="x">·</span><p><b>功能会变。</b>界面、模型清单、额度、价格都还在动;我们会尽量提前说,但不承诺功能永远保留。</p></div>
+    <div class="not"><span class="x">·</span><p><b>会有 bug。</b>它每天在我们自己手里用,但那不等于没有缺陷。遇到了告诉我们。</p></div>
+    <div class="not"><span class="x">·</span><p><b>可能停。</b>如果这个项目停掉,我们会提前通知,并退还你已付但没用完的那部分。</p></div>
+    <div class="not"><span class="x">·</span><p><b>云端额度是邀请制。</b>下载和本机识别不需要账号;要用云端额度,需要一个内测名额。</p></div>
+  </div>
+</section>
+
+<section class="wrap">
+  <h2>三、账号</h2>
+  <p class="sub">一个人一个账号,用你自己的邮箱注册。别把账号借给别人 —— 额度是按账号算的,借出去等于借走你自己的额度。
+  发现有人用自动化脚本刷额度、或者拿它做违法的事,我们会停掉那个账号。</p>
+</section>
+
+<section class="wrap">
+  <h2>四、免费额度</h2>
+  <p class="sub">免费档每周有 <b>2000 字</b>的云端听写与整理、每月 <b>30 分钟</b>长录音。
+  这些是我们替你付的云端账单,不是你买的东西 —— 所以额度的具体数值我们可能调整,调整前会在 App 或站点上说明。
+  <b>额度用完不会停机</b>:它自动切回本机识别,慢一点、中英混说弱一点,但你的话不会丢。</p>
+</section>
+
+<section class="wrap">
+  <h2>五、Pro 订阅、退款与取消</h2>
+  <div class="card">
+    <p><b>现在不收费。</b>内测期间 Murmur 没有开放付费订阅,站点上也没有收银台 ——
+    你不会被扣任何钱。这一节等正式开始收费时才生效,到时候会先在这里更新。</p>
+  </div>
+</section>
+<!-- ⛔ 原「五、Pro 订阅」正文暂时下架(2026-09-12,与站点定价段同步:Wei「收钱这条不做,现在」)。
+     条款一字未改,开始收费时把上面那个 card 换回下面这段即可。
+     ⚠️ 恢复前先确认 Stripe 已从沙盒换成正式链接。 -->
+<!--
+<section class="wrap">
+  <h2>五、Pro 订阅、退款与取消</h2>
+  <div class="receipt">
+    <p><b>价格</b>:AU$9 / 月,通过 Stripe 收取。这是内测价,正式定价还没定死;
+    <b>调价一定提前通知</b>,并且只对下一个计费周期生效 —— 已经付过的那个月不会被追加。</p>
+    <p class="how">在 App 里点「升级 Pro」,或在站点定价区订阅。网页上买的,用<b>同一个邮箱</b>在 App 里登录就会自动到账。</p>
+  </div>
+  <div class="receipt">
+    <p><b>取消</b>:随时可以,不用找人 —— 在站点的「管理订阅」输入付款邮箱,Stripe 会发一条直达链接给你,在那里自己取消或换卡。</p>
+    <p class="how">取消之后<b>用到当期结束</b>,不影响你已经付费的这个月。</p>
+  </div>
+  <div class="receipt">
+    <p><b>退款</b>:我们的政策是<b>不退当期</b> —— 取消后服务用到当期结束为止。</p>
+    <p class="how">⚠️ <b>但你所在地的法律可能给你更多权利,而那些权利这份条款拿不走。</b>
+    举两个具体的:欧盟与英国的消费者,对这类远程订阅合同通常有 <b>14 天无理由撤回权</b>;
+    澳大利亚消费者法给的<b>法定保证</b>(服务出现重大故障时可要求退款或补救)同样不可排除。
+    你所在国家/地区如果有类似的强制性规定,<b>它优先于上面这一条</b>。
+    属于这些情况的,直接来信找我们,不用跟我们争条款怎么写。</p>
+  </div>
+  <div class="receipt">
+    <p><b>兑换码</b>不经过收银台。用兑换码开通的 Pro,在 Stripe 的管理门户里会显示「查无此订阅」——
+    那是正常的,它的到期时间在 App 的账号页里看。</p>
+  </div>
+</section>
+-->
+
+<section class="wrap">
+  <h2>六、你的数据</h2>
+  <p class="sub">你的录音、转写、历史和词典<b>全部存在你自己的 Mac 上</b>,我们的服务器只处理账号与订阅。
+  选云端识别时,音频直连那一家识别服务;选本机识别,一个字节都不出这台电脑。
+  完整的去向、存放期限和删除办法写在<a href="privacy.html">「你的数据在哪」</a>。
+  你说的内容归你 —— 我们不拿它训练任何模型,也不卖给任何人。</p>
+</section>
+
+<section class="wrap">
+  <h2>七、第三方服务</h2>
+  <p class="sub">识别和整理这两步会用到第三方服务商。你选哪一档,音频就发给哪一家;那一段处理受他们自己的条款约束,不受我们控制。
+  你也可以填自己的 API Key 直连(那样连我们的服务器都不经过)。
+  收款由 Stripe 处理 —— <b>我们看不到、也不保存你的卡号</b>。</p>
+</section>
+
+<section class="wrap">
+  <h2>八、我们不保证什么(这一节请认真读)</h2>
+  <div class="receipt">
+    <p><b>识别不保证准确。</b>语音识别永远会出错 —— 口音、噪音、专有名词、同音字都会让它听错。
+    Murmur 会尽力,但<b>不承诺任何准确率</b>。</p>
+    <p class="how">所以:<b>别把它用在出错代价很大的地方</b> —— 病历、法律文书、金融指令、合同条款。
+    这类场合请人工逐字核对之后再用。它插进光标处的每一句话,发出去之前都该你自己看一眼。</p>
+  </div>
+  <div class="receipt">
+    <p><b>不保证不间断。</b>依赖的第三方服务、你的网络、我们的服务器都可能出问题。断网或额度用完时它会落回本机识别,但那也不是零故障。</p>
+  </div>
+</section>
+
+<section class="wrap">
+  <h2>九、责任的边界</h2>
+  <p class="sub">在<b>法律允许的最大范围内</b>,我们对使用 Murmur 造成的间接损失(比如错过的商机、丢失的数据、名誉损害)不承担责任;
+  如果确实需要我们赔,总额以<b>你在此前 12 个月内实际支付给我们的金额</b>为上限。</p>
+  <p class="sub">再说一次:上面这一段<b>不排除、也不限制你所在地法律给你的强制性权利</b> ——
+  澳大利亚消费者法的法定保证、欧盟/英国的消费者权利,以及其他司法辖区的同类规定。
+  在法律不允许排除责任的地方,这些限制不适用。</p>
+</section>
+
+<section class="wrap">
+  <h2>十、国际用户</h2>
+  <p class="sub">Murmur 卖给全球的人,而我们在澳大利亚。有三件事要提前说清楚:</p>
+  <div class="nots">
+    <div class="not"><span class="x">·</span><p><b>价格以澳元(AUD)计价。</b>
+    你的银行或发卡机构可能按它自己的汇率折算,并收取跨境手续费 —— 那部分不归我们收,我们也退不了。</p></div>
+    <div class="not"><span class="x">·</span><p><b>税。</b>如果你所在地的法律要求我们代收增值税或消费税,
+    收银台会在你付款前把它列出来。</p></div>
+    <div class="not"><span class="x">·</span><p><b>你所在地的消费者权利优先。</b>
+    见上面第五节和第九节 —— 强制性的权利,这份条款一律不排除。</p></div>
+    <div class="not"><span class="x">·</span><p><b>可达性。</b>某些国家/地区的网络环境可能让下载、
+    登录或付款走不通。那不是你的账号出了问题;来信告诉我们,我们看看有没有别的办法。</p></div>
+  </div>
+</section>
+
+<section class="wrap">
+  <h2>十一、这份条款本身</h2>
+  <div class="nots">
+    <div class="not"><span class="x">·</span><p><b>会更新。</b>改动会在这一页写明日期;重要改动会在 App 里告诉你。继续使用就表示接受新版本。</p></div>
+    <div class="not"><span class="x">·</span><p><b>适用法律</b>是澳大利亚维多利亚州法律,争议由该州法院管辖 ——
+    但这<b>不剥夺</b>你作为消费者在自己居住地享有的、不能被合同排除的强制性保护。</p></div>
+    <div class="not"><span class="x">·</span><p><b>某一条无效</b>不影响其余各条继续有效。</p></div>
+    <div class="not"><span class="x">·</span><p><b>有问题直接来信。</b>不设工单系统,来信就是找到人。</p></div>
+  </div>
+</section>
+
+<footer class="wrap">
+  <span>本页最后更新:2026-08-31 · 内测版</span>
+  <span>有疑问,直接来信:Others Studio</span>
+  <a style="margin-left:auto" href="privacy.html">你的数据在哪</a>
+</footer>
+
+
+</body>
+</html>
