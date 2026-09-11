@@ -1,0 +1,505 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Murmur — 你的数据在哪</title>
+<meta name="description" content="Murmur 怎么处理你的录音和文字:能自己验证的隐私说明,不是条款。">
+<link rel="alternate" hreflang="zh-Hans" href="privacy.html">
+<link rel="alternate" hreflang="en" href="en/privacy.html">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+
+<style>
+/* 字体自托管(D2):零第三方请求,「官网也不追踪你」字面成立 */
+@font-face {
+  font-family: 'IBM Plex Mono';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('fonts/IBMPlexMono-normal-400-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'IBM Plex Mono';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('fonts/IBMPlexMono-normal-400-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'IBM Plex Mono';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('fonts/IBMPlexMono-normal-500-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'IBM Plex Mono';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('fonts/IBMPlexMono-normal-500-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Newsreader';
+  font-style: italic;
+  font-weight: 300;
+  font-display: swap;
+  src: url('fonts/Newsreader-italic-300-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Newsreader';
+  font-style: italic;
+  font-weight: 300;
+  font-display: swap;
+  src: url('fonts/Newsreader-italic-300-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Newsreader';
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url('fonts/Newsreader-normal-300-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Newsreader';
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url('fonts/Newsreader-normal-300-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Newsreader';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('fonts/Newsreader-normal-400-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Newsreader';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('fonts/Newsreader-normal-400-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Newsreader';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('fonts/Newsreader-normal-500-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Newsreader';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('fonts/Newsreader-normal-500-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Newsreader';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('fonts/Newsreader-normal-600-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Newsreader';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('fonts/Newsreader-normal-600-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+:root {
+  --paper:  #F7F7F8; --card: #FFFFFF; --ink: #1B1B1F; --second: #55555C;
+  --faint:  #8E8E96; --line: #E9E9EC; --line2: #D6D6DC;
+  --coral:  #E2531F; --coral-tint: #FBEFE9; --green: #2E7D4F;
+  --shadow: 0 1px 2px rgba(27,27,31,.04), 0 12px 32px rgba(27,27,31,.07);
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --paper: #161618; --card: #1E1E21; --ink: #F2F2F4; --second: #A0A0A8;
+    --faint: #6E6E76; --line: #2C2C31; --line2: #3A3A41;
+    --coral: #FF6B35; --coral-tint: #3A2118; --green: #5FBF87;
+    --shadow: 0 1px 2px rgba(0,0,0,.3), 0 12px 32px rgba(0,0,0,.4);
+  }
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; }
+body {
+  background: var(--paper); color: var(--ink);
+  font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", sans-serif;
+  font-size: 16px; line-height: 1.75; -webkit-font-smoothing: antialiased;
+}
+.serif { font-family: "Newsreader", Georgia, serif; }
+.mono  { font-family: "IBM Plex Mono", ui-monospace, monospace; }
+.wrap { max-width: 880px; margin: 0 auto; padding-left: 32px; padding-right: 32px; }
+a { color: var(--coral); text-decoration: none; }
+a:hover { text-decoration: underline; text-underline-offset: 3px; }
+
+nav {
+  position: sticky; top: 0; z-index: 10;
+  background: color-mix(in srgb, var(--paper) 86%, transparent);
+  backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--line);
+}
+.navrow { display: flex; align-items: center; gap: 28px; height: 60px; }
+.brand { display: flex; align-items: center; gap: 9px; font-family: "Newsreader", serif; font-weight: 600; font-size: 19px; color: var(--ink); }
+.brand:hover { text-decoration: none; }
+.dot { width: 9px; height: 9px; border-radius: 50%; background: var(--coral); }
+.navlinks { margin-left: auto; }
+.navlinks a { color: var(--second); font-size: 13.5px; }
+
+.eyebrow { font-size: 12px; font-weight: 600; letter-spacing: .18em; text-transform: uppercase; color: var(--faint); margin-bottom: 14px; }
+header.page { padding: 88px 0 0; }
+h1 { font-size: clamp(30px, 4.4vw, 42px); font-weight: 600; line-height: 1.3; }
+.lede { color: var(--second); font-size: 16.5px; max-width: 40em; margin-top: 18px; }
+.lede b { color: var(--ink); }
+
+section { padding-top: 88px; }
+h2 { font-size: clamp(22px, 2.8vw, 27px); font-weight: 600; line-height: 1.4; }
+.sub { color: var(--second); font-size: 15px; margin-top: 10px; max-width: 46em; }
+
+/* 数据的旅程:每类数据一行,三列(它是什么/去哪/怎么删) */
+.journey { margin-top: 40px; border-top: 1px solid var(--line); }
+.jrow { display: grid; grid-template-columns: 150px 1fr 1fr; gap: 24px; padding: 26px 0; border-bottom: 1px solid var(--line); }
+.jrow .what { font-size: 15.5px; font-weight: 600; }
+.jrow .what .mono { display: block; font-size: 11.5px; color: var(--faint); font-weight: 400; margin-top: 4px; }
+.jrow p { font-size: 14px; color: var(--second); }
+.jrow p b { color: var(--ink); font-weight: 600; }
+.jhead { display: grid; grid-template-columns: 150px 1fr 1fr; gap: 24px; padding: 14px 0 10px; }
+.jhead span { font-size: 11.5px; letter-spacing: .14em; text-transform: uppercase; font-weight: 600; color: var(--faint); }
+
+/* 不做的事 */
+.nots { margin-top: 36px; display: grid; grid-template-columns: 1fr 1fr; gap: 18px 40px; }
+.not { display: flex; gap: 12px; align-items: baseline; }
+.not .x { color: var(--coral); font-family: "Newsreader", serif; font-weight: 600; font-size: 18px; flex: none; }
+.not p { color: var(--second); font-size: 14.5px; }
+.not p b { color: var(--ink); }
+
+/* 收据卡 */
+.receipt {
+  margin-top: 36px; background: var(--card); border: 1px solid var(--line);
+  border-radius: 14px; padding: 22px 26px; box-shadow: var(--shadow);
+}
+.receipt + .receipt { margin-top: 14px; }
+.receipt .how { font-size: 13px; color: var(--faint); margin-top: 6px; }
+.receipt .mono { font-size: 13.5px; }
+.receipt b { font-size: 14.5px; }
+
+.future {
+  margin-top: 40px; background: var(--coral-tint); border-radius: 16px; padding: 26px 30px;
+}
+.future p { color: var(--ink); font-size: 15px; max-width: 52em; }
+.future .eyebrow { color: var(--coral); margin-bottom: 8px; }
+
+footer {
+  margin-top: 110px; border-top: 1px solid var(--line);
+  padding-top: 36px; padding-bottom: 48px; color: var(--faint); font-size: 13px;
+  display: flex; gap: 24px; flex-wrap: wrap; align-items: center;
+}
+footer a { color: var(--faint); }
+
+/* ── 数据旅程动画:一颗包裹跳过「我们的服务器」── */
+.flowstage {
+  margin-top: 48px; background: var(--card); border: 1px solid var(--line);
+  border-radius: 16px; padding: 28px 24px 18px; box-shadow: var(--shadow);
+}
+.flowstage svg { display: block; width: 100%; height: auto; }
+.flowstage .cap {
+  text-align: center; font-size: 13.5px; color: var(--second);
+  min-height: 24px; margin-top: 6px; transition: opacity .22s ease;
+}
+.node-label { font-size: 14px; font-weight: 600; fill: var(--ink); }
+.node-sub { font-size: 11px; fill: var(--faint); }
+.ghost-label { font-size: 13px; font-weight: 600; fill: var(--faint); }
+
+/* ── 入场(与首页同一套) ── */
+.reveal { opacity: 0; transform: translateY(12px); transition: opacity .5s ease, transform .5s ease; }
+.reveal.on { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) {
+  .reveal { opacity: 1; transform: none; transition: none; }
+}
+
+@media (max-width: 720px) {
+  .jrow, .jhead { grid-template-columns: 1fr; gap: 8px; padding: 20px 0; }
+  .jhead { display: none; }
+  .nots { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap navrow">
+    <a class="brand" href="index.html"><span class="dot"></span>Murmur</a>
+    <div class="navlinks">
+      <a href="en/privacy.html" hreflang="en" lang="en">English</a><a href="index.html">← 回首页</a></div>
+  </div>
+</nav>
+
+<header class="page wrap">
+  <div class="eyebrow">Privacy · 你的数据在哪</div>
+  <h1>能自己验证的隐私说明,<br>不是让你签字的条款。</h1>
+  <p class="lede">一句话总纲:<b>我们的服务器只认识「你是谁」,永远不知道「你说了什么」。</b>
+  你的录音和文字只存在你的 Mac 上;识别时,音频直连你自己选的那家模型商——中间没有「我们的云」这一站。
+  下面把每一类数据的去向、存放和删除写清楚,每一条都给出你亲手核实的办法。</p>
+
+  <div class="flowstage">
+    <svg viewBox="0 0 760 250" aria-label="数据从你的 Mac 直连模型商,跳过我们的服务器">
+      <!-- 航线(常显,极淡) -->
+      <path id="goPath"   d="M196 118 C 300 26, 460 26, 564 118" fill="none" stroke="var(--line2)" stroke-width="1.5" stroke-dasharray="3 6"/>
+      <path id="backPath" d="M564 138 C 460 226, 300 226, 196 138" fill="none" stroke="var(--line2)" stroke-width="1.5" stroke-dasharray="3 6"/>
+
+      <!-- 你的 Mac -->
+      <g>
+        <rect x="36" y="86" width="160" height="84" rx="14" fill="var(--paper)" stroke="var(--line2)"/>
+        <text class="node-label" x="116" y="122" text-anchor="middle">你的 Mac</text>
+        <text class="node-sub" x="116" y="144" text-anchor="middle">录音·历史·词典都在这</text>
+        <rect id="macGlow" x="36" y="86" width="160" height="84" rx="14" fill="none" stroke="var(--coral)" stroke-width="2.5" opacity="0"/>
+        <g id="savedChip" opacity="0">
+          <rect x="52" y="176" width="128" height="26" rx="13" fill="var(--coral-tint)"/>
+          <text x="116" y="194" text-anchor="middle" style="font-size:12px; font-weight:600" fill="var(--coral)">✓ 已存在本地</text>
+        </g>
+      </g>
+
+      <!-- 我们的服务器(虚位) -->
+      <g id="ghost" opacity=".8">
+        <rect x="304" y="92" width="152" height="72" rx="14" fill="none" stroke="var(--line2)" stroke-dasharray="5 5"/>
+        <text class="ghost-label" x="380" y="122" text-anchor="middle">我们的服务器</text>
+        <text class="node-sub" x="380" y="142" text-anchor="middle">只认识「你是谁」</text>
+        <g id="ghostX" opacity="0">
+          <circle cx="380" cy="76" r="13" fill="var(--coral)"/>
+          <text x="380" y="81" text-anchor="middle" style="font-size:13px; font-weight:700" fill="#fff">✕</text>
+        </g>
+      </g>
+
+      <!-- 你选的模型商 -->
+      <g>
+        <rect x="564" y="86" width="160" height="84" rx="14" fill="var(--paper)" stroke="var(--line2)"/>
+        <text class="node-label" x="644" y="122" text-anchor="middle">你选的模型商</text>
+        <text class="node-sub" x="644" y="144" text-anchor="middle">选哪一档,就只连那一家</text>
+        <rect id="provGlow" x="564" y="86" width="160" height="84" rx="14" fill="none" stroke="var(--coral)" stroke-width="2.5" opacity="0"/>
+      </g>
+
+      <!-- 包裹 -->
+      <circle id="pktGo"   r="7" fill="var(--coral)" opacity="0"/>
+      <circle id="pktBack" r="7" fill="var(--ink)"  opacity="0"/>
+    </svg>
+    <p class="cap" id="flowCap">你说话 —— 音频只从你的 Mac 出发</p>
+  </div>
+</header>
+
+<!-- ── 数据的旅程 ── -->
+<section class="wrap">
+  <div class="eyebrow">Journey · 每类数据的去向</div>
+  <h2>五类数据,各自的旅程。</h2>
+  <div class="journey reveal">
+    <div class="jhead"><span>是什么</span><span>去哪 · 存哪</span><span>怎么删 · 怎么关</span></div>
+
+    <div class="jrow">
+      <div class="what">录音<span class="mono">你的声音</span></div>
+      <p>识别时<b>直连你所选档位对应的那一家</b>识别服务商 —— 各档位背后是哪家,以 App 内「隐私」一节的实时说明为准(它随档位演进而更新,比这页新);选「本机识别」时,<b>一个字节都不出这台电脑</b>。
+      录音文件存在你 Mac 本地,默认保留 30 天供重跑,之后自动删除。</p>
+      <p>设置里可把保留期改成 7 天或「不保存」;删掉本地文件夹即彻底删除。想完全离线,选本机识别即可。</p>
+    </div>
+
+    <div class="jrow">
+      <div class="what">转写与整理的文字<span class="mono">你说的内容</span></div>
+      <p>开着 AI 整理/翻译/随心问时,转写文字会交给大模型处理一次(哪一家、经不经我们的服务器,以 App 内「隐私」一节的实时说明为准);
+      成品与历史记录<b>只存在你 Mac 本地的数据库里</b>,不同步到任何云。</p>
+      <p>关掉整理(「不动·直出转写」档)则文字不经过任何大模型;历史可单条删、可全清,保留期可设。</p>
+    </div>
+
+    <div class="jrow">
+      <div class="what">词典<span class="mono">你的专有名词</span></div>
+      <p>为了听对你常说的名字,词典里的词会<b>随每次识别请求</b>发给识别服务商。这件事写在设置里的明面上,不藏在条款里。</p>
+      <p>词典条目随时可删;删掉后不再随请求发送。</p>
+    </div>
+
+    <div class="jrow">
+      <div class="what">屏幕上下文<span class="mono">录音那一刻的前台窗口文字</span></div>
+      <p>录音那一刻读一次前台窗口的可见文字,用来矫正专有名词。<b>只在内存里活一次:不落库、不落盘、不进日志</b>,屏幕上的词也永不进词典。</p>
+      <p>设置 → 识别里一键关闭;纯本机听写时根本不读。</p>
+    </div>
+
+    <div class="jrow">
+      <div class="what">API Key 与设置<span class="mono">你的凭证</span></div>
+      <p>API Key 存在 macOS 钥匙串(系统级加密),设置存在系统偏好——<b>都只在本机</b>,我们看不到、也收不到。</p>
+      <p>删除 App 时按系统惯例清理;Key 可在设置里随时清空。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ── 我们不做的事 ── -->
+<section class="wrap">
+  <div class="eyebrow">Never · 我们不做的事</div>
+  <h2>写下来,就是承诺不做。</h2>
+  <div class="nots reveal">
+    <div class="not"><span class="x">✕</span><p><b>不经手你的音频和文字。</b>它们从你的 Mac 直达你选的服务商,不经过我们的任何服务器。</p></div>
+    <div class="not"><span class="x">✕</span><p><b>不做行为埋点。</b>App 里没有统计 SDK,不记录你在哪个 App 里说了话、说了多久给我们。</p></div>
+    <div class="not"><span class="x">✕</span><p><b>不卖数据、不共享数据。</b>没有广告主,没有「合作伙伴」,你的数据不是商品。</p></div>
+    <div class="not"><span class="x">✕</span><p><b>官网也不追踪你。</b>这个网站没有任何第三方统计脚本——你现在就可以打开浏览器的网络面板核实。</p></div>
+  </div>
+</section>
+
+<!-- ── 自己验证 ── -->
+<section class="wrap">
+  <div class="eyebrow">Verify · 不用信我们,自己看</div>
+  <h2>三件你现在就能亲手核实的事。</h2>
+
+  <div class="receipt reveal">
+    <b>① 数据就在这个文件夹里</b>
+    <p class="how"><span class="mono">~/Library/Application Support/Murmur/</span> —— 录音和你说过的每一个字都在这,随时打开看。删掉,就是真的删掉了。</p>
+  </div>
+  <div class="receipt reveal">
+    <b>② App 只连你配置的服务商</b>
+    <p class="how">用「小火苗 LuLu」这类免费防火墙观察 Murmur 的网络连接:你会看到它只连你选的识别/大模型服务商的域名,没有别的。</p>
+  </div>
+  <div class="receipt reveal">
+    <b>③ 每一条的去向,历史页里都写着</b>
+    <p class="how">App 内历史页的「数据去哪了」按你当前设置如实列出:这条用了哪家识别、文字有没有过大模型、屏幕上下文开没开。</p>
+  </div>
+</section>
+
+<!-- ── 未来 ── -->
+<section class="wrap">
+  <div class="future reveal">
+    <div class="eyebrow">Future · 有账号之后</div>
+    <p>将来上线账号与订阅时,我们的服务器只处理「你是谁」:登录、订阅状态,到此为止。
+    <b>你的录音、转写、历史、词典,一个字都不会上传</b>——这条白纸黑字写在这一页上,上线那天你可以拿它来对照验收。
+    任何对这一页的修改,都会在页面底部留下日期。</p>
+  </div>
+</section>
+
+<script>
+/* 入场(与首页同一套) */
+const io = new IntersectionObserver((entries) => {
+  for (const e of entries) if (e.isIntersecting) {
+    const idx = [...e.target.parentElement.querySelectorAll(':scope > .reveal')].indexOf(e.target);
+    e.target.style.transitionDelay = `${Math.max(idx, 0) * 60}ms`;
+    e.target.classList.add('on');
+    io.unobserve(e.target);
+  }
+}, { threshold: 0.15 });
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+/* ── 数据旅程:时间的纯函数,不可见就整段跳过 ──
+   0.0–1.0s  Mac 说话脉冲
+   1.0–2.8s  珊瑚包裹沿上弧直达模型商,途中「我们的服务器」亮 ✕
+   2.8–3.6s  模型商脉冲(转写)
+   3.6–5.4s  墨色包裹(文字)沿下弧回 Mac
+   5.4–7.2s  「已存在本地」chip 亮起,停一拍
+   循环 7.6s */
+const $ = id => document.getElementById(id);
+const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const goPath = $('goPath'), backPath = $('backPath');
+const goLen = goPath.getTotalLength(), backLen = backPath.getTotalLength();
+const CAPS = [
+  '你说话 —— 音频只从你的 Mac 出发',
+  '直连你选的那家 —— 跳过任何中间站',
+  '云端转写完成',
+  '文字回到你的 Mac',
+  '存进本地,到此为止。',
+];
+let capIdx = 0;
+function setCap(i) {
+  if (i === capIdx) return;
+  capIdx = i;
+  const el = $('flowCap');
+  el.style.opacity = 0;
+  setTimeout(() => { el.textContent = CAPS[i]; el.style.opacity = 1; }, 180);
+}
+const ease = t => t < .5 ? 2*t*t : 1 - (-2*t+2)**2/2;   // easeInOut
+
+let stageVisible = false, stageStart = performance.now();
+new IntersectionObserver(es => {
+  if (es[0].isIntersecting && !stageVisible) stageStart = performance.now();
+  stageVisible = es[0].isIntersecting;
+}, { threshold: 0.3 }).observe(document.querySelector('.flowstage'));
+
+if (reduced) {
+  // 减弱动效:静态终态 —— 航线常显,✕ 常亮,chip 常亮,一句总结
+  $('ghostX').setAttribute('opacity', 1);
+  $('savedChip').setAttribute('opacity', 1);
+  $('flowCap').textContent = '音频直连你选的服务商,跳过我们;文字回来,存进本地。';
+} else {
+  const CYCLE = 7600;
+  function frame(now) {
+    requestAnimationFrame(frame);
+    if (!stageVisible) return;
+    const t = (now - stageStart) % CYCLE;
+
+    // Mac 卡片呼吸
+    const mp = $('macGlow');
+    if (t < 1000) {
+      const k = t / 1000;
+      mp.setAttribute('opacity', Math.sin(k * Math.PI));
+      setCap(0);
+    } else mp.setAttribute('opacity', 0);
+
+    // 去程包裹 + ✕
+    const go = $('pktGo'), gx = $('ghostX');
+    if (t >= 1000 && t < 2800) {
+      const k = ease((t - 1000) / 1800);
+      const p = goPath.getPointAtLength(k * goLen);
+      go.setAttribute('transform', `translate(${p.x},${p.y})`);
+      go.setAttribute('opacity', 1);
+      // 途经中点前后亮 ✕
+      gx.setAttribute('opacity', k > 0.3 && k < 0.75 ? 1 : Math.max(0, 1 - Math.abs(k - 0.52) * 6));
+      setCap(1);
+    } else { go.setAttribute('opacity', 0); if (t >= 2800) gx.setAttribute('opacity', 0); }
+
+    // 模型商卡片呼吸
+    const pp = $('provGlow');
+    if (t >= 2800 && t < 3600) {
+      const k = (t - 2800) / 800;
+      pp.setAttribute('opacity', Math.sin(k * Math.PI));
+      setCap(2);
+    } else pp.setAttribute('opacity', 0);
+
+    // 回程包裹(文字)
+    const back = $('pktBack');
+    if (t >= 3600 && t < 5400) {
+      const k = ease((t - 3600) / 1800);
+      const p = backPath.getPointAtLength(k * backLen);
+      back.setAttribute('transform', `translate(${p.x},${p.y})`);
+      back.setAttribute('opacity', 1);
+      setCap(3);
+    } else back.setAttribute('opacity', 0);
+
+    // 落定 chip
+    const chip = $('savedChip');
+    if (t >= 5400) {
+      const k = Math.min((t - 5400) / 300, 1);
+      chip.setAttribute('opacity', t > CYCLE - 400 ? Math.max(0, (CYCLE - t) / 400) : k);
+      setCap(4);
+    } else chip.setAttribute('opacity', 0);
+  }
+  requestAnimationFrame(frame);
+}
+</script>
+
+<footer class="wrap">
+  <span>本页最后更新:2026-08-27</span>
+  <span>有疑问,直接来信:Others Studio</span>
+  <a href="tos.html">使用条款</a>
+  <a style="margin-left:auto" href="index.html">murmur 首页</a>
+</footer>
+
+</body>
+</html>

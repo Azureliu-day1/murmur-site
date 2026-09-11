@@ -1,0 +1,1320 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Murmur — the words are already at your cursor</title>
+<meta name="description" content="A macOS dictation tool: hold a key, say it, and finished text lands wherever your cursor is. On-device or cloud recognition, your choice.">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="alternate" hreflang="zh-Hans" href="../index.html">
+<link rel="alternate" hreflang="en" href="index.html">
+
+<style>
+/* 字体自托管(D2):零第三方请求,「官网也不追踪你」字面成立 */
+@font-face {
+  font-family: 'IBM Plex Mono';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('../fonts/IBMPlexMono-normal-400-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'IBM Plex Mono';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('../fonts/IBMPlexMono-normal-400-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'IBM Plex Mono';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('../fonts/IBMPlexMono-normal-500-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'IBM Plex Mono';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('../fonts/IBMPlexMono-normal-500-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Newsreader';
+  font-style: italic;
+  font-weight: 300;
+  font-display: swap;
+  src: url('../fonts/Newsreader-italic-300-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Newsreader';
+  font-style: italic;
+  font-weight: 300;
+  font-display: swap;
+  src: url('../fonts/Newsreader-italic-300-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Newsreader';
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url('../fonts/Newsreader-normal-300-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Newsreader';
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url('../fonts/Newsreader-normal-300-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Newsreader';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('../fonts/Newsreader-normal-400-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Newsreader';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('../fonts/Newsreader-normal-400-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Newsreader';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('../fonts/Newsreader-normal-500-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Newsreader';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('../fonts/Newsreader-normal-500-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Newsreader';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('../fonts/Newsreader-normal-600-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Newsreader';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('../fonts/Newsreader-normal-600-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/* ─────────────────────────────────────────────────────────
+   色板取自 App 的 DesignSystem.swift,不另发明。
+   铁律:珊瑚是唯一品牌色,只上圆点/链接/主按钮,绝不铺面积。
+   ───────────────────────────────────────────────────────── */
+:root {
+  --paper:  #F7F7F8;
+  --card:   #FFFFFF;
+  --ink:    #1B1B1F;
+  --second: #55555C;
+  --faint:  #8E8E96;
+  --line:   #E9E9EC;
+  --line2:  #D6D6DC;
+  --coral:  #E2531F;
+  --coral-tint: #FBEFE9;
+  --green:  #2E7D4F;
+  --capsule: #FFFFFF;
+  --stage-a: rgba(27,27,31,.04);
+  --stage-b: rgba(27,27,31,.07);
+  --shadow: 0 1px 2px rgba(27,27,31,.04), 0 12px 32px rgba(27,27,31,.07);
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --paper:  #161618;
+    --card:   #1E1E21;
+    --ink:    #F2F2F4;
+    --second: #A0A0A8;
+    --faint:  #6E6E76;
+    --line:   #2C2C31;
+    --line2:  #3A3A41;
+    --coral:  #FF6B35;
+    --coral-tint: #3A2118;
+    --green:  #5FBF87;
+    --capsule: #232326;
+    --stage-a: rgba(0,0,0,.22);
+    --stage-b: rgba(0,0,0,.34);
+    --shadow: 0 1px 2px rgba(0,0,0,.3), 0 12px 32px rgba(0,0,0,.4);
+  }
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", sans-serif;
+  font-size: 16px;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+}
+
+.serif { font-family: "Newsreader", Georgia, serif; }
+.mono  { font-family: "IBM Plex Mono", ui-monospace, monospace; }
+
+/* 只管横向 —— 用 shorthand 会把 section 的顶距整个覆盖掉(类压过元素) */
+.wrap { max-width: 1080px; margin: 0 auto; padding-left: 32px; padding-right: 32px; }
+
+a { color: var(--coral); text-decoration: none; }
+a:hover { text-decoration: underline; text-underline-offset: 3px; }
+
+/* ── 入场:只动 transform/opacity,减弱动效时全部落终态 ── */
+.reveal { opacity: 0; transform: translateY(12px); transition: opacity .5s ease, transform .5s ease; }
+.reveal.on { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .reveal { opacity: 1; transform: none; transition: none; }
+  .cursor { animation: none !important; }
+}
+
+/* ── 顶栏 ── */
+nav {
+  position: sticky; top: 0; z-index: 10;
+  background: color-mix(in srgb, var(--paper) 86%, transparent);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--line);
+}
+.navrow { display: flex; align-items: center; gap: 28px; height: 60px; }
+.brand { display: flex; align-items: center; gap: 9px; font-family: "Newsreader", serif; font-weight: 600; font-size: 19px; color: var(--ink); }
+.brand:hover { text-decoration: none; }
+.dot { width: 9px; height: 9px; border-radius: 50%; background: var(--coral); }
+.navlinks { display: flex; gap: 24px; margin-left: auto; align-items: center; }
+.navlinks a { color: var(--second); font-size: 13.5px; }
+.navlinks a:hover { color: var(--ink); text-decoration: none; }
+.nav-cta {
+  font-size: 13px; font-weight: 500; color: var(--card) !important;
+  background: var(--ink); padding: 7px 16px; border-radius: 999px;
+  transition: opacity .12s ease;
+}
+.nav-cta:hover { opacity: .88; text-decoration: none; }
+
+/* ── 小标题 eyebrow ── */
+.eyebrow {
+  font-size: 12px; font-weight: 600; letter-spacing: .18em;
+  text-transform: uppercase; color: var(--faint); margin-bottom: 14px;
+}
+
+section { padding: 110px 0 0; }
+
+h2 { font-size: clamp(26px, 3.4vw, 34px); font-weight: 600; line-height: 1.35; letter-spacing: .01em; }
+.sub { color: var(--second); font-size: 15.5px; max-width: 42em; margin-top: 14px; }
+
+/* ── Hero ── */
+.hero { padding-top: 96px; text-align: center; }
+.hero h1 {
+  font-size: clamp(34px, 5.4vw, 56px);
+  font-weight: 600; line-height: 1.28; letter-spacing: .01em;
+}
+.hero h1 .serif { font-weight: 500; font-style: italic; }
+.hero .lede {
+  color: var(--second); font-size: clamp(15.5px, 1.8vw, 17.5px);
+  max-width: 34em; margin: 22px auto 0;
+}
+.cta-row { display: flex; gap: 14px; justify-content: center; align-items: center; margin-top: 36px; flex-wrap: wrap; }
+.btn {
+  display: inline-block; font-size: 15px; font-weight: 500;
+  padding: 13px 28px; border-radius: 999px; transition: opacity .12s ease;
+}
+.btn-primary { background: var(--coral); color: #fff; }
+.btn-primary:hover { opacity: .9; text-decoration: none; }
+.btn-quiet { color: var(--second); border: 1px solid var(--line2); }
+.btn-quiet:hover { color: var(--ink); text-decoration: none; }
+.hero .keys { margin-top: 26px; color: var(--faint); font-size: 13px; display: flex; gap: 18px; justify-content: center; flex-wrap: wrap; }
+kbd {
+  font-family: "IBM Plex Mono", monospace; font-size: 12px; color: var(--ink);
+  background: var(--card); border: 1px solid var(--line2); border-radius: 7px;
+  padding: 2px 9px; margin-right: 6px;
+}
+
+/* ── 舞台与演示的共用零件 ── */
+.stage {
+  margin: 64px auto 0; max-width: 760px;
+  background: linear-gradient(180deg, var(--stage-a), var(--stage-b));
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  padding: 52px 40px 44px;
+}
+.fake-input {
+  background: var(--card); border: 1px solid var(--line2); border-radius: 12px;
+  padding: 13px 17px; text-align: left; font-size: 15px; min-height: 74px;
+  box-shadow: var(--shadow); color: var(--ink);
+}
+.hero .fake-input { max-width: 520px; margin: 0 auto; }
+.fake-input .ph { color: var(--faint); }
+.cursor {
+  display: inline-block; width: 2px; height: 1.15em; background: var(--coral);
+  vertical-align: text-bottom; margin-left: 1px;
+  animation: blink 1.06s steps(1) infinite;
+}
+@keyframes blink { 50% { opacity: 0; } }
+
+.capsule-row { display: flex; justify-content: center; margin-top: 30px; min-height: 44px; }
+.capsule {
+  display: flex; align-items: center; gap: 11px;
+  background: var(--capsule); border: 1px solid var(--line);
+  border-radius: 999px; padding: 0 13px; height: 42px;
+  box-shadow: var(--shadow);
+  transition: opacity .22s ease, transform .22s ease;
+}
+.capsule.mini { height: 36px; gap: 9px; }
+.capsule.hidden { opacity: 0; transform: translateY(6px); }
+.capsule .round {
+  width: 22px; height: 22px; border-radius: 50%; flex: none;
+  display: grid; place-items: center; font-size: 10px; font-weight: 700;
+  color: var(--second); background: color-mix(in srgb, var(--ink) 8%, transparent);
+}
+.capsule.mini .round { width: 19px; height: 19px; font-size: 9px; }
+.capsule .round.go { color: #fff; background: var(--coral); }
+.capsule canvas { width: 180px; height: 24px; }
+.capsule.mini canvas { width: 110px; height: 22px; }
+.capsule .clock { font-family: "IBM Plex Mono", monospace; font-size: 12.5px; color: var(--second); min-width: 4ch; }
+.caption { margin-top: 16px; font-size: 14px; color: var(--second); min-height: 24px; text-align: center; }
+.caption .volatile { opacity: .45; }
+.stage-note { margin-top: 24px; font-size: 12.5px; color: var(--faint); text-align: center; }
+
+/* ── 少一道工序:打字 vs 说话 双演示 ── */
+.compare { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 48px; }
+.panel {
+  background: linear-gradient(180deg, var(--stage-a), var(--stage-b));
+  border: 1px solid var(--line); border-radius: 18px;
+  padding: 26px 26px 22px;
+}
+.panel .head { display: flex; align-items: baseline; gap: 12px; margin-bottom: 18px; }
+.panel .tag { font-size: 12px; letter-spacing: .16em; text-transform: uppercase; color: var(--faint); font-weight: 600; }
+.panel.speak .tag { color: var(--coral); }
+.panel .timer { margin-left: auto; font-family: "IBM Plex Mono", monospace; font-size: 13px; color: var(--faint); }
+.panel .timer.done { color: var(--coral); font-weight: 500; }
+.panel .fake-input { min-height: 66px; font-size: 14.5px; }
+.panel .caption { min-height: 22px; font-size: 13px; }
+.panel .capsule-row { margin-top: 16px; min-height: 38px; }
+.done-chip {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 12.5px; font-weight: 500; color: var(--coral);
+  background: var(--coral-tint); border-radius: 999px; padding: 4px 12px;
+  opacity: 0; transition: opacity .22s ease;
+}
+.done-chip.on { opacity: 1; }
+.subtract-note { margin-top: 36px; color: var(--faint); font-size: 14px; }
+
+/* ── 功能三行 + 三个展示区 ── */
+.features { margin-top: 48px; border-top: 1px solid var(--line); }
+.feature {
+  display: grid; grid-template-columns: 64px 120px 1fr auto; gap: 24px;
+  align-items: baseline; padding: 30px 0; border-bottom: 1px solid var(--line);
+}
+.feature .num { font-family: "Newsreader", serif; font-size: 26px; color: var(--line2); font-weight: 600; }
+.feature .name { font-size: 17px; font-weight: 600; }
+.feature p { color: var(--second); font-size: 15px; }
+
+.feature-demos { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; margin-top: 36px; }
+.fdemo {
+  background: linear-gradient(180deg, var(--stage-a), var(--stage-b));
+  border: 1px solid var(--line); border-radius: 18px;
+  padding: 22px 20px 18px;
+}
+.fdemo .head { display: flex; align-items: center; gap: 8px; margin-bottom: 14px; }
+.fdemo .head .name { font-size: 13.5px; font-weight: 600; }
+.fdemo .head kbd { margin-right: 0; margin-left: auto; }
+.fdemo .fake-input { min-height: 62px; font-size: 13.5px; padding: 11px 14px; }
+.fdemo .caption { min-height: 22px; font-size: 12.5px; }
+.fdemo .capsule-row { margin-top: 14px; min-height: 34px; }
+
+
+/* ── 数据旅程动画(与 privacy 页同一场戏) ── */
+.flowstage {
+  margin-top: 44px; background: var(--card); border: 1px solid var(--line);
+  border-radius: 16px; padding: 28px 24px 18px; box-shadow: var(--shadow);
+}
+.flowstage svg { display: block; width: 100%; height: auto; }
+.flowstage .cap {
+  text-align: center; font-size: 13.5px; color: var(--second);
+  min-height: 24px; margin-top: 6px; transition: opacity .22s ease;
+}
+.node-label { font-size: 14px; font-weight: 600; fill: var(--ink); }
+.node-sub { font-size: 11px; fill: var(--faint); }
+.ghost-label { font-size: 13px; font-weight: 600; fill: var(--faint); }
+
+/* ── 数据在哪 ── */
+.local-path {
+  display: inline-block; margin-top: 30px; text-align: left;
+  background: var(--card); border: 1px solid var(--line); border-radius: 12px;
+  padding: 16px 20px; box-shadow: var(--shadow);
+}
+.local-path .mono { font-size: 13.5px; color: var(--ink); }
+.local-path .path-note { font-size: 12.5px; color: var(--faint); }
+
+/* ── 承诺 ── */
+.promises { display: grid; grid-template-columns: 1fr 1fr; gap: 40px 56px; margin-top: 48px; }
+.promise h3 { font-size: 16.5px; font-weight: 600; display: flex; align-items: center; gap: 10px; }
+.promise h3::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--coral); flex: none; }
+.promise p { color: var(--second); font-size: 14.5px; margin-top: 8px; }
+
+/* ── FAQ ── */
+.faq { margin-top: 40px; border-top: 1px solid var(--line); }
+.faq details { border-bottom: 1px solid var(--line); }
+.faq summary {
+  cursor: pointer; list-style: none; padding: 22px 0;
+  font-size: 16px; font-weight: 500; display: flex; justify-content: space-between; gap: 20px;
+}
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::after { content: "+"; color: var(--faint); font-family: "Newsreader", serif; font-size: 20px; }
+.faq details[open] summary::after { content: "−"; }
+.faq .a { color: var(--second); font-size: 14.5px; padding: 0 0 22px; max-width: 46em; }
+
+/* ── 收尾 ── */
+.outro { text-align: center; padding-bottom: 40px; }
+.outro h2 { font-size: clamp(28px, 4vw, 40px); }
+
+footer {
+  margin-top: 110px; border-top: 1px solid var(--line);
+  padding-top: 36px; padding-bottom: 48px; color: var(--faint); font-size: 13px;
+  display: flex; gap: 24px; flex-wrap: wrap; align-items: center;
+}
+footer .brand { font-size: 15px; }
+footer .links { margin-left: auto; display: flex; gap: 20px; }
+footer a { color: var(--faint); }
+footer a:hover { color: var(--ink); text-decoration: none; }
+
+/* ─────────────  模型提供表  ───────────── */
+.tiers { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; margin-top: 44px; }
+.tier {
+  background: var(--card); border: 1px solid var(--line); border-radius: 14px;
+  padding: 26px 24px; box-shadow: var(--shadow);
+  display: flex; flex-direction: column;
+}
+.tier-top { display: flex; align-items: baseline; justify-content: space-between; }
+.tier-top h3 { font-size: 19px; font-weight: 600; }
+.tier-cost {
+  font-family: "IBM Plex Mono", monospace; font-size: 12px; color: var(--second);
+  background: var(--stage-a); padding: 3px 10px; border-radius: 999px; white-space: nowrap;
+}
+.tier-for {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 13px; font-weight: 500; margin-top: 10px;
+}
+.tier-for::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--coral); flex: none; }
+.stars { margin-top: 16px; display: grid; gap: 7px; border-top: 1px solid var(--line); padding-top: 14px; }
+.stars > div { display: flex; justify-content: space-between; align-items: center; font-size: 12.5px; color: var(--second); }
+.stars i { font-style: normal; letter-spacing: 3.5px; font-size: 9.5px; line-height: 1; }
+.stars b { color: var(--coral); font-weight: 400; }
+.stars s { color: var(--line2); text-decoration: none; }
+.tier ul { list-style: none; padding: 0; }
+.tier-good { margin-top: 16px; display: grid; gap: 8px; font-size: 13.5px; color: var(--second); }
+.tier-good li { display: flex; gap: 8px; }
+.tier-good li::before { content: "＋"; color: var(--green); font-weight: 600; flex: none; }
+.tier-bad {
+  margin-top: 14px; padding-top: 12px; border-top: 1px dashed var(--line);
+  display: grid; gap: 7px; font-size: 13px; color: var(--faint);
+}
+.tier-bad li { display: flex; gap: 8px; }
+.tier-bad li::before { content: "－"; flex: none; }
+.tier-note { color: var(--faint); font-size: 13px; line-height: 1.75; margin-top: 26px; max-width: 46em; }
+
+/* ─────────────  定价(嫁接自 v1,类名保留)  ───────────── */
+.plans {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  gap: 0; border: 1px solid var(--line); border-radius: 14px; overflow: hidden;
+  background: var(--card); box-shadow: var(--shadow); margin-top: 44px; margin-bottom: 28px;
+}
+.plan { padding: 26px 24px; border-right: 1px solid var(--line); }
+.plan:last-child { border-right: none; }
+.plan h3 {
+  font-family: "IBM Plex Mono", monospace; font-size: 11px;
+  letter-spacing: .11em; text-transform: uppercase; color: var(--faint); margin-bottom: 12px;
+}
+.plan .price {
+  font-family: "Newsreader", Georgia, serif; font-size: 32px; line-height: 1.1;
+  font-variant-numeric: tabular-nums; margin-bottom: 2px;
+}
+.plan .price small { font-size: 12.5px; color: var(--second); font-family: inherit; }
+.plan ul { list-style: none; margin: 16px 0 0; padding: 0; font-size: 13.5px; color: var(--second); }
+.plan li { padding-left: 16px; position: relative; margin-bottom: 7px; line-height: 1.65; }
+.plan li::before {
+  content: ""; position: absolute; left: 0; top: 9px;
+  width: 5px; height: 5px; border-radius: 50%; background: var(--coral); opacity: .55;
+}
+.buy {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--coral); color: #fff; font-size: 15px; font-weight: 500;
+  padding: 11px 22px; border-radius: 999px;
+}
+.buy:hover { filter: brightness(1.06); }
+.buy:focus-visible { outline: 2px solid var(--coral); outline-offset: 3px; }
+.sandbox {
+  display: none;
+  font-family: "IBM Plex Mono", monospace; font-size: 11px;
+  letter-spacing: .08em; text-transform: uppercase;
+  color: var(--coral); background: var(--coral-tint);
+  padding: 4px 9px; border-radius: 4px; margin-left: 12px; vertical-align: middle;
+}
+body.is-sandbox .sandbox { display: inline-block; }
+.pricing-plain { margin-top: 26px; display: grid; gap: 12px; max-width: 46em; }
+.pricing-plain p { color: var(--second); font-size: 14px; line-height: 1.75; }
+.pricing-plain strong { color: var(--ink); font-weight: 500; }
+
+/* ─────────────  长录音 · 实时字幕演示  ───────────── */
+.cap-demo {
+  margin-top: 40px; background: var(--card); border: 1px solid var(--line);
+  border-radius: 14px; box-shadow: var(--shadow); overflow: hidden; max-width: 640px;
+}
+.cap-head {
+  display: flex; align-items: center; gap: 8px;
+  padding: 12px 18px; border-bottom: 1px solid var(--line);
+  font-size: 12.5px; font-weight: 600;
+}
+.cap-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--coral); }
+.cap-tag { color: var(--faint); font-weight: 400; font-size: 10.5px; }
+.cap-lines { padding: 16px 18px 18px; min-height: 148px; display: grid; gap: 9px; align-content: start; }
+.cap-lines p { font-size: 13.5px; line-height: 1.65; color: var(--ink); opacity: 0; transform: translateY(4px); transition: opacity .4s ease, transform .4s ease; }
+.cap-lines p.on { opacity: 1; transform: none; }
+.cap-lines .spk { font-family: "IBM Plex Mono", monospace; font-size: 10px; color: var(--faint); margin-right: 8px; }
+@media (prefers-reduced-motion: reduce) { .cap-lines p { opacity: 1; transform: none; transition: none; } }
+
+/* ─────────────  细节合集  ───────────── */
+.detail-list { display: grid; grid-template-columns: 1fr 1fr; gap: 22px 48px; margin-top: 44px; }
+.detail-list > div { font-size: 14px; line-height: 1.75; color: var(--second); }
+.detail-list strong { color: var(--ink); font-weight: 600; display: block; margin-bottom: 3px; }
+
+/* 提供表:未开放角标 */
+.tier-soon {
+  /* .tier 是 flex 纵向容器,子元素默认 align-self: stretch ——
+     光写 inline-block 拦不住,角标会被拉成整行宽 */
+  display: inline-block; align-self: flex-start; margin-top: 8px;
+  font-family: "IBM Plex Mono", monospace; font-size: 10px; letter-spacing: .06em;
+  color: var(--faint); border: 1px solid var(--line2);
+  padding: 3px 9px; border-radius: 999px;
+}
+
+@media (max-width: 820px) {
+  section { padding-top: 80px; }
+  .compare, .promises { grid-template-columns: 1fr; }
+  .detail-list { grid-template-columns: 1fr; }
+  .tiers { grid-template-columns: 1fr; }
+  .feature-demos { grid-template-columns: 1fr; }
+  .feature { grid-template-columns: 40px 1fr; grid-template-rows: auto auto; }
+  .feature p { grid-column: 2; }
+  .feature kbd { grid-column: 2; justify-self: start; }
+  .navlinks a:not(.nav-cta) { display: none; }
+}
+</style>
+</head>
+<body>
+<nav>
+  <div class="wrap navrow">
+    <a class="brand" href="#top"><svg width="30" height="15" viewBox="0 0 200 100" aria-hidden="true"><path d="M12.0 50.0 L14.0 40.1 L16.0 31.7 L18.0 25.2 L20.0 21.0 L22.0 19.0 L24.0 19.2 L26.0 21.3 L28.0 25.2 L30.0 30.3 L32.0 36.2 L34.0 42.4 L36.0 48.5 L38.0 54.2 L40.0 59.0 L42.0 62.7 L44.0 65.2 L46.0 66.5 L48.0 66.5 L50.0 65.5 L52.0 63.5 L54.0 60.9 L56.0 57.8 L58.0 54.6 L60.0 51.5 L62.0 48.6 L64.0 46.2 L66.0 44.4 L68.0 43.2 L70.0 42.7 L72.0 42.7 L74.0 43.2 L76.0 44.1 L78.0 45.3 L80.0 46.7 L82.0 48.0 L84.0 49.2 L86.0 50.2 L88.0 51.0 L90.0 51.5 L92.0 51.8 L94.0 51.8 L96.0 51.6 L98.0 51.3 L100.0 50.9 L102.0 50.5 L104.0 50.2 L106.0 50.0 L190 50" fill="none" stroke="var(--coral)" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/></svg>Murmur</a>
+    <div class="navlinks">
+      <a href="#demo">Demo</a>
+      <a href="#features">Features</a>
+      <a href="#promises">Promises</a>
+      <a href="../index.html" hreflang="zh-Hans" lang="zh-Hans">中文</a>
+      <a class="nav-cta" href="#download">Download</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ── Hero:全页最大的一场动画只留给「说完,字落下」── -->
+<header class="hero wrap" id="top">
+  <h1 class="reveal">Stop talking. The words<br>are already at your <span class="serif">cursor</span>.</h1>
+  <p class="lede reveal">Talking is the fast part. Typing is the second pass — and so is cleaning up
+  what a transcriber hands back. Hold a key, say it, and finished text lands in whatever field the
+  cursor is already in: a chat box, an email, a commit message, a prompt.</p>
+  <div class="cta-row reveal">
+    <a class="btn btn-primary" href="#download">Download for macOS</a>
+    <a class="btn btn-quiet" href="#demo">See how it works</a>
+  </div>
+  <div class="keys reveal">
+    <span><kbd>Right ⌘</kbd>Dictate</span>
+    <span><kbd>Right ⌥</kbd>Translate</span>
+    <span><kbd>fn</kbd>Ask</span>
+    <span><kbd>Esc</kbd>Cancel</span>
+  </div>
+
+  <div class="stage reveal" id="demo">
+    <div class="fake-input"><span class="ph">your cursor is here</span><span class="out"></span><span class="cursor"></span></div>
+    <div class="capsule-row">
+      <div class="capsule hidden">
+        <div class="round">✕</div>
+        <canvas width="360" height="48"></canvas>
+        <div class="clock">0:00</div>
+        <div class="round go">✓</div>
+      </div>
+    </div>
+    <div class="caption"></div>
+    <p class="stage-note">This demo is drawn in code, not recorded — the capsule here is the one you get in the app.</p>
+  </div>
+</header>
+
+<!-- ── 少一道工序:打字 vs 说话,双演示对照 ── -->
+<section class="wrap">
+  <div class="eyebrow reveal">Subtract · One step fewer</div>
+  <h2 class="reveal">One sentence, two ways to finish it.</h2>
+  <div class="compare reveal">
+    <div class="panel type" id="panelType">
+      <div class="head">
+        <span class="tag">Typing</span>
+        <span class="timer mono">0:00</span>
+      </div>
+      <div class="fake-input"><span class="out"></span><span class="cursor"></span></div>
+      <div class="caption"><span class="volatile">Type, reread, delete, rearrange…</span></div>
+    </div>
+    <div class="panel speak" id="panelSpeak">
+      <div class="head">
+        <span class="tag">Speaking</span>
+        <span class="timer mono">0:00</span>
+      </div>
+      <div class="fake-input"><span class="ph">your cursor is here</span><span class="out"></span><span class="cursor"></span></div>
+      <div class="capsule-row">
+        <div class="capsule mini hidden">
+          <div class="round">✕</div>
+          <canvas width="220" height="44"></canvas>
+          <div class="round go">✓</div>
+        </div>
+        <span class="done-chip">✓ Inserted. On to the next thing.</span>
+      </div>
+      <div class="caption"></div>
+    </div>
+  </div>
+  <p class="subtract-note reveal">A few dozen inputs a day, and a minute or two saved on each one. That is the whole argument this page is making.</p>
+</section>
+
+<!-- ── 四个核心功能 + 各自的展示区 ── -->
+<section class="wrap" id="features">
+  <div class="eyebrow reveal">Four Things · What the keys do</div>
+  <h2 class="reveal">Four keys, four things.</h2>
+  <div class="features">
+    <div class="feature reveal">
+      <div class="num">01</div>
+      <div class="name">Dictate</div>
+      <p>Say it, get it written. The “um”, the “you know”, the false start get cleaned out on the way; what lands is a sentence you would have typed.</p>
+      <kbd>Right ⌘</kbd>
+    </div>
+    <div class="feature reveal">
+      <div class="num">02</div>
+      <div class="name">Translate</div>
+      <p>Speak English, Chinese lands; speak Chinese, English lands. The direction is worked out for you, so a message to a colleague in another language is one held key.</p>
+      <kbd>Right ⌥</kbd>
+    </div>
+    <div class="feature reveal">
+      <div class="num">03</div>
+      <div class="name">Ask</div>
+      <p>Say the question and what lands is the answer, not your question. A flag you half-remember, a conversion, a spelling — without leaving the window.</p>
+      <kbd>fn</kbd>
+    </div>
+    <div class="feature reveal">
+      <div class="num">04</div>
+      <div class="name">Edit by voice</div>
+      <p>Select a paragraph and say how it should change — what lands back is the changed version. Being able to revise by mouth is what closes the loop.</p>
+      <kbd>Right ⌃</kbd>
+    </div>
+  </div>
+
+  <div class="feature-demos">
+    <div class="fdemo reveal" id="fdemoDictate">
+      <div class="head"><span class="name">Dictate</span><kbd>Right ⌘</kbd></div>
+      <div class="fake-input"><span class="ph">your cursor is here</span><span class="out"></span><span class="cursor"></span></div>
+      <div class="capsule-row">
+        <div class="capsule mini hidden">
+          <div class="round">✕</div>
+          <canvas width="220" height="44"></canvas>
+          <div class="round go">✓</div>
+        </div>
+      </div>
+      <div class="caption"></div>
+    </div>
+    <div class="fdemo reveal" id="fdemoTranslate">
+      <div class="head"><span class="name">Translate</span><kbd>Right ⌥</kbd></div>
+      <div class="fake-input"><span class="ph">your cursor is here</span><span class="out"></span><span class="cursor"></span></div>
+      <div class="capsule-row">
+        <div class="capsule mini hidden">
+          <div class="round">✕</div>
+          <canvas width="220" height="44"></canvas>
+          <div class="round go">✓</div>
+        </div>
+      </div>
+      <div class="caption"></div>
+    </div>
+    <div class="fdemo reveal" id="fdemoAsk">
+      <div class="head"><span class="name">Ask</span><kbd>fn</kbd></div>
+      <div class="fake-input"><span class="ph">your cursor is here</span><span class="out"></span><span class="cursor"></span></div>
+      <div class="capsule-row">
+        <div class="capsule mini hidden">
+          <div class="round">✕</div>
+          <canvas width="220" height="44"></canvas>
+          <div class="round go">✓</div>
+        </div>
+      </div>
+      <div class="caption"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Vibe Coding:对着 AI 编码工具口述 —— 只写系统级听写真做得到的 ── -->
+<section class="wrap" id="vibe">
+  <div class="eyebrow reveal">Vibe Coding · Talking to the tools</div>
+  <h2 class="reveal">Telling Claude Code, Cursor or Codex what you want<br>was always a spoken job.</h2>
+  <p class="sub reveal">
+    You are not writing the code character by character any more — you are explaining what you want.
+    “Make this function async, then put a retry around it.”
+    Three seconds to say; thirty to type.
+    Murmur has no plugin, no integration and nothing to set up —
+    it is system-level dictation, and it lands at any cursor, including the prompt in your terminal that is waiting for input.
+  </p>
+  <div class="detail-list reveal">
+    <div><strong>A long prompt stops costing you anything.</strong>The constraint you normally leave out because typing it was tedious — say it instead. A spoken paragraph takes about as long as a spoken line.</div>
+    <div><strong>Get a name wrong once, correct it once, never again.</strong>Fix the library or API name it misheard and it goes into your dictionary; next time it is heard right — conservative on purpose: it would rather miss one than invent one.</div>
+    <div><strong>Your standing prompt, saved as a phrase.</strong>Say the trigger word and the whole block lands — the rules you re-explain every single day, typed out once and only once.</div>
+    <div><strong>Check an API name without switching windows.</strong>Hold Ask, say the question, and what lands is the answer, not your question — hands never leave the editor.</div>
+    <div><strong>Select some code and say how to change it.</strong>Edit by voice puts the changed version back where it was — the thought never has to be typed first.</div>
+    <div><strong>In an editor it leaves your identifiers alone.</strong>Tone per app can tell an editor from a chat window, and does not apply the same rules to both.</div>
+  </div>
+</section>
+
+<!-- ── 模型提供表:不报厂商名 —— 场景才重要(口径同 App 内模型页) ── -->
+<section class="wrap" id="models">
+  <div class="eyebrow reveal">Engines · What is behind the switch</div>
+  <h2 class="reveal">The recognition engine is swappable.<br>This is the shortlist, after we did the testing.</h2>
+  <p class="sub reveal">
+    We put the recognition models we could get our hands on through one internal evaluation and kept three.
+    None of them wins everywhere — how you talk is what decides it — so they are split by situation:
+    strengths and weaknesses printed on the front, one menu to switch, no terminology to learn first.
+  </p>
+
+  <div class="tiers">
+    <article class="tier reveal">
+      <div class="tier-top"><h3>Standard</h3><span class="tier-cost">1× quota</span></div>
+      <div class="tier-for">The default for everyday speech</div>
+      <div class="stars">
+        <div><span>Everyday use</span><i><b>●●●●●</b></i></div>
+        <div><span>Chinese-heavy</span><i><b>●●●●</b><s>●</s></i></div>
+        <div><span>English-heavy</span><i><b>●●●</b><s>●●</s></i></div>
+      </div>
+      <ul class="tier-good">
+        <li>Live captions; final text the moment you let go</li>
+        <li>Steadiest when languages are mixed mid-sentence (our own testing)</li>
+        <li>Lightest on quota</li>
+      </ul>
+      <ul class="tier-bad">
+        <li>Mid-pack on public streaming benchmarks for long English sentences</li>
+      </ul>
+    </article>
+
+    <article class="tier reveal">
+      <div class="tier-top"><h3>Chinese-first</h3><span class="tier-cost">1× quota</span></div>
+      <div class="tier-for">Mostly Chinese, regional accents</div>
+      <div class="tier-soon">In closed beta · rolling out</div>
+      <div class="stars">
+        <div><span>Everyday use</span><i><b>●●●●</b><s>●</s></i></div>
+        <div><span>Chinese-heavy</span><i><b>●●●●●</b></i></div>
+        <div><span>English-heavy</span><i><b>●●●</b><s>●●</s></i></div>
+      </div>
+      <ul class="tier-good">
+        <li>Best published results on Chinese and on mixed speech</li>
+        <li>Holds up on regional accents (Cantonese, Sichuanese, Wu)</li>
+        <li>Live captions; final text the moment you let go</li>
+      </ul>
+      <ul class="tier-bad">
+        <li>No proper-noun biasing in the live captions yet (your dictionary still fixes the final text)</li>
+      </ul>
+    </article>
+
+    <article class="tier reveal">
+      <div class="tier-top"><h3>Precision</h3><span class="tier-cost">2× quota</span></div>
+      <div class="tier-for">Mostly English, dense with names</div>
+      <div class="tier-soon">In closed beta · rolling out</div>
+      <div class="stars">
+        <div><span>Everyday use</span><i><b>●●●</b><s>●●</s></i></div>
+        <div><span>Chinese-heavy</span><i><b>●●●</b><s>●●</s></i></div>
+        <div><span>English-heavy</span><i><b>●●●●●</b></i></div>
+      </div>
+      <ul class="tier-good">
+        <li>Front rank on public English and mixed-speech benchmarks</li>
+        <li>Steadiest on heavy accents and on proper nouns</li>
+      </ul>
+      <ul class="tier-bad">
+        <li>No live captions (you wait for the whole passage)</li>
+        <li>Chinese output occasionally mixes simplified and traditional</li>
+        <li>Heaviest on quota</li>
+      </ul>
+    </article>
+  </div>
+
+  <p class="tier-note reveal">
+    <strong>Standard is the tier open to everyone today</strong>; the other two are opening up through the
+    closed beta. “2× quota” means exactly that: on that tier a minute of long recording takes two minutes
+    out of the monthly pool, and dictation draws from your weekly allowance at twice the rate. The
+    multiplier is printed next to the tier; there is no hidden conversion. Lose the network or run out of
+    allowance and it falls back to on-device recognition by itself: slower, weaker when you mix languages,
+    but never a brick, and never a lost sentence.
+  </p>
+</section>
+
+<!-- ── 数据在哪:全站最硬的一句话 ── -->
+<section class="wrap" id="local">
+  <div class="eyebrow reveal">Local · Where your data is</div>
+  <h2 class="reveal">Our server knows who you are.<br>It never learns what you said.</h2>
+  <p class="sub reveal">Accounts, sign-in, subscriptions — that is the entire job our server does. Your
+  recordings, transcripts, history and dictionary are never uploaded; they exist on your Mac only. For
+  cloud recognition the audio goes straight from your Mac to the provider you picked, not through us.
+  Choose on-device recognition and not one byte leaves this computer.</p>
+  <div class="flowstage reveal">
+    <svg viewBox="0 0 760 250" aria-label="Audio goes from your Mac straight to the provider you picked, skipping our server">
+      <!-- 航线(常显,极淡) -->
+      <path id="goPath"   d="M196 118 C 300 26, 460 26, 564 118" fill="none" stroke="var(--line2)" stroke-width="1.5" stroke-dasharray="3 6"/>
+      <path id="backPath" d="M564 138 C 460 226, 300 226, 196 138" fill="none" stroke="var(--line2)" stroke-width="1.5" stroke-dasharray="3 6"/>
+
+      <!-- 你的 Mac -->
+      <g>
+        <rect x="36" y="86" width="160" height="84" rx="14" fill="var(--paper)" stroke="var(--line2)"/>
+        <text class="node-label" x="116" y="122" text-anchor="middle">Your Mac</text>
+        <text class="node-sub" x="116" y="144" text-anchor="middle">audio, history, dictionary</text>
+        <rect id="macGlow" x="36" y="86" width="160" height="84" rx="14" fill="none" stroke="var(--coral)" stroke-width="2.5" opacity="0"/>
+        <g id="savedChip" opacity="0">
+          <rect x="52" y="176" width="128" height="26" rx="13" fill="var(--coral-tint)"/>
+          <text x="116" y="194" text-anchor="middle" style="font-size:12px; font-weight:600" fill="var(--coral)">✓ Stored locally</text>
+        </g>
+      </g>
+
+      <!-- 我们的服务器(虚位) -->
+      <g id="ghost" opacity=".8">
+        <rect x="304" y="92" width="152" height="72" rx="14" fill="none" stroke="var(--line2)" stroke-dasharray="5 5"/>
+        <text class="ghost-label" x="380" y="122" text-anchor="middle">Our server</text>
+        <text class="node-sub" x="380" y="142" text-anchor="middle">knows only who you are</text>
+        <g id="ghostX" opacity="0">
+          <circle cx="380" cy="76" r="13" fill="var(--coral)"/>
+          <text x="380" y="81" text-anchor="middle" style="font-size:13px; font-weight:700" fill="#fff">✕</text>
+        </g>
+      </g>
+
+      <!-- 你选的模型商 -->
+      <g>
+        <rect x="564" y="86" width="160" height="84" rx="14" fill="var(--paper)" stroke="var(--line2)"/>
+        <text class="node-label" x="644" y="122" text-anchor="middle">Your provider</text>
+        <text class="node-sub" x="644" y="144" text-anchor="middle">one tier, one destination</text>
+        <rect id="provGlow" x="564" y="86" width="160" height="84" rx="14" fill="none" stroke="var(--coral)" stroke-width="2.5" opacity="0"/>
+      </g>
+
+      <!-- 包裹 -->
+      <circle id="pktGo"   r="7" fill="var(--coral)" opacity="0"/>
+      <circle id="pktBack" r="7" fill="var(--ink)"  opacity="0"/>
+    </svg>
+    <p class="cap" id="flowCap">You speak — the audio leaves from your Mac and nowhere else</p>
+  </div>
+
+  <p class="local-path reveal"><span class="mono">~/Library/Application Support/Murmur/</span><br>
+  <span class="path-note">The recordings, and every word you have said, are in that folder. Open it whenever you like. Delete it and it is actually deleted.</span></p>
+</section>
+
+<!-- ── 敢写下来的承诺 ── -->
+<section class="wrap" id="promises">
+  <div class="eyebrow reveal">Promises · Things we will put in writing</div>
+  <h2 class="reveal">Four of them. Written down means kept.</h2>
+  <div class="promises">
+    <div class="promise reveal">
+      <h3>Never lose what you said</h3>
+      <p>Every dictation keeps the audio and a history entry. Cloud down, recognition wrong? Open the history and run it again on another engine. No path through this app makes a sentence you said disappear.</p>
+    </div>
+    <div class="promise reveal">
+      <h3>Failure gets said out loud</h3>
+      <p>If the translation did not happen, it tells you it did not happen. If the microphone heard nothing, it says so on the spot. It will not quietly push some fallback mess into the window you are typing in.</p>
+    </div>
+    <div class="promise reveal">
+      <h3>Where the audio goes is on the surface</h3>
+      <p>On-device: not one byte leaves this computer. Cloud: which provider, and what got sent, is written in Settings in plain words — not on page eight of the terms.</p>
+    </div>
+    <div class="promise reveal">
+      <h3>The numbers are measured</h3>
+      <p>The “release the key to text on screen” latency is a measured median, not a number a copywriter picked. Each engine's weak spots are printed next to its strong ones — switch if it does not suit you; your ears decide.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ── 长录音:实时字幕(可牺牲预览)+ 整段转写(说话人分离) ── -->
+<section class="wrap" id="lecture">
+  <div class="eyebrow reveal">Lecture · Long recordings</div>
+  <h2 class="reveal">Leave it running; captions float over whatever is on screen.</h2>
+  <p class="sub reveal">
+    Long recording is a separate pipeline. The caption window floats above any full-screen window — the
+    talk keeps playing, the captions keep up; turn on the second column if you want a translation beside
+    them. Captions are an expendable preview: if they drop, the recording does not. The full transcript
+    lands in your history when you stop, with the speakers told apart.
+  </p>
+  <div class="cap-demo reveal" id="capDemo" aria-label="Live caption demo">
+    <div class="cap-head"><span class="cap-dot"></span>Live captions<span class="cap-tag">preview · the full transcript still lands in history</span></div>
+    <div class="cap-lines" id="capLines"></div>
+  </div>
+  <p class="stage-note reveal" style="margin-top:14px">
+    Drawn in code, not recorded. Free tier: 30 minutes a month. Pro: no limit on length.
+  </p>
+</section>
+
+<!-- ── 定价(嫁接自 v1;IDs #pricing #buy #manage #pro-price 保留勿改) ── -->
+<!-- ⛔ 定价段暂时下架(2026-09-12,与中文页 index.html 同步)。
+     ⚠️ 这一段是 2026-09-10 中文页下架时**漏掉的** —— 英文页一直挂着可点的沙盒收银台
+     (#buy 会被底部 JS 赋上 buy.stripe.com/test_…,body 还会加 is-sandbox 让「测试中」徽章亮起来)。
+     原因同中文页:给人试用时,一个标着「测试中」的价格比没有价格更糟。
+     恢复方法:删掉本段首尾这两行注释即可,里面一个字没动;
+     恢复之前先把底部 PAY_LINK / MANAGE_LINK 换成正式链接。 -->
+<!--
+<section class="wrap" id="pricing">
+  <div class="eyebrow reveal">Pricing</div>
+  <h2 class="reveal">Nothing to pay until the free allowance runs out.<span class="sandbox">sandbox mode</span></h2>
+  <p class="sub reveal">
+    The free allowance is a cloud bill we pay on your behalf — when it runs out the app switches back to
+    on-device recognition instead of stopping to ask you for money. Cloud allowance is
+    <strong>invite-only during the closed beta</strong>: the download is free, on-device recognition needs
+    no account at all, and for a cloud seat, <a href="https://othersstudio.tech" rel="noopener">come and ask us</a>.
+  </p>
+
+  <div class="plans reveal">
+    <div class="plan">
+      <h3>Free</h3>
+      <div class="price">0<small> / month</small></div>
+      <ul>
+        <li>2,000 words a week of cloud dictation and cleanup</li>
+        <li>30 minutes a month of long recording</li>
+        <li>Allowance gone: it switches to on-device and keeps working</li>
+      </ul>
+    </div>
+    <div class="plan">
+      <h3>Pro</h3>
+      <div class="price" id="pro-price">AU$9<small> / month</small></div>
+      <ul>
+        <li>Dictation, cleanup and translation, unmetered</li>
+        <li>Long recording with no limit on length</li>
+        <li>Cancel any time; it runs to the end of the period</li>
+      </ul>
+    </div>
+  </div>
+
+  <p class="reveal" style="margin-bottom:8px">
+    <a class="buy" id="buy" href="#">Subscribe to Pro</a>
+  </p>
+
+  <div class="pricing-plain reveal">
+    <p>
+      <strong>Buy here, then sign in to the app with the same email and it upgrades itself.</strong>
+      At the checkout we still do not know who you are — the email you type there is the claim ticket, so
+      it has to match. Prices are charged in Australian dollars; your bank may apply its own conversion rate.
+    </p>
+    <p>
+      Already running the app? Simpler still: hit “Upgrade to Pro” inside it, pay, come back, and the tier
+      has changed on its own.
+    </p>
+    <p>
+      <strong>Cancelling does not involve talking to anyone.</strong>
+      <a id="manage" href="#">Manage subscription</a> — enter the email you paid with and Stripe sends you a
+      direct link; cancel or change the card there. After cancelling it runs to the end of the period; the
+      current period is not refunded. Pro opened with a <strong>redemption code</strong> never went through
+      the checkout, so the portal will find no subscription for it — its expiry and renewal live on the
+      account page inside the app, which is also where you type the code in. You never need this link for that.
+    </p>
+  </div>
+</section>
+-->
+
+<!-- ── 细节合集:句句是已交付行为,不许吹 ── -->
+<section class="wrap" id="details">
+  <div class="eyebrow reveal">Details · Small things that pull their weight</div>
+  <h2 class="reveal">Not in the headlines, but working every day.</h2>
+  <div class="detail-list reveal">
+    <div><strong>The dictionary grows itself.</strong> Proper nouns you have corrected go into the dictionary and are heard right next time — conservative on purpose: it would rather miss one than invent one.</div>
+    <div><strong>Quick phrases.</strong> Say the trigger word and a whole block lands — an address, payment details, a reply you send twice a week. That path never touches a large model.</div>
+    <div><strong>Tone per app.</strong> It lands in a chat app as speech, in an email as prose, and in a code editor without touching your identifiers.</div>
+    <div><strong>Said it wrong? Fix it in the history.</strong> Every dictation keeps its original text and its audio; change one word and that becomes the reference from then on.</div>
+    <div><strong>Under-your-breath mode.</strong> Say it almost silently in a library; the capture end amplifies and recognises it as usual.</div>
+    <div><strong>“Remind me in half an hour.”</strong> Say it in passing and the reminder is set; it turns up on time — handled on-device, so it costs no allowance and works offline.</div>
+    <div><strong>Names on your screen help it hear right.</strong> At the moment you start recording it reads the visible text of the front window once to pull out proper nouns (no screenshot; screen words never enter your dictionary) — the details are in <a href="privacy.html">“Where your data lives”</a>.</div>
+  </div>
+</section>
+
+<section class="wrap">
+  <div class="eyebrow reveal">Questions · The ones you are about to ask</div>
+  <div class="faq reveal">
+    <details>
+      <summary>Where does my audio get sent?</summary>
+      <p class="a">Your recordings, transcripts, history and dictionary all live on your Mac; our server only handles accounts and subscriptions. For cloud recognition the audio connects straight to that one recognition service and does not pass through our server — that holds while you are on the free allowance we pay for, too. One exception, stated plainly: on the free allowance the <strong>text</strong> for the cleanup step goes through our server before it reaches the model provider. Pick on-device recognition and nothing leaves the computer at all. Proper nouns from your dictionary are sent along with the request, so that they get heard correctly — all of this is written in Settings, not buried in terms.</p>
+    </details>
+    <details>
+      <summary>What happens when I am offline?</summary>
+      <p class="a">Offline, or out of allowance, it falls back to on-device recognition by itself — slower, weaker when you mix languages, but your words are not lost. Once you are back, any entry in the history can be run again on a cloud tier.</p>
+    </details>
+    <details>
+      <summary>Which languages does it handle?</summary>
+      <p class="a">English, Chinese, and the two of them mixed inside one sentence — that last case is the one it was built to take seriously. Chinese with a regional accent (Cantonese, Sichuanese, Wu) has a tier of its own, in closed beta and rolling out.</p>
+    </details>
+    <details>
+      <summary>Do I have to bring my own API key?</summary>
+      <p class="a">No. Cloud allowance is invite-only for now: get a seat, sign in, and the free allowance is there — it is a cloud bill we pay for you, and when it runs out the app returns to on-device recognition rather than stopping to ask you for money.</p>
+    </details>
+  </div>
+</section>
+
+<!-- ── 收尾 ── -->
+<section class="wrap outro" id="download">
+  <h2 class="reveal">Try saying the next one <span class="serif">out loud</span>.</h2>
+  <div class="cta-row reveal">
+    <a class="btn btn-primary" href="https://github.com/Azureliu-day1/murmur-site/releases/latest/download/Murmur.zip">Download for macOS</a>
+  </div>
+  <p class="stage-note reveal">macOS 26+ · Apple Silicon · Free to start · Cloud allowance by invite</p>
+  <p class="stage-note reveal">The download is free and <b>on-device recognition works without an account</b>.
+  The cloud allowance is invite-only for now — email
+  <a href="mailto:owner@example.com?subject=Murmur%20beta%20invite">owner@example.com</a>
+  and tell us in one line what you'd use it for.</p>
+  <p class="stage-note reveal">Unzip it and drag Murmur into Applications. On first run it asks for the
+  microphone and for accessibility — the first to hear you, the second to put the words at your cursor.</p>
+</section>
+
+<footer class="wrap">
+  <span class="brand"><svg width="30" height="15" viewBox="0 0 200 100" aria-hidden="true"><path d="M12.0 50.0 L14.0 40.1 L16.0 31.7 L18.0 25.2 L20.0 21.0 L22.0 19.0 L24.0 19.2 L26.0 21.3 L28.0 25.2 L30.0 30.3 L32.0 36.2 L34.0 42.4 L36.0 48.5 L38.0 54.2 L40.0 59.0 L42.0 62.7 L44.0 65.2 L46.0 66.5 L48.0 66.5 L50.0 65.5 L52.0 63.5 L54.0 60.9 L56.0 57.8 L58.0 54.6 L60.0 51.5 L62.0 48.6 L64.0 46.2 L66.0 44.4 L68.0 43.2 L70.0 42.7 L72.0 42.7 L74.0 43.2 L76.0 44.1 L78.0 45.3 L80.0 46.7 L82.0 48.0 L84.0 49.2 L86.0 50.2 L88.0 51.0 L90.0 51.5 L92.0 51.8 L94.0 51.8 L96.0 51.6 L98.0 51.3 L100.0 50.9 L102.0 50.5 L104.0 50.2 L106.0 50.0 L190 50" fill="none" stroke="var(--coral)" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/></svg>Murmur</span>
+  <span>Made by Others Studio</span>
+  <div class="links">
+    <a href="https://othersstudio.tech">othersstudio.tech</a>
+    <a href="privacy.html">Privacy</a>
+    <a href="tos.html">Terms</a>
+    <a href="../index.html" hreflang="zh-Hans" lang="zh-Hans">中文</a>
+  </div>
+</footer>
+
+
+<script>
+// ── 实时字幕演示:和其它演示同一条纪律 —— 代码画的,不是视频 ──
+(function () {
+  var box = document.getElementById('capLines');
+  if (!box) return;
+  var lines = [
+    ['Speaker 1', 'Today we get to attention; first a quick recap of embeddings.'],
+    ['Speaker 1', 'Query and key go through a dot product, divided by \u221Ad to keep the numbers sane.'],
+    ['Speaker 2', 'Is that scaling step actually necessary?'],
+    ['Speaker 1', 'Good question — high dimensions blow up the variance, and softmax saturates.']
+  ];
+  var reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function render(n) {
+    box.innerHTML = '';
+    for (var i = 0; i < n; i++) {
+      var p = document.createElement('p');
+      p.innerHTML = '<span class="spk">' + lines[i][0] + '</span>' + lines[i][1];
+      p.className = 'on';
+      box.appendChild(p);
+    }
+  }
+  if (reduced) { render(lines.length); return; }
+  var shown = 0;
+  function tick() {
+    if (shown >= lines.length) { shown = 0; box.innerHTML = ''; }
+    var p = document.createElement('p');
+    var l = lines[shown];
+    p.innerHTML = '<span class="spk">' + l[0] + '</span>' + l[1];
+    box.appendChild(p);
+    requestAnimationFrame(function () { requestAnimationFrame(function () { p.classList.add('on'); }); });
+    shown++;
+  }
+  tick();
+  setInterval(tick, 2300);
+})();
+</script>
+
+<script>
+// ── 收款链接:站点唯一一处 ─────────────────────────────────────────────
+// 换正式账号那天是**四个落点 + 一根钉**,别只改这里:
+//   ① 下面的 PAY_LINK  ② MANAGE_LINK
+//   ③ 服务端 murmur_config.stripe_payment_link  ④ …stripe_portal_link
+//   ⑤ 新 webhook endpoint 的 stripe_webhook_secret 必须同步换
+// 文案不用动 —— 沙盒徽章是从链接里的 /test_ 认出来的,不是手写开关。
+var PAY_LINK    = "https://buy.stripe.com/test_dRm28rgoe44655lgXkcs800";
+var MANAGE_LINK = "https://billing.stripe.com/p/login/test_dRm28rgoe44655lgXkcs800";
+(function () {
+  var buy = document.getElementById('buy');
+  if (buy) buy.href = PAY_LINK;
+  var manage = document.getElementById('manage');
+  if (manage) manage.href = MANAGE_LINK;
+  if (PAY_LINK.indexOf('/test_') !== -1) document.body.classList.add('is-sandbox');
+})();
+</script>
+<script>
+/* ── 入场:滚到哪节哪节醒。只动 transform/opacity ── */
+const io = new IntersectionObserver((entries) => {
+  for (const e of entries) if (e.isIntersecting) {
+    const idx = [...e.target.parentElement.querySelectorAll(':scope > .reveal')].indexOf(e.target);
+    e.target.style.transitionDelay = `${Math.max(idx, 0) * 60}ms`;
+    e.target.classList.add('on');
+    io.unobserve(e.target);
+  }
+}, { threshold: 0.15 });
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+/* ─────────────────────────────────────────────────────────
+   演示引擎:所有演示都是「时间的纯函数」——每帧只按 (当前循环
+   时刻) 算出该显示什么,没有状态机可以跑飞;不可见就整段跳过。
+   ───────────────────────────────────────────────────────── */
+const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const css = name => getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+
+class Wave {
+  constructor(canvas, w) { this.c = canvas; this.w = w; this.amp = 0; }
+  draw(t, target) {
+    const dpr = devicePixelRatio || 1, W = this.w, H = 22;
+    if (this.c.width !== W * dpr) { this.c.width = W * dpr; this.c.height = H * dpr; }
+    const g = this.c.getContext('2d');
+    g.setTransform(dpr, 0, 0, dpr, 0, 0);
+    g.clearRect(0, 0, W, H);
+    this.amp += (target - this.amp) * 0.1;             // 指数平滑:呼吸,不抽搐
+    const a = this.amp;
+    g.beginPath();
+    for (let x = 0; x <= W; x += 2) {
+      const env = Math.sin((x / W) * Math.PI);
+      const y = H / 2 + Math.sin(x * 0.11 + t * 0.006) * (H * 0.38) * a * env
+                      + Math.sin(x * 0.23 - t * 0.004) * (H * 0.17) * a * env;
+      x === 0 ? g.moveTo(x, y) : g.lineTo(x, y);
+    }
+    g.strokeStyle = a > 0.1 ? css('--coral') : css('--ink');   // 珊瑚只在有声时出现
+    g.globalAlpha = 0.28 + a * 0.6;
+    g.lineWidth = 1.4;
+    g.stroke();
+    g.globalAlpha = 1;
+  }
+}
+
+const demos = [];
+function register(el, render) {
+  const d = { el, render, visible: false, start: performance.now() };
+  new IntersectionObserver(es => {
+    // 重新滚回来时从头播,别接在循环中段
+    if (es[0].isIntersecting && !d.visible) d.start = performance.now();
+    d.visible = es[0].isIntersecting;
+  }, { threshold: 0.3 }).observe(el);
+  demos.push(d);
+}
+
+/* 「说话」演示:待命 → 听(逐词字幕+波形) → 整理 → 落字 → 停留 */
+function speakDemo(root, { words, result, per = 420, hold = 2600, cycleOverride = 0, onPhase }) {
+  const input = root.querySelector('.out'), ph = root.querySelector('.ph');
+  const capsule = root.querySelector('.capsule'), caption = root.querySelector('.caption');
+  const clock = root.querySelector('.clock');
+  const wave = new Wave(root.querySelector('canvas'), capsule.classList.contains('mini') ? 110 : 180);
+  const t0 = 800, listen = per * words.length + 500, proc = 900, typeMs = 34;
+  const typeDur = result.length * typeMs;
+  const doneAt = t0 + listen + proc + typeDur;
+  const cycle = cycleOverride || doneAt + hold;
+
+  register(root, (now, tRaw) => {
+    const t = tRaw % cycle;
+    if (reduced) {                                      // 减弱动效:直接终态
+      if (ph) ph.style.display = 'none';
+      input.textContent = result; capsule.classList.add('hidden');
+      onPhase && onPhase('done', doneAt, t);
+      return;
+    }
+    if (t < t0) {                                       // 待命
+      if (ph) ph.style.display = '';
+      input.textContent = ''; caption.innerHTML = '';
+      capsule.classList.add('hidden');
+      wave.draw(now, 0);
+      onPhase && onPhase('idle', doneAt, t);
+    } else if (t < t0 + listen) {                       // 听
+      capsule.classList.remove('hidden');
+      const dt = t - t0;
+      if (clock) clock.textContent = `0:${String(Math.floor(dt / 1000)).padStart(2, '0')}`;
+      const shown = Math.min(Math.floor(dt / per) + 1, words.length);
+      const fin = words.slice(0, shown - 1).join('');
+      caption.innerHTML = fin + `<span class="volatile">${words[shown - 1]}</span>`;
+      wave.draw(now, 0.9);
+      onPhase && onPhase('listen', doneAt, t);
+    } else if (t < t0 + listen + proc) {                // 整理
+      caption.innerHTML = '<span class="volatile">Cleaning up…</span>';
+      wave.draw(now, 0);
+      onPhase && onPhase('process', doneAt, t);
+    } else {                                            // 落字 → 停留
+      capsule.classList.add('hidden');
+      caption.innerHTML = '';
+      if (ph) ph.style.display = 'none';
+      const n = Math.min(Math.floor((t - t0 - listen - proc) / typeMs), result.length);
+      input.textContent = result.slice(0, n);
+      wave.draw(now, 0);
+      onPhase && onPhase(t >= doneAt ? 'done' : 'typing', doneAt, t);
+    }
+  });
+  return { doneAt };
+}
+
+/* 「打字」演示:type/pause/del 的脚本,编译成 (时刻 → 文本) */
+function typeDemo(root, ops, { cycleOverride = 0, onPhase }) {
+  const input = root.querySelector('.out');
+  const frames = [];                                    // [时刻, 文本] 关键帧
+  let text = '', t = 1200;                              // 起步先想 1.2s —— 打字前总要先措辞
+  frames.push([0, '']);
+  for (const op of ops) {
+    if (op.type) for (const ch of op.type) { t += op.per || 170; text += ch; frames.push([t, text]); }
+    if (op.del) for (let i = 0; i < op.del; i++) { t += 90; text = text.slice(0, -1); frames.push([t, text]); }
+    if (op.pause) t += op.pause;
+  }
+  const doneAt = t;
+  const cycle = cycleOverride || doneAt + 2600;
+
+  register(root, (now, tRaw) => {
+    const tc = tRaw % cycle;
+    if (reduced) { input.textContent = frames[frames.length - 1][1]; onPhase && onPhase('done', doneAt, tc); return; }
+    let cur = '';
+    for (const [ft, ftext] of frames) { if (ft <= tc) cur = ftext; else break; }
+    input.textContent = cur;
+    onPhase && onPhase(tc >= doneAt ? 'done' : 'typing', doneAt, tc);
+  });
+  return { doneAt };
+}
+
+/* ── Hero:一场就够,讲清「说完,字落下」── */
+speakDemo(document.getElementById('demo'), {
+  words: ['so ', "let's ship ", 'the fix ', 'behind a flag ', 'and roll it out ', 'Monday'],
+  result: "Let's ship the fix behind a flag and roll it out Monday.",
+});
+
+/* ── 少一道工序:同一句话,两边同一个循环、同时开跑 ── */
+const SAME_CYCLE = 13000;
+const speakPanel = document.getElementById('panelSpeak');
+const typePanel = document.getElementById('panelType');
+
+function timerPhase(panel) {
+  const timer = panel.querySelector('.timer');
+  return (phase, doneAt, t) => {
+    const frozen = Math.min(t, doneAt);
+    timer.textContent = `0:${String(Math.floor(frozen / 1000)).padStart(2, '0')}`;
+    timer.classList.toggle('done', t >= doneAt);
+  };
+}
+const speakChip = speakPanel.querySelector('.done-chip');
+speakDemo(speakPanel, {
+  words: ['tomorrow ', 'at three, ', 'the usual ', 'place'],
+  result: 'Tomorrow at three, the usual place.',
+  cycleOverride: SAME_CYCLE,
+  onPhase: (phase, doneAt, t) => {
+    timerPhase(speakPanel)(phase, doneAt, t);
+    speakChip.classList.toggle('on', phase === 'done');
+  },
+});
+typeDemo(typePanel, [
+  { type: 'Tomorrow at 3pm,' }, { pause: 1000 },
+  { del: 5 }, { pause: 700 },
+  { type: ' three, the usual' }, { pause: 600 },
+  { type: ' place.' },
+], { cycleOverride: SAME_CYCLE, onPhase: timerPhase(typePanel) });
+
+/* ── 三个核心功能的展示区 ── */
+speakDemo(document.getElementById('fdemoDictate'), {
+  words: ['um… ', 'remind me ', 'to call Mum ', 'at ten ', 'tomorrow'],
+  result: 'Remind me to call Mum at ten tomorrow.',   // 口水词在字幕里,不在成品里
+});
+speakDemo(document.getElementById('fdemoTranslate'), {
+  words: ['how about ', 'we grab ', 'coffee ', 'on Friday'],
+  result: '周五一起喝杯咖啡怎么样?',            // 说英文,落下的是中文
+});
+speakDemo(document.getElementById('fdemoAsk'), {
+  words: ['what undoes ', 'the last ', 'commit'],
+  result: 'git reset --soft HEAD~1',                 // 落下的是答案,不是问题
+});
+
+
+/* ── 数据旅程(#local):与 privacy 页同一场戏,接进统一 rAF ── */
+(function () {
+  const stage = document.querySelector('.flowstage');
+  if (!stage) return;
+  const g = id => document.getElementById(id);
+  const goPath = g('goPath'), backPath = g('backPath');
+  const goLen = goPath.getTotalLength(), backLen = backPath.getTotalLength();
+  const CAPS = [
+    'You speak — the audio leaves from your Mac and nowhere else',
+    'Straight to the provider you picked — no stop in between',
+    'Transcribed on their side',
+    'Text comes back to your Mac',
+    'Stored locally. That is the end of it.',
+  ];
+  let capIdx = -1;
+  function setCap(i) {
+    if (i === capIdx) return;
+    capIdx = i;
+    const el = g('flowCap');
+    el.style.opacity = 0;
+    setTimeout(() => { el.textContent = CAPS[i]; el.style.opacity = 1; }, 180);
+  }
+  const easeIO = t => t < .5 ? 2*t*t : 1 - (-2*t+2)**2/2;
+  if (reduced) {
+    g('ghostX').setAttribute('opacity', 1);
+    g('savedChip').setAttribute('opacity', 1);
+    g('flowCap').textContent = 'Audio goes straight to the provider you picked, skipping us; the text comes back and stays on your Mac.';
+    return;
+  }
+  const CYCLE = 7600;
+  register(stage, (now, tRaw) => {
+    const t = tRaw % CYCLE;
+    const mp = g('macGlow');
+    if (t < 1000) { mp.setAttribute('opacity', Math.sin(t / 1000 * Math.PI)); setCap(0); }
+    else mp.setAttribute('opacity', 0);
+
+    const go = g('pktGo'), gx = g('ghostX');
+    if (t >= 1000 && t < 2800) {
+      const k = easeIO((t - 1000) / 1800);
+      const p = goPath.getPointAtLength(k * goLen);
+      go.setAttribute('transform', `translate(${p.x},${p.y})`);
+      go.setAttribute('opacity', 1);
+      gx.setAttribute('opacity', k > 0.3 && k < 0.75 ? 1 : Math.max(0, 1 - Math.abs(k - 0.52) * 6));
+      setCap(1);
+    } else { go.setAttribute('opacity', 0); if (t >= 2800) gx.setAttribute('opacity', 0); }
+
+    const pp = g('provGlow');
+    if (t >= 2800 && t < 3600) { pp.setAttribute('opacity', Math.sin((t - 2800) / 800 * Math.PI)); setCap(2); }
+    else pp.setAttribute('opacity', 0);
+
+    const back = g('pktBack');
+    if (t >= 3600 && t < 5400) {
+      const k = easeIO((t - 3600) / 1800);
+      const p = backPath.getPointAtLength(k * backLen);
+      back.setAttribute('transform', `translate(${p.x},${p.y})`);
+      back.setAttribute('opacity', 1);
+      setCap(3);
+    } else back.setAttribute('opacity', 0);
+
+    const chip = g('savedChip');
+    if (t >= 5400) {
+      const k = Math.min((t - 5400) / 300, 1);
+      chip.setAttribute('opacity', t > CYCLE - 400 ? Math.max(0, (CYCLE - t) / 400) : k);
+      setCap(4);
+    } else chip.setAttribute('opacity', 0);
+  });
+})();
+
+/* ── 唯一的 rAF 循环:不可见的演示整段跳过 ── */
+function loop(now) {
+  requestAnimationFrame(loop);
+  for (const d of demos) if (d.visible) d.render(now, now - d.start);
+}
+requestAnimationFrame(loop);
+</script>
+</body>
+</html>
