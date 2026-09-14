@@ -1,0 +1,351 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<!-- CSP: only three relaxations vs. the home page, each named —
+     script-src adds jsDelivr (supabase-js, version pinned) and Turnstile;
+     connect-src adds this project's Supabase domain and Turnstile's verify domain;
+     style-src adds 'self' (v2.css is an external sheet). No wildcards. -->
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://challenges.cloudflare.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src https://syebvkwemxwxkonvsyjd.supabase.co https://challenges.cloudflare.com; frame-src https://challenges.cloudflare.com; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Try it — Murmur</title>
+<meta name="description" content="Paste a sentence the way you would say it and watch Murmur turn it into clean writing. No download, no sign-up.">
+<link rel="alternate" hreflang="en" href="../../en/try/index.html">
+<link rel="alternate" hreflang="zh-Hans" href="../../try/index.html">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../../v2.css">
+
+<style>
+/* ══════════ 页面局部:试一试 ══════════
+   舞台与两栏的配方逐字取自首页的 .stage / .panel;共用零件在 v2.css。 */
+.head { padding: 64px 0 0; display: flex; align-items: flex-start; gap: 24px; }
+.head .t { flex: 1; min-width: 0; }
+.head h1 { font-size: clamp(26px, 3.4vw, 34px); font-weight: 600; line-height: 1.35; letter-spacing: .01em; max-width: 12.5em; }
+.head .sub { color: var(--second); font-size: 15.5px; max-width: 38em; margin-top: 14px; }
+.head .quota { flex: none; margin-top: 6px; }
+
+.stage {
+  margin: 40px auto 0; max-width: 760px;
+  background: linear-gradient(180deg, var(--stage-a), var(--stage-b));
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  padding: 30px 32px 30px;
+}
+.examples { margin-top: 14px; display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+.examples .lab { font-size: 13px; color: var(--second); margin-right: 2px; }
+.actions { margin-top: 20px; display: flex; gap: 16px; align-items: center; flex-wrap: wrap; }
+.actions .count { margin-left: auto; font-family: "IBM Plex Mono", monospace; font-size: 11.5px; color: var(--faint); }
+.actions .count.over { color: var(--danger); }
+#state { flex-basis: 100%; }
+
+.compare { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 26px; }
+.panel {
+  background: var(--card); border: 1px solid var(--line); border-radius: 18px;
+  padding: 22px 24px 24px;
+}
+.panel .head-row { display: flex; align-items: baseline; gap: 12px; margin-bottom: 14px; }
+.panel .tag { font-size: 12px; letter-spacing: .16em; text-transform: uppercase; color: var(--faint); font-weight: 600; }
+.panel.clean .tag { color: var(--coral); }
+.panel .meta { margin-left: auto; font-family: "IBM Plex Mono", monospace; font-size: 11.5px; color: var(--faint); }
+.panel p.txt { font-size: 15px; line-height: 1.8; white-space: pre-wrap; overflow-wrap: anywhere; min-height: 3.6em; }
+.panel.raw p.txt { color: var(--second); }
+.panel.clean p.txt { color: var(--ink); }
+.panel p.txt.placeholder { color: var(--faint); }
+
+.stage-note { margin-top: 24px; font-size: 12.5px; color: var(--second); line-height: 1.8; }
+#turnstile { margin-top: 16px; }
+.after { max-width: 760px; margin: 24px auto 0; text-align: center; font-size: 14px; color: var(--second); }
+
+@media (max-width: 820px) {
+  .head { padding-top: 44px; flex-direction: column; gap: 14px; }
+  .head .quota { margin-top: 0; order: -1; }
+  .stage { margin-top: 28px; padding: 22px 18px 24px; border-radius: 18px; }
+  .compare { grid-template-columns: 1fr; gap: 14px; }
+  /* ⚠️ 占位项是 <span class="soon">,不是 <a> —— 只写 a:not(.nav-cta) 收不到它们,
+     窄屏上它们会留在顶栏里把「下载」挤成两行(375 宽实拍到过)。 */
+  .navlinks a:not(.nav-cta), .navlinks .soon { display: none; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap navrow">
+    <a class="brand" href="../index.html"><svg width="30" height="15" viewBox="0 0 200 100" aria-hidden="true"><path d="M12.0 50.0 L14.0 40.1 L16.0 31.7 L18.0 25.2 L20.0 21.0 L22.0 19.0 L24.0 19.2 L26.0 21.3 L28.0 25.2 L30.0 30.3 L32.0 36.2 L34.0 42.4 L36.0 48.5 L38.0 54.2 L40.0 59.0 L42.0 62.7 L44.0 65.2 L46.0 66.5 L48.0 66.5 L50.0 65.5 L52.0 63.5 L54.0 60.9 L56.0 57.8 L58.0 54.6 L60.0 51.5 L62.0 48.6 L64.0 46.2 L66.0 44.4 L68.0 43.2 L70.0 42.7 L72.0 42.7 L74.0 43.2 L76.0 44.1 L78.0 45.3 L80.0 46.7 L82.0 48.0 L84.0 49.2 L86.0 50.2 L88.0 51.0 L90.0 51.5 L92.0 51.8 L94.0 51.8 L96.0 51.6 L98.0 51.3 L100.0 50.9 L102.0 50.5 L104.0 50.2 L106.0 50.0 L190 50" fill="none" stroke="var(--coral)" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/></svg>Murmur</a>
+    <div class="navlinks">
+      <a href="index.html" aria-current="page">Try it</a>
+      <span class="soon" title="Coming in the next batch">Talk to the founder</span>
+      <span class="soon" title="Coming in the next batch">Sign in</span>
+      <a href="../../try/index.html" hreflang="zh-Hans" lang="zh-Hans">中文</a>
+      <a class="nav-cta" href="../index.html#download">Download</a>
+    </div>
+  </div>
+</nav>
+
+<header class="head wrap">
+  <div class="t">
+    <p class="eyebrow">Try it</p>
+    <h1>Paste a sentence the way you would actually say it</h1>
+    <p class="sub">Messy going in, clean coming out — see it once right here, no download and no sign-up. Once Murmur is installed, this happens in whatever text field your cursor is already in.</p>
+  </div>
+  <span class="quota" id="quota">Checking your quota…</span>
+</header>
+
+<main class="wrap">
+  <div class="stage">
+    <!-- A label with `hidden` drops out of the accessibility tree together with its
+         for= association, so screen readers announce an unnamed edit box. aria-label instead. -->
+    <textarea class="field" id="src" rows="4" maxlength="600" aria-label="Text to tidy"
+      placeholder="so um, about tomorrow's meeting, can we uh move it to three in the afternoon, because I've got a class in the morning, and yeah same place as usual is fine."></textarea>
+
+    <div class="examples">
+      <span class="lab">Try one of these</span>
+      <button class="chip" type="button" data-ex="so um, about tomorrow's meeting, can we uh move it to three in the afternoon, because I've got a class in the morning, and yeah same place as usual is fine.">Move a meeting</button>
+      <button class="chip" type="button" data-ex="so I had a look at the report, and um, the numbers feel a bit off, like the Q3 revenue looks short, can you double check it and then maybe we sync tomorrow?">Talk through a doc</button>
+      <button class="chip" type="button" data-ex="um so I just wanted to say, I'm not feeling great this week, and I'd like to take a day off, probably Thursday, and yeah I'll get my stuff done before then.">Ask for a day off</button>
+    </div>
+
+    <div class="actions">
+      <button class="btn btn-primary" id="go" type="button">Tidy it</button>
+      <span class="count" id="count">0 / 600</span>
+      <p class="state" id="state"></p>
+    </div>
+
+    <div id="turnstile" hidden></div>
+
+    <div class="compare">
+      <div class="panel raw">
+        <div class="head-row"><span class="tag">What you said</span><span class="meta" id="meta-raw"></span></div>
+        <p class="txt placeholder" id="out-raw">Type a sentence above, or pick one of the samples.</p>
+      </div>
+      <div class="panel clean">
+        <div class="head-row"><span class="tag">Tidied</span><span class="meta" id="meta-clean"></span></div>
+        <p class="txt placeholder" id="out-clean">The tidied version will show up here.</p>
+      </div>
+    </div>
+
+    <p class="stage-note">The <b>text</b> you type here is sent to Murmur's cloud to be tidied, and nothing is kept afterwards. This version does not record audio and does not touch your microphone. The tidying uses the same recipe as the Mac app.</p>
+  </div>
+
+  <p class="after">Sounds right? <a href="../index.html#download">Put it on your Mac</a> — finish the sentence and the text is already at your cursor.</p>
+</main>
+
+<footer class="wrap">
+  <span class="brand"><svg width="30" height="15" viewBox="0 0 200 100" aria-hidden="true"><path d="M12.0 50.0 L14.0 40.1 L16.0 31.7 L18.0 25.2 L20.0 21.0 L22.0 19.0 L24.0 19.2 L26.0 21.3 L28.0 25.2 L30.0 30.3 L32.0 36.2 L34.0 42.4 L36.0 48.5 L38.0 54.2 L40.0 59.0 L42.0 62.7 L44.0 65.2 L46.0 66.5 L48.0 66.5 L50.0 65.5 L52.0 63.5 L54.0 60.9 L56.0 57.8 L58.0 54.6 L60.0 51.5 L62.0 48.6 L64.0 46.2 L66.0 44.4 L68.0 43.2 L70.0 42.7 L72.0 42.7 L74.0 43.2 L76.0 44.1 L78.0 45.3 L80.0 46.7 L82.0 48.0 L84.0 49.2 L86.0 50.2 L88.0 51.0 L90.0 51.5 L92.0 51.8 L94.0 51.8 L96.0 51.6 L98.0 51.3 L100.0 50.9 L102.0 50.5 L104.0 50.2 L106.0 50.0 L190 50" fill="none" stroke="var(--coral)" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/></svg>Murmur</span>
+  <span>Made by Others Studio</span>
+  <div class="links">
+    <a href="https://othersstudio.tech">othersstudio.tech</a>
+    <a href="../privacy.html">Privacy</a>
+    <a href="../tos.html">Terms</a>
+    <a href="../../try/index.html" hreflang="zh-Hans" lang="zh-Hans">中文</a>
+  </div>
+</footer>
+
+<script type="module">
+// ── 试一试页的前端 ────────────────────────────────────────────────────────
+// 三条纪律:
+//  ① 模型输出一律 textContent,⛔ 不碰 innerHTML —— 那段字是模型生成的,
+//     而生成什么由用户写的话决定,等于把用户输入当 HTML 执行。
+//  ② 页面上只有 publishable key(它本来就是公开的,门是服务端的 RLS 与鉴权),
+//     ⛔ 没有别的密钥;提示词、模型、输出上限全在服务端,这里一个都看不到。
+//  ③ 一个失败对应一句人话,⛔ 不把 HTTP 状态码摆给用户看。
+//
+// ⚠️ 这一整段和 try/index.html 里那段**逐行相同**,只有 L 与 LANG 不一样。
+//    改逻辑时两边一起改(diff 一下就知道有没有漏)。本文件是 en 版。
+const SUPA_URL = "https://syebvkwemxwxkonvsyjd.supabase.co";
+const SUPA_KEY = "sb_publishable_bBmuodbgO72q8CK_kacrSw_0o3cCsOd";  // 公开 key,不是密钥
+const FN       = SUPA_URL + "/functions/v1/murmur-web";
+const FN_MAIN  = SUPA_URL + "/functions/v1/murmur";
+const SDK      = "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.116.0/+esm"; // 版本写死
+const LANG     = "en";
+const MAXLEN   = 600;
+// ⬇️ Wei 在 Cloudflare 后台建好 Turnstile widget 之后,把 site key 填这里。
+//    空着 = 匿名那条路在页面上也是关的(服务端另有一道开关,两道都要开)。
+const TURNSTILE_SITEKEY = "";
+
+const L = {
+  quotaLoading: "Checking your quota…",
+  quotaAuth:    (usd) => `$${usd} of this month's free quota left`,
+  quotaNoSeat:  "No seat on this account yet · use the anonymous trial",
+  quotaTrial:   (n) => `Anonymous trial · ${n} left today · unlimited once you sign in`,
+  quotaTrialOut:"Today's anonymous trial is used up · come back tomorrow, or sign in",
+  quotaTrialOff:"Anonymous trial is off today · available once you sign in",
+  busy:         "Tidying…",
+  cleanBusy:    "Tidying…",
+  rawEmpty:     "Type a sentence above, or pick one of the samples.",
+  cleanEmpty:   "The tidied version will show up here.",
+  needText:     "Type a sentence first.",
+  tooLong:      (n) => `That is ${n} characters; the limit is ${MAXLEN} per go — try a shorter passage.`,
+  needCaptcha:  "Clear the human check first.",
+  trialOff:     "The anonymous trial is off right now — sign in to use it.",
+  offline:      "Looks like the network dropped — reconnect and try again.",
+  byStatus: {
+    401: "Your sign-in looks expired — refresh the page and try again.",
+    402: "This month's free quota is used up — it refills next month, or write to us.",
+    500: "Something broke on our side — nothing was charged, try again shortly.",
+    502: "The model did not come back — nothing was charged, try again shortly.",
+    503: "Too busy right now — give it a moment.",
+    504: "The model timed out — nothing was charged, try again shortly.",
+  },
+  done: (sec) => `${sec}s`,
+};
+
+const $ = (id) => document.getElementById(id);
+const elSrc = $("src"), elGo = $("go"), elState = $("state"), elCount = $("count");
+const elQuota = $("quota"), elRaw = $("out-raw"), elClean = $("out-clean");
+const elMetaRaw = $("meta-raw"), elMetaClean = $("meta-clean"), elTs = $("turnstile");
+
+let token = null;               // 登录态的 access token(没有就是匿名)
+let trial = { enabled: false, remaining: 0 };
+let tsToken = "";               // Turnstile 回执,一次一用
+let busy = false;
+
+const codepoints = (s) => Array.from(s).length;
+function say(msg, kind) {       // 状态行:一次只出一个
+  elState.textContent = msg || "";
+  elState.className = "state" + (kind ? " " + kind : "");
+}
+function setText(el, text, isPlaceholder) {
+  el.textContent = text;        // ⛔ 永远不是 innerHTML
+  el.classList.toggle("placeholder", !!isPlaceholder);
+}
+
+// ── 额度小标 ──────────────────────────────────────────────────────────────
+async function loadQuota() {
+  try {
+    const r = await fetch(FN_MAIN + "/me", { headers: { authorization: "Bearer " + token } });
+    if (r.status === 403) { elQuota.textContent = L.quotaNoSeat; await loadTrial(); return; }
+    if (!r.ok) { await loadTrial(); return; }
+    const j = await r.json();
+    const usd = (Number(j.remaining_micro_usd || 0) / 1e6).toFixed(2);
+    elQuota.textContent = L.quotaAuth(usd);
+  } catch { await loadTrial(); }
+}
+async function loadTrial() {
+  try {
+    const r = await fetch(FN + "/trial/state", { headers: { apikey: SUPA_KEY } });
+    const j = await r.json();
+    trial = { enabled: !!j.enabled, remaining: Number(j.remaining_today || 0) };
+  } catch { trial = { enabled: false, remaining: 0 }; }
+  paintTrial();
+}
+function paintTrial() {
+  if (!trial.enabled) { elQuota.textContent = L.quotaTrialOff; return; }
+  elQuota.textContent = trial.remaining > 0 ? L.quotaTrial(trial.remaining) : L.quotaTrialOut;
+}
+
+// ── Turnstile(有 site key 才加载)────────────────────────────────────────
+function mountTurnstile() {
+  if (!TURNSTILE_SITEKEY || token) return;     // 登录态不需要人机验证
+  elTs.hidden = false;
+  window.onMurmurTurnstile = () => {
+    window.turnstile.render(elTs, {
+      sitekey: TURNSTILE_SITEKEY, action: "web-trial",
+      callback: (t) => { tsToken = t; },
+      "expired-callback": () => { tsToken = ""; },
+    });
+  };
+  const s = document.createElement("script");
+  s.src = "https://challenges.cloudflare.com/turnstile/v0/api.js?onload=onMurmurTurnstile&render=explicit";
+  s.async = true; s.defer = true;
+  document.head.appendChild(s);
+}
+
+// ── 整理 ──────────────────────────────────────────────────────────────────
+async function polish() {
+  if (busy) return;
+  const text = elSrc.value.trim();
+  if (!text) { say(L.needText, "err"); elSrc.focus(); return; }
+  const n = codepoints(text);
+  if (n > MAXLEN) { say(L.tooLong(n), "err"); return; }
+  if (!token) {
+    if (!trial.enabled) { say(L.trialOff, "err"); return; }
+    if (TURNSTILE_SITEKEY && !tsToken) { say(L.needCaptcha, "err"); return; }
+  }
+
+  busy = true; elGo.disabled = true;
+  setText(elRaw, text, false);
+  elMetaRaw.textContent = n + " chars";
+  setText(elClean, L.cleanBusy, true);
+  elMetaClean.textContent = "";
+  say(L.busy, "busy");
+  const t0 = performance.now();
+
+  const url = token ? FN + "/polish" : FN + "/polish/trial";
+  const headers = { "content-type": "application/json", apikey: SUPA_KEY };
+  if (token) headers.authorization = "Bearer " + token;
+  const body = { text, lang: LANG };
+  if (!token) body.turnstile = tsToken;
+
+  let r, j;
+  try {
+    r = await fetch(url, { method: "POST", headers, body: JSON.stringify(body) });
+    j = await r.json().catch(() => null);
+  } catch {
+    busy = false; elGo.disabled = false;
+    setText(elClean, L.cleanEmpty, true);
+    say(L.offline, "err");
+    return;
+  }
+  // Turnstile 的回执一次一用 —— 无论成败都换一张
+  if (window.turnstile) { try { window.turnstile.reset(); } catch { /* 没渲染过 */ } tsToken = ""; }
+
+  busy = false; elGo.disabled = false;
+  if (!r.ok || !j || !j.polished) {
+    setText(elClean, L.cleanEmpty, true);
+    // 服务端的文案本来就是人话,优先用它;没有再回落到按状态码的那张表
+    say((j && j.error && j.error.message) || L.byStatus[r.status] || L.byStatus[500], "err");
+    if (!token) await loadTrial();
+    return;
+  }
+  setText(elClean, j.polished, false);
+  elMetaClean.textContent = L.done(((performance.now() - t0) / 1000).toFixed(1));
+  say("");
+  if (token) {
+    if (typeof j.remaining === "number") elQuota.textContent = L.quotaAuth((j.remaining / 1e6).toFixed(2));
+  } else {
+    trial.remaining = Number(j.remaining_today || 0);
+    paintTrial();
+  }
+}
+
+// ── 接线 ──────────────────────────────────────────────────────────────────
+elSrc.addEventListener("input", () => {
+  const n = codepoints(elSrc.value);
+  elCount.textContent = n + " / " + MAXLEN;
+  elCount.classList.toggle("over", n > MAXLEN);
+});
+elSrc.addEventListener("keydown", (e) => {
+  // ⌘/Ctrl + Enter 提交 —— 光标在多行框里时 Enter 本来就该换行
+  if ((e.metaKey || e.ctrlKey) && e.key === "Enter") { e.preventDefault(); polish(); }
+});
+document.querySelectorAll(".chip[data-ex]").forEach((b) => {
+  b.addEventListener("click", () => {
+    elSrc.value = b.dataset.ex;
+    elSrc.dispatchEvent(new Event("input"));
+    elSrc.focus();
+    say("");
+  });
+});
+elGo.addEventListener("click", polish);
+
+(async function init() {
+  elQuota.textContent = L.quotaLoading;
+  setText(elRaw, L.rawEmpty, true);
+  setText(elClean, L.cleanEmpty, true);
+  try {
+    const { createClient } = await import(SDK);
+    const sb = createClient(SUPA_URL, SUPA_KEY, {
+      auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: false },
+    });
+    const { data } = await sb.auth.getSession();
+    token = (data && data.session && data.session.access_token) || null;
+  } catch {
+    token = null;   // CDN 拉不下来就当没登录:页面照样能用匿名那条路
+  }
+  if (token) await loadQuota(); else await loadTrial();
+  mountTurnstile();
+})();
+</script>
+</body>
+</html>
