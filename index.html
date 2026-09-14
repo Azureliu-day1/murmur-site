@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 <head>
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'unsafe-inline'; style-src 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Murmur — 说完,字已经落在光标处</title>
 <meta name="description" content="给中英夹着说话的人做的 macOS 听写工具。说完,整理好的文字已经落在光标处。">
@@ -538,6 +538,10 @@ body.is-sandbox .sandbox { display: inline-block; }
       <a href="#features">功能</a>
       <a href="#promises">承诺</a>
 <!-- 定价段下架期间,导航也去掉这一项(否则点了滚到空处) -->
+      <a href="try/index.html">试一试</a>
+      <!-- ⚠️ class="nav-signin" 是给 v2-nav.js 认的:本机有会话时它把这一项
+           换成一枚固定宽度的「账户」。⛔ 顶栏静态写着「登录」,不靠 JS 生成。 -->
+      <a class="nav-signin" href="login/index.html">登录</a>
       <a class="nav-cta" href="#download">下载</a>
     </div>
   </div>
@@ -1310,5 +1314,6 @@ function loop(now) {
 }
 requestAnimationFrame(loop);
 </script>
+<script src="v2-nav.js"></script>
 </body>
 </html>
