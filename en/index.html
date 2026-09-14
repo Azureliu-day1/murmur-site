@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'unsafe-inline'; style-src 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Murmur — the words are already at your cursor</title>
 <meta name="description" content="A macOS dictation tool: hold a key, say it, and finished text lands wherever your cursor is. On-device or cloud recognition, your choice.">
@@ -535,6 +535,11 @@ body.is-sandbox .sandbox { display: inline-block; }
       <a href="#demo">Demo</a>
       <a href="#features">Features</a>
       <a href="#promises">Promises</a>
+      <a href="try/index.html">Try it</a>
+      <!-- ⚠️ class="nav-signin" is what v2-nav.js looks for: when this machine has a
+           session it swaps this one item for a fixed-width "Account". The bar is
+           static HTML; JS never builds it. -->
+      <a class="nav-signin" href="login/index.html">Sign in</a>
       <a href="../index.html" hreflang="zh-Hans" lang="zh-Hans">中文</a>
       <a class="nav-cta" href="#download">Download</a>
     </div>
@@ -1318,5 +1323,6 @@ function loop(now) {
 }
 requestAnimationFrame(loop);
 </script>
+<script src="../v2-nav.js"></script>
 </body>
 </html>

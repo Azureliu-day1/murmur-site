@@ -76,7 +76,8 @@
       <a href="../en/try/index.html" hreflang="en" lang="en">English</a>
       <a href="index.html" aria-current="page">试一试</a>
       <span class="soon" title="下一批就开">和创始人聊聊</span>
-      <span class="soon" title="下一批就开">登录</span>
+      <!-- ⚠️ class="nav-signin" 是给 v2-nav.js 认的(本机有会话时换成「账户」) -->
+      <a class="nav-signin" href="../login/index.html">登录</a>
       <a class="nav-cta" href="../index.html#download">下载</a>
     </div>
   </div>
@@ -127,6 +128,8 @@
     <p class="stage-note">你写进去的这段<b>文字</b>会发给 Murmur 的云端整理,整理完就不留;这一版不录音、不用麦克风。整理用的是和 Mac 版同一套口径。</p>
   </div>
 
+  <p class="after" id="noseatNote" hidden>名额是一个一个开的,创始人会尽快;开了会用你这个邮箱通知你。</p>
+
   <p class="after">觉得对路?<a href="../index.html#download">装到 Mac 上</a>,说完字就落在光标处。</p>
 </main>
 
@@ -140,6 +143,7 @@
   </div>
 </footer>
 
+<script src="../v2-nav.js"></script>
 <script type="module">
 // ── 试一试页的前端 ────────────────────────────────────────────────────────
 // 三条纪律:
@@ -154,7 +158,6 @@
 const SUPA_URL = "https://syebvkwemxwxkonvsyjd.supabase.co";
 const SUPA_KEY = "sb_publishable_bBmuodbgO72q8CK_kacrSw_0o3cCsOd";  // 公开 key,不是密钥
 const FN       = SUPA_URL + "/functions/v1/murmur-web";
-const FN_MAIN  = SUPA_URL + "/functions/v1/murmur";
 const SDK      = "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.116.0/+esm"; // 版本写死
 const LANG     = "zh";
 const MAXLEN   = 600;
@@ -165,7 +168,10 @@ const TURNSTILE_SITEKEY = "";
 const L = {
   quotaLoading: "正在看你的额度…",
   quotaAuth:    (usd) => `本月免费额度还剩 $${usd}`,
-  quotaNoSeat:  "这个账号还没有名额 · 先用匿名试用",
+  quotaNoSeat:  (n) => `登录了 · 名额还没开 · 今天还能整理 ${n} 次`,
+  quotaNoSeatOut: "登录了 · 名额还没开 · 今天的次数用完了,明天再来",
+  quotaBlocked: "这个账号暂时不可用 · 回一封我们的邮件就行",
+  quotaUnknown: "额度这会儿查不到 · 整理照常能点",
   quotaTrial:   (n) => `匿名试用 · 今天还能整理 ${n} 次 · 登录后不限`,
   quotaTrialOut:"今天的匿名试用用完了 · 明天再来,登录后不限",
   quotaTrialOff:"匿名试用今天没开 · 登录后可用",
@@ -210,15 +216,36 @@ function setText(el, text, isPlaceholder) {
 }
 
 // ── 额度小标 ──────────────────────────────────────────────────────────────
+// 读的是 murmur-web 自己的 /me/lite,⛔ 不是 murmur 那个函数的 /me:
+// /me 挡在 authed() 后面,而 authed() 对**没名额的人**直接 403 —— 这一页恰好
+// 要服务的就是那批刚申请完身份的人,从那条路上拿不到他们的任何信息。
 async function loadQuota() {
   try {
-    const r = await fetch(FN_MAIN + "/me", { headers: { authorization: "Bearer " + token } });
-    if (r.status === 403) { elQuota.textContent = L.quotaNoSeat; await loadTrial(); return; }
-    if (!r.ok) { await loadTrial(); return; }
+    const r = await fetch(FN + "/me/lite", {
+      headers: { authorization: "Bearer " + token, apikey: SUPA_KEY },
+    });
+    // ⛔ 登录态查不到就说「查不到」,不许回落到匿名那句「登录后可用」——
+    //    对一个已经登录的人说这句话,是页面在撒谎(S1 冒烟时实拍到)。
+    if (!r.ok) { elQuota.textContent = L.quotaUnknown; return; }
     const j = await r.json();
-    const usd = (Number(j.remaining_micro_usd || 0) / 1e6).toFixed(2);
-    elQuota.textContent = L.quotaAuth(usd);
-  } catch { await loadTrial(); }
+    if (j.seat) {
+      elQuota.textContent = L.quotaAuth((Number(j.remaining_micro_usd || 0) / 1e6).toFixed(2));
+      return;
+    }
+    if (j.status) {            // 有会员行但不是 active = 被停用,和「还没开名额」不是一回事
+      elQuota.textContent = L.quotaBlocked;
+      return;
+    }
+    paintNoSeat(Number(j.noseat_remaining || 0));
+  } catch { elQuota.textContent = L.quotaUnknown; }
+}
+
+/// 没名额的登录用户:小标 + 下面那一句「创始人会尽快」。
+/// ⛔ 不把他推回匿名试用 —— 他已经登录了,匿名那条路对他只会更窄(而且现在关着)。
+function paintNoSeat(n) {
+  elQuota.textContent = n > 0 ? L.quotaNoSeat(n) : L.quotaNoSeatOut;
+  const note = document.getElementById("noseatNote");
+  if (note) note.hidden = false;
 }
 async function loadTrial() {
   try {
@@ -302,6 +329,7 @@ async function polish() {
   say("");
   if (token) {
     if (typeof j.remaining === "number") elQuota.textContent = L.quotaAuth((j.remaining / 1e6).toFixed(2));
+    else if (j.seat === false) paintNoSeat(Number(j.noseat_remaining || 0));
   } else {
     trial.remaining = Number(j.remaining_today || 0);
     paintTrial();

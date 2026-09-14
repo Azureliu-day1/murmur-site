@@ -75,7 +75,8 @@
     <div class="navlinks">
       <a href="index.html" aria-current="page">Try it</a>
       <span class="soon" title="Coming in the next batch">Talk to the founder</span>
-      <span class="soon" title="Coming in the next batch">Sign in</span>
+      <!-- class="nav-signin" is what v2-nav.js looks for (swapped for "Account" when signed in) -->
+      <a class="nav-signin" href="../login/index.html">Sign in</a>
       <a href="../../try/index.html" hreflang="zh-Hans" lang="zh-Hans">中文</a>
       <a class="nav-cta" href="../index.html#download">Download</a>
     </div>
@@ -127,6 +128,8 @@
     <p class="stage-note">The <b>text</b> you type here is sent to Murmur's cloud to be tidied, and nothing is kept afterwards. This version does not record audio and does not touch your microphone. The tidying uses the same recipe as the Mac app.</p>
   </div>
 
+  <p class="after" id="noseatNote" hidden>Seats open one at a time and the founder gets to them as fast as he can; we will use this email address when yours opens.</p>
+
   <p class="after">Sounds right? <a href="../index.html#download">Put it on your Mac</a> — finish the sentence and the text is already at your cursor.</p>
 </main>
 
@@ -141,6 +144,7 @@
   </div>
 </footer>
 
+<script src="../../v2-nav.js"></script>
 <script type="module">
 // ── 试一试页的前端 ────────────────────────────────────────────────────────
 // 三条纪律:
@@ -155,7 +159,6 @@
 const SUPA_URL = "https://syebvkwemxwxkonvsyjd.supabase.co";
 const SUPA_KEY = "sb_publishable_bBmuodbgO72q8CK_kacrSw_0o3cCsOd";  // 公开 key,不是密钥
 const FN       = SUPA_URL + "/functions/v1/murmur-web";
-const FN_MAIN  = SUPA_URL + "/functions/v1/murmur";
 const SDK      = "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.116.0/+esm"; // 版本写死
 const LANG     = "en";
 const MAXLEN   = 600;
@@ -166,7 +169,10 @@ const TURNSTILE_SITEKEY = "";
 const L = {
   quotaLoading: "Checking your quota…",
   quotaAuth:    (usd) => `$${usd} of this month's free quota left`,
-  quotaNoSeat:  "No seat on this account yet · use the anonymous trial",
+  quotaNoSeat:  (n) => `Signed in · seat not open yet · ${n} tidy-ups left today`,
+  quotaNoSeatOut: "Signed in · seat not open yet · today's tidy-ups are used up",
+  quotaBlocked: "This account is on hold · reply to any of our emails",
+  quotaUnknown: "Cannot read your quota right now · tidying still works",
   quotaTrial:   (n) => `Anonymous trial · ${n} left today · unlimited once you sign in`,
   quotaTrialOut:"Today's anonymous trial is used up · come back tomorrow, or sign in",
   quotaTrialOff:"Anonymous trial is off today · available once you sign in",
@@ -211,15 +217,36 @@ function setText(el, text, isPlaceholder) {
 }
 
 // ── 额度小标 ──────────────────────────────────────────────────────────────
+// 读的是 murmur-web 自己的 /me/lite,⛔ 不是 murmur 那个函数的 /me:
+// /me 挡在 authed() 后面,而 authed() 对**没名额的人**直接 403 —— 这一页恰好
+// 要服务的就是那批刚申请完身份的人,从那条路上拿不到他们的任何信息。
 async function loadQuota() {
   try {
-    const r = await fetch(FN_MAIN + "/me", { headers: { authorization: "Bearer " + token } });
-    if (r.status === 403) { elQuota.textContent = L.quotaNoSeat; await loadTrial(); return; }
-    if (!r.ok) { await loadTrial(); return; }
+    const r = await fetch(FN + "/me/lite", {
+      headers: { authorization: "Bearer " + token, apikey: SUPA_KEY },
+    });
+    // ⛔ 登录态查不到就说「查不到」,不许回落到匿名那句「登录后可用」——
+    //    对一个已经登录的人说这句话,是页面在撒谎(S1 冒烟时实拍到)。
+    if (!r.ok) { elQuota.textContent = L.quotaUnknown; return; }
     const j = await r.json();
-    const usd = (Number(j.remaining_micro_usd || 0) / 1e6).toFixed(2);
-    elQuota.textContent = L.quotaAuth(usd);
-  } catch { await loadTrial(); }
+    if (j.seat) {
+      elQuota.textContent = L.quotaAuth((Number(j.remaining_micro_usd || 0) / 1e6).toFixed(2));
+      return;
+    }
+    if (j.status) {            // 有会员行但不是 active = 被停用,和「还没开名额」不是一回事
+      elQuota.textContent = L.quotaBlocked;
+      return;
+    }
+    paintNoSeat(Number(j.noseat_remaining || 0));
+  } catch { elQuota.textContent = L.quotaUnknown; }
+}
+
+/// 没名额的登录用户:小标 + 下面那一句「创始人会尽快」。
+/// ⛔ 不把他推回匿名试用 —— 他已经登录了,匿名那条路对他只会更窄(而且现在关着)。
+function paintNoSeat(n) {
+  elQuota.textContent = n > 0 ? L.quotaNoSeat(n) : L.quotaNoSeatOut;
+  const note = document.getElementById("noseatNote");
+  if (note) note.hidden = false;
 }
 async function loadTrial() {
   try {
@@ -303,6 +330,7 @@ async function polish() {
   say("");
   if (token) {
     if (typeof j.remaining === "number") elQuota.textContent = L.quotaAuth((j.remaining / 1e6).toFixed(2));
+    else if (j.seat === false) paintNoSeat(Number(j.noseat_remaining || 0));
   } else {
     trial.remaining = Number(j.remaining_today || 0);
     paintTrial();
