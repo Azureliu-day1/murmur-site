@@ -1,0 +1,181 @@
+/* ══════════════════════════════════════════════════════════════════════════
+   v2 共用样式(2026-09-14 · S2 起)
+   ⛔ 不另起一套 CSS 体系:到「v2 新增」之前的每一条都逐字取自 index.html,
+      改这里就是改站点的脸,别顺手「优化」。
+      新加的只有表单与状态那几个零件(输入框 / 禁用 / 加载 / 错误),
+      它们用的还是同一批 token,没有新色、没有新圆角尺度。
+   放在站点根目录:里面的 fonts/… 是相对**这个文件**解析的,
+   所以 /try/ 和 /en/try/ 两层深的页面引用它,字体路径都对。
+   ══════════════════════════════════════════════════════════════════════════ */
+
+@font-face { font-family: 'IBM Plex Mono'; font-style: normal; font-weight: 400; font-display: swap; src: url('fonts/IBMPlexMono-normal-400-latin.woff2') format('woff2'); }
+@font-face { font-family: 'IBM Plex Mono'; font-style: normal; font-weight: 500; font-display: swap; src: url('fonts/IBMPlexMono-normal-500-latin.woff2') format('woff2'); }
+@font-face { font-family: 'Newsreader'; font-style: normal; font-weight: 500; font-display: swap; src: url('fonts/Newsreader-normal-500-latin.woff2') format('woff2'); }
+@font-face { font-family: 'Newsreader'; font-style: normal; font-weight: 600; font-display: swap; src: url('fonts/Newsreader-normal-600-latin.woff2') format('woff2'); }
+
+/* 色板取自 App 的 DesignSystem.swift。铁律:珊瑚是唯一品牌色,只上圆点 /
+   链接 / 主按钮,绝不铺面积。 */
+:root {
+  --paper:  #F7F7F8;
+  --card:   #FFFFFF;
+  --ink:    #1B1B1F;
+  --second: #55555C;
+  --faint:  #8E8E96;
+  --line:   #E9E9EC;
+  --line2:  #D6D6DC;
+  --coral:  #E2531F;
+  --coral-tint: #FBEFE9;
+  --green:  #2E7D4F;
+  --capsule: #FFFFFF;
+  --stage-a: rgba(27,27,31,.04);
+  --stage-b: rgba(27,27,31,.07);
+  --shadow: 0 1px 2px rgba(27,27,31,.04), 0 12px 32px rgba(27,27,31,.07);
+  /* v2 新增的语义 token:错误一个色,焦点一个色。⛔ 不给「成功」发明新绿, */
+  /* 站点本来就有 --green。 */
+  --danger: #B3341A;
+  --focus:  rgba(226,83,31,.32);
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --paper:  #161618;
+    --card:   #1E1E21;
+    --ink:    #F2F2F4;
+    --second: #A0A0A8;
+    --faint:  #6E6E76;
+    --line:   #2C2C31;
+    --line2:  #3A3A41;
+    --coral:  #FF6B35;
+    --coral-tint: #3A2118;
+    --green:  #5FBF87;
+    --capsule: #232326;
+    --stage-a: rgba(0,0,0,.22);
+    --stage-b: rgba(0,0,0,.34);
+    --shadow: 0 1px 2px rgba(0,0,0,.3), 0 12px 32px rgba(0,0,0,.4);
+    --danger: #FF8566;
+    --focus:  rgba(255,107,53,.36);
+  }
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; }
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", sans-serif;
+  font-size: 16px;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+}
+.serif { font-family: "Newsreader", Georgia, serif; }
+.mono  { font-family: "IBM Plex Mono", ui-monospace, monospace; }
+/* 只管横向 —— 用 shorthand 会把 section 的顶距整个覆盖掉(类压过元素) */
+.wrap { max-width: 1080px; margin: 0 auto; padding-left: 32px; padding-right: 32px; }
+a { color: var(--coral); text-decoration: none; }
+a:hover { text-decoration: underline; text-underline-offset: 3px; }
+
+/* ── 顶栏 ── */
+nav {
+  position: sticky; top: 0; z-index: 10;
+  background: color-mix(in srgb, var(--paper) 86%, transparent);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--line);
+}
+.navrow { display: flex; align-items: center; gap: 28px; height: 60px; }
+.brand { display: flex; align-items: center; gap: 9px; font-family: "Newsreader", serif; font-weight: 600; font-size: 19px; color: var(--ink); }
+.brand:hover { text-decoration: none; }
+.navlinks { display: flex; gap: 24px; margin-left: auto; align-items: center; }
+.navlinks a { color: var(--second); font-size: 13.5px; }
+.navlinks a:hover { color: var(--ink); text-decoration: none; }
+.navlinks a[aria-current] { color: var(--ink); }
+.nav-cta {
+  font-size: 13px; font-weight: 500; color: var(--card) !important;
+  background: var(--ink); padding: 7px 16px; border-radius: 999px;
+  transition: opacity .12s ease;
+  white-space: nowrap;   /* v2 新增:顶栏挤的时候「下载」两个字不许拆成两行 */
+}
+.nav-cta:hover { opacity: .88; text-decoration: none; }
+/* v2 新增:还没通电的导航项。⛔ 不用 --faint 当「能读的字」,这里它是
+   「明确告诉你现在点不了」的灰,配 title 说明什么时候能点。 */
+.navlinks .soon { color: var(--faint); cursor: default; }
+.navlinks .soon:hover { color: var(--faint); text-decoration: none; }
+
+.eyebrow {
+  font-size: 12px; font-weight: 600; letter-spacing: .18em;
+  text-transform: uppercase; color: var(--faint); margin-bottom: 14px;
+}
+.btn {
+  display: inline-block; font-size: 15px; font-weight: 500;
+  padding: 13px 28px; border-radius: 999px; transition: opacity .12s ease;
+}
+.btn-primary { background: var(--coral); color: #fff; }
+.btn-primary:hover { opacity: .9; text-decoration: none; }
+.btn-quiet { color: var(--second); border: 1px solid var(--line2); }
+.btn-quiet:hover { color: var(--ink); text-decoration: none; }
+button.btn { border: 0; font-family: inherit; cursor: pointer; line-height: 1.7; }
+button.btn-quiet { background: transparent; border: 1px solid var(--line2); }
+
+footer {
+  margin-top: 96px; border-top: 1px solid var(--line);
+  padding-top: 36px; padding-bottom: 48px; color: var(--faint); font-size: 13px;
+  display: flex; gap: 24px; flex-wrap: wrap; align-items: center;
+}
+footer .brand { font-size: 15px; }
+footer .links { margin-left: auto; display: flex; gap: 20px; }
+footer a { color: var(--faint); }
+footer a:hover { color: var(--ink); text-decoration: none; }
+/* 站点上 footer 的 margin-top 其实是死的:<footer class="wrap"> 的
+   .wrap{margin:0 auto} 是类选择器(0-1-0),压过 footer{margin-top}(0-0-1)。
+   这里不动站点的 index.html,只给 main 自己补这段留白。 */
+main { padding-bottom: 88px; }
+
+/* ══════════════ v2 新增:表单与状态 ══════════════
+   一套零件,登录页(S1)和对话页(S3)接着用。⛔ 别在页面里再写一份。 */
+
+.field {
+  width: 100%; display: block;
+  font-family: inherit; font-size: 15.5px; line-height: 1.8; color: var(--ink);
+  background: var(--card); border: 1px solid var(--line2); border-radius: 14px;
+  padding: 16px 18px; resize: vertical;
+  transition: border-color .12s ease, box-shadow .12s ease;
+}
+.field::placeholder { color: var(--faint); }
+.field:focus { outline: none; border-color: var(--coral); box-shadow: 0 0 0 3px var(--focus); }
+.field:disabled { opacity: .6; cursor: not-allowed; }
+
+/* 焦点可见性是全站的:键盘走位时每个可点的东西都要看得见自己被选中了 */
+.btn:focus-visible, .chip:focus-visible, .field:focus-visible,
+.navlinks a:focus-visible { outline: 2px solid var(--coral); outline-offset: 2px; }
+
+/* 禁用态的按钮:变淡 + 不许有 hover 的动静(不然看着还能点) */
+.btn[disabled], .btn[aria-disabled="true"] { opacity: .45; cursor: not-allowed; }
+.btn[disabled]:hover, .btn[aria-disabled="true"]:hover { opacity: .45; }
+
+/* 小胶囊按钮:「试试这句」那三枚 */
+.chip {
+  font-family: inherit; font-size: 13.5px; color: var(--second);
+  background: var(--capsule); border: 1px solid var(--line2);
+  border-radius: 999px; padding: 7px 15px; cursor: pointer;
+  transition: border-color .12s ease, color .12s ease;
+}
+.chip:hover { color: var(--ink); border-color: var(--coral); }
+.chip[disabled] { opacity: .45; cursor: not-allowed; }
+.chip[disabled]:hover { color: var(--second); border-color: var(--line2); }
+
+/* 配额小标:沿用首页提供表的 .tier-cost 写法 —— mono、胶囊、不抢色 */
+.quota {
+  display: inline-block;
+  font-family: "IBM Plex Mono", monospace; font-size: 11.5px; color: var(--second);
+  background: var(--stage-a); padding: 5px 12px; border-radius: 999px; white-space: nowrap;
+}
+.quota .on { color: var(--coral); }
+
+/* 状态行:加载 / 错误 / 提示,三个用同一个位置,一次只出一个 */
+.state { min-height: 22px; font-size: 13.5px; color: var(--second); }
+.state.err { color: var(--danger); }
+/* ⛔ 加载不用转圈:GPT-6 那条「两栏分两次落」的意思是让人看见进度,
+   转圈只说明「还在等」,说不出等的是什么。这里用一句会呼吸的文字。 */
+.state.busy { color: var(--second); animation: murmur-breathe 1.4s ease-in-out infinite; }
+@keyframes murmur-breathe { 0%, 100% { opacity: 1 } 50% { opacity: .45 } }
+@media (prefers-reduced-motion: reduce) {
+  .state.busy { animation: none; opacity: .8; }
+}
