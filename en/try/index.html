@@ -18,7 +18,11 @@
 <style>
 /* ══════════ 页面局部:试一试 ══════════
    舞台与两栏的配方逐字取自首页的 .stage / .panel;共用零件在 v2.css。 */
-.head { padding: 64px 0 0; display: flex; align-items: flex-start; gap: 24px; }
+/* ⛔ 这里不许写 `padding` 简写:<header class="head wrap">,而简写会把 v2.css 里
+   .wrap 的左右 32px 一起清零(同为 0-1-0,页内 <style> 在外链之后 → 它赢)。
+   后果是窄屏上额度小标、标题、副标题直接贴着屏幕左边,而下面的 .stage 是 32px。
+   竖直方向的留白一律用 padding-block。 */
+.head { padding-block: 64px 0; display: flex; align-items: flex-start; gap: 24px; }
 .head .t { flex: 1; min-width: 0; }
 .head h1 { font-size: clamp(26px, 3.4vw, 34px); font-weight: 600; line-height: 1.35; letter-spacing: .01em; max-width: 12.5em; }
 .head .sub { color: var(--second); font-size: 15.5px; max-width: 38em; margin-top: 14px; }
@@ -62,8 +66,11 @@
   .stage { margin-top: 28px; padding: 22px 18px 24px; border-radius: 18px; }
   .compare { grid-template-columns: 1fr; gap: 14px; }
   /* ⚠️ 占位项是 <span class="soon">,不是 <a> —— 只写 a:not(.nav-cta) 收不到它们,
-     窄屏上它们会留在顶栏里把「下载」挤成两行(375 宽实拍到过)。 */
-  .navlinks a:not(.nav-cta), .navlinks .soon { display: none; }
+     窄屏上它们会留在顶栏里把「下载」挤成两行(375 宽实拍到过)。
+     ⭐ 2026-09-17:打了 class="nav-keep" 的项(Try it / Sign in)在手机上留着 ——
+        顶栏只剩一个 Download 的时候,手机上的人一条能走的路都没有。
+        尺寸收窄的那几条在 v2.css 的同一个断点里。 */
+  .navlinks a:not(.nav-cta):not(.nav-keep), .navlinks .soon { display: none; }
 }
 </style>
 </head>
@@ -73,10 +80,14 @@
   <div class="wrap navrow">
     <a class="brand" href="../index.html"><svg width="30" height="15" viewBox="0 0 200 100" aria-hidden="true"><path d="M12.0 50.0 L14.0 40.1 L16.0 31.7 L18.0 25.2 L20.0 21.0 L22.0 19.0 L24.0 19.2 L26.0 21.3 L28.0 25.2 L30.0 30.3 L32.0 36.2 L34.0 42.4 L36.0 48.5 L38.0 54.2 L40.0 59.0 L42.0 62.7 L44.0 65.2 L46.0 66.5 L48.0 66.5 L50.0 65.5 L52.0 63.5 L54.0 60.9 L56.0 57.8 L58.0 54.6 L60.0 51.5 L62.0 48.6 L64.0 46.2 L66.0 44.4 L68.0 43.2 L70.0 42.7 L72.0 42.7 L74.0 43.2 L76.0 44.1 L78.0 45.3 L80.0 46.7 L82.0 48.0 L84.0 49.2 L86.0 50.2 L88.0 51.0 L90.0 51.5 L92.0 51.8 L94.0 51.8 L96.0 51.6 L98.0 51.3 L100.0 50.9 L102.0 50.5 L104.0 50.2 L106.0 50.0 L190 50" fill="none" stroke="var(--coral)" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/></svg>Murmur</a>
     <div class="navlinks">
-      <a href="index.html" aria-current="page">Try it</a>
+      <a class="nav-keep" href="index.html" aria-current="page">Try it</a>
+      <!-- S3 is not wired up yet, so it does not render — a grey word you cannot
+           click only takes room, and on a phone it pushes out a real door.
+           Put this line back when S3 ships:
       <span class="soon" title="Coming in the next batch">Talk to the founder</span>
+      -->
       <!-- class="nav-signin" is what v2-nav.js looks for (swapped for "Account" when signed in) -->
-      <a class="nav-signin" href="../login/index.html">Sign in</a>
+      <a class="nav-signin nav-keep" href="../login/index.html">Sign in</a>
       <a href="../../try/index.html" hreflang="zh-Hans" lang="zh-Hans">中文</a>
       <a class="nav-cta" href="../index.html#download">Download</a>
     </div>
@@ -168,7 +179,13 @@ const TURNSTILE_SITEKEY = "";
 
 const L = {
   quotaLoading: "Checking your quota…",
-  quotaAuth:    (usd) => `$${usd} of this month's free quota left`,
+  // ⛔ 有名额的人看到的不再是美元。站点别处对用户承诺的口径是「每周 2000 字」,
+  //    顶上却冒出一句「还剩 $0.50」是第二套口径,而且把我们的成本摆到了他脸上。
+  //    ① 还有额度 → 只说够不够用;② 真用完了 → 沿用 402 那句已经写好的人话;
+  //    ③ 字段根本没回来(NaN)→ 按「还够用」说,服务端那一关会说实话。
+  quotaAuth:    (micro) => (Number.isFinite(micro) && micro <= 0)
+                             ? L.byStatus[402]
+                             : "Free quota · plenty left this month",
   quotaNoSeat:  (n) => `Signed in · seat not open yet · ${n} tidy-ups left today`,
   quotaNoSeatOut: "Signed in · seat not open yet · today's tidy-ups are used up",
   quotaBlocked: "This account is on hold · reply to any of our emails",
@@ -183,7 +200,8 @@ const L = {
   needText:     "Type a sentence first.",
   tooLong:      (n) => `That is ${n} characters; the limit is ${MAXLEN} per go — try a shorter passage.`,
   needCaptcha:  "Clear the human check first.",
-  trialOff:     "The anonymous trial is off right now — sign in to use it.",
+  // ⭐ 三段:前半 / 链接上的字 / 后半 —— 「sign in」是这句话里唯一的下一步。
+  trialOff:     ["The anonymous trial is off right now — ", "sign in", " to use it."],
   offline:      "Looks like the network dropped — reconnect and try again.",
   byStatus: {
     401: "Your sign-in looks expired — refresh the page and try again.",
@@ -211,6 +229,19 @@ function say(msg, kind) {       // 状态行:一次只出一个
   elState.textContent = msg || "";
   elState.className = "state" + (kind ? " " + kind : "");
 }
+/// 同一行状态,但中间那一段是一个真能点的链接(现在只有「登录」用它)。
+/// ⛔ 仍然零 innerHTML(本页第①条纪律):三段自己建节点拼起来。
+/// parts = [前半, 链接上的字, 后半]
+function sayLinked(parts, href, kind) {
+  elState.textContent = "";      // 先清空(连上一次留下的节点一起清掉)
+  elState.className = "state" + (kind ? " " + kind : "");
+  elState.appendChild(document.createTextNode(parts[0]));
+  const a = document.createElement("a");
+  a.href = href;
+  a.textContent = parts[1];      // ⛔ textContent,不是 innerHTML
+  elState.appendChild(a);
+  elState.appendChild(document.createTextNode(parts[2]));
+}
 function setText(el, text, isPlaceholder) {
   el.textContent = text;        // ⛔ 永远不是 innerHTML
   el.classList.toggle("placeholder", !!isPlaceholder);
@@ -230,7 +261,7 @@ async function loadQuota() {
     if (!r.ok) { elQuota.textContent = L.quotaUnknown; return; }
     const j = await r.json();
     if (j.seat) {
-      elQuota.textContent = L.quotaAuth((Number(j.remaining_micro_usd || 0) / 1e6).toFixed(2));
+      elQuota.textContent = L.quotaAuth(Number(j.remaining_micro_usd));
       return;
     }
     if (j.status) {            // 有会员行但不是 active = 被停用,和「还没开名额」不是一回事
@@ -286,7 +317,7 @@ async function polish() {
   const n = codepoints(text);
   if (n > MAXLEN) { say(L.tooLong(n), "err"); return; }
   if (!token) {
-    if (!trial.enabled) { say(L.trialOff, "err"); return; }
+    if (!trial.enabled) { sayLinked(L.trialOff, "../login/index.html", "err"); return; }
     if (TURNSTILE_SITEKEY && !tsToken) { say(L.needCaptcha, "err"); return; }
   }
 
@@ -329,7 +360,7 @@ async function polish() {
   elMetaClean.textContent = L.done(((performance.now() - t0) / 1000).toFixed(1));
   say("");
   if (token) {
-    if (typeof j.remaining === "number") elQuota.textContent = L.quotaAuth((j.remaining / 1e6).toFixed(2));
+    if (typeof j.remaining === "number") elQuota.textContent = L.quotaAuth(j.remaining);
     else if (j.seat === false) paintNoSeat(Number(j.noseat_remaining || 0));
   } else {
     trial.remaining = Number(j.remaining_today || 0);
