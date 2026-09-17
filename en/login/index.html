@@ -19,7 +19,9 @@
 /* ══════════ 页面局部:登录 ══════════
    卡片与表单零件在 v2.css(S2 加的 .field / .state / .btn);这里只有这一页
    自己的排版。⛔ 不另起一套颜色、圆角、字号。 */
-.head { padding: 72px 0 0; text-align: center; }
+/* ⛔ 不许写 `padding` 简写:<header class="head wrap">,简写会把 v2.css 里 .wrap 的
+   左右 32px 清零。这一页文字居中,看不出来 —— 但别留同一个坑(/try/ 上就看得出)。 */
+.head { padding-block: 72px 0; text-align: center; }
 .head h1 { font-size: clamp(26px, 3.4vw, 34px); font-weight: 600; line-height: 1.35; letter-spacing: .01em; }
 .head .sub { color: var(--second); font-size: 15.5px; max-width: 30em; margin: 14px auto 0; }
 
@@ -85,8 +87,11 @@ textarea.field { min-height: 84px; line-height: 1.6; }
   .head { padding-top: 48px; }
   .card { margin-top: 28px; padding: 22px 18px 22px; border-radius: 16px; }
   /* ⚠️ 占位项是 <span class="soon">,不是 <a> —— 只写 a:not(.nav-cta) 收不到它们,
-     窄屏上它们会留在顶栏里把「下载」挤成两行(S2 在 375 宽实拍到过)。 */
-  .navlinks a:not(.nav-cta), .navlinks .soon { display: none; }
+     窄屏上它们会留在顶栏里把「下载」挤成两行(S2 在 375 宽实拍到过)。
+     ⭐ 2026-09-17:打了 class="nav-keep" 的项(Try it / Sign in)在手机上留着 ——
+        顶栏只剩一个 Download 的时候,手机上的人一条能走的路都没有。
+        尺寸收窄的那几条在 v2.css 的同一个断点里。 */
+  .navlinks a:not(.nav-cta):not(.nav-keep), .navlinks .soon { display: none; }
 }
 </style>
 </head>
@@ -96,9 +101,13 @@ textarea.field { min-height: 84px; line-height: 1.6; }
   <div class="wrap navrow">
     <a class="brand" href="../index.html"><svg width="30" height="15" viewBox="0 0 200 100" aria-hidden="true"><path d="M12.0 50.0 L14.0 40.1 L16.0 31.7 L18.0 25.2 L20.0 21.0 L22.0 19.0 L24.0 19.2 L26.0 21.3 L28.0 25.2 L30.0 30.3 L32.0 36.2 L34.0 42.4 L36.0 48.5 L38.0 54.2 L40.0 59.0 L42.0 62.7 L44.0 65.2 L46.0 66.5 L48.0 66.5 L50.0 65.5 L52.0 63.5 L54.0 60.9 L56.0 57.8 L58.0 54.6 L60.0 51.5 L62.0 48.6 L64.0 46.2 L66.0 44.4 L68.0 43.2 L70.0 42.7 L72.0 42.7 L74.0 43.2 L76.0 44.1 L78.0 45.3 L80.0 46.7 L82.0 48.0 L84.0 49.2 L86.0 50.2 L88.0 51.0 L90.0 51.5 L92.0 51.8 L94.0 51.8 L96.0 51.6 L98.0 51.3 L100.0 50.9 L102.0 50.5 L104.0 50.2 L106.0 50.0 L190 50" fill="none" stroke="var(--coral)" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/></svg>Murmur</a>
     <div class="navlinks">
-      <a href="../try/index.html">Try it</a>
+      <a class="nav-keep" href="../try/index.html">Try it</a>
+      <!-- S3 is not wired up yet, so it does not render — a grey word you cannot
+           click only takes room, and on a phone it pushes out a real door.
+           Put this line back when S3 ships:
       <span class="soon" title="Coming in the next batch">Talk to the founder</span>
-      <a class="nav-signin" href="index.html" aria-current="page">Sign in</a>
+      -->
+      <a class="nav-signin nav-keep" href="index.html" aria-current="page">Sign in</a>
       <a href="../../login/index.html" hreflang="zh-Hans" lang="zh-Hans">中文</a>
       <a class="nav-cta" href="../index.html#download">Download</a>
     </div>
@@ -133,7 +142,10 @@ textarea.field { min-height: 84px; line-height: 1.6; }
     <p class="state" id="state2"></p>
     <div class="row">
       <button class="resend" type="button" id="resend">Send it again</button>
-      <span class="note" style="margin-top:0">The code is good for 10 minutes. Check spam if it is not there.</span>
+      <!-- ⚠️ 15 minutes = Supabase's mailer_otp_exp (900 s), the same number the
+           email itself prints. Check the dashboard before changing it —
+           ⛔ the page and the email must never quote two different numbers. -->
+      <span class="note" style="margin-top:0">The code is good for 15 minutes. Check spam if it is not there.</span>
     </div>
   </section>
 
@@ -144,8 +156,9 @@ textarea.field { min-height: 84px; line-height: 1.6; }
     <button class="btn btn-quiet btn-block" id="signout" type="button" style="margin-top:10px">Sign out</button>
   </section>
 
-  <!-- 申请名额:入口始终在,不只在登录失败时才出现 -->
-  <section class="request">
+  <!-- 申请名额:入口始终在,不只在登录失败时才出现。
+       (唯一的例外:已经登录、而且服务端说这个人已经有名额 —— 见 hideRequestIfSeated) -->
+  <section class="request" id="reqSection">
     <details id="req">
       <summary id="reqSummary">No seat yet? Ask for one</summary>
       <div class="body">
@@ -170,8 +183,12 @@ textarea.field { min-height: 84px; line-height: 1.6; }
   <span>Made by Others Studio</span>
   <div class="links">
     <a href="https://othersstudio.tech">othersstudio.tech</a>
-    <a href="../../privacy.html">Privacy</a>
-    <a href="../../tos.html">Terms</a>
+    <!-- ⚠️ ../ = /en/ —— 指的是英文那两份。以前写 ../../ ,把英文用户送进了
+         根目录的**中文**隐私 / 条款页;/en/ 与 /en/try/ 的页脚一直是对的。 -->
+    <a href="../privacy.html">Privacy</a>
+    <a href="../tos.html">Terms</a>
+    <!-- 顶栏的语言切换在手机上是收起来的,页脚这一份是它在手机上的落点 -->
+    <a href="../../login/index.html" hreflang="zh-Hans" lang="zh-Hans">中文</a>
   </div>
 </footer>
 
@@ -195,7 +212,11 @@ const FN       = SUPA_URL + "/functions/v1/murmur-web";
 const SDK      = "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.116.0/+esm"; // 版本写死
 const LANG     = "en";
 const DEFAULT_NEXT = "../try/index.html";
-const RESEND_SECONDS = 45;
+// ⚠️ 60 = 线上 Auth 的 smtp_max_frequency(同一地址两封信至少隔 60 秒)。
+//    以前写 45:等到能点的时候服务端还在冷却里,点下去被 429 顶回来,页面
+//    对一个什么都没做错的人说「太频繁了」。Mac App 那边的冷却本来就是 60。
+//    ⛔ 改这个数之前先去后台核一眼 smtp_max_frequency,别让两边各写一个数。
+const RESEND_SECONDS = 60;
 // ⬇️ Wei 在 Cloudflare 后台给「申请名额」建好 widget 之后,把 site key 填这里,
 //    并把服务端的 WEB_ACCESS_TURNSTILE 打开。两边都开才生效 ——
 //    ⛔ 只开服务端那一侧会让每一次申请都 403(页面根本没有回执可发)。
@@ -407,6 +428,22 @@ async function submitRequest() {
   cardCode.scrollIntoView({ behavior: "smooth", block: "center" });
 }
 
+// ── ④ 已经有名额的人不该再看见「还没有名额?申请一个」────────────────────
+// 读的是 /me/lite(和 /try/ 同一个口径:它对没名额的人也回话,不像 /me 直接 403)。
+// ⛔ 拿不到答案就照旧显示:少一次多余的申请,比让一个真的没名额的人找不到
+//    入口便宜得多 —— 这个开关只许往「藏」的方向走一次,不许猜。
+async function hideRequestIfSeated(token) {
+  if (!token) return;
+  try {
+    const r = await fetch(FN + "/me/lite", {
+      headers: { authorization: "Bearer " + token, apikey: SUPA_KEY },
+    });
+    if (!r.ok) return;
+    const j = await r.json();
+    if (j && j.seat) $("reqSection").hidden = true;
+  } catch (e) { /* 查不到就照旧显示 */ }
+}
+
 // ── Turnstile(有 site key 才加载)────────────────────────────────────────
 function mountTurnstile() {
   if (!TURNSTILE_SITEKEY) return;
@@ -480,6 +517,7 @@ $("signout").addEventListener("click", async () => {
     $("meMail").textContent = data.session.user.email || "";   // ⛔ textContent
     $("goNext").setAttribute("href", safeNext());
     show("in");
+    hideRequestIfSeated(data.session.access_token);            // 不 await:慢一拍也不挡这一页
     return;
   }
   show("email");
