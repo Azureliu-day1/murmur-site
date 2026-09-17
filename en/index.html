@@ -248,6 +248,8 @@ h2 { font-size: clamp(26px, 3.4vw, 34px); font-weight: 600; line-height: 1.35; l
 .btn-primary:hover { opacity: .9; text-decoration: none; }
 .btn-quiet { color: var(--second); border: 1px solid var(--line2); }
 .btn-quiet:hover { color: var(--ink); text-decoration: none; }
+/* The phone path: one small line under the CTA. On desktop too, quietly. */
+.hero .mobile-path { margin-top: 18px; font-size: 13.5px; color: var(--second); line-height: 1.7; }
 .hero .keys { margin-top: 26px; color: var(--faint); font-size: 13px; display: flex; gap: 18px; justify-content: center; flex-wrap: wrap; }
 kbd {
   font-family: "IBM Plex Mono", monospace; font-size: 12px; color: var(--ink);
@@ -523,7 +525,20 @@ body.is-sandbox .sandbox { display: inline-block; }
   .feature { grid-template-columns: 40px 1fr; grid-template-rows: auto auto; }
   .feature p { grid-column: 2; }
   .feature kbd { grid-column: 2; justify-self: start; }
-  .navlinks a:not(.nav-cta) { display: none; }
+  /* ── The two real doors have to survive on a phone ─────────────────────
+     ⛔ This used to be `.navlinks a:not(.nav-cta) { display:none }`. Shot at
+     375px on 2026-09-17: people arriving from WeChat / Xiaohongshu / X are
+     mostly on a phone, and the bar left them one button — "Download" — for a
+     Mac app they cannot install. No way to ask for a seat, no way to try it.
+     Items that must stay get class="nav-keep"; the anchor menu and the
+     language switch still collapse (the switch has a copy in the footer). */
+  .navlinks a:not(.nav-cta):not(.nav-keep) { display: none; }
+  /* Tighter bar so the two links plus the CTA fit at 375px */
+  .wrap.navrow { padding-left: 20px; padding-right: 20px; }
+  .navrow { gap: 14px; }
+  .navlinks { gap: 13px; }
+  .navlinks a { font-size: 13px; }
+  .nav-cta { padding: 6px 13px; }
 }
 </style>
 </head>
@@ -535,11 +550,12 @@ body.is-sandbox .sandbox { display: inline-block; }
       <a href="#demo">Demo</a>
       <a href="#features">Features</a>
       <a href="#promises">Promises</a>
-      <a href="try/index.html">Try it</a>
+      <!-- ⭐ class="nav-keep" = stays visible on a phone (see the @media note) -->
+      <a class="nav-keep" href="try/index.html">Try it</a>
       <!-- ⚠️ class="nav-signin" is what v2-nav.js looks for: when this machine has a
            session it swaps this one item for a fixed-width "Account". The bar is
            static HTML; JS never builds it. -->
-      <a class="nav-signin" href="login/index.html">Sign in</a>
+      <a class="nav-signin nav-keep" href="login/index.html">Sign in</a>
       <a href="../index.html" hreflang="zh-Hans" lang="zh-Hans">中文</a>
       <a class="nav-cta" href="#download">Download</a>
     </div>
@@ -556,6 +572,11 @@ body.is-sandbox .sandbox { display: inline-block; }
     <a class="btn btn-primary" href="#download">Download for macOS</a>
     <a class="btn btn-quiet" href="#demo">See how it works</a>
   </div>
+  <!-- ⭐ The path for someone on a phone: the button above is a Mac app they
+       cannot install here. Most people arriving from social links are on a
+       phone, and this line is the only road they have. Shown on desktop too —
+       one small line, it does not compete with the CTA. -->
+  <p class="mobile-path reveal">On your phone? <a href="login/index.html">Ask for a seat</a>, or <a href="try/index.html">see what the tidying does →</a></p>
   <div class="keys reveal">
     <span><kbd>Right ⌘</kbd>Dictate</span>
     <span><kbd>Right ⌥</kbd>Translate</span>

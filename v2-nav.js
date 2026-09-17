@@ -92,9 +92,11 @@
       "text-align:center;transition:color .12s ease,border-color .12s ease}",
       ".nav-pop .out:hover{color:var(--ink);border-color:var(--coral);text-decoration:none}",
       ".nav-pop .out:focus-visible{outline:2px solid var(--coral);outline-offset:2px}",
-      // 窄屏上顶栏本来就把链接收起来了(各页 @media 里的 .navlinks a:not(.nav-cta)),
-      // 账户这一枚是 <button>,收不到那条规则 —— 在这里自己收。
-      "@media (max-width:820px){.nav-acct{display:none}}",
+      // ⚠️ 2026-09-17 改:窄屏上「账户」不再收起来。它换掉的是 .nav-signin
+      // 那一枚 —— 而那一枚现在打了 class="nav-keep",在手机上是留着的。
+      // 把按钮收掉等于让手机上的登录用户既看不到「登录」也看不到「账户」,
+      // 顶栏上一个账号入口都没有。这里只把它按手机的尺寸缩一号。
+      "@media (max-width:820px){.nav-account{width:68px;height:28px;padding:0 10px;font-size:12.5px}}",
     ].join("");
   }
 

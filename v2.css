@@ -99,6 +99,23 @@ nav {
 .navlinks .soon { color: var(--faint); cursor: default; }
 .navlinks .soon:hover { color: var(--faint); text-decoration: none; }
 
+/* ── 手机上的顶栏:两条真入口必须留下 ──────────────────────────────────────
+   ⛔ 别再用 `.navlinks a:not(.nav-cta) { display:none }` 把链接整条收走。
+   2026-09-17 在 375 宽实拍:从微信 / 小红书点进来的人(多数在手机上)顶栏只
+   剩一个「下载」—— 而 Mac 版在手机上装不了,他们一条能申请名额、能试一试
+   的路都没有。要在手机上留下的项打 class="nav-keep"(试一试 / 登录);
+   锚点目录和语言切换照旧收起来,语言切换在页脚有一份。
+   各页自己的 @media 里要写成 `a:not(.nav-cta):not(.nav-keep)`。 */
+@media (max-width: 820px) {
+  /* 顶栏自己的左右留白收窄一点:en 版的 "Try it · Sign in · Download"
+     在 375 宽按 32px 留白会顶出横向滚动条。 */
+  .wrap.navrow { padding-left: 20px; padding-right: 20px; }
+  .navrow { gap: 14px; }
+  .navlinks { gap: 13px; }
+  .navlinks a { font-size: 13px; }
+  .nav-cta { padding: 6px 13px; }
+}
+
 .eyebrow {
   font-size: 12px; font-weight: 600; letter-spacing: .18em;
   text-transform: uppercase; color: var(--faint); margin-bottom: 14px;
@@ -163,11 +180,16 @@ main { padding-bottom: 88px; }
 
 /* 配额小标:沿用首页提供表的 .tier-cost 写法 —— mono、胶囊、不抢色 */
 .quota {
-  display: inline-block;
+  display: inline-block; max-width: 100%;
   font-family: "IBM Plex Mono", monospace; font-size: 11.5px; color: var(--second);
   background: var(--stage-a); padding: 5px 12px; border-radius: 999px; white-space: nowrap;
 }
 .quota .on { color: var(--coral); }
+/* 额度用完那句借的是 402 的人话,比一行长 —— 窄屏上必须能折行,
+   否则 nowrap 的胶囊会把整页顶出横向滚动条(375 宽实拍)。 */
+@media (max-width: 820px) {
+  .quota { white-space: normal; }
+}
 
 /* 状态行:加载 / 错误 / 提示,三个用同一个位置,一次只出一个 */
 .state { min-height: 22px; font-size: 13.5px; color: var(--second); }

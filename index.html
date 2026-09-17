@@ -248,6 +248,8 @@ h2 { font-size: clamp(26px, 3.4vw, 34px); font-weight: 600; line-height: 1.35; l
 .btn-primary:hover { opacity: .9; text-decoration: none; }
 .btn-quiet { color: var(--second); border: 1px solid var(--line2); }
 .btn-quiet:hover { color: var(--ink); text-decoration: none; }
+/* 手机上的那条路:一行小字,跟在 CTA 下面。桌面上也在,但不抢按钮的注意力。 */
+.hero .mobile-path { margin-top: 18px; font-size: 13.5px; color: var(--second); line-height: 1.7; }
 .hero .keys { margin-top: 26px; color: var(--faint); font-size: 13px; display: flex; gap: 18px; justify-content: center; flex-wrap: wrap; }
 kbd {
   font-family: "IBM Plex Mono", monospace; font-size: 12px; color: var(--ink);
@@ -523,7 +525,19 @@ body.is-sandbox .sandbox { display: inline-block; }
   .feature { grid-template-columns: 40px 1fr; grid-template-rows: auto auto; }
   .feature p { grid-column: 2; }
   .feature kbd { grid-column: 2; justify-self: start; }
-  .navlinks a:not(.nav-cta) { display: none; }
+  /* ── 手机上的顶栏:两条真入口必须留下 ───────────────────────────────────
+     ⛔ 这里以前是 `.navlinks a:not(.nav-cta) { display:none }` —— 2026-09-17
+     在 375 宽实拍:从微信 / 小红书点进来的人(多数在手机上)顶栏只剩一个
+     「下载」,而 Mac 版在手机上装不了,他们一条能申请名额、能试一试的路
+     都没有。要留下的项打 class="nav-keep";锚点目录和 English 照旧收起来
+     (English 在页脚有一份)。 */
+  .navlinks a:not(.nav-cta):not(.nav-keep) { display: none; }
+  /* 顶栏留白收窄一点,给两枚链接 + 下载腾地方 */
+  .wrap.navrow { padding-left: 20px; padding-right: 20px; }
+  .navrow { gap: 14px; }
+  .navlinks { gap: 13px; }
+  .navlinks a { font-size: 13px; }
+  .nav-cta { padding: 6px 13px; }
 }
 </style>
 </head>
@@ -538,10 +552,11 @@ body.is-sandbox .sandbox { display: inline-block; }
       <a href="#features">功能</a>
       <a href="#promises">承诺</a>
 <!-- 定价段下架期间,导航也去掉这一项(否则点了滚到空处) -->
-      <a href="try/index.html">试一试</a>
+      <!-- ⭐ class="nav-keep" = 手机上也要留着的项(见 @media 里的说明) -->
+      <a class="nav-keep" href="try/index.html">试一试</a>
       <!-- ⚠️ class="nav-signin" 是给 v2-nav.js 认的:本机有会话时它把这一项
            换成一枚固定宽度的「账户」。⛔ 顶栏静态写着「登录」,不靠 JS 生成。 -->
-      <a class="nav-signin" href="login/index.html">登录</a>
+      <a class="nav-signin nav-keep" href="login/index.html">登录</a>
       <a class="nav-cta" href="#download">下载</a>
     </div>
   </div>
@@ -556,6 +571,10 @@ body.is-sandbox .sandbox { display: inline-block; }
     <a class="btn btn-primary" href="#download">下载 macOS 版</a>
     <a class="btn btn-quiet" href="#demo">看它怎么工作</a>
   </div>
+  <!-- ⭐ 手机上的那条路:上面那枚「下载」是 Mac 版,在手机上装不了。
+       从微信 / 小红书点进来的人多数在手机上,这一行是他们唯一能走的路。
+       桌面上也显示 —— 一行小字,不抢 CTA。 -->
+  <p class="mobile-path reveal">在手机上?<a href="login/index.html">先申请名额</a>,或<a href="try/index.html">试一试整理效果 →</a></p>
   <div class="keys reveal">
     <span><kbd>右 ⌘</kbd>听写</span>
     <span><kbd>右 ⌥</kbd>翻译</span>
@@ -998,6 +1017,8 @@ body.is-sandbox .sandbox { display: inline-block; }
     <a href="https://othersstudio.tech">othersstudio.tech</a>
     <a href="privacy.html">隐私</a>
   <a href="tos.html">条款</a>
+    <!-- 顶栏的语言切换在手机上是收起来的,页脚这一份是它在手机上的落点 -->
+    <a href="en/index.html" hreflang="en" lang="en">English</a>
   </div>
 </footer>
 

@@ -62,8 +62,11 @@
   .stage { margin-top: 28px; padding: 22px 18px 24px; border-radius: 18px; }
   .compare { grid-template-columns: 1fr; gap: 14px; }
   /* ⚠️ 占位项是 <span class="soon">,不是 <a> —— 只写 a:not(.nav-cta) 收不到它们,
-     窄屏上它们会留在顶栏里把「下载」挤成两行(375 宽实拍到过)。 */
-  .navlinks a:not(.nav-cta), .navlinks .soon { display: none; }
+     窄屏上它们会留在顶栏里把「下载」挤成两行(375 宽实拍到过)。
+     ⭐ 2026-09-17:打了 class="nav-keep" 的项(试一试 / 登录)在手机上留着 ——
+        顶栏只剩一个「下载」的时候,手机上的人一条能走的路都没有。
+        尺寸收窄的那几条在 v2.css 的同一个断点里。 */
+  .navlinks a:not(.nav-cta):not(.nav-keep), .navlinks .soon { display: none; }
 }
 </style>
 </head>
@@ -74,10 +77,13 @@
     <a class="brand" href="../index.html"><svg width="30" height="15" viewBox="0 0 200 100" aria-hidden="true"><path d="M12.0 50.0 L14.0 40.1 L16.0 31.7 L18.0 25.2 L20.0 21.0 L22.0 19.0 L24.0 19.2 L26.0 21.3 L28.0 25.2 L30.0 30.3 L32.0 36.2 L34.0 42.4 L36.0 48.5 L38.0 54.2 L40.0 59.0 L42.0 62.7 L44.0 65.2 L46.0 66.5 L48.0 66.5 L50.0 65.5 L52.0 63.5 L54.0 60.9 L56.0 57.8 L58.0 54.6 L60.0 51.5 L62.0 48.6 L64.0 46.2 L66.0 44.4 L68.0 43.2 L70.0 42.7 L72.0 42.7 L74.0 43.2 L76.0 44.1 L78.0 45.3 L80.0 46.7 L82.0 48.0 L84.0 49.2 L86.0 50.2 L88.0 51.0 L90.0 51.5 L92.0 51.8 L94.0 51.8 L96.0 51.6 L98.0 51.3 L100.0 50.9 L102.0 50.5 L104.0 50.2 L106.0 50.0 L190 50" fill="none" stroke="var(--coral)" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/></svg>Murmur</a>
     <div class="navlinks">
       <a href="../en/try/index.html" hreflang="en" lang="en">English</a>
-      <a href="index.html" aria-current="page">试一试</a>
+      <a class="nav-keep" href="index.html" aria-current="page">试一试</a>
+      <!-- S3(和创始人聊聊)还没通电,先不渲染 —— 一段点不动的灰字在顶栏里
+           只会占位置、在手机上还会把真入口挤掉。S3 上线时把下面这行放回来:
       <span class="soon" title="下一批就开">和创始人聊聊</span>
+      -->
       <!-- ⚠️ class="nav-signin" 是给 v2-nav.js 认的(本机有会话时换成「账户」) -->
-      <a class="nav-signin" href="../login/index.html">登录</a>
+      <a class="nav-signin nav-keep" href="../login/index.html">登录</a>
       <a class="nav-cta" href="../index.html#download">下载</a>
     </div>
   </div>
@@ -140,6 +146,8 @@
     <a href="https://othersstudio.tech">othersstudio.tech</a>
     <a href="../privacy.html">隐私</a>
     <a href="../tos.html">条款</a>
+    <!-- 顶栏的语言切换在手机上是收起来的,页脚这一份是它在手机上的落点 -->
+    <a href="../en/try/index.html" hreflang="en" lang="en">English</a>
   </div>
 </footer>
 
@@ -167,7 +175,15 @@ const TURNSTILE_SITEKEY = "";
 
 const L = {
   quotaLoading: "正在看你的额度…",
-  quotaAuth:    (usd) => `本月免费额度还剩 $${usd}`,
+  // ⛔ 有名额的人看到的不再是美元。站点别处对用户承诺的口径是「每周 2000 字」,
+  //    顶上却冒出一句「还剩 $0.50」是第二套口径,而且把我们的成本摆到了他脸上。
+  //    ① 还有额度 → 只说够不够用;② 真用完了 → 沿用 402 那句已经写好的人话
+  //    (两处说的是同一件事,别让它们各写一句);③ 字段根本没回来(NaN)→
+  //    按「还够用」说,⛔ 不许对一个有名额的人凭空说「用完了」,真用完了
+  //    服务端那一关会在他点「整理」时说实话。
+  quotaAuth:    (micro) => (Number.isFinite(micro) && micro <= 0)
+                             ? L.byStatus[402]
+                             : "免费额度 · 本月还够用",
   quotaNoSeat:  (n) => `登录了 · 名额还没开 · 今天还能整理 ${n} 次`,
   quotaNoSeatOut: "登录了 · 名额还没开 · 今天的次数用完了,明天再来",
   quotaBlocked: "这个账号暂时不可用 · 回一封我们的邮件就行",
@@ -182,7 +198,9 @@ const L = {
   needText:     "先写一句话再点整理。",
   tooLong:      (n) => `这段有 ${n} 个字,一次最多 ${MAXLEN} 个 —— 先短一点。`,
   needCaptcha:  "先过一下人机验证再点整理。",
-  trialOff:     "匿名试用现在没开 —— 登录之后可以用。",
+  // ⭐ 三段:前半 / 「登录」这两个字(它会变成一个真链接)/ 后半。
+  //    这句话里「登录」是唯一的下一步 —— 它不能只是两个不能点的字。
+  trialOff:     ["匿名试用现在没开 —— ", "登录", "之后可以用。"],
   offline:      "网络像是断了 —— 连上再试一次。",
   byStatus: {
     401: "登录像是过期了 —— 刷新一下页面再试。",
@@ -210,6 +228,19 @@ function say(msg, kind) {       // 状态行:一次只出一个
   elState.textContent = msg || "";
   elState.className = "state" + (kind ? " " + kind : "");
 }
+/// 同一行状态,但中间那一段是一个真能点的链接(现在只有「登录」用它)。
+/// ⛔ 仍然零 innerHTML(本页第①条纪律):三段自己建节点拼起来。
+/// parts = [前半, 链接上的字, 后半]
+function sayLinked(parts, href, kind) {
+  elState.textContent = "";      // 先清空(连上一次留下的节点一起清掉)
+  elState.className = "state" + (kind ? " " + kind : "");
+  elState.appendChild(document.createTextNode(parts[0]));
+  const a = document.createElement("a");
+  a.href = href;
+  a.textContent = parts[1];      // ⛔ textContent,不是 innerHTML
+  elState.appendChild(a);
+  elState.appendChild(document.createTextNode(parts[2]));
+}
 function setText(el, text, isPlaceholder) {
   el.textContent = text;        // ⛔ 永远不是 innerHTML
   el.classList.toggle("placeholder", !!isPlaceholder);
@@ -229,7 +260,7 @@ async function loadQuota() {
     if (!r.ok) { elQuota.textContent = L.quotaUnknown; return; }
     const j = await r.json();
     if (j.seat) {
-      elQuota.textContent = L.quotaAuth((Number(j.remaining_micro_usd || 0) / 1e6).toFixed(2));
+      elQuota.textContent = L.quotaAuth(Number(j.remaining_micro_usd));
       return;
     }
     if (j.status) {            // 有会员行但不是 active = 被停用,和「还没开名额」不是一回事
@@ -285,7 +316,7 @@ async function polish() {
   const n = codepoints(text);
   if (n > MAXLEN) { say(L.tooLong(n), "err"); return; }
   if (!token) {
-    if (!trial.enabled) { say(L.trialOff, "err"); return; }
+    if (!trial.enabled) { sayLinked(L.trialOff, "../login/index.html", "err"); return; }
     if (TURNSTILE_SITEKEY && !tsToken) { say(L.needCaptcha, "err"); return; }
   }
 
@@ -328,7 +359,7 @@ async function polish() {
   elMetaClean.textContent = L.done(((performance.now() - t0) / 1000).toFixed(1));
   say("");
   if (token) {
-    if (typeof j.remaining === "number") elQuota.textContent = L.quotaAuth((j.remaining / 1e6).toFixed(2));
+    if (typeof j.remaining === "number") elQuota.textContent = L.quotaAuth(j.remaining);
     else if (j.seat === false) paintNoSeat(Number(j.noseat_remaining || 0));
   } else {
     trial.remaining = Number(j.remaining_today || 0);
