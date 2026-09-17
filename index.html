@@ -248,8 +248,9 @@ h2 { font-size: clamp(26px, 3.4vw, 34px); font-weight: 600; line-height: 1.35; l
 .btn-primary:hover { opacity: .9; text-decoration: none; }
 .btn-quiet { color: var(--second); border: 1px solid var(--line2); }
 .btn-quiet:hover { color: var(--ink); text-decoration: none; }
-/* 手机上的那条路:一行小字,跟在 CTA 下面。桌面上也在,但不抢按钮的注意力。 */
-.hero .mobile-path { margin-top: 18px; font-size: 13.5px; color: var(--second); line-height: 1.7; }
+/* 手机上的那条路:一行小字,跟在 CTA 下面。桌面上也在,但不抢按钮的注意力。
+   ⚠️ 选择器不带 .hero —— 页尾 #download 那枚「下载」下面用的是同一句。 */
+.mobile-path { margin-top: 18px; font-size: 13.5px; color: var(--second); line-height: 1.7; }
 .hero .keys { margin-top: 26px; color: var(--faint); font-size: 13px; display: flex; gap: 18px; justify-content: center; flex-wrap: wrap; }
 kbd {
   font-family: "IBM Plex Mono", monospace; font-size: 12px; color: var(--ink);
@@ -1000,6 +1001,8 @@ body.is-sandbox .sandbox { display: inline-block; }
   <div class="cta-row reveal">
     <a class="btn btn-primary" href="https://github.com/Azureliu-day1/murmur-site/releases/latest/download/Murmur.zip">下载 macOS 版</a>
   </div>
+  <!-- ⭐ 和 hero 里那一行同一句:滚到底才看见「下载」的手机用户,在这里也不该是死路。 -->
+  <p class="mobile-path reveal">在手机上?<a href="login/index.html">先申请名额</a>,或<a href="try/index.html">试一试整理效果 →</a></p>
   <p class="stage-note reveal"><b>只支持 macOS 26 及以上、Apple Silicon(M 系列)的 Mac</b> · 免费开始 · 云端额度内测邀请制</p>
   <p class="stage-note reveal">Intel Mac,或系统还在 macOS 25 及以下?现在装不上 —— 留个邮箱到
   <a href="mailto:foraiandfocus+murmur@gmail.com?subject=Murmur%20%E7%AD%89%E6%94%AF%E6%8C%81">foraiandfocus+murmur@gmail.com</a>,支持了第一时间告诉你。</p>

@@ -248,8 +248,9 @@ h2 { font-size: clamp(26px, 3.4vw, 34px); font-weight: 600; line-height: 1.35; l
 .btn-primary:hover { opacity: .9; text-decoration: none; }
 .btn-quiet { color: var(--second); border: 1px solid var(--line2); }
 .btn-quiet:hover { color: var(--ink); text-decoration: none; }
-/* The phone path: one small line under the CTA. On desktop too, quietly. */
-.hero .mobile-path { margin-top: 18px; font-size: 13.5px; color: var(--second); line-height: 1.7; }
+/* The phone path: one small line under the CTA. On desktop too, quietly.
+   ⚠️ No .hero in the selector — the #download section at the foot reuses it. */
+.mobile-path { margin-top: 18px; font-size: 13.5px; color: var(--second); line-height: 1.7; }
 .hero .keys { margin-top: 26px; color: var(--faint); font-size: 13px; display: flex; gap: 18px; justify-content: center; flex-wrap: wrap; }
 kbd {
   font-family: "IBM Plex Mono", monospace; font-size: 12px; color: var(--ink);
@@ -1010,6 +1011,9 @@ body.is-sandbox .sandbox { display: inline-block; }
   <div class="cta-row reveal">
     <a class="btn btn-primary" href="https://github.com/Azureliu-day1/murmur-site/releases/latest/download/Murmur.zip">Download for macOS</a>
   </div>
+  <!-- ⭐ Same line as in the hero: someone who scrolled all the way down on a
+       phone should not hit a dead end here either. -->
+  <p class="mobile-path reveal">On your phone? <a href="login/index.html">Ask for a seat</a>, or <a href="try/index.html">see what the tidying does →</a></p>
   <p class="stage-note reveal"><b>Requires macOS 26 or later on an Apple Silicon (M-series) Mac</b> · Free to start · Cloud allowance by invite</p>
   <p class="stage-note reveal">On an Intel Mac, or still on macOS 25 or earlier? It won't install yet — leave your email at
   <a href="mailto:foraiandfocus+murmur@gmail.com?subject=Murmur%20waitlist">foraiandfocus+murmur@gmail.com</a> and we'll tell you the moment it's supported.</p>
