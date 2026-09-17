@@ -18,7 +18,11 @@
 <style>
 /* ══════════ 页面局部:试一试 ══════════
    舞台与两栏的配方逐字取自首页的 .stage / .panel;共用零件在 v2.css。 */
-.head { padding: 64px 0 0; display: flex; align-items: flex-start; gap: 24px; }
+/* ⛔ 这里不许写 `padding` 简写:<header class="head wrap">,而简写会把 v2.css 里
+   .wrap 的左右 32px 一起清零(同为 0-1-0,页内 <style> 在外链之后 → 它赢)。
+   后果是窄屏上额度小标、标题、副标题直接贴着屏幕左边,而下面的 .stage 是 32px。
+   竖直方向的留白一律用 padding-block。 */
+.head { padding-block: 64px 0; display: flex; align-items: flex-start; gap: 24px; }
 .head .t { flex: 1; min-width: 0; }
 .head h1 { font-size: clamp(26px, 3.4vw, 34px); font-weight: 600; line-height: 1.35; letter-spacing: .01em; max-width: 12.5em; }
 .head .sub { color: var(--second); font-size: 15.5px; max-width: 38em; margin-top: 14px; }

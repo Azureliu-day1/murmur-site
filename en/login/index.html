@@ -19,7 +19,9 @@
 /* ══════════ 页面局部:登录 ══════════
    卡片与表单零件在 v2.css(S2 加的 .field / .state / .btn);这里只有这一页
    自己的排版。⛔ 不另起一套颜色、圆角、字号。 */
-.head { padding: 72px 0 0; text-align: center; }
+/* ⛔ 不许写 `padding` 简写:<header class="head wrap">,简写会把 v2.css 里 .wrap 的
+   左右 32px 清零。这一页文字居中,看不出来 —— 但别留同一个坑(/try/ 上就看得出)。 */
+.head { padding-block: 72px 0; text-align: center; }
 .head h1 { font-size: clamp(26px, 3.4vw, 34px); font-weight: 600; line-height: 1.35; letter-spacing: .01em; }
 .head .sub { color: var(--second); font-size: 15.5px; max-width: 30em; margin: 14px auto 0; }
 
@@ -181,8 +183,10 @@ textarea.field { min-height: 84px; line-height: 1.6; }
   <span>Made by Others Studio</span>
   <div class="links">
     <a href="https://othersstudio.tech">othersstudio.tech</a>
-    <a href="../../privacy.html">Privacy</a>
-    <a href="../../tos.html">Terms</a>
+    <!-- ⚠️ ../ = /en/ —— 指的是英文那两份。以前写 ../../ ,把英文用户送进了
+         根目录的**中文**隐私 / 条款页;/en/ 与 /en/try/ 的页脚一直是对的。 -->
+    <a href="../privacy.html">Privacy</a>
+    <a href="../tos.html">Terms</a>
     <!-- 顶栏的语言切换在手机上是收起来的,页脚这一份是它在手机上的落点 -->
     <a href="../../login/index.html" hreflang="zh-Hans" lang="zh-Hans">中文</a>
   </div>
