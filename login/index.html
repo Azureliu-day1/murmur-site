@@ -7,8 +7,8 @@
      style-src 多了 'self'(v2.css 是外链的)。⛔ 别加通配符。 -->
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://challenges.cloudflare.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src https://syebvkwemxwxkonvsyjd.supabase.co https://challenges.cloudflare.com; frame-src https://challenges.cloudflare.com; object-src 'none'; base-uri 'none'; form-action 'none'">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>登录 — Murmur</title>
-<meta name="description" content="用邮箱进来,不用密码。填邮箱,收一个 6 位码。">
+<title>登录 · Murmur</title>
+<meta name="description" content="用邮箱登录 Murmur。填邮箱,收一个 6 位码,不用设密码。">
 <meta name="robots" content="noindex">
 <link rel="alternate" hreflang="zh-Hans" href="../login/index.html">
 <link rel="alternate" hreflang="en" href="../en/login/index.html">
@@ -117,8 +117,8 @@ textarea.field { min-height: 84px; line-height: 1.6; }
 
 <header class="head wrap">
   <p class="eyebrow">登录</p>
-  <h1>用邮箱进来,不用密码</h1>
-  <p class="sub">填邮箱,我们发一个 6 位码过去。没有密码可设,也就没有密码会丢。</p>
+  <h1>用邮箱登录</h1>
+  <p class="sub">填邮箱,我们发一个 6 位码过去。不用设密码。</p>
 </header>
 
 <main class="wrap">
@@ -130,7 +130,7 @@ textarea.field { min-height: 84px; line-height: 1.6; }
            placeholder="you@example.com" spellcheck="false" autocapitalize="none">
     <button class="btn btn-primary btn-block" id="send" type="button">发送 6 位码</button>
     <p class="state" id="state"></p>
-    <p class="note">这个邮箱只用来发这一个码,以及在你的额度快用完时提醒你一次。</p>
+    <p class="note">这个邮箱只用来发验证码。额度快用完时,会再发一封提醒。</p>
   </section>
 
   <!-- ② 填码 -->
@@ -145,13 +145,13 @@ textarea.field { min-height: 84px; line-height: 1.6; }
       <button class="resend" type="button" id="resend">重新发送</button>
       <!-- ⚠️ 15 分钟 = Supabase 的 mailer_otp_exp(900 s),信里写的也是这个数。
            改这里之前先去后台核一眼,⛔ 别让页面和信各说一个数。 -->
-      <span class="note" style="margin-top:0">码 15 分钟内有效。没收到就翻一眼垃圾邮件。</span>
+      <span class="note" style="margin-top:0">码 15 分钟内有效。没收到的话,看看垃圾邮件。</span>
     </div>
   </section>
 
   <!-- ③ 已经登录了 -->
   <section class="card" id="card-in" hidden>
-    <p class="sent">这台机器上已经登录了 <b id="meMail"></b></p>
+    <p class="sent">这个浏览器已经登录 <b id="meMail"></b></p>
     <a class="btn btn-primary btn-block" id="goNext" href="../try/index.html">继续</a>
     <button class="btn btn-quiet btn-block" id="signout" type="button" style="margin-top:10px">退出</button>
   </section>
@@ -164,7 +164,7 @@ textarea.field { min-height: 84px; line-height: 1.6; }
     <details id="req">
       <summary id="reqSummary">还没有名额?申请一个</summary>
       <div class="body">
-        <p class="note" style="margin-top:0">名额是一个一个开的,我本人看每一条。填完邮箱你<b>马上</b>会收到一个 6 位码 —— 先进来看看;名额开了会用这个邮箱通知你。</p>
+        <p class="note" style="margin-top:0">名额一个一个开,每条申请我都会看。提交后你<b>马上</b>会收到一个 6 位码,可以先登录,在网页上试整理。名额开了,会发信到这个邮箱。</p>
         <p class="label" style="margin-top:18px"><label for="reqEmail">邮箱</label></p>
         <input class="field" type="email" id="reqEmail" inputmode="email" autocomplete="email"
                placeholder="you@example.com" spellcheck="false" autocapitalize="none">
@@ -225,22 +225,22 @@ const TURNSTILE_ACTION  = "web-access";
 
 const L = {
   needEmail:   "先把邮箱填上。",
-  badEmail:    "这个邮箱看着不太对 —— 检查一下拼写。",
+  badEmail:    "这个邮箱格式不对,检查一下拼写。",
   sending:     "正在发码…",
-  sent:        "码发出去了 —— 去邮箱看看。",
+  sent:        "码发出去了,去邮箱看看。",
   needCode:    "把邮箱里那 6 位数字填进来。",
-  verifying:   "正在进去…",
-  badCode:     "这个码不对,或者已经过期了 —— 重新发一个试试。",
-  rate:        "太频繁了 —— 等一分钟再试。",
-  mailDown:    "邮件那边没回应 —— 过一会儿再试一次。",
-  offline:     "网络像是断了 —— 连上再试一次。",
-  generic:     "这一步没走通 —— 稍后再试一次。",
-  noIdentity:  "这个邮箱还没有登录身份 —— 在下面申请一个,一分钟就能进来。",
+  verifying:   "正在登录…",
+  badCode:     "这个码不对或已过期。点「重新发送」再要一个。",
+  rate:        "操作太频繁,等一分钟再试。",
+  mailDown:    "邮件服务没回应,过一会儿再试。",
+  offline:     "网络好像断了,连上后再试。",
+  generic:     "这一步没成功,稍后再试。",
+  noIdentity:  "这个邮箱还不能登录。在下面申请名额,提交后马上会收到码。",
   resendIn:    (n) => `${n} 秒后可重发`,
   resendNow:   "重新发送",
   reqSending:  "正在提交…",
-  reqNoMail:   "已收到 —— 但码这会儿没发出去,点上面的「重新发送」再试一次。",
-  reqTooMany:  "这个网络今天申请得有点多 —— 过一小时再试。",
+  reqNoMail:   "申请已收到,但码没发出去。点上面的「重新发送」再试。",
+  reqTooMany:  "这个网络今天申请次数太多,过一小时再试。",
   loggedOut:   "已经退出了。",
   needCaptcha: "先过一下人机验证。",
   // 申请状态(/access/status):日期拿不到就不写括号,⛔ 不写「(Invalid Date)」

@@ -8,8 +8,8 @@
      style-src 多了 'self'(v2.css 是外链的)。⛔ 别加通配符。 -->
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://challenges.cloudflare.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src https://syebvkwemxwxkonvsyjd.supabase.co https://challenges.cloudflare.com; frame-src https://challenges.cloudflare.com; object-src 'none'; base-uri 'none'; form-action 'none'">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>试一试 — Murmur</title>
-<meta name="description" content="粘一句口语,看 Murmur 把它整理成书面文字。不用下载,不用注册。">
+<title>试一试 · Murmur</title>
+<meta name="description" content="粘一句口语,看 Murmur 把它整理成书面文字。不用下载,也不用注册。">
 <link rel="alternate" hreflang="zh-Hans" href="../try/index.html">
 <link rel="alternate" hreflang="en" href="../en/try/index.html">
 <link rel="icon" href="../favicon.svg" type="image/svg+xml">
@@ -96,10 +96,10 @@
 <header class="head wrap">
   <div class="t">
     <p class="eyebrow">试一试</p>
-    <h1>粘一句你平时会说的话,看它整理成什么样</h1>
-    <p class="sub">口语进来是什么样,书面出去是什么样 —— 就在这个网页里看一遍,不用下载、不用注册。装下来之后,这一步发生在你光标所在的任何输入框里。</p>
+    <h1>粘一句口语试试</h1>
+    <p class="sub">在下面粘一句平时说的话,点「整理」,下方出整理后的版本。不用下载,也不用注册。装了 Mac 版以后,整理直接发生在光标所在的输入框里。</p>
   </div>
-  <span class="quota" id="quota">正在看你的额度…</span>
+  <span class="quota" id="quota">正在查额度…</span>
 </header>
 
 <main class="wrap">
@@ -127,7 +127,7 @@
     <div class="compare">
       <div class="panel raw">
         <div class="head-row"><span class="tag">你说的原文</span><span class="meta" id="meta-raw"></span></div>
-        <p class="txt placeholder" id="out-raw">上面写一句,或者点一枚「试试这句」。</p>
+        <p class="txt placeholder" id="out-raw">在上面写一句,或者点一个例句。</p>
       </div>
       <div class="panel clean">
         <div class="head-row"><span class="tag">整理后</span><span class="meta" id="meta-clean"></span></div>
@@ -135,12 +135,12 @@
       </div>
     </div>
 
-    <p class="stage-note">你写进去的这段<b>文字</b>会发给 Murmur 的云端整理,整理完就不留;这一版不录音、不用麦克风。整理用的是和 Mac 版同一套口径。</p>
+    <p class="stage-note">这里写的<b>文字</b>会发到 Murmur 的云端整理,整理完不保存。网页版不录音,也不用麦克风。整理规则和 Mac 版相同。</p>
   </div>
 
-  <p class="after" id="noseatNote" hidden>名额是一个一个开的,创始人会尽快;开了会用你这个邮箱通知你。</p>
+  <p class="after" id="noseatNote" hidden>名额一个一个开。开了会发信到你这个邮箱。</p>
 
-  <p class="after">觉得对路?<a href="../index.html#download">装到 Mac 上</a>,说完字就落在光标处。</p>
+  <p class="after">想在 Mac 上用?<a href="../index.html#download">下载 Mac 版</a>,按右 ⌘ 说一句,字就落在光标处。</p>
 </main>
 
 <footer class="wrap">
@@ -178,7 +178,7 @@ const MAXLEN   = 600;
 const TURNSTILE_SITEKEY = "";
 
 const L = {
-  quotaLoading: "正在看你的额度…",
+  quotaLoading: "正在查额度…",
   // ⛔ 有名额的人看到的不再是美元。站点别处对用户承诺的口径是「每周 2000 字」,
   //    顶上却冒出一句「还剩 $0.50」是第二套口径,而且把我们的成本摆到了他脸上。
   //    ① 还有额度 → 只说够不够用;② 真用完了 → 沿用 402 那句已经写好的人话
@@ -200,34 +200,34 @@ const L = {
   quotaNoSeatOut: (head) => `${head} · 今天的次数用完了,明天再来`,
   // 下面那一行(#noseatNote)。none 是三段:前半 / 链接上的字 / 后半。
   noSeatNote: {
-    default:  "名额是一个一个开的,创始人会尽快;开了会用你这个邮箱通知你。",
+    default:  "名额一个一个开。开了会发信到你这个邮箱。",
     none:     ["还没申请名额。", "去登录页申请一个", "。"],
     new:      (d) => d ? `申请已收到(${d}),名额开了会发信到这个邮箱。` : "申请已收到,名额开了会发信到这个邮箱。",
     declined: "这次没开名额。",
   },
-  quotaBlocked: "这个账号暂时不可用 · 回一封我们的邮件就行",
-  quotaUnknown: "额度这会儿查不到 · 整理照常能点",
+  quotaBlocked: "这个账号暂停使用 · 回复我们任意一封邮件",
+  quotaUnknown: "额度暂时查不到 · 整理仍然能用",
   quotaTrial:   (n) => `匿名试用 · 今天还能整理 ${n} 次 · 登录后不限`,
   quotaTrialOut:"今天的匿名试用用完了 · 明天再来,登录后不限",
   quotaTrialOff:"匿名试用今天没开 · 登录后可用",
   busy:         "整理中…",
   cleanBusy:    "整理中…",
-  rawEmpty:     "上面写一句,或者点一枚「试试这句」。",
+  rawEmpty:     "在上面写一句,或者点一个例句。",
   cleanEmpty:   "整理后的文字会出现在这里。",
   needText:     "先写一句话再点整理。",
-  tooLong:      (n) => `这段有 ${n} 个字,一次最多 ${MAXLEN} 个 —— 先短一点。`,
+  tooLong:      (n) => `这段有 ${n} 个字,一次最多 ${MAXLEN} 个。删短一点再试。`,
   needCaptcha:  "先过一下人机验证再点整理。",
   // ⭐ 三段:前半 / 「登录」这两个字(它会变成一个真链接)/ 后半。
   //    这句话里「登录」是唯一的下一步 —— 它不能只是两个不能点的字。
-  trialOff:     ["匿名试用现在没开 —— ", "登录", "之后可以用。"],
-  offline:      "网络像是断了 —— 连上再试一次。",
+  trialOff:     ["匿名试用现在关着。", "登录", "之后可以用。"],
+  offline:      "网络好像断了,连上后再试。",
   byStatus: {
-    401: "登录像是过期了 —— 刷新一下页面再试。",
-    402: "这个月的免费额度用完了 —— 下个月回血,或者回信找我们。",
-    500: "服务器那边自己出错了 —— 这次没扣你的额度,稍后再试。",
-    502: "模型那边没接住这一单 —— 这次没扣你的额度,稍后再试。",
-    503: "这会儿排不上队 —— 过一会儿再试。",
-    504: "模型那边超时了 —— 这次没扣你的额度,稍后再试。",
+    401: "登录已过期,刷新页面再试。",
+    402: "这个月的免费额度用完了。下个月会重置,也可以回信找我们。",
+    500: "我们的服务器出错了。这次没扣额度,稍后再试。",
+    502: "模型没有返回结果。这次没扣额度,稍后再试。",
+    503: "现在请求太多,过一会儿再试。",
+    504: "模型超时了。这次没扣额度,稍后再试。",
   },
   done: (sec) => `${sec}s`,
 };

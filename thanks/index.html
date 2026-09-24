@@ -89,7 +89,7 @@ a.plainlink:hover { border-bottom-color:var(--coral); }
 
   <h1>付款成功。</h1>
 
-  <p>Pro 已经开通。回到 Murmur,档位会自己变过来。</p>
+  <p>Pro 已经开通。回到 Murmur,档位会自动更新。</p>
 
   <!-- 自定义 scheme 不能靠自动跳转:浏览器会拦、也可能弹一个吓人的确认框。
        主路径是这个按钮(用户的点击就是那个必需的手势)。 -->
@@ -98,17 +98,17 @@ a.plainlink:hover { border-bottom-color:var(--coral); }
   </a>
 
   <p class="note" id="hint">
-    按钮没反应也不要紧 —— <strong>直接切回 Murmur 就行</strong>,
-    它会自己去服务器确认,一两分钟内档位就变了。
+    按钮没反应的话,<strong>直接切回 Murmur</strong>。
+    它会去服务器确认,一两分钟内档位就会变。
   </p>
 
   <hr>
 
   <p class="note" id="claim-note">
-    <strong>如果你是在网页上买的、还没在 App 里登录过:</strong>
-    用付款时填的那个邮箱去 App 里登录,这笔订阅会自动认到你名下。
-    邮箱不一样的话认不上 —— 那种情况
-    <a class="plainlink" href="https://othersstudio.tech">找我们</a>,我们手动接。
+    <strong>在网页上买、还没在 App 里登录过的话:</strong>
+    在 App 里用付款时填的邮箱登录,订阅会自动归到你名下。
+    邮箱不一样就对不上,这时
+    <a class="plainlink" href="https://othersstudio.tech">找我们</a>手动处理。
   </p>
 </div>
 
@@ -121,7 +121,7 @@ a.plainlink:hover { border-bottom-color:var(--coral); }
   var q = new URLSearchParams(location.search);
   if (!q.get('session_id')) {
     document.getElementById('hint').innerHTML =
-      '看起来你不是从收银台过来的 —— 这一页只是付款完成后的落地页。';
+      '你不是从付款页面过来的。这一页只在付款完成后显示。';
   }
 })();
 </script>

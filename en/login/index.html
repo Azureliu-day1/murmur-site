@@ -7,8 +7,8 @@
      style-src 多了 'self'(v2.css 是外链的)。⛔ 别加通配符。 -->
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://challenges.cloudflare.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src https://syebvkwemxwxkonvsyjd.supabase.co https://challenges.cloudflare.com; frame-src https://challenges.cloudflare.com; object-src 'none'; base-uri 'none'; form-action 'none'">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Sign in — Murmur</title>
-<meta name="description" content="Sign in with your email. No password — we send a 6-digit code.">
+<title>Sign in · Murmur</title>
+<meta name="description" content="Sign in to Murmur with your email. We send a 6-digit code, so there is no password.">
 <meta name="robots" content="noindex">
 <link rel="alternate" hreflang="en" href="../../en/login/index.html">
 <link rel="alternate" hreflang="zh-Hans" href="../../login/index.html">
@@ -118,8 +118,8 @@ textarea.field { min-height: 84px; line-height: 1.6; }
 
 <header class="head wrap">
   <p class="eyebrow">Sign in</p>
-  <h1>Your email is the key. No password.</h1>
-  <p class="sub">Type your email and we send a 6-digit code. Nothing to set, nothing to forget, nothing to leak.</p>
+  <h1>Sign in with your email</h1>
+  <p class="sub">Type your email and we send you a 6-digit code. There is no password to set.</p>
 </header>
 
 <main class="wrap">
@@ -131,7 +131,7 @@ textarea.field { min-height: 84px; line-height: 1.6; }
            placeholder="you@example.com" spellcheck="false" autocapitalize="none">
     <button class="btn btn-primary btn-block" id="send" type="button">Send the 6-digit code</button>
     <p class="state" id="state"></p>
-    <p class="note">We use this address for that one code, plus a single heads-up when your quota is nearly gone.</p>
+    <p class="note">We use this address to send the code. When your quota is nearly gone, we send one reminder.</p>
   </section>
 
   <!-- ② 填码 -->
@@ -147,13 +147,13 @@ textarea.field { min-height: 84px; line-height: 1.6; }
       <!-- ⚠️ 15 minutes = Supabase's mailer_otp_exp (900 s), the same number the
            email itself prints. Check the dashboard before changing it —
            ⛔ the page and the email must never quote two different numbers. -->
-      <span class="note" style="margin-top:0">The code is good for 15 minutes. Check spam if it is not there.</span>
+      <span class="note" style="margin-top:0">The code works for 15 minutes. If it is not there, check spam.</span>
     </div>
   </section>
 
   <!-- ③ 已经登录了 -->
   <section class="card" id="card-in" hidden>
-    <p class="sent">You are signed in on this machine as <b id="meMail"></b></p>
+    <p class="sent">This browser is signed in as <b id="meMail"></b></p>
     <a class="btn btn-primary btn-block" id="goNext" href="../try/index.html">Continue</a>
     <button class="btn btn-quiet btn-block" id="signout" type="button" style="margin-top:10px">Sign out</button>
   </section>
@@ -166,7 +166,7 @@ textarea.field { min-height: 84px; line-height: 1.6; }
     <details id="req">
       <summary id="reqSummary">No seat yet? Ask for one</summary>
       <div class="body">
-        <p class="note" style="margin-top:0">Seats open one at a time and I read every request myself. You get a 6-digit code <b>right away</b> — come in and look around; we will use this address when your seat opens.</p>
+        <p class="note" style="margin-top:0">Seats open one at a time and I read every request myself. You get a 6-digit code <b>right away</b>, so you can sign in and try the tidying in the browser. We email this address when your seat opens.</p>
         <p class="label" style="margin-top:18px"><label for="reqEmail">Email</label></p>
         <input class="field" type="email" id="reqEmail" inputmode="email" autocomplete="email"
                placeholder="you@example.com" spellcheck="false" autocapitalize="none">
@@ -229,22 +229,22 @@ const TURNSTILE_ACTION  = "web-access";
 
 const L = {
   needEmail:   "Type your email first.",
-  badEmail:    "That address does not look right — check the spelling.",
+  badEmail:    "That address does not look right. Check the spelling.",
   sending:     "Sending the code…",
-  sent:        "Sent — go have a look in your inbox.",
+  sent:        "Code sent. Check your inbox.",
   needCode:    "Type the 6 digits from the email.",
-  verifying:   "Letting you in…",
-  badCode:     "That code is wrong or expired — send a fresh one.",
-  rate:        "Too many tries — wait a minute.",
-  mailDown:    "The mail side did not answer — try again in a moment.",
-  offline:     "Looks like the network dropped — reconnect and try again.",
-  generic:     "That did not go through — try again shortly.",
-  noIdentity:  "There is no sign-in for this address yet — ask for one below, it takes a minute.",
+  verifying:   "Signing in…",
+  badCode:     "That code is wrong or expired. Press \u201cSend it again\u201d for a new one.",
+  rate:        "Too many tries. Wait a minute.",
+  mailDown:    "The mail service did not answer. Try again in a moment.",
+  offline:     "The network seems to be down. Reconnect and try again.",
+  generic:     "That did not work. Try again shortly.",
+  noIdentity:  "This address cannot sign in yet. Ask for a seat below and a code arrives right away.",
   resendIn:    (n) => `Send again in ${n}s`,
   resendNow:   "Send it again",
   reqSending:  "Sending…",
-  reqNoMail:   "Got it — but the code did not go out just now. Hit \u201cSend it again\u201d above.",
-  reqTooMany:  "A lot of requests from this network today — try again in an hour.",
+  reqNoMail:   "Request received, but the code did not go out. Press \u201cSend it again\u201d above.",
+  reqTooMany:  "Too many requests from this network today. Try again in an hour.",
   loggedOut:   "Signed out.",
   needCaptcha: "Clear the human check first.",
   // 申请状态(/access/status):日期拿不到就不写括号,⛔ 不写「(Invalid Date)」
