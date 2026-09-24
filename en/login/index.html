@@ -82,6 +82,8 @@
 textarea.field { min-height: 84px; line-height: 1.6; }
 .request .btn { margin-top: 16px; }
 #turnstile:not([hidden]) { margin-top: 16px; }
+/* 申请过的人:表单换成一行状态(见 showRequestStatus)。和 summary 同一个位置、同一个字号。 */
+.request .req-status { border-top: 1px solid var(--line); margin: 0; padding: 20px 0; text-align: center; font-size: 14px; color: var(--second); }
 
 @media (max-width: 820px) {
   .head { padding-top: 48px; }
@@ -157,8 +159,10 @@ textarea.field { min-height: 84px; line-height: 1.6; }
   </section>
 
   <!-- 申请名额:入口始终在,不只在登录失败时才出现。
-       (唯一的例外:已经登录、而且服务端说这个人已经有名额 —— 见 hideRequestIfSeated) -->
+       (唯一的例外:已经登录、而且服务端说这个人已经有名额 —— 见 hideRequestIfSeated;
+       申请过的人看到的是状态而不是表单 —— 见 showRequestStatus) -->
   <section class="request" id="reqSection">
+    <p class="req-status" id="reqStatus" role="status" hidden></p>
     <details id="req">
       <summary id="reqSummary">No seat yet? Ask for one</summary>
       <div class="body">
@@ -243,6 +247,9 @@ const L = {
   reqTooMany:  "A lot of requests from this network today — try again in an hour.",
   loggedOut:   "Signed out.",
   needCaptcha: "Clear the human check first.",
+  // 申请状态(/access/status):日期拿不到就不写括号,⛔ 不写「(Invalid Date)」
+  reqStatusNew:      (d) => d ? `Request received (${d}). We will email this address when your seat opens.` : "Request received. We will email this address when your seat opens.",
+  reqStatusDeclined: "No seat this time.",
 };
 
 const $ = (id) => document.getElementById(id);
@@ -444,6 +451,44 @@ async function hideRequestIfSeated(token) {
   } catch (e) { /* 查不到就照旧显示 */ }
 }
 
+// ── ⑤ 申请过的人看到的是申请的状态,不是又一张空表 ─────────────────────────
+// GET /access/status → { status: "none" | "new" | "approved" | "declined", requested_at, handled_at }
+//   new      → 表单收起,换成一行「申请已收到(日期)…」
+//   declined → 表单收起,换成一行「这次没开名额」
+//   approved → 整段藏起(和 seat:true 同一处理)
+//   none     → 什么都不动,表单照旧
+// ⛔ 请求失败 / 非 200 / 不认识的 status:什么都不改,表单照旧,也不报错。
+//    和 ④ 同一条纪律:这里的每一步只许往「藏」的方向走,两个请求谁先回来都一样。
+async function showRequestStatus(token) {
+  if (!token) return;
+  let j = null;
+  try {
+    const r = await fetch(FN + "/access/status", {
+      headers: { authorization: "Bearer " + token, apikey: SUPA_KEY },
+    });
+    if (!r.ok) return;
+    j = await r.json();
+  } catch (e) { return; /* 查不到就照旧显示 */ }
+  const st = j && j.status;
+  if (st === "approved") { $("reqSection").hidden = true; return; }
+  if (st !== "new" && st !== "declined") return;
+  const el = $("reqStatus");
+  el.textContent = st === "new" ? L.reqStatusNew(fmtDay(j.requested_at)) : L.reqStatusDeclined;   // ⛔ textContent
+  el.hidden = false;
+  elReq.open = false;
+  elReq.hidden = true;
+}
+
+/// 「9月25日」/「September 25」。解析不了就回空串,调用方据此不写括号。
+function fmtDay(iso) {
+  if (!iso) return "";
+  const d = new Date(iso);
+  if (isNaN(d.getTime())) return "";
+  try {
+    return new Intl.DateTimeFormat(LANG === "zh" ? "zh-CN" : "en", { month: "long", day: "numeric" }).format(d);
+  } catch (e) { return ""; }
+}
+
 // ── Turnstile(有 site key 才加载)────────────────────────────────────────
 function mountTurnstile() {
   if (!TURNSTILE_SITEKEY) return;
@@ -518,6 +563,7 @@ $("signout").addEventListener("click", async () => {
     $("goNext").setAttribute("href", safeNext());
     show("in");
     hideRequestIfSeated(data.session.access_token);            // 不 await:慢一拍也不挡这一页
+    showRequestStatus(data.session.access_token);              // 同上;两个都只会往「藏」走
     return;
   }
   show("email");

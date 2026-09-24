@@ -186,8 +186,23 @@ const L = {
   quotaAuth:    (micro) => (Number.isFinite(micro) && micro <= 0)
                              ? L.byStatus[402]
                              : "Free quota · plenty left this month",
-  quotaNoSeat:  (n) => `Signed in · seat not open yet · ${n} tidy-ups left today`,
-  quotaNoSeatOut: "Signed in · seat not open yet · today's tidy-ups are used up",
+  // 没名额的登录用户:小标的前半句读 /access/status(和登录页同一个状态);
+  // 查不到时用 default,也就是这次改动之前的那句话。
+  noSeatHead: {
+    default:  "Signed in · seat not open yet",
+    none:     "Signed in · no seat request yet",
+    new:      "Request received · seat not open yet",
+    declined: "Signed in · no seat this time",
+  },
+  quotaNoSeat:  (head, n) => `${head} · ${n} tidy-ups left today`,
+  quotaNoSeatOut: (head) => `${head} · today's tidy-ups are used up`,
+  // 下面那一行(#noseatNote)。none 是三段:前半 / 链接上的字 / 后半。
+  noSeatNote: {
+    default:  "Seats open one at a time and the founder gets to them as fast as he can; we will use this email address when yours opens.",
+    none:     ["You have not asked for a seat yet. ", "Ask on the sign-in page", "."],
+    new:      (d) => d ? `Request received (${d}). We will email this address when your seat opens.` : "Request received. We will email this address when your seat opens.",
+    declined: "No seat this time.",
+  },
   quotaBlocked: "This account is on hold · reply to any of our emails",
   quotaUnknown: "Cannot read your quota right now · tidying still works",
   quotaTrial:   (n) => `Anonymous trial · ${n} left today · unlimited once you sign in`,
@@ -223,6 +238,7 @@ let token = null;               // 登录态的 access token(没有就是匿名)
 let trial = { enabled: false, remaining: 0 };
 let tsToken = "";               // Turnstile 回执,一次一用
 let busy = false;
+let access = null;              // /access/status 的回答;null = 没查过或没查到(→ default 文案)
 
 const codepoints = (s) => Array.from(s).length;
 function say(msg, kind) {       // 状态行:一次只出一个
@@ -268,6 +284,7 @@ async function loadQuota() {
       elQuota.textContent = L.quotaBlocked;
       return;
     }
+    access = await loadAccess();
     paintNoSeat(Number(j.noseat_remaining || 0));
   } catch { elQuota.textContent = L.quotaUnknown; }
 }
@@ -275,9 +292,50 @@ async function loadQuota() {
 /// 没名额的登录用户:小标 + 下面那一句「创始人会尽快」。
 /// ⛔ 不把他推回匿名试用 —— 他已经登录了,匿名那条路对他只会更窄(而且现在关着)。
 function paintNoSeat(n) {
-  elQuota.textContent = n > 0 ? L.quotaNoSeat(n) : L.quotaNoSeatOut;
+  const st = access && access.status;
+  const key = (st === "none" || st === "new" || st === "declined") ? st : "default";
+  const head = L.noSeatHead[key];
+  elQuota.textContent = n > 0 ? L.quotaNoSeat(head, n) : L.quotaNoSeatOut(head);
   const note = document.getElementById("noseatNote");
-  if (note) note.hidden = false;
+  if (!note) return;
+  note.textContent = "";                                   // ⛔ 零 innerHTML:自己建节点
+  if (key === "none") {
+    const p = L.noSeatNote.none;
+    note.appendChild(document.createTextNode(p[0]));
+    const a = document.createElement("a");
+    a.href = "../login/index.html";
+    a.textContent = p[1];
+    note.appendChild(a);
+    note.appendChild(document.createTextNode(p[2]));
+  } else if (key === "new") {
+    note.textContent = L.noSeatNote.new(fmtDay(access.requested_at));
+  } else {
+    note.textContent = L.noSeatNote[key];
+  }
+  note.hidden = false;
+}
+
+/// 申请状态:和登录页读的是同一个 /access/status。
+/// ⛔ 失败 / 非 200 / 不认识的 status → null,调用方回落到原来那句话,不报错。
+async function loadAccess() {
+  try {
+    const r = await fetch(FN + "/access/status", {
+      headers: { authorization: "Bearer " + token, apikey: SUPA_KEY },
+    });
+    if (!r.ok) return null;
+    const j = await r.json();
+    return (j && typeof j.status === "string") ? j : null;
+  } catch { return null; }
+}
+
+/// 「9月25日」/「September 25」。解析不了就回空串,文案据此不写括号。
+function fmtDay(iso) {
+  if (!iso) return "";
+  const d = new Date(iso);
+  if (isNaN(d.getTime())) return "";
+  try {
+    return new Intl.DateTimeFormat(LANG === "zh" ? "zh-CN" : "en", { month: "long", day: "numeric" }).format(d);
+  } catch { return ""; }
 }
 async function loadTrial() {
   try {
