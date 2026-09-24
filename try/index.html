@@ -188,8 +188,23 @@ const L = {
   quotaAuth:    (micro) => (Number.isFinite(micro) && micro <= 0)
                              ? L.byStatus[402]
                              : "免费额度 · 本月还够用",
-  quotaNoSeat:  (n) => `登录了 · 名额还没开 · 今天还能整理 ${n} 次`,
-  quotaNoSeatOut: "登录了 · 名额还没开 · 今天的次数用完了,明天再来",
+  // 没名额的登录用户:小标的前半句读 /access/status(和登录页同一个状态);
+  // 查不到时用 default,也就是这次改动之前的那句话。
+  noSeatHead: {
+    default:  "登录了 · 名额还没开",
+    none:     "登录了 · 还没申请名额",
+    new:      "申请已收到 · 名额还没开",
+    declined: "登录了 · 这次没开名额",
+  },
+  quotaNoSeat:  (head, n) => `${head} · 今天还能整理 ${n} 次`,
+  quotaNoSeatOut: (head) => `${head} · 今天的次数用完了,明天再来`,
+  // 下面那一行(#noseatNote)。none 是三段:前半 / 链接上的字 / 后半。
+  noSeatNote: {
+    default:  "名额是一个一个开的,创始人会尽快;开了会用你这个邮箱通知你。",
+    none:     ["还没申请名额。", "去登录页申请一个", "。"],
+    new:      (d) => d ? `申请已收到(${d}),名额开了会发信到这个邮箱。` : "申请已收到,名额开了会发信到这个邮箱。",
+    declined: "这次没开名额。",
+  },
   quotaBlocked: "这个账号暂时不可用 · 回一封我们的邮件就行",
   quotaUnknown: "额度这会儿查不到 · 整理照常能点",
   quotaTrial:   (n) => `匿名试用 · 今天还能整理 ${n} 次 · 登录后不限`,
@@ -226,6 +241,7 @@ let token = null;               // 登录态的 access token(没有就是匿名)
 let trial = { enabled: false, remaining: 0 };
 let tsToken = "";               // Turnstile 回执,一次一用
 let busy = false;
+let access = null;              // /access/status 的回答;null = 没查过或没查到(→ default 文案)
 
 const codepoints = (s) => Array.from(s).length;
 function say(msg, kind) {       // 状态行:一次只出一个
@@ -271,6 +287,7 @@ async function loadQuota() {
       elQuota.textContent = L.quotaBlocked;
       return;
     }
+    access = await loadAccess();
     paintNoSeat(Number(j.noseat_remaining || 0));
   } catch { elQuota.textContent = L.quotaUnknown; }
 }
@@ -278,9 +295,50 @@ async function loadQuota() {
 /// 没名额的登录用户:小标 + 下面那一句「创始人会尽快」。
 /// ⛔ 不把他推回匿名试用 —— 他已经登录了,匿名那条路对他只会更窄(而且现在关着)。
 function paintNoSeat(n) {
-  elQuota.textContent = n > 0 ? L.quotaNoSeat(n) : L.quotaNoSeatOut;
+  const st = access && access.status;
+  const key = (st === "none" || st === "new" || st === "declined") ? st : "default";
+  const head = L.noSeatHead[key];
+  elQuota.textContent = n > 0 ? L.quotaNoSeat(head, n) : L.quotaNoSeatOut(head);
   const note = document.getElementById("noseatNote");
-  if (note) note.hidden = false;
+  if (!note) return;
+  note.textContent = "";                                   // ⛔ 零 innerHTML:自己建节点
+  if (key === "none") {
+    const p = L.noSeatNote.none;
+    note.appendChild(document.createTextNode(p[0]));
+    const a = document.createElement("a");
+    a.href = "../login/index.html";
+    a.textContent = p[1];
+    note.appendChild(a);
+    note.appendChild(document.createTextNode(p[2]));
+  } else if (key === "new") {
+    note.textContent = L.noSeatNote.new(fmtDay(access.requested_at));
+  } else {
+    note.textContent = L.noSeatNote[key];
+  }
+  note.hidden = false;
+}
+
+/// 申请状态:和登录页读的是同一个 /access/status。
+/// ⛔ 失败 / 非 200 / 不认识的 status → null,调用方回落到原来那句话,不报错。
+async function loadAccess() {
+  try {
+    const r = await fetch(FN + "/access/status", {
+      headers: { authorization: "Bearer " + token, apikey: SUPA_KEY },
+    });
+    if (!r.ok) return null;
+    const j = await r.json();
+    return (j && typeof j.status === "string") ? j : null;
+  } catch { return null; }
+}
+
+/// 「9月25日」/「September 25」。解析不了就回空串,文案据此不写括号。
+function fmtDay(iso) {
+  if (!iso) return "";
+  const d = new Date(iso);
+  if (isNaN(d.getTime())) return "";
+  try {
+    return new Intl.DateTimeFormat(LANG === "zh" ? "zh-CN" : "en", { month: "long", day: "numeric" }).format(d);
+  } catch { return ""; }
 }
 async function loadTrial() {
   try {
