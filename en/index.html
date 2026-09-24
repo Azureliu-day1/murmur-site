@@ -4,8 +4,8 @@
 <meta charset="utf-8">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'unsafe-inline'; style-src 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Murmur — the words are already at your cursor</title>
-<meta name="description" content="A macOS dictation tool: hold a key, say it, and finished text lands wherever your cursor is. On-device or cloud recognition, your choice.">
+<title>Murmur · Voice typing for the Mac</title>
+<meta name="description" content="Voice typing for the Mac. Press right ⌘, say a sentence, let go, and the text is at your cursor. On-device or cloud recognition.">
 <link rel="icon" href="../favicon.svg" type="image/svg+xml">
 <link rel="alternate" hreflang="zh-Hans" href="../index.html">
 <link rel="alternate" hreflang="en" href="index.html">
@@ -565,23 +565,23 @@ body.is-sandbox .sandbox { display: inline-block; }
 
 <!-- ── Hero:全页最大的一场动画只留给「说完,字落下」── -->
 <header class="hero wrap" id="top">
-  <h1 class="reveal">Stop talking. The words<br>are already at your <span class="serif">cursor</span>.</h1>
-  <p class="lede reveal">Talking is the fast part. Typing is the second pass — and so is cleaning up
-  what a transcriber hands back. Hold a key, say it, and finished text lands in whatever field the
-  cursor is already in: a chat box, an email, a commit message, a prompt.</p>
+  <h1 class="reveal">Voice typing<br>for the <span class="serif">Mac</span>.</h1>
+  <p class="lede reveal">Put the cursor in a text field, press right ⌘ and say a sentence. Let go and the text is there.
+  The ums and uhs are removed, and English mixed with Chinese comes out right. It works in chat, email and the terminal. Requires macOS 26 or later.</p>
   <div class="cta-row reveal">
     <a class="btn btn-primary" href="#download">Download for macOS</a>
-    <a class="btn btn-quiet" href="#demo">See how it works</a>
+    <a class="btn btn-quiet" href="#demo">Watch the demo</a>
   </div>
   <!-- ⭐ The path for someone on a phone: the button above is a Mac app they
        cannot install here. Most people arriving from social links are on a
        phone, and this line is the only road they have. Shown on desktop too —
        one small line, it does not compete with the CTA. -->
-  <p class="mobile-path reveal">On your phone? <a href="login/index.html">Ask for a seat</a>, or <a href="try/index.html">see what the tidying does →</a></p>
+  <p class="mobile-path reveal">It does not install on a phone. You can <a href="login/index.html">ask for a seat</a> or <a href="try/index.html">try the tidying in the browser →</a></p>
   <div class="keys reveal">
     <span><kbd>Right ⌘</kbd>Dictate</span>
     <span><kbd>Right ⌥</kbd>Translate</span>
-    <span><kbd>fn</kbd>Ask</span>
+    <span><kbd>Right ⌃</kbd>Edit by voice</span>
+    <span><kbd>fn</kbd>Ask (off by default)</span>
     <span><kbd>Esc</kbd>Cancel</span>
   </div>
 
@@ -596,14 +596,14 @@ body.is-sandbox .sandbox { display: inline-block; }
       </div>
     </div>
     <div class="caption"></div>
-    <p class="stage-note">This demo is drawn in code, not recorded — the capsule here is the one you get in the app.</p>
+    <p class="stage-note">This capsule shows up while you speak. Press Esc to cancel the sentence.</p>
   </div>
 </header>
 
 <!-- ── 少一道工序:打字 vs 说话,双演示对照 ── -->
 <section class="wrap">
   <div class="eyebrow reveal">Subtract · One step fewer</div>
-  <h2 class="reveal">One sentence, two ways to finish it.</h2>
+  <h2 class="reveal">Typing next to speaking.</h2>
   <div class="compare reveal">
     <div class="panel type" id="panelType">
       <div class="head">
@@ -611,7 +611,7 @@ body.is-sandbox .sandbox { display: inline-block; }
         <span class="timer mono">0:00</span>
       </div>
       <div class="fake-input"><span class="out"></span><span class="cursor"></span></div>
-      <div class="caption"><span class="volatile">Type, reread, delete, rearrange…</span></div>
+      <div class="caption"><span class="volatile">Half typed, deleted, typed again…</span></div>
     </div>
     <div class="panel speak" id="panelSpeak">
       <div class="head">
@@ -625,41 +625,41 @@ body.is-sandbox .sandbox { display: inline-block; }
           <canvas width="220" height="44"></canvas>
           <div class="round go">✓</div>
         </div>
-        <span class="done-chip">✓ Inserted. On to the next thing.</span>
+        <span class="done-chip">✓ Inserted at the cursor</span>
       </div>
       <div class="caption"></div>
     </div>
   </div>
-  <p class="subtract-note reveal">A few dozen inputs a day, and a minute or two saved on each one. That is the whole argument this page is making.</p>
+  <p class="subtract-note reveal">If you answer a few dozen messages a day, each one skips the retyping.</p>
 </section>
 
 <!-- ── 四个核心功能 + 各自的展示区 ── -->
 <section class="wrap" id="features">
-  <div class="eyebrow reveal">Four Things · What the keys do</div>
-  <h2 class="reveal">Four keys, four things.</h2>
+  <div class="eyebrow reveal">Keys · What each one does</div>
+  <h2 class="reveal">One job per key.</h2>
   <div class="features">
     <div class="feature reveal">
       <div class="num">01</div>
       <div class="name">Dictate</div>
-      <p>Say it, get it written. The “um”, the “you know”, the false start get cleaned out on the way; what lands is a sentence you would have typed.</p>
+      <p>Press right ⌘, say a sentence, let go. The “um” and “you know” are removed and a clean sentence lands.</p>
       <kbd>Right ⌘</kbd>
     </div>
     <div class="feature reveal">
       <div class="num">02</div>
       <div class="name">Translate</div>
-      <p>Speak English, Chinese lands; speak Chinese, English lands. The direction is worked out for you, so a message to a colleague in another language is one held key.</p>
+      <p>Press right ⌥ and say a sentence in English. Chinese lands at the cursor. It also works the other way, and it picks the direction itself.</p>
       <kbd>Right ⌥</kbd>
     </div>
     <div class="feature reveal">
       <div class="num">03</div>
       <div class="name">Ask</div>
-      <p>Say the question and what lands is the answer, not your question. A flag you half-remember, a conversion, a spelling — without leaving the window.</p>
+      <p>Press fn and ask “what undoes the last commit”. The answer lands, not the question. Off by default; turn it on in Settings.</p>
       <kbd>fn</kbd>
     </div>
     <div class="feature reveal">
       <div class="num">04</div>
       <div class="name">Edit by voice</div>
-      <p>Select a paragraph and say how it should change — what lands back is the changed version. Being able to revise by mouth is what closes the loop.</p>
+      <p>Select a paragraph, press right ⌃ and say how to change it. The edited version replaces the original.</p>
       <kbd>Right ⌃</kbd>
     </div>
   </div>
@@ -707,50 +707,51 @@ body.is-sandbox .sandbox { display: inline-block; }
 <!-- ── Vibe Coding:对着 AI 编码工具口述 —— 只写系统级听写真做得到的 ── -->
 <section class="wrap" id="vibe">
   <div class="eyebrow reveal">Vibe Coding · Talking to the tools</div>
-  <h2 class="reveal">Telling Claude Code, Cursor or Codex what you want<br>was always a spoken job.</h2>
+  <h2 class="reveal">Tell Claude Code<br>what you want, out loud.</h2>
   <p class="sub reveal">
-    You are not writing the code character by character any more — you are explaining what you want.
+    Leave the cursor at the prompt in your terminal, press right ⌘ and say:
     “Make this function async, then put a retry around it.”
-    Three seconds to say; thirty to type.
-    Murmur has no plugin, no integration and nothing to set up —
-    it is system-level dictation, and it lands at any cursor, including the prompt in your terminal that is waiting for input.
+    Let go and the sentence is at the prompt.
+    The input boxes in Cursor and Codex work the same way.
+    Murmur is system-level dictation, so there is no plugin to install and nothing to set up.
   </p>
   <div class="detail-list reveal">
-    <div><strong>A long prompt stops costing you anything.</strong>The constraint you normally leave out because typing it was tedious — say it instead. A spoken paragraph takes about as long as a spoken line.</div>
-    <div><strong>Get a name wrong once, correct it once, never again.</strong>Fix the library or API name it misheard and it goes into your dictionary; next time it is heard right — conservative on purpose: it would rather miss one than invent one.</div>
-    <div><strong>Your standing prompt, saved as a phrase.</strong>Say the trigger word and the whole block lands — the rules you re-explain every single day, typed out once and only once.</div>
-    <div><strong>Check an API name without switching windows.</strong>Hold Ask, say the question, and what lands is the answer, not your question — hands never leave the editor.</div>
-    <div><strong>Select some code and say how to change it.</strong>Edit by voice puts the changed version back where it was — the thought never has to be typed first.</div>
-    <div><strong>In an editor it leaves your identifiers alone.</strong>Tone per app can tell an editor from a chat window, and does not apply the same rules to both.</div>
+    <div><strong>Long prompts are easy to say.</strong>Say the constraint you would usually skip because it was tedious to type.</div>
+    <div><strong>Fix a misheard library name once.</strong>Correct the library or API name and it goes into your dictionary. Next time it is heard right.</div>
+    <div><strong>Save your standing prompt as a phrase.</strong>Say the trigger word and the whole block lands. The rules you repeat every day stay typed.</div>
+    <div><strong>Check an API name without switching windows.</strong>With Ask turned on, press fn and say the question. The answer lands at the cursor.</div>
+    <div><strong>Select some code and say how to change it.</strong>Press right ⌃ and describe the change. The edited code goes back where it was.</div>
+    <div><strong>In an editor it leaves your identifiers alone.</strong>It can tell when the front app is a code editor and uses a separate set of rules there.</div>
   </div>
 </section>
 
 <!-- ── 模型提供表:不报厂商名 —— 场景才重要(口径同 App 内模型页) ── -->
 <section class="wrap" id="models">
   <div class="eyebrow reveal">Engines · What is behind the switch</div>
-  <h2 class="reveal">The recognition engine is swappable.<br>This is the shortlist, after we did the testing.</h2>
+  <h2 class="reveal">Three recognition<br>tiers.</h2>
   <p class="sub reveal">
-    We put the recognition models we could get our hands on through one internal evaluation and kept three.
-    None of them wins everywhere — how you talk is what decides it — so they are split by situation:
-    strengths and weaknesses printed on the front, one menu to switch, no terminology to learn first.
+    We tested the recognition models on the market internally and kept three.
+    Each one suits a different way of speaking, so they are split into three tiers.
+    Their strengths and weaknesses are listed below.
+    You switch tiers with one click in the menu.
   </p>
 
   <div class="tiers">
     <article class="tier reveal">
       <div class="tier-top"><h3>Standard</h3><span class="tier-cost">1× quota</span></div>
-      <div class="tier-for">The default for everyday speech</div>
+      <div class="tier-for">The default, for everyday mixed speech</div>
       <div class="stars">
         <div><span>Everyday use</span><i><b>●●●●●</b></i></div>
         <div><span>Chinese-heavy</span><i><b>●●●●</b><s>●</s></i></div>
         <div><span>English-heavy</span><i><b>●●●</b><s>●●</s></i></div>
       </div>
       <ul class="tier-good">
-        <li>Live captions; final text the moment you let go</li>
-        <li>Steadiest when languages are mixed mid-sentence (our own testing)</li>
+        <li>Captions while you speak; text lands as soon as you let go</li>
+        <li>Fewest errors when languages mix mid-sentence (our own testing)</li>
         <li>Lightest on quota</li>
       </ul>
       <ul class="tier-bad">
-        <li>Mid-pack on public streaming benchmarks for long English sentences</li>
+        <li>Long English sentences: mid-pack on public streaming benchmarks</li>
       </ul>
     </article>
 
@@ -764,12 +765,12 @@ body.is-sandbox .sandbox { display: inline-block; }
         <div><span>English-heavy</span><i><b>●●●</b><s>●●</s></i></div>
       </div>
       <ul class="tier-good">
-        <li>Best published results on Chinese and on mixed speech</li>
-        <li>Holds up on regional accents (Cantonese, Sichuanese, Wu)</li>
-        <li>Live captions; final text the moment you let go</li>
+        <li>Chinese and mixed speech: best published results</li>
+        <li>Handles Cantonese, Sichuanese and Wu accents</li>
+        <li>Captions while you speak; text lands as soon as you let go</li>
       </ul>
       <ul class="tier-bad">
-        <li>No proper-noun biasing in the live captions yet (your dictionary still fixes the final text)</li>
+        <li>Live captions do not use your dictionary yet; the final text is corrected with it</li>
       </ul>
     </article>
 
@@ -783,35 +784,34 @@ body.is-sandbox .sandbox { display: inline-block; }
         <div><span>English-heavy</span><i><b>●●●●●</b></i></div>
       </div>
       <ul class="tier-good">
-        <li>Front rank on public English and mixed-speech benchmarks</li>
-        <li>Steadiest on heavy accents and on proper nouns</li>
+        <li>English and mixed speech: front rank on public benchmarks</li>
+        <li>Fewest errors with heavy accents and proper nouns</li>
       </ul>
       <ul class="tier-bad">
-        <li>No live captions (you wait for the whole passage)</li>
+        <li>No live captions; you wait for the whole passage</li>
         <li>Chinese output occasionally mixes simplified and traditional</li>
-        <li>Heaviest on quota</li>
+        <li>Uses quota at twice the rate</li>
       </ul>
     </article>
   </div>
 
   <p class="tier-note reveal">
-    <strong>Standard is the tier open to everyone today</strong>; the other two are opening up through the
-    closed beta. “2× quota” means exactly that: on that tier a minute of long recording takes two minutes
-    out of the monthly pool, and dictation draws from your weekly allowance at twice the rate. The
-    multiplier is printed next to the tier; there is no hidden conversion. Lose the network or run out of
-    allowance and it falls back to on-device recognition by itself: slower, weaker when you mix languages,
-    but never a brick, and never a lost sentence.
+    <strong>Standard is the only tier open today.</strong> The other two are in closed beta and open gradually.
+    On a “2× quota” tier, one minute of long recording takes two minutes from the monthly pool.
+    Dictation on that tier draws from your weekly allowance at twice the rate.
+    If you lose the network or run out of allowance, it switches to on-device recognition by itself.
+    On-device recognition is slower and less accurate with mixed languages, and your recording is still kept.
   </p>
 </section>
 
 <!-- ── 数据在哪:全站最硬的一句话 ── -->
 <section class="wrap" id="local">
   <div class="eyebrow reveal">Local · Where your data is</div>
-  <h2 class="reveal">Our server knows who you are.<br>It never learns what you said.</h2>
-  <p class="sub reveal">Accounts, sign-in, subscriptions — that is the entire job our server does. Your
-  recordings, transcripts, history and dictionary are never uploaded; they exist on your Mac only. For
+  <h2 class="reveal">Recordings stay<br>on your Mac.</h2>
+  <p class="sub reveal">Our server handles accounts, sign-in and subscriptions. Your
+  recordings, transcripts, history and dictionary are stored on your Mac. For
   cloud recognition the audio goes straight from your Mac to the provider you picked, not through us.
-  Choose on-device recognition and not one byte leaves this computer.</p>
+  With on-device recognition the audio stays on this computer.</p>
   <div class="flowstage reveal">
     <svg viewBox="0 0 760 250" aria-label="Audio goes from your Mac straight to the provider you picked, skipping our server">
       <!-- 航线(常显,极淡) -->
@@ -834,7 +834,7 @@ body.is-sandbox .sandbox { display: inline-block; }
       <g id="ghost" opacity=".8">
         <rect x="304" y="92" width="152" height="72" rx="14" fill="none" stroke="var(--line2)" stroke-dasharray="5 5"/>
         <text class="ghost-label" x="380" y="122" text-anchor="middle">Our server</text>
-        <text class="node-sub" x="380" y="142" text-anchor="middle">knows only who you are</text>
+        <text class="node-sub" x="380" y="142" text-anchor="middle">accounts and billing only</text>
         <g id="ghostX" opacity="0">
           <circle cx="380" cy="76" r="13" fill="var(--coral)"/>
           <text x="380" y="81" text-anchor="middle" style="font-size:13px; font-weight:700" fill="#fff">✕</text>
@@ -845,7 +845,7 @@ body.is-sandbox .sandbox { display: inline-block; }
       <g>
         <rect x="564" y="86" width="160" height="84" rx="14" fill="var(--paper)" stroke="var(--line2)"/>
         <text class="node-label" x="644" y="122" text-anchor="middle">Your provider</text>
-        <text class="node-sub" x="644" y="144" text-anchor="middle">one tier, one destination</text>
+        <text class="node-sub" x="644" y="144" text-anchor="middle">only the one you picked</text>
         <rect id="provGlow" x="564" y="86" width="160" height="84" rx="14" fill="none" stroke="var(--coral)" stroke-width="2.5" opacity="0"/>
       </g>
 
@@ -853,33 +853,33 @@ body.is-sandbox .sandbox { display: inline-block; }
       <circle id="pktGo"   r="7" fill="var(--coral)" opacity="0"/>
       <circle id="pktBack" r="7" fill="var(--ink)"  opacity="0"/>
     </svg>
-    <p class="cap" id="flowCap">You speak — the audio leaves from your Mac and nowhere else</p>
+    <p class="cap" id="flowCap">You speak, and the audio leaves from your Mac</p>
   </div>
 
   <p class="local-path reveal"><span class="mono">~/Library/Application Support/Murmur/</span><br>
-  <span class="path-note">The recordings, and every word you have said, are in that folder. Open it whenever you like. Delete it and it is actually deleted.</span></p>
+  <span class="path-note">The recordings and transcripts are in that folder. You can open it any time. Delete a file there and it is gone for good.</span></p>
 </section>
 
 <!-- ── 敢写下来的承诺 ── -->
 <section class="wrap" id="promises">
-  <div class="eyebrow reveal">Promises · Things we will put in writing</div>
-  <h2 class="reveal">Four of them. Written down means kept.</h2>
+  <div class="eyebrow reveal">Promises · In writing</div>
+  <h2 class="reveal">Four promises.</h2>
   <div class="promises">
     <div class="promise reveal">
-      <h3>Never lose what you said</h3>
-      <p>Every dictation keeps the audio and a history entry. Cloud down, recognition wrong? Open the history and run it again on another engine. No path through this app makes a sentence you said disappear.</p>
+      <h3>What you said is kept</h3>
+      <p>Every dictation saves the audio and a history entry. If the cloud fails or the text is wrong, run it again on another engine from the history.</p>
     </div>
     <div class="promise reveal">
-      <h3>Failure gets said out loud</h3>
-      <p>If the translation did not happen, it tells you it did not happen. If the microphone heard nothing, it says so on the spot. It will not quietly push some fallback mess into the window you are typing in.</p>
+      <h3>Errors are reported</h3>
+      <p>If a translation fails, you see a message. If the microphone heard nothing, you see that too. It does not paste garbage into your window.</p>
     </div>
     <div class="promise reveal">
-      <h3>Where the audio goes is on the surface</h3>
-      <p>On-device: not one byte leaves this computer. Cloud: which provider, and what got sent, is written in Settings in plain words — not on page eight of the terms.</p>
+      <h3>You can see where audio goes</h3>
+      <p>With on-device recognition, audio stays on this computer. With cloud recognition, Settings shows which provider got it and what was sent.</p>
     </div>
     <div class="promise reveal">
       <h3>The numbers are measured</h3>
-      <p>The “release the key to text on screen” latency is a measured median, not a number a copywriter picked. Each engine's weak spots are printed next to its strong ones — switch if it does not suit you; your ears decide.</p>
+      <p>The “release the key to text on screen” latency is a measured median. If a tier mishears you, switch to another one in the menu.</p>
     </div>
   </div>
 </section>
@@ -887,19 +887,19 @@ body.is-sandbox .sandbox { display: inline-block; }
 <!-- ── 长录音:实时字幕(可牺牲预览)+ 整段转写(说话人分离) ── -->
 <section class="wrap" id="lecture">
   <div class="eyebrow reveal">Lecture · Long recordings</div>
-  <h2 class="reveal">Leave it running; captions float over whatever is on screen.</h2>
+  <h2 class="reveal">Record a lecture.</h2>
   <p class="sub reveal">
-    Long recording is a separate pipeline. The caption window floats above any full-screen window — the
-    talk keeps playing, the captions keep up; turn on the second column if you want a translation beside
-    them. Captions are an expendable preview: if they drop, the recording does not. The full transcript
-    lands in your history when you stop, with the speakers told apart.
+    Start a long recording and a caption window floats over the full-screen lecture as it plays.
+    Turn on the second column to see a translation beside the captions.
+    The captions are only a preview, and the recording continues if they drop.
+    When you stop, the full transcript goes into your history with the speakers told apart.
   </p>
   <div class="cap-demo reveal" id="capDemo" aria-label="Live caption demo">
-    <div class="cap-head"><span class="cap-dot"></span>Live captions<span class="cap-tag">preview · the full transcript still lands in history</span></div>
+    <div class="cap-head"><span class="cap-dot"></span>Live captions<span class="cap-tag">preview · full transcript saved to history</span></div>
     <div class="cap-lines" id="capLines"></div>
   </div>
   <p class="stage-note reveal" style="margin-top:14px">
-    Drawn in code, not recorded. Free tier: 30 minutes a month. Pro: no limit on length.
+    The free tier includes 30 minutes of long recording a month. Pro has no limit on length.
   </p>
 </section>
 
@@ -970,59 +970,59 @@ body.is-sandbox .sandbox { display: inline-block; }
 
 <!-- ── 细节合集:句句是已交付行为,不许吹 ── -->
 <section class="wrap" id="details">
-  <div class="eyebrow reveal">Details · Small things that pull their weight</div>
-  <h2 class="reveal">Not in the headlines, but working every day.</h2>
+  <div class="eyebrow reveal">Details · Small features</div>
+  <h2 class="reveal">Smaller features.</h2>
   <div class="detail-list reveal">
-    <div><strong>The dictionary grows itself.</strong> Proper nouns you have corrected go into the dictionary and are heard right next time — conservative on purpose: it would rather miss one than invent one.</div>
-    <div><strong>Quick phrases.</strong> Say the trigger word and a whole block lands — an address, payment details, a reply you send twice a week. That path never touches a large model.</div>
-    <div><strong>Tone per app.</strong> It lands in a chat app as speech, in an email as prose, and in a code editor without touching your identifiers.</div>
-    <div><strong>Said it wrong? Fix it in the history.</strong> Every dictation keeps its original text and its audio; change one word and that becomes the reference from then on.</div>
-    <div><strong>Under-your-breath mode.</strong> Say it almost silently in a library; the capture end amplifies and recognises it as usual.</div>
-    <div><strong>“Remind me in half an hour.”</strong> Say it in passing and the reminder is set; it turns up on time — handled on-device, so it costs no allowance and works offline.</div>
-    <div><strong>Names on your screen help it hear right.</strong> At the moment you start recording it reads the visible text of the front window once to pull out proper nouns (no screenshot; screen words never enter your dictionary) — the details are in <a href="privacy.html">“Where your data lives”</a>.</div>
+    <div><strong>The dictionary adds words.</strong> Proper nouns you have corrected go into the dictionary and are heard right next time. Words it is unsure about are left out.</div>
+    <div><strong>Quick phrases.</strong> Say a trigger word and a whole address or a stock reply lands. This step does not go through a large model.</div>
+    <div><strong>Tone per app.</strong> Text that lands in an email is more formal than text in a chat app. In a code editor your identifiers are left alone.</div>
+    <div><strong>Fix mistakes in the history.</strong> Every dictation keeps its original text and its audio. Words you correct are used as a reference from then on.</div>
+    <div><strong>Whisper mode.</strong> Whisper in a library and it amplifies the sound before recognising it.</div>
+    <div><strong>“Remind me in half an hour.”</strong> Say it and the reminder is set and pops up on time. It runs on-device, uses no allowance and works offline.</div>
+    <div><strong>Names on your screen help it hear right.</strong> When you start recording, it reads the visible text of the front window once to find proper nouns. It takes no screenshot, and those words never enter your dictionary. Details are in <a href="privacy.html">“Where your data lives”</a>.</div>
   </div>
 </section>
 
 <section class="wrap">
-  <div class="eyebrow reveal">Questions · The ones you are about to ask</div>
+  <div class="eyebrow reveal">Questions · FAQ</div>
   <div class="faq reveal">
     <details>
       <summary>Where does my audio get sent?</summary>
-      <p class="a">Your recordings, transcripts, history and dictionary all live on your Mac; our server only handles accounts and subscriptions. For cloud recognition the audio connects straight to that one recognition service and does not pass through our server — that holds while you are on the free allowance we pay for, too. One exception, stated plainly: on the free allowance the <strong>text</strong> for the cleanup step goes through our server before it reaches the model provider. Pick on-device recognition and nothing leaves the computer at all. Proper nouns from your dictionary are sent along with the request, so that they get heard correctly — all of this is written in Settings, not buried in terms.</p>
+      <p class="a">Your recordings, transcripts, history and dictionary are stored on your Mac. Our server only handles accounts and subscriptions. For cloud recognition the audio goes straight to that one recognition service and does not pass through our server. That is also true on the free allowance we pay for. There is one exception: on the free allowance, the <strong>text</strong> for the cleanup step goes through our server before it reaches the model provider. With on-device recognition nothing leaves the computer. Proper nouns from your dictionary are sent with the request so they are heard correctly. All of this is listed in Settings.</p>
     </details>
     <details>
       <summary>What happens when I am offline?</summary>
-      <p class="a">Offline, or out of allowance, it falls back to on-device recognition by itself — slower, weaker when you mix languages, but your words are not lost. Once you are back, any entry in the history can be run again on a cloud tier.</p>
+      <p class="a">When you are offline or out of allowance, it switches to on-device recognition by itself. On-device recognition is slower and less accurate with mixed languages, and the recording is still saved. Once you are back online, you can run any history entry again on a cloud tier.</p>
     </details>
     <details>
       <summary>Which languages does it handle?</summary>
-      <p class="a">English, Chinese, and the two of them mixed inside one sentence — that last case is the one it was built to take seriously. Chinese with a regional accent (Cantonese, Sichuanese, Wu) has a tier of its own, in closed beta and rolling out.</p>
+      <p class="a">English, Chinese, and the two mixed inside one sentence. Chinese with a Cantonese, Sichuanese or Wu accent has its own tier, currently in closed beta.</p>
     </details>
     <details>
       <summary>Do I have to bring my own API key?</summary>
-      <p class="a">No. Cloud allowance is invite-only for now: get a seat, sign in, and the free allowance is there — it is a cloud bill we pay for you, and when it runs out the app returns to on-device recognition rather than stopping to ask you for money.</p>
+      <p class="a">No. Cloud allowance is invite-only for now. Once you have a seat and sign in, the free allowance is there, and we pay its cloud bill. When it runs out, the app switches to on-device recognition and does not ask you to pay.</p>
     </details>
   </div>
 </section>
 
 <!-- ── 收尾 ── -->
 <section class="wrap outro" id="download">
-  <h2 class="reveal">Try saying the next one <span class="serif">out loud</span>.</h2>
+  <h2 class="reveal">Install it, press right ⌘, <span class="serif">speak</span>.</h2>
   <div class="cta-row reveal">
     <a class="btn btn-primary" href="https://github.com/Azureliu-day1/murmur-site/releases/latest/download/Murmur.zip">Download for macOS</a>
   </div>
   <!-- ⭐ Same line as in the hero: someone who scrolled all the way down on a
        phone should not hit a dead end here either. -->
-  <p class="mobile-path reveal">On your phone? <a href="login/index.html">Ask for a seat</a>, or <a href="try/index.html">see what the tidying does →</a></p>
-  <p class="stage-note reveal"><b>Requires macOS 26 or later on an Apple Silicon (M-series) Mac</b> · Free to start · Cloud allowance by invite</p>
-  <p class="stage-note reveal">On an Intel Mac, or still on macOS 25 or earlier? It won't install yet — leave your email at
-  <a href="mailto:foraiandfocus+murmur@gmail.com?subject=Murmur%20waitlist">foraiandfocus+murmur@gmail.com</a> and we'll tell you the moment it's supported.</p>
+  <p class="mobile-path reveal">It does not install on a phone. You can <a href="login/index.html">ask for a seat</a> or <a href="try/index.html">try the tidying in the browser →</a></p>
+  <p class="stage-note reveal"><b>Requires macOS 26 or later on an Apple Silicon (M-series) Mac</b> · Free download · Cloud allowance by invite</p>
+  <p class="stage-note reveal">It does not install on Intel Macs or on macOS 25 and earlier yet. Email
+  <a href="mailto:foraiandfocus+murmur@gmail.com?subject=Murmur%20waitlist">foraiandfocus+murmur@gmail.com</a> and we will write back once it is supported.</p>
   <p class="stage-note reveal">The download is free and <b>on-device recognition works without an account</b>.
-  The cloud allowance is invite-only for now — email
+  The cloud allowance is invite-only for now. To ask for it, email
   <a href="mailto:foraiandfocus+murmur@gmail.com?subject=Murmur%20beta%20invite">foraiandfocus+murmur@gmail.com</a>
-  and tell us in one line what you'd use it for.</p>
-  <p class="stage-note reveal">Unzip it and drag Murmur into Applications. On first run it asks for the
-  microphone and for accessibility — the first to hear you, the second to put the words at your cursor.</p>
+  with one line on what you would use it for.</p>
+  <p class="stage-note reveal">Unzip it and drag Murmur into Applications. On first launch it asks for
+  microphone and accessibility permission. Accessibility is what lets it put the words at your cursor.</p>
 </section>
 
 <footer class="wrap">
@@ -1046,7 +1046,7 @@ body.is-sandbox .sandbox { display: inline-block; }
     ['Speaker 1', 'Today we get to attention; first a quick recap of embeddings.'],
     ['Speaker 1', 'Query and key go through a dot product, divided by \u221Ad to keep the numbers sane.'],
     ['Speaker 2', 'Is that scaling step actually necessary?'],
-    ['Speaker 1', 'Good question — high dimensions blow up the variance, and softmax saturates.']
+    ['Speaker 1', 'Good question. High dimensions blow up the variance, and softmax saturates.']
   ];
   var reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
   function render(n) {
@@ -1281,11 +1281,11 @@ speakDemo(document.getElementById('fdemoAsk'), {
   const goPath = g('goPath'), backPath = g('backPath');
   const goLen = goPath.getTotalLength(), backLen = backPath.getTotalLength();
   const CAPS = [
-    'You speak — the audio leaves from your Mac and nowhere else',
-    'Straight to the provider you picked — no stop in between',
-    'Transcribed on their side',
+    'You speak, and the audio leaves from your Mac',
+    'It goes straight to the provider you picked, not through us',
+    'The provider turns it into text',
     'Text comes back to your Mac',
-    'Stored locally. That is the end of it.',
+    'The text is stored on your Mac.',
   ];
   let capIdx = -1;
   function setCap(i) {
@@ -1299,7 +1299,7 @@ speakDemo(document.getElementById('fdemoAsk'), {
   if (reduced) {
     g('ghostX').setAttribute('opacity', 1);
     g('savedChip').setAttribute('opacity', 1);
-    g('flowCap').textContent = 'Audio goes straight to the provider you picked, skipping us; the text comes back and stays on your Mac.';
+    g('flowCap').textContent = 'Audio goes straight to the provider you picked, not through us. The text comes back and is stored on your Mac.';
     return;
   }
   const CYCLE = 7600;

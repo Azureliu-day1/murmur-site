@@ -8,8 +8,8 @@
      style-src adds 'self' (v2.css is an external sheet). No wildcards. -->
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://challenges.cloudflare.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src https://syebvkwemxwxkonvsyjd.supabase.co https://challenges.cloudflare.com; frame-src https://challenges.cloudflare.com; object-src 'none'; base-uri 'none'; form-action 'none'">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Try it — Murmur</title>
-<meta name="description" content="Paste a sentence the way you would say it and watch Murmur turn it into clean writing. No download, no sign-up.">
+<title>Try it · Murmur</title>
+<meta name="description" content="Paste a sentence the way you would say it and Murmur turns it into clean writing. No download or sign-up needed.">
 <link rel="alternate" hreflang="en" href="../../en/try/index.html">
 <link rel="alternate" hreflang="zh-Hans" href="../../try/index.html">
 <link rel="icon" href="../../favicon.svg" type="image/svg+xml">
@@ -97,8 +97,8 @@
 <header class="head wrap">
   <div class="t">
     <p class="eyebrow">Try it</p>
-    <h1>Paste a sentence the way you would actually say it</h1>
-    <p class="sub">Messy going in, clean coming out — see it once right here, no download and no sign-up. Once Murmur is installed, this happens in whatever text field your cursor is already in.</p>
+    <h1>Paste a spoken sentence</h1>
+    <p class="sub">Paste something you would say out loud and press “Tidy it”. The tidied version shows up below. You do not need to download anything or sign up. With the Mac app installed, the tidying happens in the text field your cursor is in.</p>
   </div>
   <span class="quota" id="quota">Checking your quota…</span>
 </header>
@@ -136,12 +136,12 @@
       </div>
     </div>
 
-    <p class="stage-note">The <b>text</b> you type here is sent to Murmur's cloud to be tidied, and nothing is kept afterwards. This version does not record audio and does not touch your microphone. The tidying uses the same recipe as the Mac app.</p>
+    <p class="stage-note">The <b>text</b> you type here is sent to Murmur's cloud to be tidied and is not kept afterwards. This web version does not record audio or use your microphone. The tidying uses the same rules as the Mac app.</p>
   </div>
 
-  <p class="after" id="noseatNote" hidden>Seats open one at a time and the founder gets to them as fast as he can; we will use this email address when yours opens.</p>
+  <p class="after" id="noseatNote" hidden>Seats open one at a time. We email this address when yours opens.</p>
 
-  <p class="after">Sounds right? <a href="../index.html#download">Put it on your Mac</a> — finish the sentence and the text is already at your cursor.</p>
+  <p class="after">Want it on your Mac? <a href="../index.html#download">Download the Mac app</a>, press right ⌘, say a sentence, and the text lands at your cursor.</p>
 </main>
 
 <footer class="wrap">
@@ -198,7 +198,7 @@ const L = {
   quotaNoSeatOut: (head) => `${head} · today's tidy-ups are used up`,
   // 下面那一行(#noseatNote)。none 是三段:前半 / 链接上的字 / 后半。
   noSeatNote: {
-    default:  "Seats open one at a time and the founder gets to them as fast as he can; we will use this email address when yours opens.",
+    default:  "Seats open one at a time. We email this address when yours opens.",
     none:     ["You have not asked for a seat yet. ", "Ask on the sign-in page", "."],
     new:      (d) => d ? `Request received (${d}). We will email this address when your seat opens.` : "Request received. We will email this address when your seat opens.",
     declined: "No seat this time.",
@@ -213,18 +213,18 @@ const L = {
   rawEmpty:     "Type a sentence above, or pick one of the samples.",
   cleanEmpty:   "The tidied version will show up here.",
   needText:     "Type a sentence first.",
-  tooLong:      (n) => `That is ${n} characters; the limit is ${MAXLEN} per go — try a shorter passage.`,
+  tooLong:      (n) => `That is ${n} characters. The limit is ${MAXLEN} at a time, so try a shorter passage.`,
   needCaptcha:  "Clear the human check first.",
   // ⭐ 三段:前半 / 链接上的字 / 后半 —— 「sign in」是这句话里唯一的下一步。
-  trialOff:     ["The anonymous trial is off right now — ", "sign in", " to use it."],
-  offline:      "Looks like the network dropped — reconnect and try again.",
+  trialOff:     ["The anonymous trial is off right now. ", "Sign in", " to use it."],
+  offline:      "The network seems to be down. Reconnect and try again.",
   byStatus: {
-    401: "Your sign-in looks expired — refresh the page and try again.",
-    402: "This month's free quota is used up — it refills next month, or write to us.",
-    500: "Something broke on our side — nothing was charged, try again shortly.",
-    502: "The model did not come back — nothing was charged, try again shortly.",
-    503: "Too busy right now — give it a moment.",
-    504: "The model timed out — nothing was charged, try again shortly.",
+    401: "Your sign-in has expired. Refresh the page and try again.",
+    402: "This month's free quota is used up. It resets next month, or you can write to us.",
+    500: "Our server hit an error. Nothing was charged; try again shortly.",
+    502: "The model did not return a result. Nothing was charged; try again shortly.",
+    503: "Too many requests right now. Try again in a moment.",
+    504: "The model timed out. Nothing was charged; try again shortly.",
   },
   done: (sec) => `${sec}s`,
 };

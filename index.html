@@ -4,8 +4,8 @@
 <meta charset="utf-8">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'unsafe-inline'; style-src 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Murmur — 说完,字已经落在光标处</title>
-<meta name="description" content="给中英夹着说话的人做的 macOS 听写工具。说完,整理好的文字已经落在光标处。">
+<title>Murmur · Mac 上的语音输入</title>
+<meta name="description" content="Mac 上的语音输入。按右 ⌘ 说一句,松手字就落在光标处。中英夹着说照样准。">
 <link rel="alternate" hreflang="zh-Hans" href="index.html">
 <link rel="alternate" hreflang="en" href="en/index.html">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
@@ -565,21 +565,22 @@ body.is-sandbox .sandbox { display: inline-block; }
 
 <!-- ── Hero:全页最大的一场动画只留给「说完,字落下」── -->
 <header class="hero wrap" id="top">
-  <h1 class="reveal">说完,字已经<br>落在<span class="serif">光标</span>处。</h1>
-  <p class="lede reveal">说话的时候,想法是自己冒出来的——打字才需要第二道工序。
-  对着任何输入框说,口语进,整理好的文字出。微信、邮件、代码注释,光标在哪,落在哪。</p>
+  <h1 class="reveal">Mac 上的<br><span class="serif">语音</span>输入。</h1>
+  <p class="lede reveal">光标放进输入框,按右 ⌘ 说一句,松手字就在那儿。
+  嗯、啊、那个自动去掉,中英夹着说照样准。微信、邮件、终端里都能用。macOS 26 以上。</p>
   <div class="cta-row reveal">
     <a class="btn btn-primary" href="#download">下载 macOS 版</a>
-    <a class="btn btn-quiet" href="#demo">看它怎么工作</a>
+    <a class="btn btn-quiet" href="#demo">看演示</a>
   </div>
   <!-- ⭐ 手机上的那条路:上面那枚「下载」是 Mac 版,在手机上装不了。
        从微信 / 小红书点进来的人多数在手机上,这一行是他们唯一能走的路。
        桌面上也显示 —— 一行小字,不抢 CTA。 -->
-  <p class="mobile-path reveal">在手机上?<a href="login/index.html">先申请名额</a>,或<a href="try/index.html">试一试整理效果 →</a></p>
+  <p class="mobile-path reveal">手机上装不了。可以先<a href="login/index.html">申请名额</a>,或者<a href="try/index.html">在网页上试整理 →</a></p>
   <div class="keys reveal">
     <span><kbd>右 ⌘</kbd>听写</span>
     <span><kbd>右 ⌥</kbd>翻译</span>
-    <span><kbd>fn</kbd>随心问</span>
+    <span><kbd>右 ⌃</kbd>口述编辑</span>
+    <span><kbd>fn</kbd>随心问(可开启)</span>
     <span><kbd>Esc</kbd>取消</span>
   </div>
 
@@ -594,14 +595,14 @@ body.is-sandbox .sandbox { display: inline-block; }
       </div>
     </div>
     <div class="caption"></div>
-    <p class="stage-note">这段演示是代码画的,不是视频——App 里的胶囊长什么样,这里就是什么样。</p>
+    <p class="stage-note">说话时会出现这条胶囊。按 Esc 取消这一句。</p>
   </div>
 </header>
 
 <!-- ── 少一道工序:打字 vs 说话,双演示对照 ── -->
 <section class="wrap">
   <div class="eyebrow reveal">Subtract · 少一道工序</div>
-  <h2 class="reveal">同一句话,两种写完的方式。</h2>
+  <h2 class="reveal">打字对比说话。</h2>
   <div class="compare reveal">
     <div class="panel type" id="panelType">
       <div class="head">
@@ -609,7 +610,7 @@ body.is-sandbox .sandbox { display: inline-block; }
         <span class="timer mono">0:00</span>
       </div>
       <div class="fake-input"><span class="out"></span><span class="cursor"></span></div>
-      <div class="caption"><span class="volatile">敲,回头看,删掉,重排……</span></div>
+      <div class="caption"><span class="volatile">打一半,删掉重写……</span></div>
     </div>
     <div class="panel speak" id="panelSpeak">
       <div class="head">
@@ -623,41 +624,41 @@ body.is-sandbox .sandbox { display: inline-block; }
           <canvas width="220" height="44"></canvas>
           <div class="round go">✓</div>
         </div>
-        <span class="done-chip">✓ 已插入,先干别的去了</span>
+        <span class="done-chip">✓ 已插入光标处</span>
       </div>
       <div class="caption"></div>
     </div>
   </div>
-  <p class="subtract-note reveal">一天几十次输入,每次省下的那一两分钟,就是这个页面想说的全部。</p>
+  <p class="subtract-note reveal">一天回几十条消息,每条都省掉打字后的回头删改。</p>
 </section>
 
 <!-- ── 三个核心功能 + 各自的展示区 ── -->
 <section class="wrap" id="features">
-  <div class="eyebrow reveal">Three Things · 三件事</div>
-  <h2 class="reveal">三个键,三件事。</h2>
+  <div class="eyebrow reveal">Keys · 四个键</div>
+  <h2 class="reveal">每个键管一件事。</h2>
   <div class="features">
     <div class="feature reveal">
       <div class="num">01</div>
       <div class="name">听写</div>
-      <p>说什么,写什么。口语里的「嗯、那个、就是说」会被 AI 清理掉,落下的是通顺的书面文字。</p>
+      <p>按右 ⌘ 说一句,松手落字。「嗯、那个、就是说」会被删掉,留下通顺的句子。</p>
       <kbd>右 ⌘</kbd>
     </div>
     <div class="feature reveal">
       <div class="num">02</div>
       <div class="name">翻译</div>
-      <p>说中文,落下的是英文;说英文,落下的是中文。方向自动判断,发消息给外国同事是说一句话的事。</p>
+      <p>按右 ⌥ 说一句中文,光标处落下英文。说英文会落下中文,方向自动判断。</p>
       <kbd>右 ⌥</kbd>
     </div>
     <div class="feature reveal">
       <div class="num">03</div>
       <div class="name">随心问</div>
-      <p>把问题说出来,落下的不是你的话,是答案。查个词、算个数,不用切去浏览器。</p>
+      <p>按 fn 说「一英里等于多少公里」,落下的是答案。默认关闭,可在设置里开启。</p>
       <kbd>fn</kbd>
     </div>
     <div class="feature reveal">
       <div class="num">04</div>
       <div class="name">口述编辑</div>
-      <p>选中一段文字,说怎么改 —— 落回去的是改完的样子。说完还能用嘴改,才算闭环。</p>
+      <p>选中一段字,按右 ⌃ 说要怎么改。改好的版本会替换原文。</p>
       <kbd>右 ⌃</kbd>
     </div>
   </div>
@@ -705,50 +706,50 @@ body.is-sandbox .sandbox { display: inline-block; }
 <!-- ── Vibe Coding:对着 AI 编码工具口述 —— 只写系统级听写真做得到的 ── -->
 <section class="wrap" id="vibe">
   <div class="eyebrow reveal">Vibe Coding · 对着 AI 说话</div>
-  <h2 class="reveal">跟 Claude Code、Cursor、Codex 提需求,<br>本来就是口语活儿。</h2>
+  <h2 class="reveal">对 Claude Code<br>口述需求。</h2>
   <p class="sub reveal">
-    你不是在一个字一个字地写代码,你是在跟它讲清楚要什么 ——
-    「把这个 function 改成 async,然后加个 retry」。
-    这句话说出来三秒,敲出来要三十秒。
-    Murmur 没有插件,没有集成,也不需要你配什么 ——
-    它就是个系统级听写,落在任何光标处,包括终端里那个正等你输入的提示符。
+    光标停在终端的提示符后面,按右 ⌘ 说:
+    「把这个 function 改成 async,再加个 retry」。
+    松手,这句话就出现在提示符后面。
+    Cursor、Codex 的输入框里也一样。
+    Murmur 是系统级听写,不需要插件,也不用配置。
   </p>
   <div class="detail-list reveal">
-    <div><strong>中英混着说,不给你强行统一。</strong>变量名、库名、报错本来就是英文,中间夹的是中文 —— 落下来还是你说的那样。</div>
-    <div><strong>专名错一次,纠正一次,就不再错。</strong>把听岔的库名或 API 名改对,它自动进词典,下次直接听对 —— 保守优先,宁漏不乱。</div>
-    <div><strong>常用 prompt 存成快捷短语。</strong>说一句触发词,落下的是整段模板 —— 那些每天要重复交代的规矩,不用再敲一遍。</div>
-    <div><strong>查个 API 名字不用切窗口。</strong>随心问按下去把问题说完,落下的不是你的话,是答案,手不离开编辑器。</div>
-    <div><strong>选中一段代码,说怎么改。</strong>口述编辑把改完的样子落回原处 —— 想法不用先敲成字。</div>
-    <div><strong>落进代码编辑器,不动你的标识符。</strong>分应用语气认得出你在编辑器里,跟落进聊天软件是两套规矩。</div>
+    <div><strong>中英夹着说。</strong>变量名、库名、报错保留英文,中间的中文照常落下。</div>
+    <div><strong>听错的库名改一次。</strong>把听错的库名或 API 名改对,它会进词典,下次直接听对。</div>
+    <div><strong>常用 prompt 存成快捷短语。</strong>说触发词,落下整段模板。每天要交代的规矩不用再敲。</div>
+    <div><strong>查 API 名字不用切窗口。</strong>开启随心问后,按 fn 说出问题,答案落在光标处。</div>
+    <div><strong>选中一段代码,说怎么改。</strong>按右 ⌃ 说出改法,改好的代码落回原处。</div>
+    <div><strong>在代码编辑器里不改标识符。</strong>它认得出前台是编辑器,落字时换用另一套规则。</div>
   </div>
 </section>
 
 <!-- ── 模型提供表:不报厂商名 —— 场景才重要(口径同 App 内模型页) ── -->
 <section class="wrap" id="models">
   <div class="eyebrow reveal">Engines · 提供表</div>
-  <h2 class="reveal">识别引擎可以换。<br>这是我们替你试完之后的推荐表。</h2>
+  <h2 class="reveal">识别引擎<br>分三档。</h2>
   <p class="sub reveal">
-    市面上的识别模型,我们在产品团队内部做了一整套测评,选出三个最主要的提供给你。
-    没有哪一家在所有场景都最好 —— 你怎么说话才重要,所以按场景分成三档:
-    优缺点写在明面上,一层菜单直接切,换挡不用懂任何术语。
+    我们在内部测了市面上的识别模型,留下三个,按说话场景分成三档。
+    每一档的长处和短处都列在下面。
+    在菜单里点一下就能换档。
   </p>
 
   <div class="tiers">
     <article class="tier reveal">
       <div class="tier-top"><h3>标准</h3><span class="tier-cost">额度 ×1</span></div>
-      <div class="tier-for">日常混说的默认之选</div>
+      <div class="tier-for">默认档,日常中英混说</div>
       <div class="stars">
         <div><span>日常使用</span><i><b>●●●●●</b></i></div>
         <div><span>中文为主</span><i><b>●●●●</b><s>●</s></i></div>
         <div><span>英文为主</span><i><b>●●●</b><s>●●</s></i></div>
       </div>
       <ul class="tier-good">
-        <li>实时字幕,松手秒出</li>
-        <li>中英混说最稳(亲测基准)</li>
+        <li>边说边出字幕,松手马上落字</li>
+        <li>中英混说错得最少(我们自己测的)</li>
         <li>额度消耗最低</li>
       </ul>
       <ul class="tier-bad">
-        <li>纯英文长句的公开流式基准中游</li>
+        <li>纯英文长句:公开流式评测里排中游</li>
       </ul>
     </article>
 
@@ -762,12 +763,12 @@ body.is-sandbox .sandbox { display: inline-block; }
         <div><span>英文为主</span><i><b>●●●</b><s>●●</s></i></div>
       </div>
       <ul class="tier-good">
-        <li>中文与混说公开实测最强档</li>
-        <li>方言底子好(粤/川渝/吴)</li>
-        <li>实时字幕,松手秒出</li>
+        <li>中文和混说:公开评测里最好的一档</li>
+        <li>粤语、川渝、吴语口音也听得准</li>
+        <li>边说边出字幕,松手马上落字</li>
       </ul>
       <ul class="tier-bad">
-        <li>实时字幕的专名偏置暂缺(终稿由词典兜底)</li>
+        <li>实时字幕还不认词典里的专名,最终文字会按词典校正</li>
       </ul>
     </article>
 
@@ -781,34 +782,34 @@ body.is-sandbox .sandbox { display: inline-block; }
         <div><span>英文为主</span><i><b>●●●●●</b></i></div>
       </div>
       <ul class="tier-good">
-        <li>英文与混说的公开基准第一梯队</li>
-        <li>复杂口音、专有名词最稳</li>
+        <li>英文和混说:公开评测里第一梯队</li>
+        <li>口音重、专有名词多时错得最少</li>
       </ul>
       <ul class="tier-bad">
-        <li>没有实时字幕(说完等整段)</li>
+        <li>没有实时字幕,说完要等整段结果</li>
         <li>中文输出偶有简繁混杂</li>
-        <li>额度消耗高</li>
+        <li>额度按两倍扣</li>
       </ul>
     </article>
   </div>
 
   <p class="tier-note reveal">
-    <strong>现在就能用的是「标准」档</strong>,另外两档正在内测里逐步放开。
-    「额度 ×2」的意思是:同一份额度,这一档消耗按两倍计 —— 比如长录音录 1 分钟,
-    从时长池里扣 2 分钟,消耗写在档位旁边,没有隐藏折算。断网或额度用完时
-    自动落回本机识别:慢一点、混说弱一点,但不变砖,你的话也不会丢。
+    <strong>现在能用的只有「标准」档</strong>,另外两档在内测,会逐步开放。
+    「额度 ×2」指这一档按两倍扣:长录音录 1 分钟,从时长池里扣 2 分钟。
+    断网或额度用完时,自动换成本机识别。
+    本机识别比云端慢,中英混说也没那么准,但录下的话不会丢。
   </p>
 </section>
 
 <!-- ── 数据在哪:全站最硬的一句话 ── -->
 <section class="wrap" id="local">
   <div class="eyebrow reveal">Local · 数据在哪</div>
-  <h2 class="reveal">我们的服务器只认识「你是谁」,<br>永远不知道「你说了什么」。</h2>
-  <p class="sub reveal">账号、登录、订阅——这是我们服务器仅有的工作。你的录音、转写、历史、词典,
-  一个字都不上传,全部只存在你的 Mac 上。云端识别时,音频直连你自己选的那家模型商,
-  不经过我们;选本机识别,则一个字节都不出这台电脑。</p>
+  <h2 class="reveal">录音只存在<br>你的 Mac 上。</h2>
+  <p class="sub reveal">我们的服务器只管账号、登录和订阅。录音、转写、历史和词典都存在你的 Mac 上。
+  用云端识别时,音频直接发给你选的那家识别服务,不经过我们。
+  用本机识别时,音频不出这台电脑。</p>
   <div class="flowstage reveal">
-    <svg viewBox="0 0 760 250" aria-label="数据从你的 Mac 直连模型商,跳过我们的服务器">
+    <svg viewBox="0 0 760 250" aria-label="音频从你的 Mac 直接发给你选的模型商,不经过我们的服务器">
       <!-- 航线(常显,极淡) -->
       <path id="goPath"   d="M196 118 C 300 26, 460 26, 564 118" fill="none" stroke="var(--line2)" stroke-width="1.5" stroke-dasharray="3 6"/>
       <path id="backPath" d="M564 138 C 460 226, 300 226, 196 138" fill="none" stroke="var(--line2)" stroke-width="1.5" stroke-dasharray="3 6"/>
@@ -829,7 +830,7 @@ body.is-sandbox .sandbox { display: inline-block; }
       <g id="ghost" opacity=".8">
         <rect x="304" y="92" width="152" height="72" rx="14" fill="none" stroke="var(--line2)" stroke-dasharray="5 5"/>
         <text class="ghost-label" x="380" y="122" text-anchor="middle">我们的服务器</text>
-        <text class="node-sub" x="380" y="142" text-anchor="middle">只认识「你是谁」</text>
+        <text class="node-sub" x="380" y="142" text-anchor="middle">只管账号和订阅</text>
         <g id="ghostX" opacity="0">
           <circle cx="380" cy="76" r="13" fill="var(--coral)"/>
           <text x="380" y="81" text-anchor="middle" style="font-size:13px; font-weight:700" fill="#fff">✕</text>
@@ -840,7 +841,7 @@ body.is-sandbox .sandbox { display: inline-block; }
       <g>
         <rect x="564" y="86" width="160" height="84" rx="14" fill="var(--paper)" stroke="var(--line2)"/>
         <text class="node-label" x="644" y="122" text-anchor="middle">你选的模型商</text>
-        <text class="node-sub" x="644" y="144" text-anchor="middle">选哪一档,就只连那一家</text>
+        <text class="node-sub" x="644" y="144" text-anchor="middle">只连你选的那一家</text>
         <rect id="provGlow" x="564" y="86" width="160" height="84" rx="14" fill="none" stroke="var(--coral)" stroke-width="2.5" opacity="0"/>
       </g>
 
@@ -848,33 +849,33 @@ body.is-sandbox .sandbox { display: inline-block; }
       <circle id="pktGo"   r="7" fill="var(--coral)" opacity="0"/>
       <circle id="pktBack" r="7" fill="var(--ink)"  opacity="0"/>
     </svg>
-    <p class="cap" id="flowCap">你说话 —— 音频只从你的 Mac 出发</p>
+    <p class="cap" id="flowCap">你说话,音频从你的 Mac 发出</p>
   </div>
 
   <p class="local-path reveal"><span class="mono">~/Library/Application Support/Murmur/</span><br>
-  <span class="path-note">录音和你说过的每一个字,都在这个文件夹里,不信随时自己打开看。删掉,就是真的删掉了。</span></p>
+  <span class="path-note">录音和转写都在这个文件夹里,可以随时打开看。在这里删掉,就是彻底删掉。</span></p>
 </section>
 
 <!-- ── 敢写下来的承诺 ── -->
 <section class="wrap" id="promises">
-  <div class="eyebrow reveal">Promises · 敢写下来的事</div>
-  <h2 class="reveal">这四条,写下来就要兑现。</h2>
+  <div class="eyebrow reveal">Promises · 承诺</div>
+  <h2 class="reveal">四条承诺。</h2>
   <div class="promises">
     <div class="promise reveal">
-      <h3>绝不丢话</h3>
-      <p>每次听写都留着录音和一条历史。云端挂了、识别错了?回历史里换个模型重跑——没有哪条路径会让你说过的话凭空消失。</p>
+      <h3>说过的话不丢</h3>
+      <p>每次听写都存一份录音和一条历史。云端出错或识别错了,可以在历史里换个模型重新识别。</p>
     </div>
     <div class="promise reveal">
-      <h3>失败就明说</h3>
-      <p>没翻译成,会告诉你没翻译成;麦克风没收到声,当场就说。不会把一段兜底出来的乱码,悄悄塞进你正在打字的窗口。</p>
+      <h3>出错会告诉你</h3>
+      <p>翻译失败时,屏幕上会提示。麦克风没收到声音,也会当场提示。它不会往你的窗口里塞乱码。</p>
     </div>
     <div class="promise reveal">
-      <h3>音频去哪,写在明面</h3>
-      <p>选本机识别,音频一个字节不出这台电脑;选云端,用了哪家、发了什么,设置里白纸黑字——不藏在条款第八页。</p>
+      <h3>音频去哪看得到</h3>
+      <p>用本机识别时,音频不出这台电脑。用云端时,设置里写着发给了哪家、发了什么。</p>
     </div>
     <div class="promise reveal">
-      <h3>数字是量出来的</h3>
-      <p>「松手到出字」的延迟是实测中位数,不是文案写的。识别档位的优缺点也写在明面上 —— 不合适就换一档,你的耳朵说了算。</p>
+      <h3>数字是实测的</h3>
+      <p>「松手到出字」的延迟写的是实测中位数。哪一档听得不准,在菜单里换一档就行。</p>
     </div>
   </div>
 </section>
@@ -883,18 +884,19 @@ body.is-sandbox .sandbox { display: inline-block; }
 <!-- ── 长录音:实时字幕(可牺牲预览)+ 整段转写(说话人分离) ── -->
 <section class="wrap" id="lecture">
   <div class="eyebrow reveal">Lecture · 长录音</div>
-  <h2 class="reveal">上课开着,字幕像弹幕一样浮在屏幕上。</h2>
+  <h2 class="reveal">上课开长录音。</h2>
   <p class="sub reveal">
-    长录音是另一条管线:实时字幕浮窗盖在任何全屏窗口上面 —— 网课照常放,字幕自己跟;
-    想看译文就开双栏。字幕只是可牺牲的预览,它断了课不断:完整版录完照常落历史,
-    还分得出谁在说话。
+    开长录音后,字幕浮窗盖在全屏网课上面,边放边出字。
+    要看译文,可以开双栏。
+    字幕只是预览,中途断了也不影响录音。
+    录完后完整转写存进历史,分得出谁在说话。
   </p>
   <div class="cap-demo reveal" id="capDemo" aria-label="实时字幕演示">
-    <div class="cap-head"><span class="cap-dot"></span>实时字幕<span class="cap-tag">预览 · 完整版录完照常落历史</span></div>
+    <div class="cap-head"><span class="cap-dot"></span>实时字幕<span class="cap-tag">预览 · 录完存进历史</span></div>
     <div class="cap-lines" id="capLines"></div>
   </div>
   <p class="stage-note reveal" style="margin-top:14px">
-    这段演示是代码画的,不是视频。长录音免费档每月 30 分钟。
+    免费档每月可以录 30 分钟长录音。
   </p>
 </section>
 
@@ -961,56 +963,56 @@ body.is-sandbox .sandbox { display: inline-block; }
 <!-- ── 细节合集:句句是已交付行为,不许吹 ── -->
 <section class="wrap" id="details">
   <div class="eyebrow reveal">Details · 顺手的小事</div>
-  <h2 class="reveal">没写进大标题,但每天都在干活的。</h2>
+  <h2 class="reveal">顺手的小功能。</h2>
   <div class="detail-list reveal">
-    <div><strong>词典会自己长大。</strong>被你纠正过的专有名词自动进词典,下次直接听对 —— 保守优先,宁漏不乱。</div>
-    <div><strong>快捷短语。</strong>说一句触发词,落下的是整段模板 —— 地址、收款信息、常用回复,一步不经大模型。</div>
-    <div><strong>分应用语气。</strong>落进聊天软件是口语,落进邮件是正式,落进代码编辑器不动你的标识符。</div>
-    <div><strong>说错了,回历史改。</strong>每条听写都留着原文和录音;改一个字,它就是以后的参照。</div>
-    <div><strong>悄悄话模式。</strong>图书馆里用气声说,采集端放大之后照常识别。</div>
-    <div><strong>「半小时后提醒我」。</strong>顺嘴一句就挂上提醒,到点弹出来 —— 本地就地处理,不花额度、断网也灵。</div>
-    <div><strong>屏幕上的专名帮忙听对。</strong>录音那一刻读一次前台窗口的可见文字抽专有名词(不截屏,屏幕词绝不进词典)—— 细节在<a href="privacy.html">「你的数据在哪」</a>。</div>
+    <div><strong>词典自动加词。</strong>你改对过的专有名词会进词典,下次直接听对。没把握的词不加。</div>
+    <div><strong>快捷短语。</strong>说一个触发词,落下整段地址或常用回复。这一步不经过大模型。</div>
+    <div><strong>分应用语气。</strong>落进邮件时,措辞比落进微信正式。在代码编辑器里不改你的标识符。</div>
+    <div><strong>在历史里改错字。</strong>每条听写都留着原文和录音。你改过的字,以后识别时会参照。</div>
+    <div><strong>悄悄话模式。</strong>在图书馆用气声说话,它先把声音放大再识别。</div>
+    <div><strong>「半小时后提醒我」。</strong>说这一句就设好提醒,到点弹出。这句在本机处理,不花额度,断网也能用。</div>
+    <div><strong>参考屏幕上的专名。</strong>开始录音时,它读一次前台窗口的文字,找出专有名词帮忙识别。不截屏,这些词也不进词典。细节见<a href="privacy.html">「你的数据在哪」</a>。</div>
   </div>
 </section>
 
 <section class="wrap">
-  <div class="eyebrow reveal">Questions · 你会想问的</div>
+  <div class="eyebrow reveal">Questions · 常见问题</div>
   <div class="faq reveal">
     <details>
       <summary>我的录音会被传到哪里?</summary>
-      <p class="a">你的录音、转写、历史、词典全存在你的 Mac 本地,我们的服务器只处理账号和订阅。云端识别时,音频直连那一家识别服务,不经我们的服务器——用免费额度(我们代付)时也一样。唯一的例外要说清:用免费额度时,整理环节的<strong>文字</strong>会先经我们的服务器再转给模型厂商。选本机识别,一个字节都不出电脑。词典里的专有名词会随请求发给识别服务(为了听对它们)——这些都写在设置里,不是藏在条款里。</p>
+      <p class="a">录音、转写、历史和词典都存在你的 Mac 上。我们的服务器只处理账号和订阅。用云端识别时,音频直接发给那一家识别服务,不经过我们的服务器。用我们代付的免费额度时也是这样。有一个例外:用免费额度时,整理用的<strong>文字</strong>会先经过我们的服务器,再转给模型厂商。用本机识别时,什么都不出电脑。词典里的专有名词会随请求发给识别服务,帮它听对这些词。这些在设置里都写着。</p>
     </details>
     <details>
       <summary>断网了怎么办?</summary>
-      <p class="a">断网或额度用完,都自动落回本机识别——慢一点、混说弱一点,但你的话不会丢。恢复之后,历史里的任何一条都可以换云端档位重跑。</p>
+      <p class="a">断网或额度用完时,会自动换成本机识别。本机识别慢一些,中英混说没那么准,录音照样保存。联网后,可以在历史里用云端档位重新识别任何一条。</p>
     </details>
     <details>
       <summary>支持哪些语言?</summary>
-      <p class="a">中文、英文,以及它们夹在一起说——最后这种恰恰是它做得最认真的。中文带方言口音(粤/川渝/吴)也有专门的档位(内测中,逐步开放)。</p>
+      <p class="a">中文、英文,以及一句话里中英夹着说。带粤语、川渝、吴语口音的中文有专门的档位,目前在内测。</p>
     </details>
     <details>
       <summary>需要自己配 API Key 吗?</summary>
-      <p class="a">不需要。云端额度现阶段是内测邀请制:拿到名额、登录,免费额度就在 —— 那是我们替你付的云端账单,用完自动切回本机识别,不会停下来问你要钱。</p>
+      <p class="a">不需要。云端额度现在是邀请制,拿到名额并登录后就有免费额度。免费额度的云端费用由我们付。用完后自动换成本机识别,不会停下来让你付费。</p>
     </details>
   </div>
 </section>
 
 <!-- ── 收尾 ── -->
 <section class="wrap outro" id="download">
-  <h2 class="reveal">下一句话,<span class="serif">说</span>出来试试。</h2>
+  <h2 class="reveal">装好后按右 ⌘ <span class="serif">说</span>一句。</h2>
   <div class="cta-row reveal">
     <a class="btn btn-primary" href="https://github.com/Azureliu-day1/murmur-site/releases/latest/download/Murmur.zip">下载 macOS 版</a>
   </div>
   <!-- ⭐ 和 hero 里那一行同一句:滚到底才看见「下载」的手机用户,在这里也不该是死路。 -->
-  <p class="mobile-path reveal">在手机上?<a href="login/index.html">先申请名额</a>,或<a href="try/index.html">试一试整理效果 →</a></p>
-  <p class="stage-note reveal"><b>只支持 macOS 26 及以上、Apple Silicon(M 系列)的 Mac</b> · 免费开始 · 云端额度内测邀请制</p>
-  <p class="stage-note reveal">Intel Mac,或系统还在 macOS 25 及以下?现在装不上 —— 留个邮箱到
-  <a href="mailto:foraiandfocus+murmur@gmail.com?subject=Murmur%20%E7%AD%89%E6%94%AF%E6%8C%81">foraiandfocus+murmur@gmail.com</a>,支持了第一时间告诉你。</p>
-  <p class="stage-note reveal">下载免费,<b>本机识别不用登录就能用</b>。要云端额度的话,现在是内测邀请制 ——
-  写封信到 <a href="mailto:foraiandfocus+murmur@gmail.com?subject=Murmur%20%E5%86%85%E6%B5%8B%E5%90%8D%E9%A2%9D">foraiandfocus+murmur@gmail.com</a>
-  要一个,说一句你想用它做什么就行。</p>
-  <p class="stage-note reveal">解压后把 Murmur 拖进「应用程序」。首次使用会请求麦克风与辅助功能权限 ——
-  前者听你说话,后者把字落进光标处。</p>
+  <p class="mobile-path reveal">手机上装不了。可以先<a href="login/index.html">申请名额</a>,或者<a href="try/index.html">在网页上试整理 →</a></p>
+  <p class="stage-note reveal"><b>需要 macOS 26 以上、M 系列芯片的 Mac</b> · 下载免费 · 云端额度要邀请</p>
+  <p class="stage-note reveal">Intel Mac 和 macOS 25 以下的系统现在装不上。发封邮件到
+  <a href="mailto:foraiandfocus+murmur@gmail.com?subject=Murmur%20%E7%AD%89%E6%94%AF%E6%8C%81">foraiandfocus+murmur@gmail.com</a>,支持以后我们回信告诉你。</p>
+  <p class="stage-note reveal">下载免费,<b>本机识别不用登录就能用</b>。云端额度现在要邀请。
+  写信到 <a href="mailto:foraiandfocus+murmur@gmail.com?subject=Murmur%20%E5%86%85%E6%B5%8B%E5%90%8D%E9%A2%9D">foraiandfocus+murmur@gmail.com</a>
+  申请,写一句你想用它做什么。</p>
+  <p class="stage-note reveal">解压后把 Murmur 拖进「应用程序」。第一次打开时,它会请求麦克风和辅助功能权限。
+  辅助功能权限用来把字放进光标处。</p>
 </section>
 
 <footer class="wrap">
@@ -1035,7 +1037,7 @@ body.is-sandbox .sandbox { display: inline-block; }
     ['说话人 1', '今天我们讲 attention 机制,先回顾上节课的 embedding。'],
     ['说话人 1', '这里 query 和 key 做点积,除以 √d 防止数值跑飞。'],
     ['说话人 2', '老师,这个 scaling 是必须的吗?'],
-    ['说话人 1', '好问题 —— 维度一高点积方差就大,softmax 会饱和。']
+    ['说话人 1', '好问题。维度一高,点积方差就大,softmax 会饱和。']
   ];
   var reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
   function render(n) {
@@ -1271,11 +1273,11 @@ speakDemo(document.getElementById('fdemoAsk'), {
   const goPath = g('goPath'), backPath = g('backPath');
   const goLen = goPath.getTotalLength(), backLen = backPath.getTotalLength();
   const CAPS = [
-    '你说话 —— 音频只从你的 Mac 出发',
-    '直连你选的那家 —— 跳过任何中间站',
-    '云端转写完成',
+    '你说话,音频从你的 Mac 发出',
+    '音频直接发给你选的那家,不经过我们',
+    '那家服务把音频转成文字',
     '文字回到你的 Mac',
-    '存进本地,到此为止。',
+    '文字存在你的 Mac 上。',
   ];
   let capIdx = -1;
   function setCap(i) {
@@ -1289,7 +1291,7 @@ speakDemo(document.getElementById('fdemoAsk'), {
   if (reduced) {
     g('ghostX').setAttribute('opacity', 1);
     g('savedChip').setAttribute('opacity', 1);
-    g('flowCap').textContent = '音频直连你选的服务商,跳过我们;文字回来,存进本地。';
+    g('flowCap').textContent = '音频直接发给你选的服务商,不经过我们。文字回来后存在本地。';
     return;
   }
   const CYCLE = 7600;
