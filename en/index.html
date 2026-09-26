@@ -396,6 +396,10 @@ kbd {
 /* ── 收尾 ── */
 .outro { text-align: center; padding-bottom: 40px; }
 .outro h2 { font-size: clamp(28px, 4vw, 40px); }
+/* 真截图(App 离屏出图,见 shots/README.md);暗色跟系统换一张。 */
+.real-shot { max-width: 560px; margin: 28px auto 0; }
+.real-shot img { display: block; width: 100%; height: auto; border-radius: 14px; }
+.real-shot figcaption { margin-top: 10px; font-size: 12.5px; color: var(--faint); }
 
 footer {
   margin-top: 110px; border-top: 1px solid var(--line);
@@ -1019,6 +1023,15 @@ body.is-sandbox .sandbox { display: inline-block; }
 <!-- ── 收尾 ── -->
 <section class="wrap outro" id="download">
   <h2 class="reveal">Install it, press right ⌘, <span class="serif">speak</span>.</h2>
+  <!-- ⭐ 真截图:和中文页同一张(App 的 en 出图与 zh 逐字节相同,气泡里是中文样例)。 -->
+  <figure class="real-shot reveal">
+    <picture>
+      <source srcset="../shots/zh/hud-dark.png" media="(prefers-color-scheme: dark)">
+      <img src="../shots/zh/hud-light.png" width="716" height="230" loading="lazy"
+           alt="Murmur recording bar. A capsule at the bottom of the screen with a cancel button, a waveform, a 0:08 timer and a check button; above it, the words appearing as you speak.">
+    </picture>
+    <figcaption>A real screenshot. While you speak, this bar sits at the bottom of the screen. Press again or click ✓ and the words land at your cursor.</figcaption>
+  </figure>
   <div class="cta-row reveal">
     <a class="btn btn-primary" href="https://github.com/Azureliu-day1/murmur-site/releases/latest/download/Murmur.zip">Download for macOS</a>
   </div>
@@ -1026,12 +1039,12 @@ body.is-sandbox .sandbox { display: inline-block; }
        phone should not hit a dead end here either. -->
   <p class="mobile-path reveal">It does not install on a phone. You can <a href="login/index.html">ask for a seat</a> or <a href="try/index.html">try the tidying in the browser →</a></p>
   <p class="stage-note reveal"><b>Requires macOS 26 or later on an Apple Silicon (M-series) Mac</b> · Free download · Cloud allowance by invite</p>
-  <p class="stage-note reveal">It does not install on Intel Macs or on macOS 25 and earlier yet. Email
+  <p class="stage-note reveal">It does not install on Intel Macs or on macOS 15 and earlier yet. Email
   <a href="mailto:foraiandfocus+murmur@gmail.com?subject=Murmur%20waitlist">foraiandfocus+murmur@gmail.com</a> and we will write back once it is supported.</p>
+  <!-- ⭐ One way to ask for a seat: the form on the sign-in page (same entry as the hero and
+       the phone hint). This used to be a second route by email. -->
   <p class="stage-note reveal">The download is free and <b>on-device recognition works without an account</b>.
-  The cloud allowance is invite-only for now. To ask for it, email
-  <a href="mailto:foraiandfocus+murmur@gmail.com?subject=Murmur%20beta%20invite">foraiandfocus+murmur@gmail.com</a>
-  with one line on what you would use it for.</p>
+  The cloud allowance is invite-only for now. <a href="login/index.html">Ask for a seat here</a>, with one line on what you would use it for.</p>
   <p class="stage-note reveal">Unzip it and drag Murmur into Applications. On first launch it asks for
   microphone and accessibility permission. Accessibility is what lets it put the words at your cursor.</p>
 </section>
