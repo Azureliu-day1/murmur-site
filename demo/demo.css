@@ -1,0 +1,86 @@
+/* ══════════════════════════════════════════════════════════════════════════
+   demo.css · /demo/ 与 /en/demo/ 的页面局部样式(2026-09-26 · 0.53 起)
+   两页都引:../v2.css(共用零件)→ ../pinyin.css(候选窗 .py-*)→ 这份。
+   ⛔ 不在这里重定义 .py-* 的外观(那是 pinyin.css 的);这里只管它在本页的定位。
+   ⛔ 不新增颜色:全部用 v2.css 的 token。
+   为什么单独一份外链而不是页内 <style>:两页共用,CSP 也只放 'self'。
+   ══════════════════════════════════════════════════════════════════════════ */
+
+/* ── 页头与舞台:配方逐字取自 try/index.html ──
+   ⛔ .head 不许写 padding 简写:会把 .wrap 的左右 32px 清零(见 try 页注释)。 */
+.head { padding-block: 64px 0; display: flex; align-items: flex-start; gap: 24px; }
+.head .t { flex: 1; min-width: 0; }
+.head h1 { font-size: clamp(26px, 3.4vw, 34px); font-weight: 600; line-height: 1.35; letter-spacing: .01em; max-width: 12.5em; }
+.head .sub { color: var(--second); font-size: 15.5px; max-width: 38em; margin-top: 14px; }
+
+.stage {
+  margin: 40px auto 0; max-width: 760px;
+  background: linear-gradient(180deg, var(--stage-a), var(--stage-b));
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  padding: 30px 32px 30px;
+}
+
+/* ── 模拟输入框:同首页 .fake-input,光标同款 ── */
+.fake-input {
+  background: var(--card); border: 1px solid var(--line2); border-radius: 12px;
+  padding: 13px 17px; text-align: left; font-size: 17px; min-height: 74px;
+  box-shadow: var(--shadow); color: var(--ink);
+  overflow-wrap: anywhere; white-space: pre-wrap; cursor: text;
+  transition: border-color .12s ease;
+}
+.fake-input .ph { color: var(--faint); }
+#box:focus { outline: none; border-color: var(--coral); }
+#box:focus-visible { outline: 2px solid var(--coral); outline-offset: 2px; }
+/* 组合中的拼音:下划线,和系统输入法的内联拼音一个样子 */
+.py-comp {
+  color: var(--ink);
+  text-decoration: underline; text-decoration-color: var(--second);
+  text-underline-offset: 4px; text-decoration-thickness: 1px;
+}
+.cursor {
+  display: inline-block; width: 2px; height: 1.15em; background: var(--coral);
+  vertical-align: text-bottom; margin-left: 1px;
+  animation: demo-blink 1.06s steps(1) infinite;
+}
+@keyframes demo-blink { 50% { opacity: 0; } }
+@media (prefers-reduced-motion: reduce) {
+  .cursor { animation: none; }
+}
+
+/* ── 候选窗的落位:输入框下面预留一格,候选窗绝对定位在格里 ──
+   预留高度 = 候选窗一行 36 + 上下各 10,候选窗出现 / 收起时下面的按钮不跳。 */
+.slot { position: relative; min-height: 56px; }
+.slot .py-panel { position: absolute; top: 10px; left: 0; z-index: 2; }
+/* ⚠️ .py-panel 是 display:inline-flex(类选择器)会压过浏览器对 [hidden] 的 display:none */
+#panel[hidden] { display: none; }
+
+/* ── 按钮行与 10 句 ── */
+.actions { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; margin-top: 8px; }
+.actions .mode { margin-left: auto; }
+.btn[aria-pressed="true"] { opacity: .6; }
+.lines { margin-top: 16px; display: flex; gap: 10px; flex-wrap: wrap; }
+.lines .chip.on { color: var(--ink); border-color: var(--coral); }
+#cap { margin-top: 16px; }
+
+/* ── 键位说明 ── */
+.stage-note { margin-top: 24px; font-size: 12.5px; color: var(--second); line-height: 1.8; }
+.keys { list-style: none; padding: 0; margin-top: 8px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px 24px; }
+.keys li { min-width: 0; }
+kbd {
+  font-family: "IBM Plex Mono", monospace; font-size: 12px; color: var(--ink);
+  background: var(--card); border: 1px solid var(--line2); border-radius: 7px;
+  padding: 1px 8px; margin-right: 6px; white-space: nowrap;
+}
+.after { max-width: 760px; margin: 24px auto 0; text-align: center; font-size: 14px; color: var(--second); }
+
+@media (max-width: 820px) {
+  .head { padding-top: 44px; flex-direction: column; gap: 14px; }
+  .stage { margin-top: 28px; padding: 22px 18px 24px; border-radius: 18px; }
+  /* 候选窗在窄屏会按 pinyin.css 折成两三行:预留格跟着加高 */
+  .slot { min-height: 118px; }
+  .slot .py-panel { left: 0 !important; right: 0; }
+  .keys { grid-template-columns: 1fr; }
+  /* 顶栏收起的那条,同 try 页:只留 nav-keep 与「下载」 */
+  .navlinks a:not(.nav-cta):not(.nav-keep), .navlinks .soon { display: none; }
+}

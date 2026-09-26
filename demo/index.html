@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<!-- CSP:和首页同一条,只收紧两处 ——
+     script-src 只有 'self'(本页零内联脚本,逻辑全在 demo/*.js);
+     style-src 有 'self'(v2.css / pinyin.css / demo.css 都是外链)。
+     connect-src 'none':演示页零网络,词表和引擎都在本地文件里。 -->
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>输入法演示 · Murmur</title>
+<meta name="description" content="在浏览器里试打 Murmur 拼音输入法的候选窗。这是演示,词表很小。">
+<link rel="alternate" hreflang="zh-Hans" href="../demo/index.html">
+<link rel="alternate" hreflang="en" href="../en/demo/index.html">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../v2.css">
+<link rel="stylesheet" href="../pinyin.css">
+<link rel="stylesheet" href="demo.css">
+</head>
+<body>
+
+<nav>
+  <div class="wrap navrow">
+    <a class="brand" href="../index.html"><svg width="30" height="15" viewBox="0 0 200 100" aria-hidden="true"><path d="M12.0 50.0 L14.0 40.1 L16.0 31.7 L18.0 25.2 L20.0 21.0 L22.0 19.0 L24.0 19.2 L26.0 21.3 L28.0 25.2 L30.0 30.3 L32.0 36.2 L34.0 42.4 L36.0 48.5 L38.0 54.2 L40.0 59.0 L42.0 62.7 L44.0 65.2 L46.0 66.5 L48.0 66.5 L50.0 65.5 L52.0 63.5 L54.0 60.9 L56.0 57.8 L58.0 54.6 L60.0 51.5 L62.0 48.6 L64.0 46.2 L66.0 44.4 L68.0 43.2 L70.0 42.7 L72.0 42.7 L74.0 43.2 L76.0 44.1 L78.0 45.3 L80.0 46.7 L82.0 48.0 L84.0 49.2 L86.0 50.2 L88.0 51.0 L90.0 51.5 L92.0 51.8 L94.0 51.8 L96.0 51.6 L98.0 51.3 L100.0 50.9 L102.0 50.5 L104.0 50.2 L106.0 50.0 L190 50" fill="none" stroke="var(--coral)" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/></svg>Murmur</a>
+    <div class="navlinks">
+      <a href="../en/demo/index.html" hreflang="en" lang="en">English</a>
+      <a href="../index.html#pinyin">输入法</a>
+      <a href="index.html" aria-current="page">演示</a>
+      <a class="nav-keep" href="../try/index.html">试一试</a>
+      <!-- ⚠️ class="nav-signin" 是给 v2-nav.js 认的(本机有会话时换成「账户」) -->
+      <a class="nav-signin nav-keep" href="../login/index.html">登录</a>
+      <a class="nav-cta" href="../index.html#download">下载</a>
+    </div>
+  </div>
+</nav>
+
+<header class="head wrap">
+  <div class="t">
+    <p class="eyebrow">演示</p>
+    <h1>在浏览器里试打</h1>
+    <p class="sub">这是演示,不是真输入法。词表是为演示手写的,只有几百个词。真输入法随 Murmur 一起装,见首页的<a href="../index.html#pinyin">拼音输入法</a>一节。</p>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="stage">
+    <!-- 模拟输入框:是 div 不是 input,手机上点它不弹软键盘(手机上看自动演示)。
+         内容由 demo-ui.js 用 textContent 画,⛔ 零 innerHTML。 -->
+    <div class="fake-input" id="box" tabindex="0" role="textbox" aria-label="演示输入框" aria-describedby="cap"><span class="ph" id="ph"></span><span class="out" id="out"></span><span class="py-comp" id="comp"></span><span class="cursor" id="caret"></span></div>
+
+    <div class="slot" id="slot">
+      <div class="py-panel" id="panel" hidden></div>
+    </div>
+
+    <div class="actions">
+      <button class="btn btn-primary" id="auto" type="button">自动演示</button>
+      <button class="btn btn-quiet" id="stop" type="button" disabled>停</button>
+      <button class="chip" id="reset" type="button">清空</button>
+      <span class="quota mode" id="mode" title="Shift 单按一下切中英">中文</span>
+    </div>
+
+    <div class="lines" id="lines"></div>
+
+    <p class="state" id="cap" aria-live="polite"></p>
+    <noscript><p class="state">这一页要开 JavaScript 才能用。</p></noscript>
+
+    <div class="stage-note">
+      <p>候选窗照真输入法画:一页 5 个,当前候选的编号是珊瑚色。</p>
+      <ul class="keys">
+        <li><kbd>1</kbd>到<kbd>5</kbd>选字</li>
+        <li><kbd>空格</kbd>上屏高亮的候选,默认第一个</li>
+        <li><kbd>退格</kbd>上屏后 1.5 秒内按一下,整词退回拼音</li>
+        <li><kbd>Shift</kbd>单按一下切中英,拼了一半的拼音原样落下</li>
+        <li><kbd>-</kbd><kbd>=</kbd>上一页、下一页</li>
+        <li><kbd>,</kbd><kbd>.</kbd>高亮候选和标点一起上屏</li>
+        <li><kbd>回车</kbd>拼音原样落下</li>
+        <li><kbd>Esc</kbd>清空拼音;有联想时先收起联想</li>
+      </ul>
+      <p>联想接的词、标点、回车落下的拼音,退格不退回。</p>
+    </div>
+  </div>
+
+  <p class="after">想在 Mac 上用?<a href="../index.html#download">下载 Mac 版</a>,在设置 → 识别 →「输入法」卡片里装。</p>
+</main>
+
+<footer class="wrap">
+  <span class="brand"><svg width="30" height="15" viewBox="0 0 200 100" aria-hidden="true"><path d="M12.0 50.0 L14.0 40.1 L16.0 31.7 L18.0 25.2 L20.0 21.0 L22.0 19.0 L24.0 19.2 L26.0 21.3 L28.0 25.2 L30.0 30.3 L32.0 36.2 L34.0 42.4 L36.0 48.5 L38.0 54.2 L40.0 59.0 L42.0 62.7 L44.0 65.2 L46.0 66.5 L48.0 66.5 L50.0 65.5 L52.0 63.5 L54.0 60.9 L56.0 57.8 L58.0 54.6 L60.0 51.5 L62.0 48.6 L64.0 46.2 L66.0 44.4 L68.0 43.2 L70.0 42.7 L72.0 42.7 L74.0 43.2 L76.0 44.1 L78.0 45.3 L80.0 46.7 L82.0 48.0 L84.0 49.2 L86.0 50.2 L88.0 51.0 L90.0 51.5 L92.0 51.8 L94.0 51.8 L96.0 51.6 L98.0 51.3 L100.0 50.9 L102.0 50.5 L104.0 50.2 L106.0 50.0 L190 50" fill="none" stroke="var(--coral)" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/></svg>Murmur</span>
+  <span>Others Studio 出品</span>
+  <div class="links">
+    <a href="https://othersstudio.tech">othersstudio.tech</a>
+    <a href="../privacy.html">隐私</a>
+    <a href="../tos.html">条款</a>
+    <!-- 顶栏的语言切换在手机上是收起来的,页脚这一份是它在手机上的落点 -->
+    <a href="../en/demo/index.html" hreflang="en" lang="en">English</a>
+  </div>
+</footer>
+
+<!-- 顺序有意义:defer 的脚本按出现顺序执行 —— 词表 → 引擎 → 页面 -->
+<script src="../v2-nav.js" defer></script>
+<script src="demo-words.js" defer></script>
+<script src="demo.js" defer></script>
+<script src="demo-ui.js" defer></script>
+</body>
+</html>
