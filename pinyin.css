@@ -130,5 +130,5 @@
   .py-compare > .k { grid-column: 1 / -1; padding-bottom: 2px; border-bottom: 0; }
   .py-compare > div + div { padding-left: 0; }
   .py-compare > div:nth-child(3n) { padding-left: 16px; }
-  .py-compare > .h:first-child { grid-column: 1 / -1; }
+  .py-compare > .h:first-child { grid-column: 1 / -1; padding-bottom: 2px; border-bottom: 0; }   /* 表头和数据行同形 */
 }
