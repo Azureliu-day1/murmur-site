@@ -154,7 +154,8 @@ textarea.field { min-height: 84px; line-height: 1.6; }
   <!-- ③ 已经登录了 -->
   <section class="card" id="card-in" hidden>
     <p class="sent">This browser is signed in as <b id="meMail"></b></p>
-    <a class="btn btn-primary btn-block" id="goNext" href="../try/index.html">Continue</a>
+    <a class="btn btn-primary btn-block" id="goNext" href="../index.html#download">Continue</a>
+    <p class="note" style="text-align:center"><a href="../try/index.html">Or try the tidying in the browser →</a></p>
     <button class="btn btn-quiet btn-block" id="signout" type="button" style="margin-top:10px">Sign out</button>
   </section>
 
@@ -215,7 +216,12 @@ const SUPA_KEY = "sb_publishable_bBmuodbgO72q8CK_kacrSw_0o3cCsOd";  // 公开 ke
 const FN       = SUPA_URL + "/functions/v1/murmur-web";
 const SDK      = "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.116.0/+esm"; // 版本写死
 const LANG     = "en";
-const DEFAULT_NEXT = "../try/index.html";
+// 登录后默认去首页的「下载」:Mac App 才是产品,下载免费、本机识别不用名额。
+// 网页试整理仍在顶栏「试一试」和登录态卡片里。
+// 例外:刚在这一页提交申请的人还没有名额,申请说明答应过他「可以先登录,在网页上
+// 试整理」—— 他验完码去 APPLY_NEXT(见 afterLogin())。
+const DEFAULT_NEXT = "../index.html#download";
+const APPLY_NEXT   = "../try/index.html";
 // ⚠️ 60 = 线上 Auth 的 smtp_max_frequency(同一地址两封信至少隔 60 秒)。
 //    以前写 45:等到能点的时候服务端还在冷却里,点下去被 429 顶回来,页面
 //    对一个什么都没做错的人说「太频繁了」。Mac App 那边的冷却本来就是 60。
@@ -290,6 +296,14 @@ function safeNext() {
   }
 }
 
+/// 验码成功后去哪:带了 next 就照 next(仍过 safeNext 那道闸);
+/// 没带、而且是刚在这一页申请的人 → 试整理;其余 → 下载。
+let justApplied = false;
+function afterLogin() {
+  const hasNext = !!new URLSearchParams(location.search).get("next");
+  return (justApplied && !hasNext) ? APPLY_NEXT : safeNext();
+}
+
 function show(which) {
   cardEmail.hidden = which !== "email";
   cardCode.hidden  = which !== "code";
@@ -330,6 +344,7 @@ async function sendCode(email, fromResend) {
     return;
   }
   pending = email;
+  if (!fromResend) justApplied = false;    // 从第一步正常要码 = 老用户那条路,去下载
   elSentTo.textContent = email;            // ⛔ textContent,不是 innerHTML
   show("code");
   say(elState2, L.sent, "");
@@ -378,7 +393,7 @@ async function verify() {
     elCode.select();
     return;
   }
-  location.href = safeNext();
+  location.href = afterLogin();
 }
 
 // ── ③ 申请名额 ────────────────────────────────────────────────────────────
@@ -425,6 +440,7 @@ async function submitRequest() {
   // ⭐ 成功:服务端已经建好身份、发出了码。直接把人推到「填码」那一态,
   //    ⛔ 不让他回到第一步再点一次「发送 6 位码」(那会白等一封重复的信)。
   pending = email;
+  justApplied = true;          // 验完码去试整理,不去下载(见 afterLogin)
   elSentTo.textContent = email;
   show("code");
   elReq.open = false;
