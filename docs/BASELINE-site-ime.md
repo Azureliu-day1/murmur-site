@@ -66,6 +66,8 @@
 | F17 | macOS 26 起 | `Package.swift:6`;`build-app.sh:71,107-108` |
 | F18 | 我们自己测的口语 125 句(不在词表里),首选命中 80.0%;在设置里一键下载语言模型后 89.6% | `docs/BASELINE-ime-mac.md:538`;测试集定义 `Tools/build-dict/README.md:911-918`;模型下载 `murmur_pinyin.schema.yaml:143-150` |
 | F19 | 候选窗只有深色一套(玻璃材质、白 22% 描边、珊瑚只上当前候选的编号底);第一次出现淡入 60 ms,选词翻页零动画 | `IME/IMEStyle.swift:13,37-86,223-244`;`IME/CandidatePanel.swift:188` |
+| F22 | AI 整理时会带上你的词:按 ⌥⇧Space 让 AI 整理这句时,词典里登记的词和输入法学到的词里与这句沾边的(最多 500 个)随整理请求出机;**选本机识别也一样**(这条路是 AI 整理,不是识别);开关「允许 AI 参考我的用词」(en: Let AI use my own words)默认开,关掉一个词都不发;卡片在设置 → 整理(en: Cleanup)→ 「我打过的词(输入法学的)」(en: Words I've typed (learned by the input method)) | `UI/PersonalLexiconSection.swift:58-70`;`Core/AppSettings.swift:184-186`(默认 true);`AI/AIServiceHost.swift:258-275`;`UI/SettingsView.swift:31`;`Core/UserCopy.swift:513` |
+| F23 | 设置项英文原文:「学我平时打的字」= Learn the words I type;「联想(根据你打过的词)」= Suggest the next word (from what you've typed);「清除数据…」= Clear data… | `PersonalLexiconSection.swift:54,74`;`UserCopy.swift:521` |
 | F20 | 0.53 未接线:麦克风预热(不写进输入法板块) | `docs/RELEASE-0.53.0.md` 末段 |
 | F21 | 演示页词表是**为演示手写的一份小表**,⛔ 不从仓库词典 / 词池 / 联想表抽(理由:`Tools/build-dict/README.md:221-223` 词库许可未经律师确认前不对外发布;`nextword-general.tsv` 与 `phrases.tsv` 的候补层含个人种子扩出的条目、按列区分不了) | scout D-3、E-1、E-3 |
 
@@ -145,7 +147,9 @@
 | 14:05 | builder S3-thanks | Opus high | thanks | 15 分 | 0.2 分 | 无顶栏,未改 |
 | 14:03 | builder S2-ui | Opus high | demo/index.html + en/demo + demo.css + demo-ui.js | 75 分 | UNKNOWN(文件 14:03 落地,报告未到,领导者自验后先合) | 支持 ?auto=1&stopAt=N 截图 |
 | 14:2x | builder S2-words(重派) | Opus high | demo/demo-words.js | 45 分 | 6 分 | 691 词 / 90 联想 / 407 音节 / 10 句;联调 10 句全对 |
-| 14:4x | builder R(独立审核) | Opus high | 只读:V1–V4 + UI + 文案 | 40 分 | | 不读施工报告 |
+| 14:4x | builder R(独立审核) | Opus high | 只读:V1–V4 + UI + 文案 | 40 分 | ~8 分 | V1/V2/V3/暗色 PASS;三条阻断(en 说满 / F22 漏 / en 设置名不存在)全修 |
+| 15:0x | builder R-fix ×4 | Opus high | index zh / index en / privacy / tos 各一人 | 15–20 分 | 2–5 分 | 全部落地,e9d1480 |
+| 15:1x | 领导者事故(第二次) | | 「S2-ui 交报告并停手」发给了 S2-shot(a109d3)。无损失;S2-ui 的报告至今未到(文件 14:03 / 14:13 落地,已由领导者自验合入) | | | |
 | 14:03 | builder S2-words | Opus high | demo/demo-words.js | 45 分 | 死 | 输出被接口内容过滤中断,文件没落地;14:2x 按「分段写 + 脚本生成音节表」重派 |
 | 14:03 | builder S2-shot | Opus high | shots/ 真图 | 45 分 | 8 分 | 8 张,dark @2x;前后置检查干净;候补:英文界面自检 15 项红 |
 | 14:03 | builder S3-privacy | Opus high | privacy 两页 | 35 分 | 3 分 | 加「打过的词」一行 |
@@ -159,6 +163,11 @@ index.html / en/index.html 从 189 → 213:全部是 `Tag figure invalid` ×4 + 
 - 13:44 领导者探 headless Chrome 时用 `pkill -f 'use-mock-keychain'` 收尾,模式过宽,连带杀了 Wei 正在跑的网易云音乐两个 Helper 子进程(37878 / 37879;主进程未动,子进程 1 秒内自行重生为 66100 / 66101)。规矩:本线后续只按 PID 杀自己起的进程,不按模式 pkill。
 - 探针结论:`--headless=new --use-mock-keychain --password-store=basic` 截图能出、无 SecurityAgent 弹框;但进程在截图后不自退,要用 `timeout` 包住。
 
+## 进度板(15:1x,终)
+- 审核修复提交 e9d1480;总共 6 笔在 release-0.53 之上(96360df / dd2e4b4 / b60c172 / 6bd9015 / 2458861 / e9d1480),未 push。
+- 门 1–4 复跑全过(copy-lint PASS、PII 0;xmllint 213/213/96/96/42/42/24/24;selftest 73;四路径 200;无 latest.json / CNAME)。
+- 复截:`final2-zh-full.png` `final2-en-full.png` `final2-privacy.png`(1280 全页),`final2-zh-full-words.png`(「你的词去哪了」六步)。
+
 ## 进度板(14:4x)
 - 提交(release-0.53,未 push):96360df 首页板块 + pinyin.css + shots;dd2e4b4 全站顶栏 / 隐私 / 条款;b60c172 pinyin.css 补丁;6bd9015 演示页。`git diff main --stat` 无 latest.json / CNAME。
 - 门:① copy-lint PASS、PII 0;② xmllint:index / en 189 → 213(figure/figcaption 误报,判 PASS),其余页持平,demo 24(新页,全是 HTML5 标签误报);`node demo/demo-selftest.js` 73 过;③ 本地 8765 四个路径 200;截图见下;④ 无 latest.json / CNAME;⑤ 事实核对表在上。
@@ -166,6 +175,8 @@ index.html / en/index.html 从 189 → 213:全部是 `Tag figure invalid` ×4 + 
 - 待 Wei / 总领导者定:条款第八节免责要不要扩到输入法候选 / 联想出错(责任条款,builder 回报即停);条款页脚「最后更新」日期等发版时改。
 
 ## 候补(对不上上面任何一行的,不做)
+- 审核 R 候补:手机宽顶栏「输入法 / 演示」两项收起(靠首页板块内链接与演示页互链);真图第 2–5 候选(尼好 / 拟好 / 泥好 / 妮好)观感一般,换样例要重出图;口号味三句;演示页自动演示高亮态 UNKNOWN。
+- en FAQ「(see the Pinyin section)」只是文字没做链接。
 - 输入法仓:英文界面跑自检 15 项红(文案断言写死中文)+「直插 90 条 16 失败」(S2-shot 顺手发现,未查)。
 - 条款第六节「不拿它训练模型」只提「说的」没提打的字。
 - 手机宽演示页自动演示在无头截图里停在占位文字(可能是 headless 时序),由审核者复核。
