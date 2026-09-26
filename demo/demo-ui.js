@@ -157,7 +157,6 @@
   }
   function setRunning(on) {
     btnStop.disabled = !on;
-    btnAuto.setAttribute("aria-pressed", on ? "true" : "false");
   }
 
   function stopAuto() {

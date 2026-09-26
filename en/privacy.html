@@ -333,8 +333,9 @@ footer a { color: var(--faint); }
     <div class="jrow">
       <div class="what">Typed words<span class="mono">words the pinyin keyboard has learned</span></div>
       <p>They are stored on this Mac at ~/Library/Application Support/Murmur/lexicon.sqlite. Learning is on by default. Password fields and apps on the deny list are never recorded.
-      When you dictate, these words go to the recognition provider as hints, <b>sent with each recognition request</b>. This is the same path as the Dictionary row above. Pick on-device recognition and they do not leave the Mac. The first version does not sync across devices.</p>
-      <p>In Settings, the personal lexicon section under cleanup has a switch for learning what you type. Turn it off and no new words are learned after that. The clear data option under Settings → System wipes the learned words in one go. The switch for suggestions based on what you have typed sits on the same card.</p>
+      When you dictate, these words go to the recognition provider as hints, <b>sent with each recognition request</b>. This is the same path as the Dictionary row above. Pick on-device recognition and they do not leave the Mac. The first version does not sync across devices.
+      When you press ⌥⇧Space to polish a sentence, the words it touches from your dictionary and from what you typed go with the polish request (at most 500). This happens with on-device recognition too.</p>
+      <p>Settings → Cleanup → the "Words I've typed (learned by the input method)" card: turn off "Learn the words I type" and no new words are learned after that; turn off "Let AI use my own words" and AI polish sends none of your words. Settings → System → "Clear data…" wipes the learned words in one go. The "Suggest the next word (from what you've typed)" switch sits on the same card.</p>
     </div>
 
     <div class="jrow">

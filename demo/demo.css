@@ -58,7 +58,6 @@
 /* ── 按钮行与 10 句 ── */
 .actions { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; margin-top: 8px; }
 .actions .mode { margin-left: auto; }
-.btn[aria-pressed="true"] { opacity: .6; }
 .lines { margin-top: 16px; display: flex; gap: 10px; flex-wrap: wrap; }
 .lines .chip.on { color: var(--ink); border-color: var(--coral); }
 #cap { margin-top: 16px; }
@@ -67,6 +66,7 @@
 .stage-note { margin-top: 24px; font-size: 12.5px; color: var(--second); line-height: 1.8; }
 .keys { list-style: none; padding: 0; margin-top: 8px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px 24px; }
 .keys li { min-width: 0; }
+.keys + p { margin-top: 8px; }
 kbd {
   font-family: "IBM Plex Mono", monospace; font-size: 12px; color: var(--ink);
   background: var(--card); border: 1px solid var(--line2); border-radius: 7px;
