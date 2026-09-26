@@ -396,6 +396,10 @@ kbd {
 /* ── 收尾 ── */
 .outro { text-align: center; padding-bottom: 40px; }
 .outro h2 { font-size: clamp(28px, 4vw, 40px); }
+/* 真截图(App 离屏出图,见 shots/README.md);暗色跟系统换一张。 */
+.real-shot { max-width: 560px; margin: 28px auto 0; }
+.real-shot img { display: block; width: 100%; height: auto; border-radius: 14px; }
+.real-shot figcaption { margin-top: 10px; font-size: 12.5px; color: var(--faint); }
 
 footer {
   margin-top: 110px; border-top: 1px solid var(--line);
@@ -1011,17 +1015,27 @@ body.is-sandbox .sandbox { display: inline-block; }
 <!-- ── 收尾 ── -->
 <section class="wrap outro" id="download">
   <h2 class="reveal">装好后按右 ⌘ <span class="serif">说</span>一句。</h2>
+  <!-- ⭐ 全站第一张真截图:上面 hero 里的胶囊是动画,这张是 App 自己画的录音条。
+       0.52.3(今天下载到的版本)就有这条录音条和上面那行边说边出的字。 -->
+  <figure class="real-shot reveal">
+    <picture>
+      <source srcset="shots/zh/hud-dark.png" media="(prefers-color-scheme: dark)">
+      <img src="shots/zh/hud-light.png" width="716" height="230" loading="lazy"
+           alt="Murmur 录音条截图。底部胶囊有取消键、波形、计时 0:08 和打勾键,上方是正在出的字:好,我看一下。">
+    </picture>
+    <figcaption>真截图。说话时屏幕底部是这条录音条;再按一下或点 ✓,字落进光标。</figcaption>
+  </figure>
   <div class="cta-row reveal">
     <a class="btn btn-primary" href="https://github.com/Azureliu-day1/murmur-site/releases/latest/download/Murmur.zip">下载 macOS 版</a>
   </div>
   <!-- ⭐ 和 hero 里那一行同一句:滚到底才看见「下载」的手机用户,在这里也不该是死路。 -->
   <p class="mobile-path reveal">手机上装不了。可以先<a href="login/index.html">申请名额</a>,或者<a href="try/index.html">在网页上试整理 →</a></p>
   <p class="stage-note reveal"><b>需要 macOS 26 以上、M 系列芯片的 Mac</b> · 下载免费 · 云端额度要邀请</p>
-  <p class="stage-note reveal">Intel Mac 和 macOS 25 以下的系统现在装不上。发封邮件到
+  <p class="stage-note reveal">Intel Mac 和 macOS 15 及更早的系统现在装不上。发封邮件到
   <a href="mailto:foraiandfocus+murmur@gmail.com?subject=Murmur%20%E7%AD%89%E6%94%AF%E6%8C%81">foraiandfocus+murmur@gmail.com</a>,支持以后我们回信告诉你。</p>
-  <p class="stage-note reveal">下载免费,<b>本机识别不用登录就能用</b>。云端额度现在要邀请。
-  写信到 <a href="mailto:foraiandfocus+murmur@gmail.com?subject=Murmur%20%E5%86%85%E6%B5%8B%E5%90%8D%E9%A2%9D">foraiandfocus+murmur@gmail.com</a>
-  申请,写一句你想用它做什么。</p>
+  <!-- ⭐ 申请名额只有一条路:登录页的表单(和 hero、手机提示同一个入口)。
+       以前这里另写了一个邮箱,两条路收进两个地方,申请的人不知道该走哪条。 -->
+  <p class="stage-note reveal">下载免费,<b>本机识别不用登录就能用</b>。云端额度现在要邀请,<a href="login/index.html">在这里申请名额</a>,写一句你想用它做什么。</p>
   <p class="stage-note reveal">解压后把 Murmur 拖进「应用程序」。第一次打开时,它会请求麦克风和辅助功能权限。
   辅助功能权限用来把字放进光标处。</p>
 </section>
