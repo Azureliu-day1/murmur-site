@@ -145,7 +145,7 @@
 | 14:05 | builder S3-try | Opus high | try 两页顶栏 | 25 分 | 0.6 分 | 改口清单:无 |
 | 14:05 | builder S3-login | Opus high | login 两页顶栏 | 25 分 | 0.6 分 | 改口清单:无 |
 | 14:05 | builder S3-thanks | Opus high | thanks | 15 分 | 0.2 分 | 无顶栏,未改 |
-| 14:03 | builder S2-ui | Opus high | demo/index.html + en/demo + demo.css + demo-ui.js | 75 分 | UNKNOWN(文件 14:03 落地,报告未到,领导者自验后先合) | 支持 ?auto=1&stopAt=N 截图 |
+| 14:03 | builder S2-ui | Opus high | demo/index.html + en/demo + demo.css + demo-ui.js | 75 分 | ~70 分(报告 15:2x 到) | 真按键冒烟 + 自动演示整轮 40 秒 10 句全对;手机宽自动演示真的开跑(file:// 外壳套 http 页截图是假空框,要用同站 iframe);超简报一处:动作行加「中文 / 英文」模式标 |
 | 14:2x | builder S2-words(重派) | Opus high | demo/demo-words.js | 45 分 | 6 分 | 691 词 / 90 联想 / 407 音节 / 10 句;联调 10 句全对 |
 | 14:4x | builder R(独立审核) | Opus high | 只读:V1–V4 + UI + 文案 | 40 分 | ~8 分 | V1/V2/V3/暗色 PASS;三条阻断(en 说满 / F22 漏 / en 设置名不存在)全修 |
 | 15:0x | builder R-fix ×4 | Opus high | index zh / index en / privacy / tos 各一人 | 15–20 分 | 2–5 分 | 全部落地,e9d1480 |
