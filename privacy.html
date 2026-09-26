@@ -161,7 +161,7 @@ nav {
 .brand { display: flex; align-items: center; gap: 9px; font-family: "Newsreader", serif; font-weight: 600; font-size: 19px; color: var(--ink); }
 .brand:hover { text-decoration: none; }
 .dot { width: 9px; height: 9px; border-radius: 50%; background: var(--coral); }
-.navlinks { margin-left: auto; }
+.navlinks { margin-left: auto; display:flex; gap:18px; align-items:center; }
 .navlinks a { color: var(--second); font-size: 13.5px; }
 
 .eyebrow { font-size: 12px; font-weight: 600; letter-spacing: .18em; text-transform: uppercase; color: var(--faint); margin-bottom: 14px; }
@@ -248,7 +248,7 @@ footer a { color: var(--faint); }
   <div class="wrap navrow">
     <a class="brand" href="index.html"><span class="dot"></span>Murmur</a>
     <div class="navlinks">
-      <a href="en/privacy.html" hreflang="en" lang="en">English</a><a href="index.html">← 回首页</a></div>
+      <a href="en/privacy.html" hreflang="en" lang="en">English</a><a href="index.html#pinyin">输入法</a><a href="demo/index.html">演示</a><a href="index.html">← 回首页</a></div>
   </div>
 </nav>
 
@@ -307,7 +307,7 @@ footer a { color: var(--faint); }
 <!-- ── 数据的旅程 ── -->
 <section class="wrap">
   <div class="eyebrow">Journey · 每类数据的去向</div>
-  <h2>五类数据,各自的旅程。</h2>
+  <h2>六类数据,各自的旅程。</h2>
   <div class="journey reveal">
     <div class="jhead"><span>是什么</span><span>去哪 · 存哪</span><span>怎么删 · 怎么关</span></div>
 
@@ -329,6 +329,13 @@ footer a { color: var(--faint); }
       <div class="what">词典<span class="mono">你的专有名词</span></div>
       <p>为了听对你常说的名字,词典里的词会<b>随每次识别请求</b>发给识别服务商。这件事写在设置里的明面上,不藏在条款里。</p>
       <p>词典条目随时可删;删掉后不再随请求发送。</p>
+    </div>
+
+    <div class="jrow">
+      <div class="what">打过的词<span class="mono">拼音输入法学到的词</span></div>
+      <p>存在这台 Mac 上:~/Library/Application Support/Murmur/lexicon.sqlite。学词默认开着。密码框与拒绝名单里的 App 一律不记。
+      听写时,这些词当提示词<b>随识别请求</b>发给识别服务商。这和上面「词典」一行走同一条路。选本机识别时不出机。第一版不跨设备。</p>
+      <p>设置 → 整理 → 个人词库,关掉「学我平时打的字」,之后不再学新词。设置 → 系统 →「清除数据…」可一键清掉已学的词。联想开关「联想(根据你打过的词)」在同一张卡上。</p>
     </div>
 
     <div class="jrow">

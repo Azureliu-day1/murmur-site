@@ -161,7 +161,7 @@ nav {
 .brand { display: flex; align-items: center; gap: 9px; font-family: "Newsreader", serif; font-weight: 600; font-size: 19px; color: var(--ink); }
 .brand:hover { text-decoration: none; }
 .dot { width: 9px; height: 9px; border-radius: 50%; background: var(--coral); }
-.navlinks { margin-left: auto; }
+.navlinks { margin-left:auto; display:flex; gap:18px; align-items:center }
 .navlinks a { color: var(--second); font-size: 13.5px; }
 
 .eyebrow { font-size: 12px; font-weight: 600; letter-spacing: .18em; text-transform: uppercase; color: var(--faint); margin-bottom: 14px; }
@@ -247,7 +247,7 @@ footer a { color: var(--faint); }
 <nav>
   <div class="wrap navrow">
     <a class="brand" href="index.html"><span class="dot"></span>Murmur</a>
-    <div class="navlinks"><a href="index.html">← Back to home</a>&nbsp;&nbsp;&nbsp;<a href="../tos.html">中文</a></div>
+    <div class="navlinks"><a href="index.html">← Back to home</a><a href="../tos.html">中文</a><a href="index.html#pinyin">Pinyin</a><a href="demo/index.html">Demo</a></div>
   </div>
 </nav>
 
@@ -262,6 +262,7 @@ footer a { color: var(--faint); }
 <section class="wrap">
   <h2>1. What this is, and who makes it</h2>
   <p class="sub">Murmur is a dictation tool for macOS: you hold a hotkey, you speak, and the words land at your cursor.
+  It also includes a pinyin input method, which you install from Murmur's settings.
   It is made by <b>Others Studio</b> (<span class="mono">ABN pending</span>), operating from Victoria, Australia.
   Downloading or installing Murmur, or signing in inside the app, means you accept these terms.</p>
 </section>
@@ -329,8 +330,9 @@ footer a { color: var(--faint); }
 
 <section class="wrap">
   <h2>6. Your data</h2>
-  <p class="sub">Your recordings, transcripts, history and dictionary <b>all stay on your own Mac</b>; our servers only handle accounts and subscriptions.
+  <p class="sub">Your recordings, transcripts, history, dictionary and the words you type with the pinyin input method <b>are all stored on your own Mac</b>; our servers only handle accounts and subscriptions.
   Choose cloud recognition and the audio goes straight to that recognition service; choose on-device recognition and not one byte leaves this computer.
+  With cloud recognition, the words you have typed go to the recognition provider as hints with each request, the same as your dictionary.
   The full routing, retention periods and deletion steps are written up in <a href="privacy.html">Where your data lives</a>.
   What you say is yours — we don't train any model on it, and we don't sell it to anyone.</p>
 </section>

@@ -161,7 +161,7 @@ nav {
 .brand { display: flex; align-items: center; gap: 9px; font-family: "Newsreader", serif; font-weight: 600; font-size: 19px; color: var(--ink); }
 .brand:hover { text-decoration: none; }
 .dot { width: 9px; height: 9px; border-radius: 50%; background: var(--coral); }
-.navlinks { margin-left: auto; }
+.navlinks { margin-left: auto; display:flex; gap:18px; align-items:center; }
 .navlinks a { color: var(--second); font-size: 13.5px; }
 
 .eyebrow { font-size: 12px; font-weight: 600; letter-spacing: .18em; text-transform: uppercase; color: var(--faint); margin-bottom: 14px; }
@@ -247,7 +247,7 @@ footer a { color: var(--faint); }
 <nav>
   <div class="wrap navrow">
     <a class="brand" href="index.html"><span class="dot"></span>Murmur</a>
-    <div class="navlinks"><a href="index.html">← Home</a> &nbsp;<a href="../privacy.html">中文</a></div>
+    <div class="navlinks"><a href="index.html">← Home</a><a href="../privacy.html">中文</a><a href="index.html#pinyin">Pinyin</a><a href="demo/index.html">Demo</a></div>
   </div>
 </nav>
 
@@ -306,7 +306,7 @@ footer a { color: var(--faint); }
 <!-- ── The journey of each kind of data ── -->
 <section class="wrap">
   <div class="eyebrow">Journey · Where each kind of data goes</div>
-  <h2>Five kinds of data. Five journeys.</h2>
+  <h2>Six kinds of data. Six journeys.</h2>
   <div class="journey reveal">
     <div class="jhead"><span>What it is</span><span>Where it goes · where it sits</span><span>How to delete it · how to switch it off</span></div>
 
@@ -328,6 +328,13 @@ footer a { color: var(--faint); }
       <div class="what">Dictionary<span class="mono">your proper nouns</span></div>
       <p>So it hears the names and terms you say often, the words in your dictionary are <b>sent along with every recognition request</b>. That is written in plain sight in Settings, not buried in terms.</p>
       <p>Delete an entry whenever you like; once deleted it stops being sent.</p>
+    </div>
+
+    <div class="jrow">
+      <div class="what">Typed words<span class="mono">words the pinyin keyboard has learned</span></div>
+      <p>They are stored on this Mac at ~/Library/Application Support/Murmur/lexicon.sqlite. Learning is on by default. Password fields and apps on the deny list are never recorded.
+      When you dictate, these words go to the recognition provider as hints, <b>sent with each recognition request</b>. This is the same path as the Dictionary row above. Pick on-device recognition and they do not leave the Mac. The first version does not sync across devices.</p>
+      <p>In Settings, the personal lexicon section under cleanup has a switch for learning what you type. Turn it off and no new words are learned after that. The clear data option under Settings → System wipes the learned words in one go. The switch for suggestions based on what you have typed sits on the same card.</p>
     </div>
 
     <div class="jrow">
