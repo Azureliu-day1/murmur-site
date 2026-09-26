@@ -2,11 +2,12 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'unsafe-inline'; style-src 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Murmur · Voice typing for the Mac</title>
 <meta name="description" content="Voice typing for the Mac. Press right ⌘, say a sentence, let go, and the text is at your cursor. On-device or cloud recognition.">
 <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../pinyin.css">
 <link rel="alternate" hreflang="zh-Hans" href="../index.html">
 <link rel="alternate" hreflang="en" href="index.html">
 
@@ -548,8 +549,10 @@ body.is-sandbox .sandbox { display: inline-block; }
   <div class="wrap navrow">
     <a class="brand" href="#top"><svg width="30" height="15" viewBox="0 0 200 100" aria-hidden="true"><path d="M12.0 50.0 L14.0 40.1 L16.0 31.7 L18.0 25.2 L20.0 21.0 L22.0 19.0 L24.0 19.2 L26.0 21.3 L28.0 25.2 L30.0 30.3 L32.0 36.2 L34.0 42.4 L36.0 48.5 L38.0 54.2 L40.0 59.0 L42.0 62.7 L44.0 65.2 L46.0 66.5 L48.0 66.5 L50.0 65.5 L52.0 63.5 L54.0 60.9 L56.0 57.8 L58.0 54.6 L60.0 51.5 L62.0 48.6 L64.0 46.2 L66.0 44.4 L68.0 43.2 L70.0 42.7 L72.0 42.7 L74.0 43.2 L76.0 44.1 L78.0 45.3 L80.0 46.7 L82.0 48.0 L84.0 49.2 L86.0 50.2 L88.0 51.0 L90.0 51.5 L92.0 51.8 L94.0 51.8 L96.0 51.6 L98.0 51.3 L100.0 50.9 L102.0 50.5 L104.0 50.2 L106.0 50.0 L190 50" fill="none" stroke="var(--coral)" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/></svg>Murmur</a>
     <div class="navlinks">
-      <a href="#demo">Demo</a>
+      <a href="../index.html" hreflang="zh-Hans" lang="zh-Hans">中文</a>
       <a href="#features">Features</a>
+      <a href="#pinyin">Pinyin</a>
+      <a href="demo/index.html">Demo</a>
       <a href="#promises">Promises</a>
       <!-- ⭐ class="nav-keep" = stays visible on a phone (see the @media note) -->
       <a class="nav-keep" href="try/index.html">Try it</a>
@@ -557,7 +560,6 @@ body.is-sandbox .sandbox { display: inline-block; }
            session it swaps this one item for a fixed-width "Account". The bar is
            static HTML; JS never builds it. -->
       <a class="nav-signin nav-keep" href="login/index.html">Sign in</a>
-      <a href="../index.html" hreflang="zh-Hans" lang="zh-Hans">中文</a>
       <a class="nav-cta" href="#download">Download</a>
     </div>
   </div>
@@ -704,14 +706,77 @@ body.is-sandbox .sandbox { display: inline-block; }
   </div>
 </section>
 
-<!-- ── Pinyin input method: installed with the app (reuses .detail-list, no new classes) ── -->
+<!-- ── Pinyin input method: one full block. Styles in pinyin.css (contract A); every claim maps to docs/BASELINE-site-ime.md F-table ── -->
 <section class="wrap" id="pinyin">
   <div class="eyebrow reveal">Pinyin · Chinese input method</div>
-  <h2 class="reveal">A Pinyin keyboard comes with Murmur.</h2>
-  <div class="detail-list reveal">
-    <div><strong>Install it from Settings.</strong>Open Settings → Recognition → Input method and click Install. Log out once after the first install.</div>
-    <div><strong>Picked the wrong word? Press Delete.</strong>Within 1.5 seconds of committing, Delete turns the whole word back into Pinyin so you can choose again.</div>
-    <div><strong>Words you type help dictation.</strong>Words you type in Pinyin stay on this Mac, and dictation uses them as hints.</div>
+  <h2 class="reveal">A Pinyin keyboard<br>comes with Murmur.</h2>
+  <p class="sub reveal">
+    Murmur ships a Pinyin input method for the Mac.
+    Dictation and typing share one vocabulary.
+    Install it from Settings in one click.
+    Requires macOS 26 or later.
+  </p>
+
+  <h3 class="reveal">What is different</h3>
+  <div class="py-grid reveal">
+    <div>
+      <div class="py-step"><b>01</b><div><strong>One vocabulary for speaking and typing.</strong>Names you add to the dictation dictionary show up as candidates. Words you type become hints for dictation.</div></div>
+      <div class="py-step"><b>02</b><div><strong>Words you type help dictation.</strong>They are stored on this Mac. When you dictate, they go with the recognition request as hints, same as the dictionary. Choose on-device recognition and nothing leaves the Mac.</div></div>
+      <div class="py-step"><b>03</b><div><strong>One-row candidate bar.</strong>5 candidates per page on dark glass. Predictions show up only after a word you have typed before, up to 5.</div></div>
+    </div>
+    <figure class="py-shot"><img src="../shots/en/nihao.png" alt="Murmur candidate bar: ni hao, candidates 你好 你 尼 泥 拟" width="1120" height="72"><figcaption>The candidate bar, rendered by the input method itself.</figcaption></figure>
+  </div>
+
+  <h3 class="reveal">How to install</h3>
+  <div class="py-grid flip reveal">
+    <figure class="py-shot"><p><kbd>Settings</kbd> → <kbd>Recognition</kbd> → <kbd>Input method</kbd> → <kbd>Install</kbd></p><figcaption>Installs into Library → Input Methods. No password.</figcaption></figure>
+    <div>
+      <div class="py-step"><b>01</b><div><strong>Click Install.</strong>Open Settings → Recognition. The first card is Input method. Click Install.</div></div>
+      <div class="py-step"><b>02</b><div><strong>Log out once.</strong>Log out and log back in. macOS lists input methods only at login.</div></div>
+      <div class="py-step"><b>03</b><div><strong>Pick Murmur.</strong>Choose Murmur in the input menu in the menu bar.</div></div>
+      <div class="py-step"><b>04</b><div><strong>Update or uninstall.</strong>Both live on the same card. Uninstall keeps your words, dictionary and settings.</div></div>
+    </div>
+  </div>
+
+  <h3 class="reveal">How to type</h3>
+  <div class="py-grid reveal">
+    <div>
+      <div class="py-step"><b>01</b><div><strong>Type Pinyin.</strong>One row of 5 candidates. Press 1–5 to pick one. Space takes the first.</div></div>
+      <div class="py-step"><b>02</b><div><strong>Wrong word? Press Delete.</strong>Within 1.5 seconds, press Delete once. The whole word turns back into Pinyin. A second Delete deletes Pinyin as usual.</div></div>
+      <div class="py-step"><b>03</b><div><strong>Tap Shift for English.</strong>Tap Shift once for English, again for Chinese. Caps Lock on also means English.</div></div>
+      <div class="py-step"><b>04</b><div><strong>Mix languages.</strong><span class="mono">okl</span> gives OK了. <span class="mono">zhegeapphaoyong</span> gives 这个app好用.</div></div>
+      <div class="py-step"><b>05</b><div><strong>Pages, punctuation, Return.</strong><kbd>-</kbd> and <kbd>=</kbd> turn pages. A punctuation key commits the highlighted candidate plus the mark. Return commits the raw Pinyin.</div></div>
+    </div>
+    <figure class="py-shot"><img src="../shots/en/nextwords-personal.png" alt="Murmur next-word row" width="1120" height="72"><figcaption>After a word commits: a number picks the Nth suggestion, Space takes the first, Esc hides it.</figcaption></figure>
+  </div>
+
+  <h3 class="reveal">Where your words go</h3>
+  <div class="py-grid flip reveal">
+    <figure class="py-shot"><p class="mono">~/Library/Application Support/Murmur/lexicon.sqlite</p><figcaption>Words you type are stored here.</figcaption></figure>
+    <div>
+      <div class="py-step"><b>01</b><div><strong>Stored on this Mac.</strong>On by default. Nothing typed in a password field is recorded.</div></div>
+      <div class="py-step"><b>02</b><div><strong>Sent as hints during dictation.</strong>These words go with the recognition request as hints, same as the dictionary (see the <a href="privacy.html">privacy page</a>). Choose on-device recognition and nothing leaves the Mac.</div></div>
+      <div class="py-step"><b>03</b><div><strong>Turn it off.</strong>Settings → Polish → Personal lexicon, then switch off learning from your typing.</div></div>
+      <div class="py-step"><b>04</b><div><strong>Clear it.</strong>Settings → System → Clear data.</div></div>
+      <div class="py-step"><b>05</b><div><strong>No sync.</strong>Words do not sync between devices in this version.</div></div>
+    </div>
+  </div>
+
+  <h3 class="reveal">What we compare</h3>
+  <div class="py-compare reveal">
+    <div class="h">Item</div><div class="h">Status</div><div class="h">One line</div>
+    <div class="k">First-choice accuracy on spoken phrases</div><div><span class="yes">Measured</span></div><div>Our own set of 125 phrases not in the dictionary: 80% first choice, 89.6% with the language model installed.</div>
+    <div class="k">Delete to undo a commit</div><div><span class="yes">Yes</span></div><div>One press within 1.5 seconds.</div>
+    <div class="k">One vocabulary</div><div><span class="yes">Yes</span></div><div>Shared both ways between dictation and typing.</div>
+    <div class="k">Predictions</div><div><span class="yes">Yes</span></div><div>Only after a word you have typed before, up to 5.</div>
+    <div class="k">Accuracy against the system keyboard</div><div>Not measured</div><div>We do not publish numbers we did not measure.</div>
+    <div class="k">Sync across devices</div><div>No</div><div>Not in this version.</div>
+    <div class="k">Light candidate bar</div><div>No</div><div>Dark only.</div>
+  </div>
+  <p class="py-note reveal">Numbers come from our own test set, not a third party.</p>
+  <div class="py-cta reveal">
+    <a class="btn btn-primary" href="#download">Download for macOS</a>
+    <a class="btn btn-quiet" href="demo/index.html">Try typing in the browser</a>
   </div>
 </section>
 

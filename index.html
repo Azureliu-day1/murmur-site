@@ -2,13 +2,14 @@
 <html lang="zh-CN">
 <head>
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'unsafe-inline'; style-src 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Murmur · Mac 上的语音输入</title>
 <meta name="description" content="Mac 上的语音输入。按右 ⌘ 说一句,松手字就落在光标处。中英夹着说照样准。">
 <link rel="alternate" hreflang="zh-Hans" href="index.html">
 <link rel="alternate" hreflang="en" href="en/index.html">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="pinyin.css">
 
 <style>
 /* 字体自托管(D2):零第三方请求,「官网也不追踪你」字面成立 */
@@ -549,8 +550,9 @@ body.is-sandbox .sandbox { display: inline-block; }
     <a class="brand" href="#top"><svg width="30" height="15" viewBox="0 0 200 100" aria-hidden="true"><path d="M12.0 50.0 L14.0 40.1 L16.0 31.7 L18.0 25.2 L20.0 21.0 L22.0 19.0 L24.0 19.2 L26.0 21.3 L28.0 25.2 L30.0 30.3 L32.0 36.2 L34.0 42.4 L36.0 48.5 L38.0 54.2 L40.0 59.0 L42.0 62.7 L44.0 65.2 L46.0 66.5 L48.0 66.5 L50.0 65.5 L52.0 63.5 L54.0 60.9 L56.0 57.8 L58.0 54.6 L60.0 51.5 L62.0 48.6 L64.0 46.2 L66.0 44.4 L68.0 43.2 L70.0 42.7 L72.0 42.7 L74.0 43.2 L76.0 44.1 L78.0 45.3 L80.0 46.7 L82.0 48.0 L84.0 49.2 L86.0 50.2 L88.0 51.0 L90.0 51.5 L92.0 51.8 L94.0 51.8 L96.0 51.6 L98.0 51.3 L100.0 50.9 L102.0 50.5 L104.0 50.2 L106.0 50.0 L190 50" fill="none" stroke="var(--coral)" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/></svg>Murmur</a>
     <div class="navlinks">
       <a href="en/index.html" hreflang="en" lang="en">English</a>
-      <a href="#demo">演示</a>
       <a href="#features">功能</a>
+      <a href="#pinyin">输入法</a>
+      <a href="demo/index.html">演示</a>
       <a href="#promises">承诺</a>
 <!-- 定价段下架期间,导航也去掉这一项(否则点了滚到空处) -->
       <!-- ⭐ class="nav-keep" = 手机上也要留着的项(见 @media 里的说明) -->
@@ -703,14 +705,78 @@ body.is-sandbox .sandbox { display: inline-block; }
   </div>
 </section>
 
-<!-- ── 拼音输入法:随主 App 一起装(样式复用 .detail-list,不加新类) ── -->
+<!-- ── 拼音输入法:一整块。样式在 pinyin.css(契约 A),事实来自 docs/BASELINE-site-ime.md F 表 ── -->
 <section class="wrap" id="pinyin">
   <div class="eyebrow reveal">Pinyin · 拼音输入法</div>
-  <h2 class="reveal">拼音输入法,随 Murmur 一起装。</h2>
-  <div class="detail-list reveal">
-    <div><strong>在设置里一键装。</strong>打开设置 → 识别 → 输入法,点「安装」。第一次装完要注销一次。</div>
-    <div><strong>选错字按退格。</strong>字上屏后 1.5 秒内按退格,整个词退回拼音,重新选。</div>
-    <div><strong>打过的词,听写也认得。</strong>你用拼音打过的词只存在这台 Mac 上,听写时也拿来参照。</div>
+  <h2 class="reveal">拼音输入法,<br>随 Murmur 一起装。</h2>
+  <!-- F15 / F1 / F17 -->
+  <p class="sub reveal">Murmur 自带一个 Mac 拼音输入法。它和听写用同一套词。在设置里一键装,不用另外下载。要 macOS 26 以上。</p>
+
+  <!-- F15 / F13 / F16 / F5 / F19 / F11 -->
+  <h3 class="reveal">和别的拼音差在哪</h3>
+  <div class="py-grid reveal">
+    <div>
+      <div class="py-step"><b>01</b><div><strong>说话和打字同一套词。</strong>听写词典里登记的名字,打字时在候选里。拼音打过的词,说话时当提示词。</div></div>
+      <div class="py-step"><b>02</b><div><strong>打过的词,听写认得。</strong>它们存在这台 Mac 上。听写时当提示词,随识别请求发给识别服务商。选本机识别就不出机。</div></div>
+      <div class="py-step"><b>03</b><div><strong>候选窗一行,联想跟着你的词。</strong>一页 5 个候选,深色玻璃。联想最多 5 个,只在你打过的词后面出现。</div></div>
+    </div>
+    <figure class="py-shot"><img src="shots/zh/nihao.png" alt="Murmur 候选窗:ni hao,候选 你好 你 尼 泥 拟" width="1120" height="72"><figcaption>候选窗,输入法自己渲染的图。</figcaption></figure>
+  </div>
+
+  <!-- F1 / F2 / F3 / F4 -->
+  <h3 class="reveal">怎么装</h3>
+  <div class="py-grid flip reveal">
+    <figure class="py-shot"><p><kbd>设置</kbd> → <kbd>识别</kbd> → <kbd>输入法</kbd> → <kbd>安装</kbd></p><figcaption>装到资源库的 Input Methods,不用密码。</figcaption></figure>
+    <div>
+      <div class="py-step"><b>01</b><div>打开设置 → 识别,第一张卡是「输入法」,点「安装」。</div></div>
+      <div class="py-step"><b>02</b><div>注销一次再登录,系统才会列出 Murmur 输入法。</div></div>
+      <div class="py-step"><b>03</b><div>在菜单栏的输入法菜单里选 Murmur。</div></div>
+      <div class="py-step"><b>04</b><div>更新、卸载在同一张卡。卸载保留打过的词、词典和设置。</div></div>
+    </div>
+  </div>
+
+  <!-- F5 / F7 / F9 / F10 / F6 / F11 -->
+  <h3 class="reveal">怎么用</h3>
+  <div class="py-grid reveal">
+    <div>
+      <div class="py-step"><b>01</b><div>敲拼音,一行 5 个候选。按 1–5 选,空格上第一个。</div></div>
+      <div class="py-step"><b>02</b><div><strong>选错了。</strong>1.5 秒内按一下退格,整个词退回拼音,重选。第二下退格照常删拼音。</div></div>
+      <div class="py-step"><b>03</b><div>单按 Shift 切英文,再按一次回中文。Caps Lock 亮着也是英文。</div></div>
+      <div class="py-step"><b>04</b><div>中英夹着打:<span class="mono">okl</span> 出「OK了」,<span class="mono">zhegeapphaoyong</span> 出「这个app好用」。</div></div>
+      <div class="py-step"><b>05</b><div><kbd>-</kbd> 和 <kbd>=</kbd> 翻页。标点键把高亮候选连标点一起上屏。回车落下原样拼音。</div></div>
+    </div>
+    <figure class="py-shot"><img src="shots/zh/nextwords-personal.png" alt="Murmur 联想行:左端写着接写,后面是带编号的下一个词,尾注空格接1 Esc收起" width="1120" height="72"><figcaption>上屏后的联想行。数字接第几个,空格接第一个,Esc 收起。</figcaption></figure>
+  </div>
+
+  <!-- F13 / F16 / F14 -->
+  <h3 class="reveal">你的词去哪了</h3>
+  <div class="py-grid flip reveal">
+    <figure class="py-shot"><p class="mono">~/Library/Application Support/Murmur/lexicon.sqlite</p><figcaption>打过的词存在这里。</figcaption></figure>
+    <div>
+      <div class="py-step"><b>01</b><div>存在这台 Mac 上,默认开。密码框里的字一律不记。</div></div>
+      <div class="py-step"><b>02</b><div>听写时,这些词当提示词随识别请求发给识别服务商,和词典一样,<a href="privacy.html">隐私页</a>有写。选本机识别就不出机。</div></div>
+      <div class="py-step"><b>03</b><div>不想让它学:设置 → 整理 → 个人词库,关掉「学我平时打的字」。</div></div>
+      <div class="py-step"><b>04</b><div>清掉:设置 → 系统 →「清除数据…」。</div></div>
+      <div class="py-step"><b>05</b><div>第一版不跨设备。</div></div>
+    </div>
+  </div>
+
+  <!-- F18 / F7 / F15 / F11 / F13 / F19 -->
+  <h3 class="reveal">比什么,不比什么</h3>
+  <div class="py-compare reveal">
+    <div class="h">项</div><div class="h">有没有</div><div class="h">一句说明</div>
+    <div class="k">口语首选命中</div><div><span class="yes">测了</span></div><div>我们自己的 125 句表外口语,首选 80.0%。装上语言模型后 89.6%。</div>
+    <div class="k">退格退回拼音</div><div>有</div><div>上屏后 1.5 秒内按一下。</div>
+    <div class="k">同一套词</div><div>有</div><div>听写和打字双向共用。</div>
+    <div class="k">联想</div><div>有</div><div>只在你打过的词后面出现,最多 5 个。</div>
+    <div class="k">和系统拼音比准确率</div><div>没测</div><div>不写没测过的数。</div>
+    <div class="k">跨设备同步</div><div>没有</div><div>第一版不跨设备。</div>
+    <div class="k">浅色候选窗</div><div>没有</div><div>只有深色一套。</div>
+  </div>
+  <p class="py-note reveal">数字来自我们自己的评测集,不是第三方。</p>
+  <div class="py-cta reveal">
+    <a class="btn btn-primary" href="#download">下载 macOS 版</a>
+    <a class="btn btn-quiet" href="demo/index.html">在浏览器里试打</a>
   </div>
 </section>
 

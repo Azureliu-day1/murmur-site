@@ -1,0 +1,134 @@
+/* ══════════════════════════════════════════════════════════════════════════
+   pinyin.css · 首页 #pinyin 板块与 /demo/ 共用(2026-09-26 · 0.53 起)
+   类名全部 py- 开头,只在这里定义;类名与数值照 docs/BASELINE-site-ime.md 契约 A。
+   颜色一律用 v2.css 的 token(--paper --card --ink --second --faint --line --line2
+   --coral --green --shadow),这里不新增颜色 token。⛔ 不改 v2.css。
+   例外只有 .py-panel:候选窗只有深色一套,这是产品事实(IMEStyle.swift:13),
+   亮色站点上也是深色玻璃,所以它的 sRGB 数值写死,亮暗一样。
+   没有动画,所以不用写 prefers-reduced-motion。
+   ══════════════════════════════════════════════════════════════════════════ */
+
+/* ── 小节:两栏(文字 | 图),.flip 图在左 ──
+   按 .py-shot 这个类排位置,不靠 DOM 顺序:图框写在前写在后都对。 */
+.py-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 28px 40px;
+  align-items: center; margin-top: 36px;
+}
+.py-grid > * { min-width: 0; order: 1; }   /* min-width:0 —— 候选窗不许把栏撑宽 */
+.py-grid > .py-shot { order: 2; }
+.py-grid.flip > .py-shot { order: 0; }
+
+/* ── 小节小标题:离上一格远、离下面的网格近 ──
+   字号在 h2(26–34)与站点现有 h3(16.5–19)之间。 */
+#pinyin h3 { margin-top: 64px; margin-bottom: 4px; font-size: 20px; font-weight: 600; line-height: 1.4; }
+#pinyin h3 + .py-grid { margin-top: 16px; }   /* 只收紧紧跟小标题的那格;没有 h3 的网格照旧 36 */
+
+/* ── 一步:序号 | 说明 ── */
+.py-step {
+  display: grid; grid-template-columns: 40px 1fr; gap: 14px;
+  padding: 14px 0; border-top: 1px solid var(--line);
+}
+.py-step > b {
+  font-family: "Newsreader", serif; font-weight: 600; font-size: 22px;
+  color: var(--line2); line-height: 1.35;
+}
+.py-step > div { font-size: 14.5px; line-height: 1.75; color: var(--second); }
+.py-step > div strong { display: block; color: var(--ink); font-weight: 600; margin-bottom: 2px; }
+
+/* ── 图框:卡片色 + --line2 边 + --shadow,同 .fake-input 手感 ── */
+.py-shot {
+  margin: 0; background: var(--card); border: 1px solid var(--line2);
+  border-radius: 16px; padding: 18px; box-shadow: var(--shadow);
+}
+.py-shot img { display: block; width: 100%; height: auto; border-radius: 8px; }
+.py-shot figcaption { margin-top: 10px; font-size: 12.5px; color: var(--faint); }
+
+/* ── 候选窗复刻:只有深色一套(产品事实),数值写死 ── */
+/* 高 36 = 上下 6 + 编号块 22 + 边 1×2(border-box):一行时和写死 height:36px 画出来一样;
+   多出来的只是「栏太窄时允许折行」—— 821–1010 宽两栏时 5 个候选一行放不下,
+   写死 36 会把「‹ 1 ›」顶出图框(900 宽实拍)。 */
+.py-panel {
+  display: inline-flex; align-items: center; flex-wrap: wrap; min-height: 36px;
+  padding: 6px 16px; gap: 4px 12px; border-radius: 18px;
+  background: #202023; border: 1px solid rgba(255,255,255,.22);
+  box-shadow: 0 3px 8px rgba(0,0,0,.24);
+  color: #E5E5E7; font-family: -apple-system, "PingFang SC", sans-serif;
+  line-height: 1.3; white-space: nowrap; max-width: 100%;
+}
+.py-shot .py-panel { margin: 14px auto; display: flex; width: max-content; }
+
+.py-pinyin {
+  font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: 13px;
+  color: #B8B8BE; margin-right: -4px;   /* 拼音到首候选 8 = 12 - 4 */
+}
+.py-cands { display: flex; flex-wrap: wrap; gap: 4px 12px; }
+.py-cand, .py-nx { display: inline-flex; align-items: center; gap: 6px; font-size: 15px; }
+.py-nx { color: #F7F7F8; }
+.py-cand i, .py-nx i {
+  font-style: normal; font-family: "IBM Plex Mono", monospace; font-weight: 600;
+  font-size: 13px; width: 18px; height: 22px; border-radius: 4px;
+  display: inline-flex; align-items: center; justify-content: center;
+  color: #B8B8BE; flex: none;
+}
+.py-cand.on { color: #F7F7F8; font-weight: 500; }
+.py-cand.on i, .py-nx.on i { background: #FF6B35; color: #1B1B1F; }
+.py-page {
+  font-size: 12px; color: #B8B8BE; font-variant-numeric: tabular-nums;
+  min-width: 56px; text-align: right;
+  margin-left: auto;   /* 一行时没有余量,不动;折到下一行时靠右 */
+}
+
+/* 联想行:同一块玻璃 */
+.py-next { display: flex; flex-wrap: wrap; gap: 4px 12px; align-items: center; }
+.py-next .py-lab { font-size: 12px; color: #B8B8BE; }
+.py-next .py-tail { font-size: 12px; color: #8F8F96; margin-left: auto; }
+
+/* 两行态:拼音 + 候选,或候选 + 联想 */
+.py-panel.two {
+  flex-wrap: nowrap; min-height: 56px; padding: 6px 16px; border-radius: 16px;
+  flex-direction: column; align-items: flex-start; justify-content: center; gap: 4px;
+}
+
+/* ── 比较表 · 三列:项 | 有没有 | 一句说明(中英同口径) ── */
+.py-compare {
+  display: grid; grid-template-columns: 1.2fr 1fr 1fr; gap: 0;
+  border-top: 1px solid var(--line); margin-top: 28px; font-size: 14px;
+}
+.py-compare > div { padding: 12px 0; border-bottom: 1px solid var(--line); color: var(--second); }
+.py-compare > div:nth-child(3n+1) { color: var(--ink); }
+.py-compare .h {
+  font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--faint);
+}
+.py-compare > .h:nth-child(3n+1) { color: var(--faint); }
+.py-compare .yes { color: var(--green); }
+.py-compare > div + div { padding-left: 16px; }
+.py-compare > div:nth-child(3n+1) { padding-left: 0; }
+
+/* ── 小字说明(同 .stage-note 的字号色) ── */
+.py-note { margin-top: 18px; font-size: 12.5px; color: var(--faint); }
+
+/* ── 板块末尾一行两枚按钮(按钮用站点现成的 .btn .btn-primary .btn-quiet) ── */
+.py-cta { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 32px; }
+
+@media (max-width: 820px) {
+  #pinyin h3 { margin-top: 44px; }
+
+  /* 单栏,图一律在文字后面(flip 也一样) */
+  .py-grid { grid-template-columns: 1fr; }
+  .py-grid > .py-shot, .py-grid.flip > .py-shot { order: 2; }
+
+  /* 候选窗允许折行:5 个候选在 390 宽排不下一行,⛔ 不许撑出横向滚动 */
+  .py-panel {
+    height: auto; min-height: 36px; flex-wrap: wrap; white-space: normal;
+    padding: 6px 12px; border-radius: 16px;
+  }
+  .py-cand, .py-nx, .py-page, .py-lab, .py-tail { white-space: nowrap; }
+  .py-panel.two { flex-wrap: nowrap; min-height: 56px; }
+
+  /* 比较表:项名独占一行,两列值在下面并排 */
+  .py-compare { grid-template-columns: 1fr 1fr; }
+  .py-compare > .k { grid-column: 1 / -1; padding-bottom: 2px; border-bottom: 0; }
+  .py-compare > div + div { padding-left: 0; }
+  .py-compare > div:nth-child(3n) { padding-left: 16px; }
+  .py-compare > .h:first-child { grid-column: 1 / -1; }
+}
