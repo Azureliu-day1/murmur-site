@@ -729,7 +729,7 @@ body.is-sandbox .sandbox { display: inline-block; }
     <div>
       <div class="py-step"><b>01</b><div><strong>One vocabulary for speaking and typing.</strong>Names you add to the dictation dictionary show up as candidates. Words you type become hints for dictation.</div></div>
       <div class="py-step"><b>02</b><div><strong>Words you type help dictation.</strong>They are stored on this Mac. When you dictate, they go with the recognition request as hints, same as the dictionary. With on-device recognition, these words are not sent for dictation.</div></div>
-      <div class="py-step"><b>03</b><div><strong>One-row candidate bar.</strong>5 candidates per page on dark glass. Predictions show up only after a word you have typed before, up to 5.</div></div>
+      <div class="py-step"><b>03</b><div><strong>One-row candidate bar by default.</strong>5 candidates per page. Predictions show up only after a word you have typed before, up to 5.</div></div>
     </div>
     <figure class="py-shot"><img src="../shots/en/nihao.png" alt="Murmur candidate bar: ni hao, candidates 1 你好 2 尼好 3 拟好 4 泥好 5 妮好" width="1120" height="72"><figcaption>The candidate bar, rendered by the input method itself.</figcaption></figure>
   </div>
@@ -757,6 +757,62 @@ body.is-sandbox .sandbox { display: inline-block; }
     <figure class="py-shot"><img src="../shots/en/nextwords-personal.png" alt="Murmur next-word row: Next 1 天气 2 不错 3 很好, note Space takes 1 · Esc hides" width="1120" height="72"><figcaption>After a word commits: a number picks the Nth suggestion. Space takes the first one only when it comes from a word you typed. Esc hides the row.</figcaption></figure>
   </div>
 
+  <!-- Four new sub-sections for 0.53 (2026-10-01). Facts: murmur-ime docs/FEATURE-FACTS-0.53.md §3;
+       locations follow the 0.53 Settings "Input Method" tab (BASELINE-onboarding-site v0.2). -->
+  <!-- IMEFuzzySection.swift:29-37 · RimeEngineDoublePinyin.swift:40 · RimeEngineFuzzy.swift:55-79 -->
+  <h3 class="reveal" id="py-fuzzy">Double pinyin and fuzzy pinyin</h3>
+  <div class="py-grid flip reveal">
+    <!-- shot: settings-ime-fuzzy (Pinyin style and fuzzy pinyin card, en light) -->
+    <figure class="py-shot"><p><kbd>Settings</kbd> → <kbd>Input Method</kbd> → <kbd>Pinyin style and fuzzy pinyin</kbd></p><figcaption>Pick one of three pinyin styles. Tick fuzzy pairs one by one.</figcaption></figure>
+    <div>
+      <div class="py-step"><b>01</b><div><strong>Double pinyin.</strong>Two keys per character: one for the initial, one for the final. The candidate bar still shows full pinyin.</div></div>
+      <div class="py-step"><b>02</b><div><strong>Two layouts.</strong>Flypy or Ziranma. Full Pinyin is the default. After switching, the input method takes a few seconds to get ready.</div></div>
+      <div class="py-step"><b>03</b><div><strong>Fuzzy pinyin.</strong>A ticked pair works both ways. With z ⇄ zh on, typing <span class="mono">zongguo</span> also gives 中国.</div></div>
+      <div class="py-step"><b>04</b><div><strong>Nine pairs, all off.</strong>Every extra pair makes whole sentences slightly less accurate.</div></div>
+    </div>
+  </div>
+
+  <!-- IMESmartInputSection.swift:31-77 · SmartPunctuation.swift:46-58 (defaults as read there) -->
+  <h3 class="reveal" id="py-smart">Smart punctuation and URLs</h3>
+  <div class="py-grid reveal">
+    <div>
+      <div class="py-step"><b>01</b><div><strong>Punctuation.</strong>Full-width punctuation in Chinese. After digits, . and : stay half-width, so 3.14 and 10:30 need no switch to English.</div></div>
+      <div class="py-step"><b>02</b><div><strong>Ellipsis and dash.</strong>Two periods in a row make an ellipsis. Underscore types a dash. These are on by default.</div></div>
+      <div class="py-step"><b>03</b><div><strong>Off by default.</strong>Pairing brackets and quotes, and a space between Chinese and English.</div></div>
+      <div class="py-step"><b>04</b><div><strong>URL and email pass-through.</strong>When you type www., http or an email address, that stretch goes through as English. No candidates, nothing learned. On by default.</div></div>
+      <div class="py-step"><b>05</b><div><strong>Emoji panel.</strong>Off by default. Turn it on in the same card. Then : followed by pinyin gives emoji, and ; followed by pinyin gives symbols.</div></div>
+    </div>
+    <!-- shot: settings-ime-smart (Smart input card, en light) -->
+    <figure class="py-shot"><p><kbd>Settings</kbd> → <kbd>Input Method</kbd> → <kbd>Smart input</kbd></p><figcaption>Each rule has its own switch.</figcaption></figure>
+  </div>
+
+  <!-- IMELookSection.swift:19-24, 37-56, 91 -->
+  <h3 class="reveal" id="py-look">Candidate window</h3>
+  <div class="py-grid flip reveal">
+    <!-- shot: ime-look (three sizes / five accent colours / vertical, en light) -->
+    <figure class="py-shot"><p><kbd>Settings</kbd> → <kbd>Input Method</kbd> → <kbd>Candidate window</kbd></p><figcaption>The card has a preview. Changes apply right away, with no restart.</figcaption></figure>
+    <div>
+      <div class="py-step"><b>01</b><div><strong>Three sizes.</strong>Small, Standard, Large. Standard is the default.</div></div>
+      <div class="py-step"><b>02</b><div><strong>Five accent colours.</strong>Coral, Blue, Green, Purple, Graphite. Coral is the default.</div></div>
+      <div class="py-step"><b>03</b><div><strong>Horizontal or vertical.</strong>Horizontal is the default. In the vertical layout each candidate gets its own line, and long ones wrap.</div></div>
+      <div class="py-step"><b>04</b><div><strong>Light and dark.</strong>The window follows the system appearance.</div></div>
+    </div>
+  </div>
+
+  <!-- IMECloudSection.swift:23-40 · CloudCandidates.swift:67 (⌥↩).
+       ⛔ The text in the figure below is the English disclosure string from IMECloudSection.swift, word for word. -->
+  <h3 class="reveal" id="py-cloud">Cloud candidates</h3>
+  <div class="py-grid reveal">
+    <div>
+      <div class="py-step"><b>01</b><div><strong>Off by default.</strong>Turn it on in Settings → Input Method → Cloud candidates (preview). A confirmation page comes first. Sign-in required.</div></div>
+      <div class="py-step"><b>02</b><div><strong>How it works.</strong>There is a fixed cloud slot at the end of the candidate bar. A request is sent only when you click it or press <kbd>⌥↩</kbd>.</div></div>
+      <div class="py-step"><b>03</b><div><strong>Committing.</strong>The result fills the same slot. Click it or press <kbd>⌥↩</kbd> again to commit. It takes no number key and never commits by itself.</div></div>
+      <div class="py-step"><b>04</b><div><strong>Limits.</strong>"Request automatically when I pause" is also off by default. It does not work in password fields or in apps on the deny list.</div></div>
+    </div>
+    <!-- shot: ime-cloud-slot (cloud slot at the end of the candidate bar, en light) -->
+    <figure class="py-shot"><p class="py-quote">Once this is on, the pinyin you have not committed yet is sent to the Murmur server and passed on to a third-party model service to guess the whole sentence; what you are typing can be inferred from it. Text you have already committed, your personal lexicon and which app you are in are not sent. After you turn it off, no new requests are sent; what has already been sent cannot be taken back.</p><figcaption>The text next to the switch in Settings.</figcaption></figure>
+  </div>
+
   <h3 class="reveal">Where your words go</h3>
   <div class="py-grid flip reveal">
     <figure class="py-shot"><p class="mono">~/Library/Application Support/Murmur/lexicon.sqlite</p><figcaption>Words you type are stored here.</figcaption></figure>
@@ -779,7 +835,8 @@ body.is-sandbox .sandbox { display: inline-block; }
     <div class="k">Predictions</div><div><span class="yes">Yes</span></div><div>Only after a word you have typed before, up to 5.</div>
     <div class="k">Accuracy against the system keyboard</div><div>Not measured</div><div>We do not publish numbers we did not measure.</div>
     <div class="k">Sync across devices</div><div>No</div><div>Not in this version.</div>
-    <div class="k">Light candidate bar</div><div>No</div><div>Dark only.</div>
+    <!-- IMEStyle.swift:13 (light and dark since 2026-09-27). The old "dark only" line is out of date -->
+    <div class="k">Light candidate bar</div><div><span class="yes">Yes</span></div><div>Follows the system appearance.</div>
   </div>
   <p class="py-note reveal">Numbers come from our own test set, not a third party.</p>
   <div class="py-cta reveal">

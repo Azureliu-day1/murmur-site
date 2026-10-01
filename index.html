@@ -730,7 +730,7 @@ body.is-sandbox .sandbox { display: inline-block; }
     <div>
       <div class="py-step"><b>01</b><div><strong>说话和打字同一套词。</strong>听写词典里登记的名字,打字时在候选里。拼音打过的词,说话时当提示词。</div></div>
       <div class="py-step"><b>02</b><div><strong>打过的词,听写认得。</strong>它们存在这台 Mac 上。听写时当提示词,随识别请求发给识别服务商。选本机识别就不出机。</div></div>
-      <div class="py-step"><b>03</b><div><strong>候选窗一行,联想跟着你的词。</strong>一页 5 个候选,深色玻璃。联想最多 5 个,只在你打过的词后面出现。</div></div>
+      <div class="py-step"><b>03</b><div><strong>候选窗默认一行,联想跟着你的词。</strong>一页 5 个候选。联想最多 5 个,只在你打过的词后面出现。</div></div>
     </div>
     <figure class="py-shot"><img src="shots/zh/nihao.png" alt="Murmur 候选窗:ni hao,候选 1 你好 2 尼好 3 拟好 4 泥好 5 妮好" width="1120" height="72"><figcaption>候选窗,输入法自己渲染的图。</figcaption></figure>
   </div>
@@ -760,6 +760,62 @@ body.is-sandbox .sandbox { display: inline-block; }
     <figure class="py-shot"><img src="shots/zh/nextwords-personal.png" alt="Murmur 联想行:接写 1 天气 2 不错 3 很好,尾注 空格接1 · Esc收起" width="1120" height="72"><figcaption>上屏后的联想行。数字接第几个;空格接第一个,只在它来自你打过的词时;Esc 收起。</figcaption></figure>
   </div>
 
+  <!-- 0.53 新增四小节(2026-10-01)。事实:murmur-ime docs/FEATURE-FACTS-0.53.md §3;
+       位置按 0.53 设置页的「输入法」页签(基调 BASELINE-onboarding-site v0.2)。 -->
+  <!-- IMEFuzzySection.swift:29-37 · RimeEngineDoublePinyin.swift:32 · RimeEngineFuzzy.swift:55-79 -->
+  <h3 class="reveal" id="py-fuzzy">双拼与模糊音</h3>
+  <div class="py-grid flip reveal">
+    <!-- shot: settings-ime-fuzzy(拼音方式与模糊音卡,zh 浅 / 深) -->
+    <figure class="py-shot"><p><kbd>设置</kbd> → <kbd>输入法</kbd> → <kbd>拼音方式与模糊音</kbd></p><figcaption>拼音方式三选一,模糊音逐对勾选。</figcaption></figure>
+    <div>
+      <div class="py-step"><b>01</b><div><strong>双拼。</strong>每个字敲两个键,声母一个,韵母一个。候选条上显示的仍是全拼。</div></div>
+      <div class="py-step"><b>02</b><div>可选小鹤双拼或自然码双拼,默认是全拼。切换后输入法要准备几秒。</div></div>
+      <div class="py-step"><b>03</b><div><strong>模糊音。</strong>勾上的一对两头通用。勾了 z ⇄ zh,打 <span class="mono">zongguo</span> 也出「中国」。</div></div>
+      <div class="py-step"><b>04</b><div>一共 9 对,默认全关。每多勾一对,整句会略微没那么准。</div></div>
+    </div>
+  </div>
+
+  <!-- IMESmartInputSection.swift:31-77 · SmartPunctuation.swift:46-58(默认值以读取处为准) -->
+  <h3 class="reveal" id="py-smart">智能标点与网址直通</h3>
+  <div class="py-grid reveal">
+    <div>
+      <div class="py-step"><b>01</b><div><strong>标点。</strong>中文时标点用全角。数字后的 . 和 : 用半角,打 3.14、10:30 不用切英文。</div></div>
+      <div class="py-step"><b>02</b><div>句号连按两次变成省略号。按 _ 出破折号。这几条默认开。</div></div>
+      <div class="py-step"><b>03</b><div>括号引号自动配对、中英文之间自动加空格,这两条默认关。</div></div>
+      <div class="py-step"><b>04</b><div><strong>网址与邮箱直通。</strong>打出 www.、http 或邮箱地址时,这一段按英文走,不出候选,不学词。默认开。</div></div>
+      <div class="py-step"><b>05</b><div><strong>Emoji 面板。</strong>默认关,在同一张卡打开。开了之后,按 : 接拼音出 emoji,按 ; 接拼音出符号。</div></div>
+    </div>
+    <!-- shot: settings-ime-smart(智能输入卡,zh 浅 / 深) -->
+    <figure class="py-shot"><p><kbd>设置</kbd> → <kbd>输入法</kbd> → <kbd>智能输入</kbd></p><figcaption>每条规则单独开关。</figcaption></figure>
+  </div>
+
+  <!-- IMELookSection.swift:19-24, 37-56, 91 -->
+  <h3 class="reveal" id="py-look">候选窗外观</h3>
+  <div class="py-grid flip reveal">
+    <!-- shot: ime-look(候选窗三档字号 / 五个强调色 / 竖排,zh 浅 / 深) -->
+    <figure class="py-shot"><p><kbd>设置</kbd> → <kbd>输入法</kbd> → <kbd>候选窗外观</kbd></p><figcaption>卡上有预览,选了马上生效,不用重启输入法。</figcaption></figure>
+    <div>
+      <div class="py-step"><b>01</b><div><strong>字号三档。</strong>小、标准、大,默认标准。</div></div>
+      <div class="py-step"><b>02</b><div><strong>强调色五种。</strong>珊瑚、蓝、绿、紫、石墨,默认珊瑚。</div></div>
+      <div class="py-step"><b>03</b><div><strong>横排或竖排。</strong>默认横排。竖排时每行一个候选,长候选折行,不截断。</div></div>
+      <div class="py-step"><b>04</b><div>深浅跟随系统外观。</div></div>
+    </div>
+  </div>
+
+  <!-- IMECloudSection.swift:23-40 · CloudCandidates.swift:67(⌥↩)。
+       ⛔ 下面图框里那段是 IMECloudSection.swift 的 disclosure 中文原文(Wei 2026-09-30 定稿),一字不改。 -->
+  <h3 class="reveal" id="py-cloud">云候选</h3>
+  <div class="py-grid reveal">
+    <div>
+      <div class="py-step"><b>01</b><div><strong>默认关。</strong>在 设置 → 输入法 →「云候选(预览)」卡打开,打开前有一页确认。要登录。</div></div>
+      <div class="py-step"><b>02</b><div><strong>怎么用。</strong>候选条末尾有一个固定的「云」位。点它或按 <kbd>⌥↩</kbd>,才会发请求。</div></div>
+      <div class="py-step"><b>03</b><div>结果填在同一个位置。再点一次或再按一次 <kbd>⌥↩</kbd> 才上屏。它不占数字键,也不会自己上屏。</div></div>
+      <div class="py-step"><b>04</b><div>「停顿时自动请求」也默认关。密码框和拒绝名单里的 App 里不工作。</div></div>
+    </div>
+    <!-- shot: ime-cloud-slot(候选条末尾的云位,zh 浅 / 深) -->
+    <figure class="py-shot"><p class="py-quote">开启后,尚未上屏的拼音会发到 Murmur 服务器,并转给第三方模型服务来猜整句;据此可以推断你正在输入的内容。不发已上屏的文字、不发你打过的词、不发你在哪个 App。关掉后不再发新的请求;已经发出的收不回。</p><figcaption>设置里开关旁的说明原文。</figcaption></figure>
+  </div>
+
   <!-- F13 / F16 / F22 / F14 -->
   <h3 class="reveal">你的词去哪了</h3>
   <div class="py-grid flip reveal">
@@ -784,7 +840,8 @@ body.is-sandbox .sandbox { display: inline-block; }
     <div class="k">联想</div><div>有</div><div>只在你打过的词后面出现,最多 5 个。</div>
     <div class="k">和系统拼音比准确率</div><div>没测</div><div>不写没测过的数。</div>
     <div class="k">跨设备同步</div><div>没有</div><div>第一版不跨设备。</div>
-    <div class="k">浅色候选窗</div><div>没有</div><div>只有深色一套。</div>
+    <!-- IMEStyle.swift:13(2026-09-27 起深浅两套)。旧口径「只有深色」已失效 -->
+    <div class="k">浅色候选窗</div><div>有</div><div>深浅跟随系统外观。</div>
   </div>
   <p class="py-note reveal">数字来自我们自己的评测集,不是第三方。</p>
   <div class="py-cta reveal">
