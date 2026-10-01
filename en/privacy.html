@@ -253,10 +253,11 @@ footer a { color: var(--faint); }
 
 <header class="page wrap">
   <div class="eyebrow">Privacy · Where your data lives</div>
-  <h1>A privacy page you can check yourself,<br>not terms you have to sign.</h1>
-  <p class="lede">The whole policy in one line: <b>our servers know who you are. They never know what you said.</b>
-  Your recordings and your words stay on your Mac; during recognition the audio goes straight from your Mac to the provider you picked — there is no stop called “our cloud” in the middle.
-  Below, for every kind of data: where it goes, where it sits, how to delete it — and for each one, how to verify it with your own hands.</p>
+  <h1>Where Murmur’s data goes.</h1>
+  <p class="lede">Recordings, history, your dictionary and the words you type stay on your Mac.
+  With cloud recognition, <b>the audio goes straight to the recognition provider for the tier you picked, not through our servers.</b>
+  When you are signed in and cleanup runs on the free allowance, the text goes through our servers first and then to the model vendor.
+  Below, for each kind of data: where it goes, where it is stored, and how to delete it, each with a way to check it yourself.</p>
 
   <div class="flowstage">
     <svg viewBox="0 0 760 250" aria-label="Data travels from your Mac straight to the provider, skipping our servers">
@@ -280,7 +281,7 @@ footer a { color: var(--faint); }
       <g id="ghost" opacity=".8">
         <rect x="304" y="92" width="152" height="72" rx="14" fill="none" stroke="var(--line2)" stroke-dasharray="5 5"/>
         <text class="ghost-label" x="380" y="122" text-anchor="middle">Our servers</text>
-        <text class="node-sub" x="380" y="142" text-anchor="middle">Only know who you are</text>
+        <text class="node-sub" x="380" y="142" text-anchor="middle">Audio skips this</text>
         <g id="ghostX" opacity="0">
           <circle cx="380" cy="76" r="13" fill="var(--coral)"/>
           <text x="380" y="81" text-anchor="middle" style="font-size:13px; font-weight:700" fill="#fff">✕</text>
@@ -335,7 +336,7 @@ footer a { color: var(--faint); }
       <p>They are stored on this Mac at ~/Library/Application Support/Murmur/lexicon.sqlite. Learning is on by default. Password fields and apps on the deny list are never recorded.
       When you dictate, these words go to the recognition provider as hints, <b>sent with each recognition request</b>. This is the same path as the Dictionary row above. Pick on-device recognition and they do not leave the Mac. The first version does not sync across devices.
       When you press ⌥⇧Space to polish a sentence, the words it touches from your dictionary and from what you typed go with the polish request (at most 500). This happens with on-device recognition too.</p>
-      <p>Settings → Cleanup → the "Words I've typed (learned by the input method)" card: turn off "Learn the words I type" and no new words are learned after that; turn off "Let AI use my own words" and AI polish sends none of your words. Settings → System → "Clear data…" wipes the learned words in one go. The "Suggest the next word (from what you've typed)" switch sits on the same card.</p>
+      <p>Settings → Input Method → the "Words I've typed (learned by the input method)" card: turn off "Learn the words I type" and no new words are learned after that; turn off "Let AI use my own words" and AI polish sends none of your words. Settings → System → "Clear data…" wipes the learned words in one go. The "Suggest the next word (from what you've typed)" switch sits on the same card.</p>
     </div>
 
     <div class="jrow">
@@ -345,8 +346,8 @@ footer a { color: var(--faint); }
     </div>
 
     <div class="jrow">
-      <div class="what">API keys and settings<span class="mono">your credentials</span></div>
-      <p>API keys sit in the macOS Keychain (system-level encryption), settings in system preferences — <b>both on this machine only</b>. We cannot see them and never receive them.</p>
+      <div class="what">Sign-in, API keys and settings<span class="mono">your credentials</span></div>
+      <p>Your sign-in credentials are kept in the macOS Keychain. If you entered your own API key, it is in the Keychain too, <b>on this Mac only</b>, and we never receive it. Settings are kept in system preferences.</p>
       <p>Deleting the app cleans them up the way macOS normally does; keys can be cleared in Settings at any time.</p>
     </div>
   </div>
@@ -357,7 +358,7 @@ footer a { color: var(--faint); }
   <div class="eyebrow">Never · What we don’t do</div>
   <h2>In writing, so you can hold us to it.</h2>
   <div class="nots reveal">
-    <div class="not"><span class="x">✕</span><p><b>We never handle your audio or your words.</b> They go from your Mac straight to the provider you picked, through none of our servers.</p></div>
+    <div class="not"><span class="x">✕</span><p><b>We never handle your audio.</b> With cloud recognition the audio goes from your Mac straight to the recognition provider, through none of our servers. Text for cleanup is an exception; see “Once you sign in” below.</p></div>
     <div class="not"><span class="x">✕</span><p><b>No behavioural tracking.</b> There is no analytics SDK in the app. Which app you were speaking into, and for how long, is never reported back to us.</p></div>
     <div class="not"><span class="x">✕</span><p><b>No selling your data, no sharing it.</b> There are no advertisers and no “partners”. Your data is not the product.</p></div>
     <div class="not"><span class="x">✕</span><p><b>This website doesn’t track you either.</b> There is no third-party analytics script on this page — open your browser’s network panel right now and check.</p></div>
@@ -386,10 +387,10 @@ footer a { color: var(--faint); }
 <!-- ── What happens next ── -->
 <section class="wrap">
   <div class="future reveal">
-    <div class="eyebrow">Future · Once there are accounts</div>
-    <p>When accounts and subscriptions ship, our servers will handle exactly one thing — who you are: sign-in and subscription status, and that is the end of the list.
-    <b>Not one word of your recordings, transcripts, history or dictionary will be uploaded</b> — that sentence is on this page in black and white, so on launch day you can hold the product up against it.
-    Every change to this page leaves its date at the bottom.</p>
+    <div class="eyebrow">Account · Once you sign in</div>
+    <p>When you are not signed in, Murmur sends nothing to our servers. When you are signed in, our servers do these things:</p>
+    <p>① Sign-in and allowance. ② After each sentence, one report of how many words it was and whether it was dictation or Ask, without the text. ③ On the free allowance, each recording fetches a one-time pass, so the server knows you are recording at that moment. ④ On the free allowance, text for cleanup goes through the server and then to the model vendor. ⑤ With cloud candidates on in the input method, Pinyin you have not committed goes through the server to a third-party model service.</p>
+    <p>Recordings and history are not uploaded. Your dictionary and the words you type are not uploaded as a whole; only the words a sentence touches go with its cleanup request, as described in the “Typed words” row above. Every change to this page leaves its date at the bottom.</p>
   </div>
 </section>
 

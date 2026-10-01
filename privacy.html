@@ -254,10 +254,11 @@ footer a { color: var(--faint); }
 
 <header class="page wrap">
   <div class="eyebrow">Privacy · 你的数据在哪</div>
-  <h1>能自己验证的隐私说明,<br>不是让你签字的条款。</h1>
-  <p class="lede">一句话总纲:<b>我们的服务器只认识「你是谁」,永远不知道「你说了什么」。</b>
-  你的录音和文字只存在你的 Mac 上;识别时,音频直连你自己选的那家模型商——中间没有「我们的云」这一站。
-  下面把每一类数据的去向、存放和删除写清楚,每一条都给出你亲手核实的办法。</p>
+  <h1>Murmur 的数据去向。</h1>
+  <p class="lede">录音、历史、词典和打过的词存在你的 Mac 上。
+  云端识别时,<b>音频直接发给你选的那一档的识别服务商,不经过我们的服务器。</b>
+  登录后用免费额度整理时,文字先经过我们的服务器,再转给模型厂商。
+  下面按数据类别写去向、存放和删除办法,每一条附一个你能自己核实的办法。</p>
 
   <div class="flowstage">
     <svg viewBox="0 0 760 250" aria-label="数据从你的 Mac 直连模型商,跳过我们的服务器">
@@ -281,7 +282,7 @@ footer a { color: var(--faint); }
       <g id="ghost" opacity=".8">
         <rect x="304" y="92" width="152" height="72" rx="14" fill="none" stroke="var(--line2)" stroke-dasharray="5 5"/>
         <text class="ghost-label" x="380" y="122" text-anchor="middle">我们的服务器</text>
-        <text class="node-sub" x="380" y="142" text-anchor="middle">只认识「你是谁」</text>
+        <text class="node-sub" x="380" y="142" text-anchor="middle">音频不经过这里</text>
         <g id="ghostX" opacity="0">
           <circle cx="380" cy="76" r="13" fill="var(--coral)"/>
           <text x="380" y="81" text-anchor="middle" style="font-size:13px; font-weight:700" fill="#fff">✕</text>
@@ -336,7 +337,7 @@ footer a { color: var(--faint); }
       <p>存在这台 Mac 上:~/Library/Application Support/Murmur/lexicon.sqlite。学词默认开着。密码框与拒绝名单里的 App 一律不记。
       听写时,这些词当提示词<b>随识别请求</b>发给识别服务商。这和上面「词典」一行走同一条路。选本机识别时不出机。第一版不跨设备。
       按 ⌥⇧Space 让 AI 整理这句时,词典里登记的词和学到的词里与这句沾边的(最多 500 个)随整理请求出机。选本机识别也一样。</p>
-      <p>设置 → 整理 → 「我打过的词(输入法学的)」卡:关「学我平时打的字」,之后不再学新词;关「允许 AI 参考我的用词」,AI 整理时一个词都不发。设置 → 系统 → 「清除数据…」一键清掉已学的词。联想开关「联想(根据你打过的词)」在同一张卡上。</p>
+      <p>设置 → 输入法 → 「我打过的词(输入法学的)」卡:关「学我平时打的字」,之后不再学新词;关「允许 AI 参考我的用词」,AI 整理时一个词都不发。设置 → 系统 → 「清除数据…」一键清掉已学的词。联想开关「联想(根据你打过的词)」在同一张卡上。</p>
     </div>
 
     <div class="jrow">
@@ -346,8 +347,8 @@ footer a { color: var(--faint); }
     </div>
 
     <div class="jrow">
-      <div class="what">API Key 与设置<span class="mono">你的凭证</span></div>
-      <p>API Key 存在 macOS 钥匙串(系统级加密),设置存在系统偏好——<b>都只在本机</b>,我们看不到、也收不到。</p>
+      <div class="what">登录凭据、API Key 与设置<span class="mono">你的凭证</span></div>
+      <p>登录凭据存在 macOS 钥匙串。你自己填了 API Key 的话,它也存在钥匙串,<b>只在本机</b>,我们收不到。设置存在系统偏好里。</p>
       <p>删除 App 时按系统惯例清理;Key 可在设置里随时清空。</p>
     </div>
   </div>
@@ -358,7 +359,7 @@ footer a { color: var(--faint); }
   <div class="eyebrow">Never · 我们不做的事</div>
   <h2>写下来,就是承诺不做。</h2>
   <div class="nots reveal">
-    <div class="not"><span class="x">✕</span><p><b>不经手你的音频和文字。</b>它们从你的 Mac 直达你选的服务商,不经过我们的任何服务器。</p></div>
+    <div class="not"><span class="x">✕</span><p><b>不经手你的音频。</b>云端识别的音频从你的 Mac 直达识别服务商,不经过我们的服务器。整理用的文字有例外,见下面「登录之后」一节。</p></div>
     <div class="not"><span class="x">✕</span><p><b>不做行为埋点。</b>App 里没有统计 SDK,不记录你在哪个 App 里说了话、说了多久给我们。</p></div>
     <div class="not"><span class="x">✕</span><p><b>不卖数据、不共享数据。</b>没有广告主,没有「合作伙伴」,你的数据不是商品。</p></div>
     <div class="not"><span class="x">✕</span><p><b>官网也不追踪你。</b>这个网站没有任何第三方统计脚本——你现在就可以打开浏览器的网络面板核实。</p></div>
@@ -387,10 +388,10 @@ footer a { color: var(--faint); }
 <!-- ── 未来 ── -->
 <section class="wrap">
   <div class="future reveal">
-    <div class="eyebrow">Future · 有账号之后</div>
-    <p>将来上线账号与订阅时,我们的服务器只处理「你是谁」:登录、订阅状态,到此为止。
-    <b>你的录音、转写、历史、词典,一个字都不会上传</b>——这条白纸黑字写在这一页上,上线那天你可以拿它来对照验收。
-    任何对这一页的修改,都会在页面底部留下日期。</p>
+    <div class="eyebrow">Account · 登录之后</div>
+    <p>不登录时,Murmur 不往我们的服务器发任何东西。登录后,我们的服务器做这几件事:</p>
+    <p>① 登录和额度。② 每说完一句,报一次这句算多少字、是听写还是随心问,不带原文。③ 用免费额度识别时,每次开录换一张一次性通行证,所以服务器知道你此刻在录音。④ 用免费额度整理时,文字先经过服务器,再转给模型厂商。⑤ 开了输入法的云候选时,还没上屏的拼音经过服务器,转给第三方模型服务。</p>
+    <p>录音和历史不上传。词典与打过的词不整份上传,只有整理请求里会带上与这句沾边的那些,见上面「打过的词」一行。这一页每次修改,页面底部都会留下日期。</p>
   </div>
 </section>
 
