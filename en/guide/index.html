@@ -61,7 +61,7 @@
         <div class="g-row"><span class="k">Where</span><div>Settings → Input Method → the Input method card. Update and Uninstall are on the same card. Uninstall keeps your words, dictionary and settings.</div></div>
       </div>
       <figure class="py-shot"><img src="../../shots/en/nihao.png" alt="Murmur candidate bar: ni hao, candidates 1 你好 2 尼好 3 拟好 4 泥好 5 妮好" width="925" height="184" loading="lazy"><figcaption>After switching to Murmur, typing ni hao shows this candidate bar.</figcaption></figure>
-      <!-- shot: settings-ime-install (first card of the Input Method tab, en light) -->
+      <!-- shot: settings-ime-install still missing. The INT render is a dev build whose card says the input method is not bundled; that is not what a 0.53 user sees. -->
     </div>
   </section>
 
@@ -96,8 +96,8 @@
         </div></div>
         <div class="g-row"><span class="k">Where</span><div>Settings → Input Method → Pinyin style and fuzzy pinyin. Full Pinyin is the default; Flypy and Ziranma double pinyin are the other two. Fuzzy pinyin has nine pairs, all off by default.</div></div>
       </div>
-      <!-- shot: settings-ime-fuzzy (Pinyin style and fuzzy pinyin card, en light) -->
-      <figure class="py-shot"><p><kbd>Settings</kbd> → <kbd>Input Method</kbd> → <kbd>Pinyin style and fuzzy pinyin</kbd></p><figcaption>Full Pinyin, Flypy or Ziranma.</figcaption></figure>
+      <!-- Real screenshot settings-ime-fuzzy (INT render 2026-10-01). The Pinyin style row is a system popup that offscreen rendering cannot draw, so only the fuzzy pinyin part is shown. -->
+      <figure class="py-shot"><picture><img src="../../shots/en/settings-ime-fuzzy-light.png" width="900" height="366" loading="lazy" alt="The fuzzy pinyin part of Settings: nine pairs, z⇄zh, c⇄ch, s⇄sh, n⇄l, l⇄r, an⇄ang, en⇄eng, in⇄ing and f⇄h, none ticked. Above is a note on double pinyin; below, a note that a ticked pair works both ways."></picture><figcaption>The fuzzy pinyin part of the card. All nine pairs are off by default.</figcaption></figure>
     </div>
   </section>
 
@@ -115,8 +115,8 @@
         </div></div>
         <div class="g-row"><span class="k">Where</span><div>Settings → Input Method → Smart input. Each rule has its own switch. <b>Off by default:</b> pairing brackets and quotes, a space between Chinese and English, and the emoji panel. The rest are on.</div></div>
       </div>
-      <!-- shot: settings-ime-smart (Smart input card, en light) -->
-      <figure class="py-shot"><p><kbd>Settings</kbd> → <kbd>Input Method</kbd> → <kbd>Smart input</kbd></p><figcaption>Each rule has its own switch.</figcaption></figure>
+      <!-- Real screenshot settings-ime-smart (INT render 2026-10-01), default values -->
+      <figure class="py-shot"><picture><img src="../../shots/en/settings-ime-smart-light.png" width="900" height="800" loading="lazy" alt="The Smart input card in Settings. Under smart punctuation: full-width punctuation in Chinese, pair brackets and quotes, half-width . and : after digits, two periods make an ellipsis, underscore types a dash, space between Chinese and English or digits. Then URL and email pass-through, and the emoji and symbol panel. Pairing, spacing and the emoji panel are unticked."></picture><figcaption>The Smart input card. Each rule has its own switch. The three unticked rules are off by default.</figcaption></figure>
     </div>
   </section>
 
@@ -132,8 +132,8 @@
         </div></div>
         <div class="g-row"><span class="k">Where</span><div>Settings → Input Method → Candidate window. Standard, Coral and horizontal are the defaults. The card has a preview, and changes apply right away with no restart.</div></div>
       </div>
-      <!-- shot: ime-look (three sizes / five accent colours / vertical, en light) -->
-      <figure class="py-shot"><p><kbd>Settings</kbd> → <kbd>Input Method</kbd> → <kbd>Candidate window</kbd></p><figcaption>The card has a preview.</figcaption></figure>
+      <!-- Real screenshot ime-look: only the preview on the card (INT render 2026-10-01). The preview has no interface text, so the zh files are used, light and dark. -->
+      <figure class="py-shot"><picture><source srcset="../../shots/zh/ime-look-dark.png" media="(prefers-color-scheme: dark)"><img src="../../shots/zh/ime-look-light.png" width="900" height="156" loading="lazy" alt="The candidate window preview in Settings: shu ru fa, candidates 1 输入法 2 书入法 3 数入法 4 输入 5 书, with the second one highlighted."></picture><figcaption>The preview on the Candidate window card, with the defaults: standard size, coral, horizontal.</figcaption></figure>
     </div>
   </section>
 
@@ -150,7 +150,7 @@
         </div></div>
         <div class="g-row"><span class="k">Where</span><div><b>Off by default. Sign-in required.</b> Turn it on in Settings → Input Method → Cloud candidates (preview). A confirmation page comes first. "Request automatically when I pause" is also off by default.</div></div>
       </div>
-      <!-- shot: ime-cloud-slot (cloud slot at the end of the candidate bar, en light) -->
+      <!-- shot: ime-cloud-slot still missing: no existing render shows the cloud slot. The disclosure text stays. -->
       <figure class="py-shot"><p class="py-quote">Once this is on, the pinyin you have not committed yet is sent to the Murmur server and passed on to a third-party model service to guess the whole sentence; what you are typing can be inferred from it. Text you have already committed, your personal lexicon and which app you are in are not sent. After you turn it off, no new requests are sent; what has already been sent cannot be taken back.</p><figcaption>The text next to the switch in Settings.</figcaption></figure>
     </div>
   </section>
@@ -170,7 +170,7 @@
           <p>Dictation: the Dictionary page in the main window sidebar, Snippets card.</p>
         </div></div>
       </div>
-      <!-- shot: ime-phrases (Manage shortcut phrases sheet, en light) -->
+      <!-- shot: ime-phrases still missing: no existing render shows the Manage shortcut phrases sheet. The text example stays. -->
       <figure class="py-shot"><p><span class="mono">dz</span> → your address</p><figcaption>Input method phrases: type the code, the phrase is the first candidate.</figcaption></figure>
     </div>
   </section>
@@ -226,8 +226,8 @@
         <div class="g-row"><span class="k">Where</span><div><b>On by default.</b> Settings → Cleanup → Cleanup by scene.</div></div>
         <p class="g-note">It reads the app identifier and the field type, plus the page host name in supported browsers. The host name is not sent. The scene name goes with the cleanup request to the cleanup model.</p>
       </div>
-      <!-- shot: settings-scene-on (Cleanup by scene card, en light) -->
-      <figure class="py-shot"><p><kbd>Settings</kbd> → <kbd>Cleanup</kbd> → <kbd>Cleanup by scene</kbd></p><figcaption>The card shows which scene the front app is recognised as.</figcaption></figure>
+      <!-- Real screenshot settings-scene-on (INT render 2026-10-01); the front app is the render sample, Mail -->
+      <figure class="py-shot"><picture><img src="../../shots/en/settings-scene-on-light.png" width="900" height="457" loading="lazy" alt="The Cleanup by scene card in Settings, switched on. Front app: Mail, recognised as Email. Below, a scene per app: Mail, Safari and Terminal are all set to Auto."></picture><figcaption>The card shows which scene the front app is recognised as.</figcaption></figure>
     </div>
   </section>
 

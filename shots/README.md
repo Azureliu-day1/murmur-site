@@ -14,3 +14,20 @@
 | `zh/hud-{light,dark}.png` | Murmur 录音条截图。底部胶囊有取消键、波形、计时 0:08 和打勾键,上方是正在出的字:好,我看一下。 | Murmur recording bar. A capsule at the bottom of the screen with a cancel button, a waveform, a 0:08 timer and a check button; above it, the words appearing as you speak. |
 | `zh/welcome-{light,dark}.png` | Murmur 新手引导第一页截图。标题:对着电脑说话,出来的是整理好的文字。下面列出听写、翻译、口述编辑三个键,和识别语言。 | Murmur onboarding, first page: "Talk to your computer. What comes out is clean text." Lists the three keys (dictate, translate, voice edit) and the recognition language. |
 | `zh/done-{light,dark}.png` | Murmur 新手引导最后一页截图。标题:可以开工了。下面是快捷键速查:右 ⌘ 听写,右 ⌥ 翻译,右 ⌃ 口述编辑,Esc 取消。 | Murmur onboarding, last page: "Ready to work." Key cheat sheet: Right ⌘ dictate, Right ⌥ translate, Right ⌃ voice edit, Esc cancel. |
+
+# 0.53 新手引导与设置页真截图(2026-10-01 换)
+
+- 来源:murmur-ime worktree `ob-int`(builder INT,2026-10-01)离屏出图,原图在审计目录 `onboarding-site/INT/site-shots/`。
+- 处理:引导两张从 1800 宽缩到 900 宽;设置卡按卡片边界自动裁(脚本在审计目录 `W2/`),缩到 900 宽;全部重存为只含 IHDR/IDAT/IEND 的 PNG,单张 ≤ 300 KB。
+- 文字是出图样例,不含邮箱、账号、密钥、个人信息(逐张看过;场景卡的前台 App「Mail」是出图样例)。
+- 系统选择框(拼音方式、候选字号、强调色、候选排列)离屏出图画不出,所以模糊音只截下半栏、候选窗外观只截预览。
+- 英文只有浅色:en 页的这几张不带深色 source。ime-look 预览里没有界面字,en 页直接用 zh 的浅深两张。
+
+| 文件 | 用在 |
+|---|---|
+| `zh/welcome-{light,dark}.png` `zh/done-{light,dark}.png` | 首页收尾(换成 0.53 的新版引导:第一页先学右 ⌘,最后一页多了「功能一览」) |
+| `en/welcome-light.png` `en/done-light.png` | 英文首页收尾 |
+| `zh/settings-ime-fuzzy-*` `en/settings-ime-fuzzy-light` | 指南 #fuzzy |
+| `zh/settings-ime-smart-*` `en/settings-ime-smart-light` | 指南 #smart |
+| `zh/ime-look-{light,dark}.png` | 指南 #look(中英两页共用) |
+| `zh/settings-scene-on-*` `en/settings-scene-on-light` | 指南 #scene |

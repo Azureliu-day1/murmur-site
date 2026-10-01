@@ -1057,22 +1057,20 @@ body.is-sandbox .sandbox { display: inline-block; }
     </picture>
     <figcaption>A real screenshot. While you speak, this bar sits at the bottom of the screen. Press again or click ✓ and the words land at your cursor.</figcaption>
   </figure>
-  <!-- ⚠️ These two are the zh renders (no en onboarding render yet; "en shots pending" is in the W report).
-       Swap to ../shots/en/welcome-*.png / done-*.png once D renders them with MURMUR_SHOT_LANG=en. -->
+  <!-- 2026-10-01: en onboarding renders (INT, MURMUR_SHOT_LANG=en). Only a light render exists in English,
+       so these two have no dark source; a dark page shows the light screenshot. -->
   <div class="real-shots reveal">
     <figure class="real-shot">
       <picture>
-        <source srcset="../shots/zh/welcome-dark.png" media="(prefers-color-scheme: dark)">
-        <img src="../shots/zh/welcome-light.png" width="900" height="980" loading="lazy"
-             alt="Murmur onboarding, first page, Chinese interface. The heading says: speak to your computer and get tidy text. Below it are the keys for dictation, translation and editing by voice, and the recognition language.">
+        <img src="../shots/en/welcome-light.png" width="900" height="676" loading="lazy"
+             alt="Murmur onboarding, first page. Heading: Talk to your computer. What comes out is clean text. Below it are the recording capsule, a card that says to learn one key first, Right ⌘, and the recognition language.">
       </picture>
-      <figcaption>First launch: a short onboarding that walks you through one dictation. Shown here in the Chinese interface.</figcaption>
+      <figcaption>First launch: a short onboarding that starts with one key, Right ⌘.</figcaption>
     </figure>
     <figure class="real-shot">
       <picture>
-        <source srcset="../shots/zh/done-dark.png" media="(prefers-color-scheme: dark)">
-        <img src="../shots/zh/done-light.png" width="900" height="720" loading="lazy"
-             alt="Murmur onboarding, last page, Chinese interface. The heading says: ready to go. Below it is a shortcut list: right ⌘ dictate, right ⌥ translate, right ⌃ edit by voice, Esc cancel.">
+        <img src="../shots/en/done-light.png" width="900" height="696" loading="lazy"
+             alt="Murmur onboarding, last page. Heading: Ready to work. A quick reference lists Right ⌘ dictation, Right ⌥ translate, Right ⌃ voice edit and Esc cancel. Below it is a link to the Features page.">
       </picture>
       <figcaption>The last page lists the shortcuts. You can open it again from the menu bar.</figcaption>
     </figure>
