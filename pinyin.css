@@ -12,7 +12,7 @@
    按 .py-shot 这个类排位置,不靠 DOM 顺序:图框写在前写在后都对。 */
 .py-grid {
   display: grid; grid-template-columns: 1fr 1fr; gap: 28px 40px;
-  align-items: center; margin-top: 36px;
+  align-items: start; margin-top: 36px;
 }
 .py-grid > * { min-width: 0; order: 1; }   /* min-width:0 —— 候选窗不许把栏撑宽 */
 .py-grid > .py-shot { order: 2; }
