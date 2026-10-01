@@ -32,7 +32,7 @@
   --shadow: 0 1px 2px rgba(27,27,31,.04), 0 12px 32px rgba(27,27,31,.07);
   /* v2 新增的语义 token:错误一个色,焦点一个色。⛔ 不给「成功」发明新绿, */
   /* 站点本来就有 --green。 */
-  --danger: #B3341A;
+  --danger: #B3402E;   /* = App DS.danger 浅(DesignSystem.swift),2026-10-01 对齐 */
   --focus:  rgba(226,83,31,.32);
 }
 @media (prefers-color-scheme: dark) {
@@ -51,7 +51,7 @@
     --stage-a: rgba(0,0,0,.22);
     --stage-b: rgba(0,0,0,.34);
     --shadow: 0 1px 2px rgba(0,0,0,.3), 0 12px 32px rgba(0,0,0,.4);
-    --danger: #FF8566;
+    --danger: #E8705C;   /* = App DS.danger 深 */
     --focus:  rgba(255,107,53,.36);
   }
 }
