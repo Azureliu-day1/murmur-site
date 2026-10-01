@@ -756,9 +756,9 @@ body.is-sandbox .sandbox { display: inline-block; }
     Cursor、Codex 的输入框里也一样。
   </p>
   <!-- 2026-10-01 Wei:只留差异化,细节进 /guide/#prompt-skills 与 #scene。
-       事实:PromptSkillSettings.swift(⌃⌥P,默认关;终端里不开)· SceneSettingsSection.swift:56(术语原样) -->
+       事实:murmur-ime 809fdda7(2026-10-01「去掉单独技能键」):PromptSkillSettings.swift PromptSkillAuto(15 字门)· PromptSkillCopy.toggleLabel / scopeLine / disclosure / howTo / firstHint(默认关;终端里不开;没有技能键、没有预览卡)· SceneSettingsSection.swift:56(术语原样) -->
   <div class="detail-list reveal">
-    <div id="vibe-skills"><strong>按 ⌃⌥P,落下的是提示词。</strong>在 Cursor、Claude 桌面版、ChatGPT 里说需求,落下结构清楚的提示词。默认关。</div>
+    <div id="vibe-skills"><strong>说需求,落下的是提示词。</strong>在 Cursor、Claude 桌面版、ChatGPT 里按听写键说需求,自动整理成提示词直接落字。短句和闲聊照常落字。默认关。</div>
     <div id="vibe-scene"><strong>术语原样落下。</strong>在终端和编辑器里,变量名、库名、报错保留英文,中间的中文照常落下。</div>
     <div><strong>听错的库名改一次。</strong>改对后它进词典,下次直接听对。</div>
     <div><strong>选中代码,说怎么改。</strong>按右 ⌃ 说出改法,改好的代码落回原处。</div>

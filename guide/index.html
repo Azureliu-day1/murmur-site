@@ -196,22 +196,23 @@
     </div>
   </section>
 
-  <!-- 事实:PromptSkillSettings.swift:10-61(默认关、⌃⌥P、disclosure、howTo)· PromptSkills.swift:41-42 ·
-       Resources/prompt-skills/*.json 的 name -->
+  <!-- 事实:murmur-ime 809fdda7(2026-10-01「去掉单独技能键」):PromptSkillSettings.swift PromptSkillAuto(15 字门)· PromptSkillCopy.toggleLabel / scopeLine / disclosure / howTo / firstHint · PromptSkills.swift:41-42 ·
+       Resources/prompt-skills/*.json 的 name。⛔ 不再有技能键 ⌃⌥P 和预览卡(Wei 2026-10-01「直接做」)。 -->
   <section class="g-sec" id="prompt-skills">
     <h2>提示词技能</h2>
     <div class="g-body">
       <div>
-        <div class="g-row"><span class="k">是什么</span><div>在 AI 编程和 AI 聊天工具里,把你说的需求整理成结构清楚的提示词再落字。</div></div>
+        <div class="g-row"><span class="k">是什么</span><div>在 AI 编程和 AI 聊天工具里,把你说的需求整理成结构清楚的提示词,直接落字。</div></div>
         <div class="g-row"><span class="k">怎么用</span><div>
-          <p>按 <kbd>⌃⌥P</kbd> 说需求。结果先出在预览卡上,点「确认落字」才落字。卡上可以换技能,也可以退回普通整理。</p>
+          <p>在 Cursor、Claude 桌面版、ChatGPT 里照常按听写键说需求。整理好的提示词直接落在光标处,不用多按键。</p>
+          <p>短句和闲聊照常落字。少于 15 个字的句子不走技能。判不出是哪种需求时,落普通整理的结果。</p>
           <p>Cursor 里是编程四个技能:写新功能、修 bug、改 / 重构代码、解释代码。Claude 桌面版、ChatGPT / Codex 里另有聊天三个:调研、帮我写、帮我做决定。终端里不开。</p>
         </div></div>
-        <div class="g-row"><span class="k">在哪打开</span><div><b>默认关。</b>在 设置 → 整理 →「提示词技能」卡打开,打开前有一页确认。技能键在同一张卡上换。</div></div>
-        <p class="g-note">开启后,这一句的转写文字会多发一次给整理用的同一家模型厂商。不新增接收方,不发录音。「整理」设成「不动」时技能也不发。</p>
+        <div class="g-row"><span class="k">在哪打开</span><div><b>默认关。</b>在 设置 → 整理 →「提示词技能」卡打开,打开前有一页确认。七个技能在同一张卡上单独开关。关着时,你第一次在这些 App 里说够长的一句,录音条会提示一次在哪打开。</div></div>
+        <p class="g-note">开启后,够长的那一句的转写文字会多发一次给整理用的同一家模型厂商。不新增接收方,不发录音,不发你在哪个窗口。「整理」设成「不动」时技能也不发。</p>
       </div>
-      <!-- shot: prompt-skill-card(预览卡,zh 浅 / 深)· settings-prompt-skill(设置卡) -->
-      <figure class="py-shot"><p><kbd>设置</kbd> → <kbd>整理</kbd> → <kbd>提示词技能</kbd></p><figcaption>技能键默认 ⌃⌥P。</figcaption></figure>
+      <!-- shot: settings-prompt-skill 仍缺:INT 那张是改口前的卡(还有技能键 ⌃⌥P 和预览卡说明),等 809fdda7 之后重出。预览卡已经没有了,不再要图。 -->
+      <figure class="py-shot"><p><kbd>设置</kbd> → <kbd>整理</kbd> → <kbd>提示词技能</kbd></p><figcaption>默认关。打开前有一页确认。</figcaption></figure>
     </div>
   </section>
 
@@ -246,7 +247,7 @@
       <li>候选窗外观:字号三档、强调色五种、横排或竖排。深浅跟随系统。</li>
       <li>云候选(预览):按 ⌥↩ 让云端猜整句。默认关,要登录。</li>
       <li>输入法里按 ⌥⇧Space,让 AI 整理这一句。</li>
-      <li>提示词技能:按 ⌃⌥P 说需求,落下结构化的提示词。默认关。</li>
+      <li>提示词技能:在 Cursor、Claude 桌面版、ChatGPT 里按听写键说需求,自动整理成提示词直接落字。默认关。</li>
       <li>按场景整理:按落进的 App 调整理口吻。默认开。</li>
       <li>设置页新增「输入法」页签,输入法的设置都在这一页。</li>
       <li>历史里每条都有「听错了」,改完按 ⌘↩ 保存。</li>

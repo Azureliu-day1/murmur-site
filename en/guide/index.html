@@ -195,21 +195,23 @@
     </div>
   </section>
 
-  <!-- Facts: PromptSkillSettings.swift:10-61 · PromptSkills.swift:41-42 · name field of Resources/prompt-skills/*.json -->
+  <!-- Facts: murmur-ime 809fdda7 (2026-10-01, separate skill key removed): PromptSkillSettings.swift PromptSkillAuto (15-unit threshold) · PromptSkillCopy.toggleLabel / scopeLine / disclosure / howTo / firstHint · PromptSkills.swift:41-42 · name field of Resources/prompt-skills/*.json.
+       ⛔ No more ⌃⌥P skill key and no preview card (Wei 2026-10-01: "just do it"). -->
   <section class="g-sec" id="prompt-skills">
     <h2>Prompt skills</h2>
     <div class="g-body">
       <div>
-        <div class="g-row"><span class="k">What it is</span><div>In AI coding and AI chat tools, what you say becomes a structured prompt before it lands.</div></div>
+        <div class="g-row"><span class="k">What it is</span><div>In AI coding and AI chat tools, the request you say is turned into a structured prompt and lands directly.</div></div>
         <div class="g-row"><span class="k">How to use</span><div>
-          <p>Press <kbd>⌃⌥P</kbd> and say the request. The result shows up on a preview card and lands only when you click Insert. You can switch skills on the card, or go back to plain cleanup.</p>
+          <p>In Cursor, Claude desktop or ChatGPT, press the dictation key as usual and say the request. The prompt lands at your cursor. There is no extra key.</p>
+          <p>Short sentences and chat land as usual. Sentences under 15 characters or words skip the skill. When no skill fits, the plain cleanup lands.</p>
           <p>Cursor gets the four coding skills: Build a feature, Fix a bug, Change or refactor code, Explain code. Claude desktop and ChatGPT / Codex also get the three chat skills: Research, Write, Decide. Not in terminals.</p>
         </div></div>
-        <div class="g-row"><span class="k">Where</span><div><b>Off by default.</b> Turn it on in Settings → Cleanup → Prompt skills. A confirmation page comes first. The skill key can be changed on the same card.</div></div>
-        <p class="g-note">Once it is on, the transcript of that sentence is sent one extra time to the same model vendor that cleanup uses. No new recipient, no audio. When cleanup is set to leave text alone, the skill sends nothing either.</p>
+        <div class="g-row"><span class="k">Where</span><div><b>Off by default.</b> Turn it on in Settings → Cleanup → Prompt skills. A confirmation page comes first. Each of the seven skills has its own switch on the same card. While it is off, the recording bar tells you once where to turn it on, the first time you say a long enough sentence in one of these apps.</div></div>
+        <p class="g-note">Once it is on, the transcript of a long enough sentence is sent one extra time to the same model vendor that cleanup uses. No new recipient, no audio, and which window you are in is not sent. When cleanup is set to leave text alone, the skill sends nothing either.</p>
       </div>
-      <!-- shot: prompt-skill-card (preview card, en light) · settings-prompt-skill (settings card) -->
-      <figure class="py-shot"><p><kbd>Settings</kbd> → <kbd>Cleanup</kbd> → <kbd>Prompt skills</kbd></p><figcaption>The skill key is ⌃⌥P by default.</figcaption></figure>
+      <!-- shot: settings-prompt-skill still missing: the INT render is the card from before the change (it still shows the ⌃⌥P skill key). Re-render after 809fdda7. The preview card is gone, so no shot is needed for it. -->
+      <figure class="py-shot"><p><kbd>Settings</kbd> → <kbd>Cleanup</kbd> → <kbd>Prompt skills</kbd></p><figcaption>Off by default. A confirmation page comes first.</figcaption></figure>
     </div>
   </section>
 
@@ -244,7 +246,7 @@
       <li>Candidate window: three sizes, five accent colours, horizontal or vertical. Light and dark follow the system.</li>
       <li>Cloud candidates (preview): press ⌥↩ and the cloud suggests a whole sentence. Off by default, sign-in required.</li>
       <li>In the input method, ⌥⇧Space asks AI to polish the current sentence.</li>
-      <li>Prompt skills: press ⌃⌥P, say the request, and a structured prompt lands. Off by default.</li>
+      <li>Prompt skills: in Cursor, Claude desktop or ChatGPT, press the dictation key and say the request. It is turned into a prompt and lands directly. Off by default.</li>
       <li>Cleanup by scene: the cleanup tone follows the app you dictate into. On by default.</li>
       <li>Settings has a new Input Method tab with all the input method settings.</li>
       <li>Every history entry has a Fix button. Fix it and press ⌘↩ to save.</li>
