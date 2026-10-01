@@ -6,7 +6,7 @@
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Guide · Murmur</title>
-<meta name="description" content="How to use Murmur 0.53: installing the Pinyin input method, prompt skills, cloud candidates, double pinyin and fuzzy pinyin, shortcut phrases, and the change log.">
+<meta name="description" content="How to use Murmur 0.53: the Pinyin input method and its settings, prompt skills, cleanup by scene, and the change log.">
 <link rel="alternate" hreflang="en" href="../../en/guide/index.html">
 <link rel="alternate" hreflang="zh-Hans" href="../../guide/index.html">
 <link rel="icon" href="../../favicon.svg" type="image/svg+xml">
@@ -38,7 +38,9 @@
   <p class="eyebrow">Guide</p>
   <h1>How to use Murmur</h1>
   <p class="sub">Each feature gets three lines: what it is, how to use it, where to turn it on. Written for Murmur 0.53.</p>
-  <p class="g-toc"><a href="#install">Install the Pinyin input method</a><span class="sep">·</span><a href="#prompt-skills">Prompt skills</a><span class="sep">·</span><a href="#cloud">Cloud candidates</a><span class="sep">·</span><a href="#fuzzy">Double pinyin and fuzzy pinyin</a><span class="sep">·</span><a href="#phrases">Shortcut phrases</a><span class="sep">·</span><a href="#changes">Change log</a></p>
+  <p class="g-toc"><b>Typing</b><a href="#install">Install the input method</a><span class="sep">·</span><a href="#typing">Typing Pinyin</a><span class="sep">·</span><a href="#fuzzy">Double and fuzzy pinyin</a><span class="sep">·</span><a href="#smart">Smart punctuation</a><span class="sep">·</span><a href="#look">Candidate window</a><span class="sep">·</span><a href="#cloud">Cloud candidates</a><span class="sep">·</span><a href="#phrases">Shortcut phrases</a><span class="sep">·</span><a href="#words">Words you type</a></p>
+  <p class="g-toc"><b>Speaking</b><a href="#prompt-skills">Prompt skills</a><span class="sep">·</span><a href="#scene">Cleanup by scene</a></p>
+  <p class="g-toc"><b>0.53</b><a href="#changes">Change log</a></p>
 </header>
 
 <main class="wrap">
@@ -46,7 +48,7 @@
   <!-- Facts: FEATURE-FACTS §2. Whether a log-out is needed after install is UNKNOWN (code says yes,
        ime-mac baseline :339 says it takes effect at once), so both cases are written. -->
   <section class="g-sec" id="install">
-    <h2>Install the Pinyin input method</h2>
+    <h2>Install the input method</h2>
     <div class="g-body">
       <div>
         <div class="g-row"><span class="k">What it is</span><div>A Pinyin input method for the Mac that comes with Murmur. It shares one vocabulary with dictation. Requires macOS 26 or later.</div></div>
@@ -60,6 +62,136 @@
       </div>
       <figure class="py-shot"><img src="../../shots/en/nihao.png" alt="Murmur candidate bar: ni hao, candidates 1 你好 2 尼好 3 拟好 4 泥好 5 妮好" width="925" height="184" loading="lazy"><figcaption>After switching to Murmur, typing ni hao shows this candidate bar.</figcaption></figure>
       <!-- shot: settings-ime-install (first card of the Input Method tab, en light) -->
+    </div>
+  </section>
+
+  <!-- Facts: the former home-page "How to type" section (BASELINE-site-ime F5 / F7 / F9 / F10 / F6 / F11), moved here 2026-10-01 -->
+  <section class="g-sec" id="typing">
+    <h2>Typing Pinyin</h2>
+    <div class="g-body">
+      <div>
+        <div class="g-row"><span class="k">What it is</span><div>The basic keys of Murmur Pinyin.</div></div>
+        <div class="g-row"><span class="k">How to use</span><div>
+          <div class="py-step"><b>01</b><div>Type Pinyin. One row of 5 candidates. Press 1–5 to pick one. Space takes the first.</div></div>
+          <div class="py-step"><b>02</b><div><b>Wrong word?</b> Within 1.5 seconds, press Delete once. The whole word turns back into Pinyin. A second Delete deletes Pinyin as usual.</div></div>
+          <div class="py-step"><b>03</b><div>Tap Shift once for English, again for Chinese. Caps Lock on also means English.</div></div>
+          <div class="py-step"><b>04</b><div>Mix languages: <span class="mono">okl</span> gives OK了. <span class="mono">zhegeapphaoyong</span> gives 这个app好用.</div></div>
+          <div class="py-step"><b>05</b><div><kbd>-</kbd> and <kbd>=</kbd> turn pages. A punctuation key commits the highlighted candidate plus the mark. Return commits the raw Pinyin.</div></div>
+        </div></div>
+        <div class="g-row"><span class="k">Where</span><div>It works as soon as you switch to Murmur. There is no switch for it. Delete to undo does not work in Chromium-based apps.</div></div>
+      </div>
+      <figure class="py-shot"><img src="../../shots/en/nextwords-personal.png" alt="Murmur next-word row: Next 1 天气 2 不错 3 很好, note Space takes 1 · Esc hides" width="982" height="184" loading="lazy"><figcaption>After a word commits: a number picks the Nth suggestion. Space takes the first one only when it comes from a word you typed. Esc hides the row.</figcaption></figure>
+    </div>
+  </section>
+
+  <!-- Facts: IMEFuzzySection.swift:29-37 · RimeEngineDoublePinyin.swift:40-46 · RimeEngineFuzzy.swift:55-79 -->
+  <section class="g-sec" id="fuzzy">
+    <h2>Double and fuzzy pinyin</h2>
+    <div class="g-body">
+      <div>
+        <div class="g-row"><span class="k">What it is</span><div>Double pinyin: two keys per character, one for the initial and one for the final. Fuzzy pinyin: a pair of sounds you mix up, such as z and zh, works both ways.</div></div>
+        <div class="g-row"><span class="k">How to use</span><div>
+          <p>Pick a double pinyin layout and type as usual. The candidate bar still shows full pinyin. After switching, the input method takes a few seconds to get ready.</p>
+          <p>With z ⇄ zh on, typing <span class="mono">zongguo</span> also gives 中国. Every extra pair makes whole sentences slightly less accurate, so tick only the ones you really mix up.</p>
+        </div></div>
+        <div class="g-row"><span class="k">Where</span><div>Settings → Input Method → Pinyin style and fuzzy pinyin. Full Pinyin is the default; Flypy and Ziranma double pinyin are the other two. Fuzzy pinyin has nine pairs, all off by default.</div></div>
+      </div>
+      <!-- shot: settings-ime-fuzzy (Pinyin style and fuzzy pinyin card, en light) -->
+      <figure class="py-shot"><p><kbd>Settings</kbd> → <kbd>Input Method</kbd> → <kbd>Pinyin style and fuzzy pinyin</kbd></p><figcaption>Full Pinyin, Flypy or Ziranma.</figcaption></figure>
+    </div>
+  </section>
+
+  <!-- Facts: IMESmartInputSection.swift:31-77 · SmartPunctuation.swift:46-58 (defaults as read there) -->
+  <section class="g-sec" id="smart">
+    <h2>Smart punctuation and URLs</h2>
+    <div class="g-body">
+      <div>
+        <div class="g-row"><span class="k">What it is</span><div>Punctuation rules in the input method, plus URL and email pass-through.</div></div>
+        <div class="g-row"><span class="k">How to use</span><div>
+          <div class="py-step"><b>01</b><div>Full-width punctuation in Chinese. After digits, . and : stay half-width, so 3.14 and 10:30 need no switch to English.</div></div>
+          <div class="py-step"><b>02</b><div>Two periods in a row make an ellipsis. Underscore types a dash.</div></div>
+          <div class="py-step"><b>03</b><div>When you type www., http or an email address, that stretch goes through as English. No candidates, nothing learned.</div></div>
+          <div class="py-step"><b>04</b><div>With the emoji panel on, : followed by pinyin gives emoji, and ; followed by pinyin gives symbols.</div></div>
+        </div></div>
+        <div class="g-row"><span class="k">Where</span><div>Settings → Input Method → Smart input. Each rule has its own switch. <b>Off by default:</b> pairing brackets and quotes, a space between Chinese and English, and the emoji panel. The rest are on.</div></div>
+      </div>
+      <!-- shot: settings-ime-smart (Smart input card, en light) -->
+      <figure class="py-shot"><p><kbd>Settings</kbd> → <kbd>Input Method</kbd> → <kbd>Smart input</kbd></p><figcaption>Each rule has its own switch.</figcaption></figure>
+    </div>
+  </section>
+
+  <!-- Facts: IMELookSection.swift:19-24, 37-56, 91 · IMEStyle.swift:13 (light and dark) -->
+  <section class="g-sec" id="look">
+    <h2>Candidate window</h2>
+    <div class="g-body">
+      <div>
+        <div class="g-row"><span class="k">What it is</span><div>The size, accent colour and direction of the candidate window.</div></div>
+        <div class="g-row"><span class="k">How to use</span><div>
+          <p>Three sizes: Small, Standard, Large. Five accent colours: Coral, Blue, Green, Purple, Graphite.</p>
+          <p>Horizontal or vertical. In the vertical layout each candidate gets its own line, and long ones wrap instead of being cut off. Light and dark follow the system appearance.</p>
+        </div></div>
+        <div class="g-row"><span class="k">Where</span><div>Settings → Input Method → Candidate window. Standard, Coral and horizontal are the defaults. The card has a preview, and changes apply right away with no restart.</div></div>
+      </div>
+      <!-- shot: ime-look (three sizes / five accent colours / vertical, en light) -->
+      <figure class="py-shot"><p><kbd>Settings</kbd> → <kbd>Input Method</kbd> → <kbd>Candidate window</kbd></p><figcaption>The card has a preview.</figcaption></figure>
+    </div>
+  </section>
+
+  <!-- Facts: IMECloudSection.swift:23-40 · CloudCandidates.swift:67.
+       ⛔ The .py-quote text is the English disclosure string from IMECloudSection.swift, word for word. -->
+  <section class="g-sec" id="cloud">
+    <h2>Cloud candidates</h2>
+    <div class="g-body">
+      <div>
+        <div class="g-row"><span class="k">What it is</span><div>For long input, the cloud suggests one whole-sentence candidate. It is a preview for now.</div></div>
+        <div class="g-row"><span class="k">How to use</span><div>
+          <p>There is a fixed cloud slot at the end of the candidate bar. A request is sent only when you click it or press <kbd>⌥↩</kbd>.</p>
+          <p>The result fills the same slot. Click it or press <kbd>⌥↩</kbd> again to commit. It takes no number key and never commits by itself. It does not work in password fields or in apps on the deny list.</p>
+        </div></div>
+        <div class="g-row"><span class="k">Where</span><div><b>Off by default. Sign-in required.</b> Turn it on in Settings → Input Method → Cloud candidates (preview). A confirmation page comes first. "Request automatically when I pause" is also off by default.</div></div>
+      </div>
+      <!-- shot: ime-cloud-slot (cloud slot at the end of the candidate bar, en light) -->
+      <figure class="py-shot"><p class="py-quote">Once this is on, the pinyin you have not committed yet is sent to the Murmur server and passed on to a third-party model service to guess the whole sentence; what you are typing can be inferred from it. Text you have already committed, your personal lexicon and which app you are in are not sent. After you turn it off, no new requests are sent; what has already been sent cannot be taken back.</p><figcaption>The text next to the switch in Settings.</figcaption></figure>
+    </div>
+  </section>
+
+  <!-- Facts: PersonalLexiconSection.swift:157-170, 362-364 (input method) · DictionaryView.swift:155-160 (dictation) -->
+  <section class="g-sec" id="phrases">
+    <h2>Shortcut phrases</h2>
+    <div class="g-body">
+      <div>
+        <div class="g-row"><span class="k">What it is</span><div>The input method and dictation each keep their own list. The two lists are separate and never mix.</div></div>
+        <div class="g-row"><span class="k">How to use</span><div>
+          <p><b>When typing.</b> Write your own “code → phrase”, e.g. dz → your address. Type the code in Murmur Pinyin and the phrase is the first candidate.</p>
+          <p><b>When speaking.</b> In dictation, say the trigger phrase on its own and the whole template goes in. One extra word and it does not count as a match.</p>
+        </div></div>
+        <div class="g-row"><span class="k">Where</span><div>
+          <p>Input method: Settings → Input Method → Words I've typed (learned by the input method) → Manage shortcut phrases.</p>
+          <p>Dictation: the Dictionary page in the main window sidebar, Snippets card.</p>
+        </div></div>
+      </div>
+      <!-- shot: ime-phrases (Manage shortcut phrases sheet, en light) -->
+      <figure class="py-shot"><p><span class="mono">dz</span> → your address</p><figcaption>Input method phrases: type the code, the phrase is the first candidate.</figcaption></figure>
+    </div>
+  </section>
+
+  <!-- Facts: the former home-page "Where your words go" section (F13 / F16 / F22 / F14), moved here 2026-10-01 -->
+  <section class="g-sec" id="words">
+    <h2>Words you type</h2>
+    <div class="g-body">
+      <div>
+        <div class="g-row"><span class="k">What it is</span><div>Words the input method learns. They are stored on this Mac. On by default. Nothing typed in a password field is recorded.</div></div>
+        <div class="g-row"><span class="k">How to use</span><div>
+          <p>When you dictate, these words go with the recognition request as hints, same as the dictionary. With on-device recognition, they are not sent for dictation.</p>
+          <p>When you press ⌥⇧Space to polish a sentence, the words it touches go with the polish request, at most 500. This happens with on-device recognition too.</p>
+          <p>Words do not sync between devices in this version.</p>
+        </div></div>
+        <div class="g-row"><span class="k">Where</span><div>
+          <p>Settings → Input Method → Words I've typed (learned by the input method). Switch off "Learn the words I type" to stop learning. Switch off "Let AI use my own words" and polishing sends none.</p>
+          <p>To clear them: Settings → System → Clear data.</p>
+        </div></div>
+      </div>
+      <figure class="py-shot"><p class="mono">~/Library/Application Support/Murmur/lexicon.sqlite</p><figcaption>Words you type are stored here. See the <a href="../privacy.html">privacy page</a>.</figcaption></figure>
     </div>
   </section>
 
@@ -81,58 +213,21 @@
     </div>
   </section>
 
-  <!-- Facts: IMECloudSection.swift:23-40 · CloudCandidates.swift:67.
-       ⛔ The .py-quote text is the English disclosure string from IMECloudSection.swift, word for word. -->
-  <section class="g-sec" id="cloud">
-    <h2>Cloud candidates</h2>
+  <!-- Facts: SceneSettingsSection.swift:47-76 · AppSettings.swift:484-488 (on by default) -->
+  <section class="g-sec" id="scene">
+    <h2>Cleanup by scene</h2>
     <div class="g-body">
       <div>
-        <div class="g-row"><span class="k">What it is</span><div>For long input, the cloud suggests one whole-sentence candidate. It is a preview for now.</div></div>
+        <div class="g-row"><span class="k">What it is</span><div>The cleanup tone follows the app and field you dictate into. Email reads like email, chat stays casual, and the terminal and code editors keep their terms.</div></div>
         <div class="g-row"><span class="k">How to use</span><div>
-          <p>There is a fixed cloud slot at the end of the candidate bar. A request is sent only when you click it or press <kbd>⌥↩</kbd>.</p>
-          <p>The result fills the same slot. Click it or press <kbd>⌥↩</kbd> again to commit. It takes no number key and never commits by itself.</p>
+          <p>Dictate as usual, with no extra key. The card shows which scene the front app is recognised as, and you can set a scene for one app.</p>
+          <p>When cleanup is set to leave text alone, this does nothing.</p>
         </div></div>
-        <div class="g-row"><span class="k">Where</span><div><b>Off by default. Sign-in required.</b> Turn it on in Settings → Input Method → Cloud candidates (preview). A confirmation page comes first. "Request automatically when I pause" is also off by default.</div></div>
+        <div class="g-row"><span class="k">Where</span><div><b>On by default.</b> Settings → Cleanup → Cleanup by scene.</div></div>
+        <p class="g-note">It reads the app identifier and the field type, plus the page host name in supported browsers. The host name is not sent. The scene name goes with the cleanup request to the cleanup model.</p>
       </div>
-      <!-- shot: ime-cloud-slot (cloud slot at the end of the candidate bar, en light) -->
-      <figure class="py-shot"><p class="py-quote">Once this is on, the pinyin you have not committed yet is sent to the Murmur server and passed on to a third-party model service to guess the whole sentence; what you are typing can be inferred from it. Text you have already committed, your personal lexicon and which app you are in are not sent. After you turn it off, no new requests are sent; what has already been sent cannot be taken back.</p><figcaption>The text next to the switch in Settings.</figcaption></figure>
-    </div>
-  </section>
-
-  <!-- Facts: IMEFuzzySection.swift:29-37 · RimeEngineDoublePinyin.swift:40-46 · RimeEngineFuzzy.swift:55-79 -->
-  <section class="g-sec" id="fuzzy">
-    <h2>Double pinyin and fuzzy pinyin</h2>
-    <div class="g-body">
-      <div>
-        <div class="g-row"><span class="k">What it is</span><div>Double pinyin: two keys per character, one for the initial and one for the final. Fuzzy pinyin: a pair of sounds you mix up, such as z and zh, works both ways.</div></div>
-        <div class="g-row"><span class="k">How to use</span><div>
-          <p>Pick a double pinyin layout and type as usual. The candidate bar still shows full pinyin. After switching, the input method takes a few seconds to get ready.</p>
-          <p>With z ⇄ zh on, typing <span class="mono">zongguo</span> also gives 中国. Every extra pair makes whole sentences slightly less accurate, so tick only the ones you really mix up.</p>
-        </div></div>
-        <div class="g-row"><span class="k">Where</span><div>Settings → Input Method → Pinyin style and fuzzy pinyin. Full Pinyin is the default; Flypy and Ziranma double pinyin are the other two. Fuzzy pinyin has nine pairs, all off by default.</div></div>
-      </div>
-      <!-- shot: settings-ime-fuzzy (Pinyin style and fuzzy pinyin card, en light) -->
-      <figure class="py-shot"><p><kbd>Settings</kbd> → <kbd>Input Method</kbd> → <kbd>Pinyin style and fuzzy pinyin</kbd></p><figcaption>Full Pinyin, Flypy or Ziranma.</figcaption></figure>
-    </div>
-  </section>
-
-  <!-- Facts: PersonalLexiconSection.swift:157-170, 362-364 (input method) · DictionaryView.swift:155-160 (dictation) -->
-  <section class="g-sec" id="phrases">
-    <h2>Shortcut phrases</h2>
-    <div class="g-body">
-      <div>
-        <div class="g-row"><span class="k">What it is</span><div>The input method and dictation each keep their own list. The two lists are separate and never mix.</div></div>
-        <div class="g-row"><span class="k">How to use</span><div>
-          <p><b>When typing.</b> Write your own “code → phrase”, e.g. dz → your address. Type the code in Murmur Pinyin and the phrase is the first candidate.</p>
-          <p><b>When speaking.</b> In dictation, say the trigger phrase on its own and the whole template goes in. One extra word and it does not count as a match.</p>
-        </div></div>
-        <div class="g-row"><span class="k">Where</span><div>
-          <p>Input method: Settings → Input Method → Words I've typed (learned by the input method) → Manage shortcut phrases.</p>
-          <p>Dictation: the Dictionary page in the main window sidebar, Snippets card.</p>
-        </div></div>
-      </div>
-      <!-- shot: ime-phrases (Manage shortcut phrases sheet, en light) -->
-      <figure class="py-shot"><p><span class="mono">dz</span> → your address</p><figcaption>Input method phrases: type the code, the phrase is the first candidate.</figcaption></figure>
+      <!-- shot: settings-scene-on (Cleanup by scene card, en light) -->
+      <figure class="py-shot"><p><kbd>Settings</kbd> → <kbd>Cleanup</kbd> → <kbd>Cleanup by scene</kbd></p><figcaption>The card shows which scene the front app is recognised as.</figcaption></figure>
     </div>
   </section>
 

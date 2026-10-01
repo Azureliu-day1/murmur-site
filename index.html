@@ -597,7 +597,7 @@ body.is-sandbox .sandbox { display: inline-block; }
   </div>
   <!-- ⭐ 这一版新增:一行文字链,跳到下面对应的板块。样式在 pinyin.css(.whatsnew)。
        只列 0.53 才有的功能;全部改动在 guide/#changes。 -->
-  <p class="whatsnew reveal"><b>0.53 新增</b><a href="#pinyin">拼音输入法</a><span class="sep">·</span><a href="#py-fuzzy">双拼与模糊音</a><span class="sep">·</span><a href="#py-smart">智能标点</a><span class="sep">·</span><a href="#py-cloud">云候选</a><span class="sep">·</span><a href="#vibe-skills">提示词技能</a><span class="sep">·</span><a href="#vibe-scene">按场景整理</a></p>
+  <p class="whatsnew reveal"><b>0.53 新增</b><a href="#pinyin">拼音输入法</a><span class="sep">·</span><a href="guide/index.html#fuzzy">双拼与模糊音</a><span class="sep">·</span><a href="guide/index.html#smart">智能标点</a><span class="sep">·</span><a href="guide/index.html#cloud">云候选</a><span class="sep">·</span><a href="#vibe-skills">提示词技能</a><span class="sep">·</span><a href="#vibe-scene">按场景整理</a></p>
 
   <div class="stage reveal" id="demo">
     <div class="fake-input"><span class="ph">光标在这里</span><span class="out"></span><span class="cursor"></span></div>
@@ -718,133 +718,27 @@ body.is-sandbox .sandbox { display: inline-block; }
   </div>
 </section>
 
-<!-- ── 拼音输入法:一整块。样式在 pinyin.css(契约 A),事实来自 docs/BASELINE-site-ime.md F 表 ── -->
+<!-- ── 拼音输入法:只讲差异化(Wei 2026-10-01),细节在 /guide/。样式在 pinyin.css ── -->
 <section class="wrap" id="pinyin">
   <div class="eyebrow reveal">Pinyin · 拼音输入法</div>
   <h2 class="reveal">拼音输入法,<br>随 Murmur 一起装。</h2>
-  <!-- F15 / F1 / F17 -->
-  <p class="sub reveal">Murmur 自带一个 Mac 拼音输入法。它和听写用同一套词。在设置里一键装,不用另外下载。要 macOS 26 以上。</p>
-
-  <!-- F15 / F13 / F16 / F5 / F19 / F11 -->
-  <h3 class="reveal">和别的拼音差在哪</h3>
+  <!-- 2026-10-01 Wei:首页这一节只讲差异化,细节全在 /guide/。四条各一句,≤ 30 字。
+       事实:F15 / F13(同一套词)· F6(退格退回)· PersonalLexiconSection.swift:82 + AIActionCard(⌥⇧Space)·
+       IMECloudSection.swift / CloudCandidates.swift:67(云候选,默认关) -->
+  <p class="sub reveal">Murmur 自带一个 Mac 拼音输入法。要 macOS 26 以上。</p>
   <div class="py-grid reveal">
     <div>
-      <div class="py-step"><b>01</b><div><strong>说话和打字同一套词。</strong>听写词典里登记的名字,打字时在候选里。拼音打过的词,说话时当提示词。</div></div>
-      <div class="py-step"><b>02</b><div><strong>打过的词,听写认得。</strong>它们存在这台 Mac 上。听写时当提示词,随识别请求发给识别服务商。选本机识别就不出机。</div></div>
-      <div class="py-step"><b>03</b><div><strong>候选窗默认一行,联想跟着你的词。</strong>一页 5 个候选。联想最多 5 个,只在你打过的词后面出现。</div></div>
+      <div class="py-step"><b>01</b><div><strong>说话和打字同一套词。</strong>听写词典里的名字打字时在候选里,打过的词说话时也认得。</div></div>
+      <div class="py-step"><b>02</b><div><strong>选错了,按退格。</strong>上屏后 1.5 秒内按一下退格,整个词退回拼音重选。</div></div>
+      <div class="py-step"><b>03</b><div><strong>⌥⇧Space 让 AI 整理这一句。</strong>拼音还没上屏时按一下,AI 补标点、理语序,结果先出在卡上。</div></div>
+      <div class="py-step"><b>04</b><div><strong>云候选,默认关。</strong>按 ⌥↩ 让云端猜一个整句候选。要登录,打开前会写明发什么。</div></div>
     </div>
-    <figure class="py-shot"><img src="shots/zh/nihao.png" alt="Murmur 候选窗:ni hao,候选 1 你好 2 尼好 3 拟好 4 泥好 5 妮好" width="1120" height="72"><figcaption>候选窗,输入法自己渲染的图。</figcaption></figure>
+    <figure class="py-shot"><img src="shots/zh/nihao.png" alt="Murmur 候选窗:ni hao,候选 1 你好 2 尼好 3 拟好 4 泥好 5 妮好" width="925" height="184"><figcaption>候选窗,输入法自己渲染的图。</figcaption></figure>
   </div>
-
-  <!-- F1 / F2 / F3 / F4 -->
-  <h3 class="reveal">怎么装</h3>
-  <div class="py-grid flip reveal">
-    <figure class="py-shot"><p><kbd>设置</kbd> → <kbd>输入法</kbd> →「输入法」卡 → <kbd>安装</kbd></p><figcaption>装到资源库的 Input Methods,不用密码。</figcaption></figure>
-    <div>
-      <div class="py-step"><b>01</b><div>打开 设置 → 输入法,第一张卡是「输入法」,点「安装」。</div></div>
-      <div class="py-step"><b>02</b><div>看菜单栏的输入法菜单。已经列出 Murmur 就直接用;没有就注销一次再登录。</div></div>
-      <div class="py-step"><b>03</b><div>按 <kbd>⌃Space</kbd>,或在菜单栏的输入法菜单里选 Murmur。</div></div>
-      <div class="py-step"><b>04</b><div>更新、卸载在同一张卡。卸载保留打过的词、词典和设置。</div></div>
-    </div>
-  </div>
-
-  <!-- F5 / F7 / F9 / F10 / F6 / F11 -->
-  <h3 class="reveal">怎么用</h3>
-  <div class="py-grid reveal">
-    <div>
-      <div class="py-step"><b>01</b><div>敲拼音,一行 5 个候选。按 1–5 选,空格上第一个。</div></div>
-      <div class="py-step"><b>02</b><div><strong>选错了。</strong>1.5 秒内按一下退格,整个词退回拼音,重选。第二下退格照常删拼音。</div></div>
-      <div class="py-step"><b>03</b><div>单按 Shift 切英文,再按一次回中文。Caps Lock 亮着也是英文。</div></div>
-      <div class="py-step"><b>04</b><div>中英夹着打:<span class="mono">okl</span> 出「OK了」,<span class="mono">zhegeapphaoyong</span> 出「这个app好用」。</div></div>
-      <div class="py-step"><b>05</b><div><kbd>-</kbd> 和 <kbd>=</kbd> 翻页。标点键把高亮候选连标点一起上屏。回车落下原样拼音。</div></div>
-    </div>
-    <figure class="py-shot"><img src="shots/zh/nextwords-personal.png" alt="Murmur 联想行:接写 1 天气 2 不错 3 很好,尾注 空格接1 · Esc收起" width="1120" height="72"><figcaption>上屏后的联想行。数字接第几个;空格接第一个,只在它来自你打过的词时;Esc 收起。</figcaption></figure>
-  </div>
-
-  <!-- 0.53 新增四小节(2026-10-01)。事实:murmur-ime docs/FEATURE-FACTS-0.53.md §3;
-       位置按 0.53 设置页的「输入法」页签(基调 BASELINE-onboarding-site v0.2)。 -->
-  <!-- IMEFuzzySection.swift:29-37 · RimeEngineDoublePinyin.swift:32 · RimeEngineFuzzy.swift:55-79 -->
-  <h3 class="reveal" id="py-fuzzy">双拼与模糊音</h3>
-  <div class="py-grid flip reveal">
-    <!-- shot: settings-ime-fuzzy(拼音方式与模糊音卡,zh 浅 / 深) -->
-    <figure class="py-shot"><p><kbd>设置</kbd> → <kbd>输入法</kbd> → <kbd>拼音方式与模糊音</kbd></p><figcaption>拼音方式三选一,模糊音逐对勾选。</figcaption></figure>
-    <div>
-      <div class="py-step"><b>01</b><div><strong>双拼。</strong>每个字敲两个键,声母一个,韵母一个。候选条上显示的仍是全拼。</div></div>
-      <div class="py-step"><b>02</b><div>可选小鹤双拼或自然码双拼,默认是全拼。切换后输入法要准备几秒。</div></div>
-      <div class="py-step"><b>03</b><div><strong>模糊音。</strong>勾上的一对两头通用。勾了 z ⇄ zh,打 <span class="mono">zongguo</span> 也出「中国」。</div></div>
-      <div class="py-step"><b>04</b><div>一共 9 对,默认全关。每多勾一对,整句会略微没那么准。</div></div>
-    </div>
-  </div>
-
-  <!-- IMESmartInputSection.swift:31-77 · SmartPunctuation.swift:46-58(默认值以读取处为准) -->
-  <h3 class="reveal" id="py-smart">智能标点与网址直通</h3>
-  <div class="py-grid reveal">
-    <div>
-      <div class="py-step"><b>01</b><div><strong>标点。</strong>中文时标点用全角。数字后的 . 和 : 用半角,打 3.14、10:30 不用切英文。</div></div>
-      <div class="py-step"><b>02</b><div>句号连按两次变成省略号。按 _ 出破折号。这几条默认开。</div></div>
-      <div class="py-step"><b>03</b><div>括号引号自动配对、中英文之间自动加空格,这两条默认关。</div></div>
-      <div class="py-step"><b>04</b><div><strong>网址与邮箱直通。</strong>打出 www.、http 或邮箱地址时,这一段按英文走,不出候选,不学词。默认开。</div></div>
-      <div class="py-step"><b>05</b><div><strong>Emoji 面板。</strong>默认关,在同一张卡打开。开了之后,按 : 接拼音出 emoji,按 ; 接拼音出符号。</div></div>
-    </div>
-    <!-- shot: settings-ime-smart(智能输入卡,zh 浅 / 深) -->
-    <figure class="py-shot"><p><kbd>设置</kbd> → <kbd>输入法</kbd> → <kbd>智能输入</kbd></p><figcaption>每条规则单独开关。</figcaption></figure>
-  </div>
-
-  <!-- IMELookSection.swift:19-24, 37-56, 91 -->
-  <h3 class="reveal" id="py-look">候选窗外观</h3>
-  <div class="py-grid flip reveal">
-    <!-- shot: ime-look(候选窗三档字号 / 五个强调色 / 竖排,zh 浅 / 深) -->
-    <figure class="py-shot"><p><kbd>设置</kbd> → <kbd>输入法</kbd> → <kbd>候选窗外观</kbd></p><figcaption>卡上有预览,选了马上生效,不用重启输入法。</figcaption></figure>
-    <div>
-      <div class="py-step"><b>01</b><div><strong>字号三档。</strong>小、标准、大,默认标准。</div></div>
-      <div class="py-step"><b>02</b><div><strong>强调色五种。</strong>珊瑚、蓝、绿、紫、石墨,默认珊瑚。</div></div>
-      <div class="py-step"><b>03</b><div><strong>横排或竖排。</strong>默认横排。竖排时每行一个候选,长候选折行,不截断。</div></div>
-      <div class="py-step"><b>04</b><div>深浅跟随系统外观。</div></div>
-    </div>
-  </div>
-
-  <!-- IMECloudSection.swift:23-40 · CloudCandidates.swift:67(⌥↩)。
-       ⛔ 下面图框里那段是 IMECloudSection.swift 的 disclosure 中文原文(Wei 2026-09-30 定稿),一字不改。 -->
-  <h3 class="reveal" id="py-cloud">云候选</h3>
-  <div class="py-grid reveal">
-    <div>
-      <div class="py-step"><b>01</b><div><strong>默认关。</strong>在 设置 → 输入法 →「云候选(预览)」卡打开,打开前有一页确认。要登录。</div></div>
-      <div class="py-step"><b>02</b><div><strong>怎么用。</strong>候选条末尾有一个固定的「云」位。点它或按 <kbd>⌥↩</kbd>,才会发请求。</div></div>
-      <div class="py-step"><b>03</b><div>结果填在同一个位置。再点一次或再按一次 <kbd>⌥↩</kbd> 才上屏。它不占数字键,也不会自己上屏。</div></div>
-      <div class="py-step"><b>04</b><div>「停顿时自动请求」也默认关。密码框和拒绝名单里的 App 里不工作。</div></div>
-    </div>
-    <!-- shot: ime-cloud-slot(候选条末尾的云位,zh 浅 / 深) -->
-    <figure class="py-shot"><p class="py-quote">开启后,尚未上屏的拼音会发到 Murmur 服务器,并转给第三方模型服务来猜整句;据此可以推断你正在输入的内容。不发已上屏的文字、不发你打过的词、不发你在哪个 App。关掉后不再发新的请求;已经发出的收不回。</p><figcaption>设置里开关旁的说明原文。</figcaption></figure>
-  </div>
-
-  <!-- F13 / F16 / F22 / F14 -->
-  <h3 class="reveal">你的词去哪了</h3>
-  <div class="py-grid flip reveal">
-    <figure class="py-shot"><p class="mono">~/Library/Application Support/Murmur/lexicon.sqlite</p><figcaption>打过的词存在这里。</figcaption></figure>
-    <div>
-      <div class="py-step"><b>01</b><div>存在这台 Mac 上,默认开。密码框里的字一律不记。</div></div>
-      <div class="py-step"><b>02</b><div>听写时,这些词当提示词随识别请求发给识别服务商,和词典一样,<a href="privacy.html">隐私页</a>有写。选本机识别就不出机。</div></div>
-      <div class="py-step"><b>03</b><div><strong>AI 整理时也会带上。</strong>按 ⌥⇧Space 让 AI 整理这句时,你的词随整理请求出机。只带与这句沾边的,取自词典登记的词和输入法学到的词,最多 500 个。选本机识别也一样。关:设置 → 输入法 →「我打过的词(输入法学的)」卡,关「允许 AI 参考我的用词」。</div></div>
-      <div class="py-step"><b>04</b><div>不想让它学:设置 → 输入法 →「我打过的词(输入法学的)」卡,关掉「学我平时打的字」。</div></div>
-      <div class="py-step"><b>05</b><div>清掉:设置 → 系统 →「清除数据…」。</div></div>
-      <div class="py-step"><b>06</b><div>第一版不跨设备。</div></div>
-    </div>
-  </div>
-
-  <!-- F18 / F7 / F15 / F11 / F13 / F19 -->
-  <h3 class="reveal">比什么,不比什么</h3>
-  <div class="py-compare reveal">
-    <div class="h">项</div><div class="h">有没有</div><div class="h">一句说明</div>
-    <div class="k">口语首选命中</div><div><span class="yes">测了</span></div><div>我们自己的 125 句表外口语,首选 80.0%。装上语言模型后 89.6%。</div>
-    <div class="k">退格退回拼音</div><div>有</div><div>上屏后 1.5 秒内按一下。</div>
-    <div class="k">同一套词</div><div>有</div><div>听写和打字双向共用。</div>
-    <div class="k">联想</div><div>有</div><div>只在你打过的词后面出现,最多 5 个。</div>
-    <div class="k">和系统拼音比准确率</div><div>没测</div><div>不写没测过的数。</div>
-    <div class="k">跨设备同步</div><div>没有</div><div>第一版不跨设备。</div>
-    <!-- IMEStyle.swift:13(2026-09-27 起深浅两套)。旧口径「只有深色」已失效 -->
-    <div class="k">浅色候选窗</div><div>有</div><div>深浅跟随系统外观。</div>
-  </div>
-  <p class="py-note reveal">数字来自我们自己的评测集,不是第三方。</p>
+  <!-- 口语首选命中:只留这一句(带口径)。F18 -->
+  <p class="py-note reveal">口语首选命中:我们自己的 125 句表外口语,首选 80.0%,装上语言模型后 89.6%。</p>
+  <p class="py-note reveal">⌥⇧Space 整理时会带上与这句沾边的用词。云候选会发出还没上屏的拼音。细节见<a href="guide/index.html#words">使用指南</a>。</p>
+  <p class="py-install reveal"><b>装:</b>设置 → 输入法 → 安装。怎么切换、每个功能怎么用,见<a href="guide/index.html">使用指南</a>。</p>
   <div class="py-cta reveal">
     <a class="btn btn-primary" href="#download">下载 macOS 版</a>
     <a class="btn btn-quiet" href="demo/index.html">在浏览器里试打</a>
@@ -860,45 +754,16 @@ body.is-sandbox .sandbox { display: inline-block; }
     「把这个 function 改成 async,再加个 retry」。
     再按一下,这句话就出现在提示符后面。
     Cursor、Codex 的输入框里也一样。
-    Murmur 是系统级听写,不需要插件,也不用配置。
   </p>
+  <!-- 2026-10-01 Wei:只留差异化,细节进 /guide/#prompt-skills 与 #scene。
+       事实:PromptSkillSettings.swift(⌃⌥P,默认关;终端里不开)· SceneSettingsSection.swift:56(术语原样) -->
   <div class="detail-list reveal">
-    <div><strong>中英夹着说。</strong>变量名、库名、报错保留英文,中间的中文照常落下。</div>
-    <div><strong>听错的库名改一次。</strong>把听错的库名或 API 名改对,它会进词典,下次直接听对。</div>
-    <div><strong>常用 prompt 存成快捷短语。</strong>说触发词,落下整段模板。每天要交代的规矩不用再敲。</div>
-    <div><strong>查 API 名字不用切窗口。</strong>开启随心问后,按 fn 说出问题,答案落在光标处。</div>
-    <div><strong>选中一段代码,说怎么改。</strong>按右 ⌃ 说出改法,改好的代码落回原处。</div>
-    <div><strong>在代码编辑器里不改标识符。</strong>它认得出前台是编辑器,落字时换用另一套规则。</div>
+    <div id="vibe-skills"><strong>按 ⌃⌥P,落下的是提示词。</strong>在 Cursor、Claude 桌面版、ChatGPT 里说需求,落下结构清楚的提示词。默认关。</div>
+    <div id="vibe-scene"><strong>术语原样落下。</strong>在终端和编辑器里,变量名、库名、报错保留英文,中间的中文照常落下。</div>
+    <div><strong>听错的库名改一次。</strong>改对后它进词典,下次直接听对。</div>
+    <div><strong>选中代码,说怎么改。</strong>按右 ⌃ 说出改法,改好的代码落回原处。</div>
   </div>
-
-  <!-- 0.53 新增(2026-10-01)。事实:PromptSkillSettings.swift:10-61 · PromptSkills.swift:41-42 ·
-       Resources/prompt-skills/*.json 的 name · PromptSkillCopy.howTo / disclosure -->
-  <h3 class="reveal" id="vibe-skills">提示词技能</h3>
-  <div class="py-grid reveal">
-    <div>
-      <div class="py-step"><b>01</b><div><strong>按 ⌃⌥P 说需求。</strong>落下的是整理成结构的提示词,不是原话。</div></div>
-      <div class="py-step"><b>02</b><div>结果先出在预览卡上,点「确认落字」才落字。卡上可以换技能,也可以退回普通整理。</div></div>
-      <div class="py-step"><b>03</b><div><strong>七个技能。</strong>编程四个:写新功能、修 bug、改 / 重构代码、解释代码。聊天三个:调研、帮我写、帮我做决定。</div></div>
-      <div class="py-step"><b>04</b><div>Cursor 里用编程四个。Claude 桌面版、ChatGPT / Codex 里七个都能用。终端里不开。</div></div>
-      <div class="py-step"><b>05</b><div><strong>默认关。</strong>在 设置 → 整理 →「提示词技能」打开,打开前有一页确认。</div></div>
-      <div class="py-step"><b>06</b><div>开启后,这一句的转写文字会多发一次给整理用的同一家模型厂商。不新增接收方,不发录音。</div></div>
-    </div>
-    <!-- shot: prompt-skill-card(预览卡)/ settings-prompt-skill(设置卡),zh 浅 / 深 -->
-    <figure class="py-shot"><p><kbd>设置</kbd> → <kbd>整理</kbd> → <kbd>提示词技能</kbd></p><figcaption>技能键默认 ⌃⌥P,在同一张卡上可以换。</figcaption></figure>
-  </div>
-
-  <!-- SceneSettingsSection.swift:47-76 · AppSettings.swift:484-488(默认开) -->
-  <h3 class="reveal" id="vibe-scene">按场景整理</h3>
-  <div class="py-grid flip reveal">
-    <!-- shot: settings-scene-on(按场景整理卡,zh 浅 / 深) -->
-    <figure class="py-shot"><p><kbd>设置</kbd> → <kbd>整理</kbd> → <kbd>按场景整理</kbd></p><figcaption>卡上显示当前前台 App 被识别成哪个场景。</figcaption></figure>
-    <div>
-      <div class="py-step"><b>01</b><div><strong>按落进的 App 调口吻。</strong>邮件像邮件,聊天像平常话。</div></div>
-      <div class="py-step"><b>02</b><div>在终端和代码编辑器里,术语原样留下。</div></div>
-      <div class="py-step"><b>03</b><div><strong>默认开。</strong>在同一张卡上可以关掉,也可以给某个 App 指定场景。整理设成「不动」时这一项不起作用。</div></div>
-      <div class="py-step"><b>04</b><div>它读应用标识和输入框类型,在支持的浏览器里还读页面的主机名。主机名不发送。场景名随整理请求发给整理模型。</div></div>
-    </div>
-  </div>
+  <p class="py-note reveal">提示词技能在哪些 App 里能用、会发什么,见<a href="guide/index.html#prompt-skills">使用指南</a>。</p>
 </section>
 
 <!-- ── 模型提供表:不报厂商名 —— 场景才重要(口径同 App 内模型页) ── -->

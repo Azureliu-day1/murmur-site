@@ -158,3 +158,7 @@
 
 /* 文字型图框里的长说明(云候选披露原文):比图框默认字小一号,行距放开 */
 .py-shot .py-quote { font-size: 13.5px; line-height: 1.8; color: var(--second); }
+
+/* 首页 #pinyin 末尾「装:」那一行(2026-10-01 · 首页只讲差异化后,安装压成一行) */
+.py-install { margin-top: 14px; font-size: 14px; line-height: 1.75; color: var(--second); }
+.py-install b { color: var(--ink); font-weight: 600; }

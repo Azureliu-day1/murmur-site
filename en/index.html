@@ -593,7 +593,7 @@ body.is-sandbox .sandbox { display: inline-block; }
   </div>
   <!-- ⭐ New in this version: one line of text links into the sections below. Styles in pinyin.css (.whatsnew).
        Only features that are new in 0.53; the full list is at guide/#changes. -->
-  <p class="whatsnew reveal"><b>New in 0.53</b><a href="#pinyin">Pinyin input method</a><span class="sep">·</span><a href="#py-fuzzy">Double pinyin and fuzzy pinyin</a><span class="sep">·</span><a href="#py-smart">Smart punctuation</a><span class="sep">·</span><a href="#py-cloud">Cloud candidates</a><span class="sep">·</span><a href="#vibe-skills">Prompt skills</a><span class="sep">·</span><a href="#vibe-scene">Cleanup by scene</a></p>
+  <p class="whatsnew reveal"><b>New in 0.53</b><a href="#pinyin">Pinyin input method</a><span class="sep">·</span><a href="guide/index.html#fuzzy">Double pinyin and fuzzy pinyin</a><span class="sep">·</span><a href="guide/index.html#smart">Smart punctuation</a><span class="sep">·</span><a href="guide/index.html#cloud">Cloud candidates</a><span class="sep">·</span><a href="#vibe-skills">Prompt skills</a><span class="sep">·</span><a href="#vibe-scene">Cleanup by scene</a></p>
 
   <div class="stage reveal" id="demo">
     <div class="fake-input"><span class="ph">your cursor is here</span><span class="out"></span><span class="cursor"></span></div>
@@ -714,132 +714,26 @@ body.is-sandbox .sandbox { display: inline-block; }
   </div>
 </section>
 
-<!-- ── Pinyin input method: one full block. Styles in pinyin.css (contract A); every claim maps to docs/BASELINE-site-ime.md F-table ── -->
+<!-- ── Pinyin input method: only what sets it apart (Wei 2026-10-01); details in /guide/. Styles in pinyin.css ── -->
 <section class="wrap" id="pinyin">
   <div class="eyebrow reveal">Pinyin · Chinese input method</div>
   <h2 class="reveal">A Pinyin keyboard<br>comes with Murmur.</h2>
-  <p class="sub reveal">
-    Murmur ships a Pinyin input method for the Mac.
-    Dictation and typing share one vocabulary.
-    Install it from Settings in one click.
-    Requires macOS 26 or later.
-  </p>
-
-  <h3 class="reveal">What is different</h3>
+  <!-- 2026-10-01 Wei: on the home page this section only covers what sets it apart; details live in /guide/.
+       Facts: F15 / F13 · F6 · PersonalLexiconSection.swift:82 + AIActionCard (⌥⇧Space) · IMECloudSection.swift / CloudCandidates.swift:67 -->
+  <p class="sub reveal">Murmur ships a Pinyin input method for the Mac. Requires macOS 26 or later.</p>
   <div class="py-grid reveal">
     <div>
-      <div class="py-step"><b>01</b><div><strong>One vocabulary for speaking and typing.</strong>Names you add to the dictation dictionary show up as candidates. Words you type become hints for dictation.</div></div>
-      <div class="py-step"><b>02</b><div><strong>Words you type help dictation.</strong>They are stored on this Mac. When you dictate, they go with the recognition request as hints, same as the dictionary. With on-device recognition, these words are not sent for dictation.</div></div>
-      <div class="py-step"><b>03</b><div><strong>One-row candidate bar by default.</strong>5 candidates per page. Predictions show up only after a word you have typed before, up to 5.</div></div>
+      <div class="py-step"><b>01</b><div><strong>One vocabulary for speaking and typing.</strong>Names in your dictation dictionary show up as candidates. Words you type are recognised when you speak.</div></div>
+      <div class="py-step"><b>02</b><div><strong>Wrong word? Press Delete.</strong>Within 1.5 seconds of a commit, one Delete turns the whole word back into Pinyin.</div></div>
+      <div class="py-step"><b>03</b><div><strong>⌥⇧Space asks AI to polish the sentence.</strong>Press it before the Pinyin commits. AI fixes punctuation and word order and shows the result on a card first.</div></div>
+      <div class="py-step"><b>04</b><div><strong>Cloud candidates, off by default.</strong>Press ⌥↩ and the cloud suggests a whole sentence. Sign-in required. The text next to the switch says what is sent.</div></div>
     </div>
-    <figure class="py-shot"><img src="../shots/en/nihao.png" alt="Murmur candidate bar: ni hao, candidates 1 你好 2 尼好 3 拟好 4 泥好 5 妮好" width="1120" height="72"><figcaption>The candidate bar, rendered by the input method itself.</figcaption></figure>
+    <figure class="py-shot"><img src="../shots/en/nihao.png" alt="Murmur candidate bar: ni hao, candidates 1 你好 2 尼好 3 拟好 4 泥好 5 妮好" width="925" height="184"><figcaption>The candidate bar, rendered by the input method itself.</figcaption></figure>
   </div>
-
-  <h3 class="reveal">How to install</h3>
-  <div class="py-grid flip reveal">
-    <figure class="py-shot"><p><kbd>Settings</kbd> → <kbd>Input Method</kbd> → the Input method card → <kbd>Install</kbd></p><figcaption>Installs into Library → Input Methods. No password.</figcaption></figure>
-    <div>
-      <div class="py-step"><b>01</b><div><strong>Click Install.</strong>Open Settings → Input Method. The first card is Input method. Click Install.</div></div>
-      <div class="py-step"><b>02</b><div><strong>Check the input menu.</strong>If the input menu in the menu bar already lists Murmur, use it. If not, log out once and log back in.</div></div>
-      <div class="py-step"><b>03</b><div><strong>Switch to Murmur.</strong>Press <kbd>⌃Space</kbd>, or choose Murmur in the input menu in the menu bar.</div></div>
-      <div class="py-step"><b>04</b><div><strong>Update or uninstall.</strong>Both live on the same card. Uninstall keeps your words, dictionary and settings.</div></div>
-    </div>
-  </div>
-
-  <h3 class="reveal">How to type</h3>
-  <div class="py-grid reveal">
-    <div>
-      <div class="py-step"><b>01</b><div><strong>Type Pinyin.</strong>One row of 5 candidates. Press 1–5 to pick one. Space takes the first.</div></div>
-      <div class="py-step"><b>02</b><div><strong>Wrong word? Press Delete.</strong>Within 1.5 seconds, press Delete once. The whole word turns back into Pinyin. A second Delete deletes Pinyin as usual.</div></div>
-      <div class="py-step"><b>03</b><div><strong>Tap Shift for English.</strong>Tap Shift once for English, again for Chinese. Caps Lock on also means English.</div></div>
-      <div class="py-step"><b>04</b><div><strong>Mix languages.</strong><span class="mono">okl</span> gives OK了. <span class="mono">zhegeapphaoyong</span> gives 这个app好用.</div></div>
-      <div class="py-step"><b>05</b><div><strong>Pages, punctuation, Return.</strong><kbd>-</kbd> and <kbd>=</kbd> turn pages. A punctuation key commits the highlighted candidate plus the mark. Return commits the raw Pinyin.</div></div>
-    </div>
-    <figure class="py-shot"><img src="../shots/en/nextwords-personal.png" alt="Murmur next-word row: Next 1 天气 2 不错 3 很好, note Space takes 1 · Esc hides" width="1120" height="72"><figcaption>After a word commits: a number picks the Nth suggestion. Space takes the first one only when it comes from a word you typed. Esc hides the row.</figcaption></figure>
-  </div>
-
-  <!-- Four new sub-sections for 0.53 (2026-10-01). Facts: murmur-ime docs/FEATURE-FACTS-0.53.md §3;
-       locations follow the 0.53 Settings "Input Method" tab (BASELINE-onboarding-site v0.2). -->
-  <!-- IMEFuzzySection.swift:29-37 · RimeEngineDoublePinyin.swift:40 · RimeEngineFuzzy.swift:55-79 -->
-  <h3 class="reveal" id="py-fuzzy">Double pinyin and fuzzy pinyin</h3>
-  <div class="py-grid flip reveal">
-    <!-- shot: settings-ime-fuzzy (Pinyin style and fuzzy pinyin card, en light) -->
-    <figure class="py-shot"><p><kbd>Settings</kbd> → <kbd>Input Method</kbd> → <kbd>Pinyin style and fuzzy pinyin</kbd></p><figcaption>Pick one of three pinyin styles. Tick fuzzy pairs one by one.</figcaption></figure>
-    <div>
-      <div class="py-step"><b>01</b><div><strong>Double pinyin.</strong>Two keys per character: one for the initial, one for the final. The candidate bar still shows full pinyin.</div></div>
-      <div class="py-step"><b>02</b><div><strong>Two layouts.</strong>Flypy or Ziranma. Full Pinyin is the default. After switching, the input method takes a few seconds to get ready.</div></div>
-      <div class="py-step"><b>03</b><div><strong>Fuzzy pinyin.</strong>A ticked pair works both ways. With z ⇄ zh on, typing <span class="mono">zongguo</span> also gives 中国.</div></div>
-      <div class="py-step"><b>04</b><div><strong>Nine pairs, all off.</strong>Every extra pair makes whole sentences slightly less accurate.</div></div>
-    </div>
-  </div>
-
-  <!-- IMESmartInputSection.swift:31-77 · SmartPunctuation.swift:46-58 (defaults as read there) -->
-  <h3 class="reveal" id="py-smart">Smart punctuation and URLs</h3>
-  <div class="py-grid reveal">
-    <div>
-      <div class="py-step"><b>01</b><div><strong>Punctuation.</strong>Full-width punctuation in Chinese. After digits, . and : stay half-width, so 3.14 and 10:30 need no switch to English.</div></div>
-      <div class="py-step"><b>02</b><div><strong>Ellipsis and dash.</strong>Two periods in a row make an ellipsis. Underscore types a dash. These are on by default.</div></div>
-      <div class="py-step"><b>03</b><div><strong>Off by default.</strong>Pairing brackets and quotes, and a space between Chinese and English.</div></div>
-      <div class="py-step"><b>04</b><div><strong>URL and email pass-through.</strong>When you type www., http or an email address, that stretch goes through as English. No candidates, nothing learned. On by default.</div></div>
-      <div class="py-step"><b>05</b><div><strong>Emoji panel.</strong>Off by default. Turn it on in the same card. Then : followed by pinyin gives emoji, and ; followed by pinyin gives symbols.</div></div>
-    </div>
-    <!-- shot: settings-ime-smart (Smart input card, en light) -->
-    <figure class="py-shot"><p><kbd>Settings</kbd> → <kbd>Input Method</kbd> → <kbd>Smart input</kbd></p><figcaption>Each rule has its own switch.</figcaption></figure>
-  </div>
-
-  <!-- IMELookSection.swift:19-24, 37-56, 91 -->
-  <h3 class="reveal" id="py-look">Candidate window</h3>
-  <div class="py-grid flip reveal">
-    <!-- shot: ime-look (three sizes / five accent colours / vertical, en light) -->
-    <figure class="py-shot"><p><kbd>Settings</kbd> → <kbd>Input Method</kbd> → <kbd>Candidate window</kbd></p><figcaption>The card has a preview. Changes apply right away, with no restart.</figcaption></figure>
-    <div>
-      <div class="py-step"><b>01</b><div><strong>Three sizes.</strong>Small, Standard, Large. Standard is the default.</div></div>
-      <div class="py-step"><b>02</b><div><strong>Five accent colours.</strong>Coral, Blue, Green, Purple, Graphite. Coral is the default.</div></div>
-      <div class="py-step"><b>03</b><div><strong>Horizontal or vertical.</strong>Horizontal is the default. In the vertical layout each candidate gets its own line, and long ones wrap.</div></div>
-      <div class="py-step"><b>04</b><div><strong>Light and dark.</strong>The window follows the system appearance.</div></div>
-    </div>
-  </div>
-
-  <!-- IMECloudSection.swift:23-40 · CloudCandidates.swift:67 (⌥↩).
-       ⛔ The text in the figure below is the English disclosure string from IMECloudSection.swift, word for word. -->
-  <h3 class="reveal" id="py-cloud">Cloud candidates</h3>
-  <div class="py-grid reveal">
-    <div>
-      <div class="py-step"><b>01</b><div><strong>Off by default.</strong>Turn it on in Settings → Input Method → Cloud candidates (preview). A confirmation page comes first. Sign-in required.</div></div>
-      <div class="py-step"><b>02</b><div><strong>How it works.</strong>There is a fixed cloud slot at the end of the candidate bar. A request is sent only when you click it or press <kbd>⌥↩</kbd>.</div></div>
-      <div class="py-step"><b>03</b><div><strong>Committing.</strong>The result fills the same slot. Click it or press <kbd>⌥↩</kbd> again to commit. It takes no number key and never commits by itself.</div></div>
-      <div class="py-step"><b>04</b><div><strong>Limits.</strong>"Request automatically when I pause" is also off by default. It does not work in password fields or in apps on the deny list.</div></div>
-    </div>
-    <!-- shot: ime-cloud-slot (cloud slot at the end of the candidate bar, en light) -->
-    <figure class="py-shot"><p class="py-quote">Once this is on, the pinyin you have not committed yet is sent to the Murmur server and passed on to a third-party model service to guess the whole sentence; what you are typing can be inferred from it. Text you have already committed, your personal lexicon and which app you are in are not sent. After you turn it off, no new requests are sent; what has already been sent cannot be taken back.</p><figcaption>The text next to the switch in Settings.</figcaption></figure>
-  </div>
-
-  <h3 class="reveal">Where your words go</h3>
-  <div class="py-grid flip reveal">
-    <figure class="py-shot"><p class="mono">~/Library/Application Support/Murmur/lexicon.sqlite</p><figcaption>Words you type are stored here.</figcaption></figure>
-    <div>
-      <div class="py-step"><b>01</b><div><strong>Stored on this Mac.</strong>On by default. Nothing typed in a password field is recorded.</div></div>
-      <div class="py-step"><b>02</b><div><strong>Sent as hints during dictation.</strong>These words go with the recognition request as hints, same as the dictionary (see the <a href="privacy.html">privacy page</a>). With on-device recognition, these words are not sent for dictation.</div></div>
-      <div class="py-step"><b>03</b><div><strong>Also sent when AI polishes.</strong>When you press ⌥⇧Space to polish a sentence, the words it touches from your dictionary and from what you typed go with the polish request (at most 500). This happens with on-device recognition too. Turn it off with "Let AI use my own words" on the same card.</div></div>
-      <div class="py-step"><b>04</b><div><strong>Turn it off.</strong>Settings → Input Method → the card "Words I've typed (learned by the input method)", then switch off "Learn the words I type".</div></div>
-      <div class="py-step"><b>05</b><div><strong>Clear it.</strong>Settings → System → Clear data.</div></div>
-      <div class="py-step"><b>06</b><div><strong>No sync.</strong>Words do not sync between devices in this version.</div></div>
-    </div>
-  </div>
-
-  <h3 class="reveal">What we compare</h3>
-  <div class="py-compare reveal">
-    <div class="h">Item</div><div class="h">Status</div><div class="h">One line</div>
-    <div class="k">First-choice accuracy on spoken phrases</div><div><span class="yes">Measured</span></div><div>Our own set of 125 phrases not in the dictionary: 80% first choice, 89.6% with the language model installed.</div>
-    <div class="k">Delete to undo a commit</div><div><span class="yes">Yes</span></div><div>One press within 1.5 seconds.</div>
-    <div class="k">One vocabulary</div><div><span class="yes">Yes</span></div><div>Shared both ways between dictation and typing.</div>
-    <div class="k">Predictions</div><div><span class="yes">Yes</span></div><div>Only after a word you have typed before, up to 5.</div>
-    <div class="k">Accuracy against the system keyboard</div><div>Not measured</div><div>We do not publish numbers we did not measure.</div>
-    <div class="k">Sync across devices</div><div>No</div><div>Not in this version.</div>
-    <!-- IMEStyle.swift:13 (light and dark since 2026-09-27). The old "dark only" line is out of date -->
-    <div class="k">Light candidate bar</div><div><span class="yes">Yes</span></div><div>Follows the system appearance.</div>
-  </div>
-  <p class="py-note reveal">Numbers come from our own test set, not a third party.</p>
+  <!-- First-choice accuracy: only this one line is kept (with its basis). F18 -->
+  <p class="py-note reveal">First-choice accuracy on our own set of 125 spoken phrases not in the dictionary: 80.0%, and 89.6% with the language model installed.</p>
+  <p class="py-note reveal">⌥⇧Space sends the words from your vocabulary that this sentence touches. Cloud candidates send the Pinyin you have not committed. Details are in the <a href="guide/index.html#words">guide</a>.</p>
+  <p class="py-install reveal"><b>Install:</b> Settings → Input Method → Install. How to switch to it and how each feature works are in the <a href="guide/index.html">guide</a>.</p>
   <div class="py-cta reveal">
     <a class="btn btn-primary" href="#download">Download for macOS</a>
     <a class="btn btn-quiet" href="demo/index.html">Try typing in the browser</a>
@@ -855,45 +749,15 @@ body.is-sandbox .sandbox { display: inline-block; }
     “Make this function async, then put a retry around it.”
     Tap again and the sentence is at the prompt.
     The input boxes in Cursor and Codex work the same way.
-    Murmur is system-level dictation, so there is no plugin to install and nothing to set up.
   </p>
+  <!-- 2026-10-01 Wei: only what sets it apart; details in /guide/#prompt-skills and #scene. -->
   <div class="detail-list reveal">
-    <div><strong>Long prompts are easy to say.</strong>Say the constraint you would usually skip because it was tedious to type.</div>
-    <div><strong>Fix a misheard library name once.</strong>Correct the library or API name and it goes into your dictionary. Next time it is heard right.</div>
-    <div><strong>Save your standing prompt as a phrase.</strong>Say the trigger word and the whole block lands. The rules you repeat every day stay typed.</div>
-    <div><strong>Check an API name without switching windows.</strong>With Ask turned on, press fn and say the question. The answer lands at the cursor.</div>
-    <div><strong>Select some code and say how to change it.</strong>Press right ⌃ and describe the change. The edited code goes back where it was.</div>
-    <div><strong>In an editor it leaves your identifiers alone.</strong>It can tell when the front app is a code editor and uses a separate set of rules there.</div>
+    <div id="vibe-skills"><strong>Press ⌃⌥P and a prompt lands.</strong>In Cursor, Claude desktop or ChatGPT, say the request and a structured prompt lands. Off by default.</div>
+    <div id="vibe-scene"><strong>Terms land as they are.</strong>In the terminal and in editors, variable names, library names and errors stay in English. The Chinese around them lands as usual.</div>
+    <div><strong>Fix a misheard library name once.</strong>Correct it and it goes into your dictionary. Next time it is heard right.</div>
+    <div><strong>Select code and say how to change it.</strong>Press right ⌃ and describe the change. The edited code goes back where it was.</div>
   </div>
-
-  <!-- New in 0.53 (2026-10-01). Facts: PromptSkillSettings.swift:10-61 · PromptSkills.swift:41-42 ·
-       the name field of Resources/prompt-skills/*.json · PromptSkillCopy.howTo / disclosure -->
-  <h3 class="reveal" id="vibe-skills">Prompt skills</h3>
-  <div class="py-grid reveal">
-    <div>
-      <div class="py-step"><b>01</b><div><strong>Press ⌃⌥P and say the request.</strong>What lands is a structured prompt, not your raw words.</div></div>
-      <div class="py-step"><b>02</b><div><strong>Preview first.</strong>The result shows up on a preview card and lands only when you click Insert. You can switch skills on the card, or go back to plain cleanup.</div></div>
-      <div class="py-step"><b>03</b><div><strong>Seven skills.</strong>Four for coding: Build a feature, Fix a bug, Change or refactor code, Explain code. Three for chat: Research, Write, Decide.</div></div>
-      <div class="py-step"><b>04</b><div><strong>Where it works.</strong>Cursor gets the four coding skills. Claude desktop and ChatGPT / Codex get all seven. Not in terminals.</div></div>
-      <div class="py-step"><b>05</b><div><strong>Off by default.</strong>Turn it on in Settings → Cleanup → Prompt skills. A confirmation page comes first.</div></div>
-      <div class="py-step"><b>06</b><div><strong>What is sent.</strong>Once it is on, the transcript of that sentence is sent one extra time to the same model vendor that cleanup uses. No new recipient, no audio.</div></div>
-    </div>
-    <!-- shot: prompt-skill-card (preview card) / settings-prompt-skill (settings card), en light -->
-    <figure class="py-shot"><p><kbd>Settings</kbd> → <kbd>Cleanup</kbd> → <kbd>Prompt skills</kbd></p><figcaption>The skill key is ⌃⌥P by default. You can change it on the same card.</figcaption></figure>
-  </div>
-
-  <!-- SceneSettingsSection.swift:47-76 · AppSettings.swift:484-488 (on by default) -->
-  <h3 class="reveal" id="vibe-scene">Cleanup by scene</h3>
-  <div class="py-grid flip reveal">
-    <!-- shot: settings-scene-on (Cleanup by scene card, en light) -->
-    <figure class="py-shot"><p><kbd>Settings</kbd> → <kbd>Cleanup</kbd> → <kbd>Cleanup by scene</kbd></p><figcaption>The card shows which scene the front app is recognised as.</figcaption></figure>
-    <div>
-      <div class="py-step"><b>01</b><div><strong>Tone follows the app.</strong>Email reads like email. Chat stays casual.</div></div>
-      <div class="py-step"><b>02</b><div><strong>Terms stay as they are.</strong>In the terminal and in code editors, technical terms are left alone.</div></div>
-      <div class="py-step"><b>03</b><div><strong>On by default.</strong>You can turn it off on the same card, or set a scene for one app. When cleanup is set to leave text alone, this does nothing.</div></div>
-      <div class="py-step"><b>04</b><div><strong>What it reads.</strong>The app identifier and the field type, plus the page host name in supported browsers. The host name is not sent. The scene name goes with the cleanup request to the cleanup model.</div></div>
-    </div>
-  </div>
+  <p class="py-note reveal">Which apps prompt skills work in, and what they send, is in the <a href="guide/index.html#prompt-skills">guide</a>.</p>
 </section>
 
 <!-- ── 模型提供表:不报厂商名 —— 场景才重要(口径同 App 内模型页) ── -->

@@ -6,7 +6,7 @@
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>使用指南 · Murmur</title>
-<meta name="description" content="Murmur 0.53 的使用指南:装拼音输入法、提示词技能、云候选、双拼与模糊音、快捷短语,以及更新记录。">
+<meta name="description" content="Murmur 0.53 的使用指南:拼音输入法的安装与各项设置、提示词技能、按场景整理,以及更新记录。">
 <link rel="alternate" hreflang="zh-Hans" href="../guide/index.html">
 <link rel="alternate" hreflang="en" href="../en/guide/index.html">
 <link rel="icon" href="../favicon.svg" type="image/svg+xml">
@@ -38,7 +38,9 @@
   <p class="eyebrow">Guide · 使用指南</p>
   <h1>使用指南</h1>
   <p class="sub">每个功能写三行:是什么,怎么用,在哪打开。按 Murmur 0.53 写。</p>
-  <p class="g-toc"><a href="#install">装拼音输入法</a><span class="sep">·</span><a href="#prompt-skills">提示词技能</a><span class="sep">·</span><a href="#cloud">云候选</a><span class="sep">·</span><a href="#fuzzy">双拼与模糊音</a><span class="sep">·</span><a href="#phrases">快捷短语</a><span class="sep">·</span><a href="#changes">更新记录</a></p>
+  <p class="g-toc"><b>打字</b><a href="#install">装拼音输入法</a><span class="sep">·</span><a href="#typing">拼音怎么打</a><span class="sep">·</span><a href="#fuzzy">双拼与模糊音</a><span class="sep">·</span><a href="#smart">智能标点</a><span class="sep">·</span><a href="#look">候选窗外观</a><span class="sep">·</span><a href="#cloud">云候选</a><span class="sep">·</span><a href="#phrases">快捷短语</a><span class="sep">·</span><a href="#words">你打过的词</a></p>
+  <p class="g-toc"><b>说话</b><a href="#prompt-skills">提示词技能</a><span class="sep">·</span><a href="#scene">按场景整理</a></p>
+  <p class="g-toc"><b>0.53</b><a href="#changes">更新记录</a></p>
 </header>
 
 <main class="wrap">
@@ -64,40 +66,22 @@
     </div>
   </section>
 
-  <!-- 事实:PromptSkillSettings.swift:10-61(默认关、⌃⌥P、disclosure、howTo)· PromptSkills.swift:41-42 ·
-       Resources/prompt-skills/*.json 的 name -->
-  <section class="g-sec" id="prompt-skills">
-    <h2>提示词技能</h2>
+  <!-- 事实:原首页「怎么用」一节(BASELINE-site-ime F5 / F7 / F9 / F10 / F6 / F11),2026-10-01 搬来 -->
+  <section class="g-sec" id="typing">
+    <h2>拼音怎么打</h2>
     <div class="g-body">
       <div>
-        <div class="g-row"><span class="k">是什么</span><div>在 AI 编程和 AI 聊天工具里,把你说的需求整理成结构清楚的提示词再落字。</div></div>
+        <div class="g-row"><span class="k">是什么</span><div>Murmur 拼音的基本按键。</div></div>
         <div class="g-row"><span class="k">怎么用</span><div>
-          <p>按 <kbd>⌃⌥P</kbd> 说需求。结果先出在预览卡上,点「确认落字」才落字。卡上可以换技能,也可以退回普通整理。</p>
-          <p>Cursor 里是编程四个技能:写新功能、修 bug、改 / 重构代码、解释代码。Claude 桌面版、ChatGPT / Codex 里另有聊天三个:调研、帮我写、帮我做决定。终端里不开。</p>
+          <div class="py-step"><b>01</b><div>敲拼音,一行 5 个候选。按 1–5 选,空格上第一个。</div></div>
+          <div class="py-step"><b>02</b><div><b>选错了。</b>1.5 秒内按一下退格,整个词退回拼音重选。第二下退格照常删拼音。</div></div>
+          <div class="py-step"><b>03</b><div>单按 Shift 切英文,再按一次回中文。Caps Lock 亮着也是英文。</div></div>
+          <div class="py-step"><b>04</b><div>中英夹着打:<span class="mono">okl</span> 出「OK了」,<span class="mono">zhegeapphaoyong</span> 出「这个app好用」。</div></div>
+          <div class="py-step"><b>05</b><div><kbd>-</kbd> 和 <kbd>=</kbd> 翻页。标点键把高亮候选连标点一起上屏。回车落下原样拼音。</div></div>
         </div></div>
-        <div class="g-row"><span class="k">在哪打开</span><div><b>默认关。</b>在 设置 → 整理 →「提示词技能」卡打开,打开前有一页确认。技能键在同一张卡上换。</div></div>
-        <p class="g-note">开启后,这一句的转写文字会多发一次给整理用的同一家模型厂商。不新增接收方,不发录音。「整理」设成「不动」时技能也不发。</p>
+        <div class="g-row"><span class="k">在哪打开</span><div>切到 Murmur 输入法就生效,没有开关。退格退回在 Chromium 系的 App 里不支持。</div></div>
       </div>
-      <!-- shot: prompt-skill-card(预览卡,zh 浅 / 深)· settings-prompt-skill(设置卡) -->
-      <figure class="py-shot"><p><kbd>设置</kbd> → <kbd>整理</kbd> → <kbd>提示词技能</kbd></p><figcaption>技能键默认 ⌃⌥P。</figcaption></figure>
-    </div>
-  </section>
-
-  <!-- 事实:IMECloudSection.swift:23-40 · CloudCandidates.swift:67。
-       ⛔ .py-quote 里是 IMECloudSection.swift 的 disclosure 中文原文(Wei 2026-09-30 定稿),一字不改。 -->
-  <section class="g-sec" id="cloud">
-    <h2>云候选</h2>
-    <div class="g-body">
-      <div>
-        <div class="g-row"><span class="k">是什么</span><div>打长句时,让云端猜一个整句候选。现在是预览版。</div></div>
-        <div class="g-row"><span class="k">怎么用</span><div>
-          <p>候选条末尾有一个固定的「云」位。点它或按 <kbd>⌥↩</kbd>,才会发请求。</p>
-          <p>结果填在同一个位置。再点一次或再按一次 <kbd>⌥↩</kbd> 才上屏。它不占数字键,也不会自己上屏。</p>
-        </div></div>
-        <div class="g-row"><span class="k">在哪打开</span><div><b>默认关,要登录。</b>在 设置 → 输入法 →「云候选(预览)」卡打开,打开前有一页确认。「停顿时自动请求」也默认关。</div></div>
-      </div>
-      <!-- shot: ime-cloud-slot(候选条末尾的云位,zh 浅 / 深) -->
-      <figure class="py-shot"><p class="py-quote">开启后,尚未上屏的拼音会发到 Murmur 服务器,并转给第三方模型服务来猜整句;据此可以推断你正在输入的内容。不发已上屏的文字、不发你打过的词、不发你在哪个 App。关掉后不再发新的请求;已经发出的收不回。</p><figcaption>设置里开关旁的说明原文。</figcaption></figure>
+      <figure class="py-shot"><img src="../shots/zh/nextwords-personal.png" alt="Murmur 联想行:接写 1 天气 2 不错 3 很好,尾注 空格接1 · Esc收起" width="894" height="184" loading="lazy"><figcaption>上屏后的联想行。数字接第几个;空格接第一个,只在它来自你打过的词时;Esc 收起。</figcaption></figure>
     </div>
   </section>
 
@@ -118,6 +102,60 @@
     </div>
   </section>
 
+  <!-- 事实:IMESmartInputSection.swift:31-77 · SmartPunctuation.swift:46-58(默认值以读取处为准) -->
+  <section class="g-sec" id="smart">
+    <h2>智能标点与网址直通</h2>
+    <div class="g-body">
+      <div>
+        <div class="g-row"><span class="k">是什么</span><div>输入法里的标点规则,加上网址和邮箱直通。</div></div>
+        <div class="g-row"><span class="k">怎么用</span><div>
+          <div class="py-step"><b>01</b><div>中文时标点用全角。数字后的 . 和 : 用半角,打 3.14、10:30 不用切英文。</div></div>
+          <div class="py-step"><b>02</b><div>句号连按两次变成省略号。按 _ 出破折号。</div></div>
+          <div class="py-step"><b>03</b><div>打出 www.、http 或邮箱地址时,这一段按英文走,不出候选,不学词。</div></div>
+          <div class="py-step"><b>04</b><div>开了 Emoji 面板后,按 : 接拼音出 emoji,按 ; 接拼音出符号。</div></div>
+        </div></div>
+        <div class="g-row"><span class="k">在哪打开</span><div>设置 → 输入法 →「智能输入」卡,每条规则单独开关。<b>默认关的三条:</b>括号引号自动配对、中英文之间自动加空格、Emoji 面板。其余默认开。</div></div>
+      </div>
+      <!-- shot: settings-ime-smart(智能输入卡,zh 浅 / 深) -->
+      <figure class="py-shot"><p><kbd>设置</kbd> → <kbd>输入法</kbd> → <kbd>智能输入</kbd></p><figcaption>每条规则单独开关。</figcaption></figure>
+    </div>
+  </section>
+
+  <!-- 事实:IMELookSection.swift:19-24, 37-56, 91 · IMEStyle.swift:13(深浅两套) -->
+  <section class="g-sec" id="look">
+    <h2>候选窗外观</h2>
+    <div class="g-body">
+      <div>
+        <div class="g-row"><span class="k">是什么</span><div>候选窗的字号、强调色和排列方向。</div></div>
+        <div class="g-row"><span class="k">怎么用</span><div>
+          <p>字号三档:小、标准、大。强调色五种:珊瑚、蓝、绿、紫、石墨。</p>
+          <p>横排或竖排。竖排时每行一个候选,长候选折行,不截断。深浅跟随系统外观。</p>
+        </div></div>
+        <div class="g-row"><span class="k">在哪打开</span><div>设置 → 输入法 →「候选窗外观」卡。默认标准字号、珊瑚、横排。卡上有预览,选了马上生效,不用重启输入法。</div></div>
+      </div>
+      <!-- shot: ime-look(候选窗三档字号 / 五个强调色 / 竖排,zh 浅 / 深) -->
+      <figure class="py-shot"><p><kbd>设置</kbd> → <kbd>输入法</kbd> → <kbd>候选窗外观</kbd></p><figcaption>卡上有预览。</figcaption></figure>
+    </div>
+  </section>
+
+  <!-- 事实:IMECloudSection.swift:23-40 · CloudCandidates.swift:67。
+       ⛔ .py-quote 里是 IMECloudSection.swift 的 disclosure 中文原文(Wei 2026-09-30 定稿),一字不改。 -->
+  <section class="g-sec" id="cloud">
+    <h2>云候选</h2>
+    <div class="g-body">
+      <div>
+        <div class="g-row"><span class="k">是什么</span><div>打长句时,让云端猜一个整句候选。现在是预览版。</div></div>
+        <div class="g-row"><span class="k">怎么用</span><div>
+          <p>候选条末尾有一个固定的「云」位。点它或按 <kbd>⌥↩</kbd>,才会发请求。</p>
+          <p>结果填在同一个位置。再点一次或再按一次 <kbd>⌥↩</kbd> 才上屏。它不占数字键,也不会自己上屏。密码框和拒绝名单里的 App 里不工作。</p>
+        </div></div>
+        <div class="g-row"><span class="k">在哪打开</span><div><b>默认关,要登录。</b>在 设置 → 输入法 →「云候选(预览)」卡打开,打开前有一页确认。「停顿时自动请求」也默认关。</div></div>
+      </div>
+      <!-- shot: ime-cloud-slot(候选条末尾的云位,zh 浅 / 深) -->
+      <figure class="py-shot"><p class="py-quote">开启后,尚未上屏的拼音会发到 Murmur 服务器,并转给第三方模型服务来猜整句;据此可以推断你正在输入的内容。不发已上屏的文字、不发你打过的词、不发你在哪个 App。关掉后不再发新的请求;已经发出的收不回。</p><figcaption>设置里开关旁的说明原文。</figcaption></figure>
+    </div>
+  </section>
+
   <!-- 事实:PersonalLexiconSection.swift:157-170, 362-364(输入法)· DictionaryView.swift:155-160(听写) -->
   <section class="g-sec" id="phrases">
     <h2>快捷短语</h2>
@@ -135,6 +173,63 @@
       </div>
       <!-- shot: ime-phrases(管理快捷短语页,zh 浅 / 深) -->
       <figure class="py-shot"><p><span class="mono">dz</span> → 你的地址</p><figcaption>输入法的快捷短语:打编码,候选第一个是短语。</figcaption></figure>
+    </div>
+  </section>
+
+  <!-- 事实:原首页「你的词去哪了」一节(F13 / F16 / F22 / F14),2026-10-01 搬来;路径按 0.53「输入法」页签 -->
+  <section class="g-sec" id="words">
+    <h2>你打过的词</h2>
+    <div class="g-body">
+      <div>
+        <div class="g-row"><span class="k">是什么</span><div>输入法学到的词,存在这台 Mac 上,默认开。密码框里的字一律不记。</div></div>
+        <div class="g-row"><span class="k">怎么用</span><div>
+          <p>听写时,这些词当提示词随识别请求发给识别服务商,和词典一样。选本机识别就不出机。</p>
+          <p>按 ⌥⇧Space 让 AI 整理这句时,与这句沾边的词随整理请求出机,最多 500 个。选本机识别也一样。</p>
+          <p>第一版不跨设备。</p>
+        </div></div>
+        <div class="g-row"><span class="k">在哪打开</span><div>
+          <p>设置 → 输入法 →「我打过的词(输入法学的)」卡:关「学我平时打的字」就不再学新词;关「允许 AI 参考我的用词」,AI 整理时一个词都不发。</p>
+          <p>清掉:设置 → 系统 →「清除数据…」。</p>
+        </div></div>
+      </div>
+      <figure class="py-shot"><p class="mono">~/Library/Application Support/Murmur/lexicon.sqlite</p><figcaption>打过的词存在这里。<a href="../privacy.html">隐私页</a>有写。</figcaption></figure>
+    </div>
+  </section>
+
+  <!-- 事实:PromptSkillSettings.swift:10-61(默认关、⌃⌥P、disclosure、howTo)· PromptSkills.swift:41-42 ·
+       Resources/prompt-skills/*.json 的 name -->
+  <section class="g-sec" id="prompt-skills">
+    <h2>提示词技能</h2>
+    <div class="g-body">
+      <div>
+        <div class="g-row"><span class="k">是什么</span><div>在 AI 编程和 AI 聊天工具里,把你说的需求整理成结构清楚的提示词再落字。</div></div>
+        <div class="g-row"><span class="k">怎么用</span><div>
+          <p>按 <kbd>⌃⌥P</kbd> 说需求。结果先出在预览卡上,点「确认落字」才落字。卡上可以换技能,也可以退回普通整理。</p>
+          <p>Cursor 里是编程四个技能:写新功能、修 bug、改 / 重构代码、解释代码。Claude 桌面版、ChatGPT / Codex 里另有聊天三个:调研、帮我写、帮我做决定。终端里不开。</p>
+        </div></div>
+        <div class="g-row"><span class="k">在哪打开</span><div><b>默认关。</b>在 设置 → 整理 →「提示词技能」卡打开,打开前有一页确认。技能键在同一张卡上换。</div></div>
+        <p class="g-note">开启后,这一句的转写文字会多发一次给整理用的同一家模型厂商。不新增接收方,不发录音。「整理」设成「不动」时技能也不发。</p>
+      </div>
+      <!-- shot: prompt-skill-card(预览卡,zh 浅 / 深)· settings-prompt-skill(设置卡) -->
+      <figure class="py-shot"><p><kbd>设置</kbd> → <kbd>整理</kbd> → <kbd>提示词技能</kbd></p><figcaption>技能键默认 ⌃⌥P。</figcaption></figure>
+    </div>
+  </section>
+
+  <!-- 事实:SceneSettingsSection.swift:47-76 · AppSettings.swift:484-488(默认开) -->
+  <section class="g-sec" id="scene">
+    <h2>按场景整理</h2>
+    <div class="g-body">
+      <div>
+        <div class="g-row"><span class="k">是什么</span><div>按落进的 App 和输入框调整理口吻。邮件像邮件,聊天像平常话,终端和编辑器里术语原样。</div></div>
+        <div class="g-row"><span class="k">怎么用</span><div>
+          <p>照常听写,不用多按键。卡上显示当前前台 App 被识别成哪个场景,也可以给某个 App 指定场景。</p>
+          <p>整理设成「不动」时这一项不起作用。</p>
+        </div></div>
+        <div class="g-row"><span class="k">在哪打开</span><div><b>默认开。</b>设置 → 整理 →「按场景整理」卡。</div></div>
+        <p class="g-note">它读应用标识和输入框类型,在支持的浏览器里还读页面的主机名。主机名不发送。场景名随整理请求发给整理模型。</p>
+      </div>
+      <!-- shot: settings-scene-on(按场景整理卡,zh 浅 / 深) -->
+      <figure class="py-shot"><p><kbd>设置</kbd> → <kbd>整理</kbd> → <kbd>按场景整理</kbd></p><figcaption>卡上显示当前前台 App 被识别成哪个场景。</figcaption></figure>
     </div>
   </section>
 
