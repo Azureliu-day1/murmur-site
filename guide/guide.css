@@ -1,0 +1,55 @@
+/* ══════════════════════════════════════════════════════════════════════════
+   guide.css · /guide/ 与 /en/guide/ 的页面局部样式(2026-10-01 · 0.53 起)
+   两页都引:../v2.css(共用零件)→ ../pinyin.css(.py-step / .py-shot / .py-quote)→ 这份。
+   ⛔ 不新增颜色:全部用 v2.css 的 token。⛔ 不重定义 .py-* 的外观。
+   每个功能一节,统一三行「是什么 / 怎么用 / 在哪打开」:左列小标签,右列正文。
+   ══════════════════════════════════════════════════════════════════════════ */
+
+/* ── 页头:配方同 demo.css 的 .head(⛔ 不写 padding 简写,会清掉 .wrap 的左右留白) ── */
+.head { padding-block: 64px 0; }
+.head h1 { font-size: clamp(26px, 3.4vw, 34px); font-weight: 600; line-height: 1.35; letter-spacing: .01em; }
+.head .sub { color: var(--second); font-size: 15.5px; max-width: 38em; margin-top: 14px; }
+
+/* ── 目录:一行文字链,同首页 .whatsnew 的手感(左对齐) ── */
+.g-toc { margin-top: 22px; font-size: 13.5px; line-height: 1.9; color: var(--faint); }
+.g-toc .sep { margin: 0 7px; color: var(--line2); }
+
+/* ── 一节 ── */
+.g-sec { padding-top: 72px; scroll-margin-top: 24px; }
+.g-sec h2 { font-size: clamp(22px, 2.6vw, 26px); font-weight: 600; line-height: 1.4; }
+.g-sec h3 { margin-top: 36px; font-size: 17px; font-weight: 600; line-height: 1.4; }
+
+/* 两栏:三行 | 图框;窄屏单栏,图在后 */
+.g-body { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 28px 40px; align-items: start; margin-top: 18px; }
+.g-body > .py-shot { margin-top: 6px; }
+
+/* 三行:左列小标签,右列正文 */
+.g-row {
+  display: grid; grid-template-columns: 76px 1fr; gap: 14px;
+  padding: 14px 0; border-top: 1px solid var(--line);
+}
+.g-row:last-child { border-bottom: 1px solid var(--line); }
+.g-row > .k { font-size: 13px; color: var(--faint); line-height: 1.85; }
+.g-row > div { font-size: 14.5px; line-height: 1.75; color: var(--second); min-width: 0; }
+.g-row > div p + p { margin-top: 6px; }
+.g-row > div b { color: var(--ink); font-weight: 600; }
+html[lang="en"] .g-row { grid-template-columns: 104px 1fr; }
+
+/* 「怎么用」里的分步:沿用 .py-step,只收紧上下留白、去掉第一条的上边线 */
+.g-row .py-step { padding: 8px 0; }
+.g-row .py-step:first-child { border-top: 0; padding-top: 0; }
+.g-row .py-step > b { font-size: 18px; }
+
+/* 一节末尾的小字(数据去向、例外) */
+.g-note { margin-top: 14px; font-size: 13px; line-height: 1.75; color: var(--faint); }
+
+/* ── 更新记录:按版本一块,列表只写事实 ── */
+.g-log { margin-top: 18px; padding-left: 1.2em; color: var(--second); font-size: 14.5px; line-height: 1.75; }
+.g-log li + li { margin-top: 6px; }
+.g-log li::marker { color: var(--line2); }
+
+@media (max-width: 820px) {
+  .g-body { grid-template-columns: 1fr; }
+  .g-sec { padding-top: 56px; }
+  .g-row, html[lang="en"] .g-row { grid-template-columns: 1fr; gap: 2px; }
+}
