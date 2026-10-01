@@ -321,8 +321,9 @@ footer a { color: var(--faint); }
     <div class="jrow">
       <div class="what">Transcript and cleaned-up text<span class="mono">what you actually said</span></div>
       <p>With AI cleanup, translation or ask-anything switched on, the transcript is handed to a language model once (which one, and whether it passes through our servers, is stated live in the app’s own “Privacy” panel);
-      the finished text and your history <b>live only in a database on your Mac</b>, synced to no cloud at all.</p>
-      <p>Switch cleanup off (the “raw transcript, untouched” setting) and the text reaches no language model. History can be deleted one entry at a time or wiped entirely, and you set how long it is kept.</p>
+      the finished text and your history <b>live only in a database on your Mac</b>, synced to no cloud at all.
+      “Personal style” is off by default. Once it is on, each cleanup picks up to 3 of your earlier “what you said → cleaned-up text” pairs from recent dictation history and sends them with the cleanup request as samples.</p>
+      <p>Switch cleanup off (the “raw transcript, untouched” setting) and the text reaches no language model. History can be deleted one entry at a time. To clear it all at once, go to Settings → System, set “Keep text” to “Don’t keep”, then click “Apply the retention rules now”. You set how long it is kept.</p>
     </div>
 
     <div class="jrow">
@@ -341,8 +342,10 @@ footer a { color: var(--faint); }
 
     <div class="jrow">
       <div class="what">Screen context<span class="mono">text in the frontmost window at the moment you record</span></div>
-      <p>At the moment you start speaking it reads the visible text of the frontmost window once, to get proper nouns right. It <b>lives in memory for that one request: never written to the database, never to disk, never to a log</b> — and words from your screen never enter your dictionary.</p>
-      <p>One switch in Settings → Recognition turns it off. With on-device dictation it is never read in the first place.</p>
+      <p>At the moment you start speaking it reads the visible text of the frontmost window once (through Accessibility, no screenshot), to get proper nouns right. With cloud recognition, the proper nouns taken from it go to the recognition provider with the audio.
+      With cleanup on, or in translate and Ask, <b>an excerpt of the screen text (1500 characters at most) goes to the model vendor with the transcript</b>. On the free allowance it passes through our server first; with your own key it goes straight to that vendor.
+      On your Mac it is never written to the database, to disk or to a log, and words from your screen never enter your dictionary.</p>
+      <p>On by default. Turn off “Use the text on screen to get proper nouns right” in Settings → Recognition. With on-device dictation it is never read in the first place.</p>
     </div>
 
     <div class="jrow">
@@ -359,7 +362,7 @@ footer a { color: var(--faint); }
   <h2>In writing, so you can hold us to it.</h2>
   <div class="nots reveal">
     <div class="not"><span class="x">✕</span><p><b>We never handle your audio.</b> With cloud recognition the audio goes from your Mac straight to the recognition provider, through none of our servers. Text for cleanup is an exception; see “Once you sign in” below.</p></div>
-    <div class="not"><span class="x">✕</span><p><b>No behavioural tracking.</b> There is no analytics SDK in the app. Which app you were speaking into, and for how long, is never reported back to us.</p></div>
+    <div class="not"><span class="x">✕</span><p><b>No behavioural tracking.</b> There is no analytics SDK in the app. Which app you were speaking into is never reported back to us. Once you sign in, each sentence reports its length in words and how long you spoke, to count your allowance; see “Once you sign in” below.</p></div>
     <div class="not"><span class="x">✕</span><p><b>No selling your data, no sharing it.</b> There are no advertisers and no “partners”. Your data is not the product.</p></div>
     <div class="not"><span class="x">✕</span><p><b>This website doesn’t track you either.</b> There is no third-party analytics script on this page — open your browser’s network panel right now and check.</p></div>
   </div>
@@ -375,8 +378,8 @@ footer a { color: var(--faint); }
     <p class="how"><span class="mono">~/Library/Application Support/Murmur/</span> — the recordings and every word you have ever said to it are in there. Open it whenever you want. Delete it and it is really deleted.</p>
   </div>
   <div class="receipt reveal">
-    <b>② The app connects only to the providers you configured</b>
-    <p class="how">Point a free firewall like LuLu at Murmur and watch its outbound connections: you will see the domains of the recognition and language-model providers you picked, and nothing else.</p>
+    <b>② Where the app connects</b>
+    <p class="how">Point a free firewall like LuLu at Murmur and watch its outbound connections. You will see these: the recognition and language-model providers you picked; our server (sign-in, allowance, public config); this website (a version file, once a day); and GitHub when you download the Rime dictionary or a sentence model.</p>
   </div>
   <div class="receipt reveal">
     <b>③ Every single entry says where it went</b>
@@ -388,9 +391,10 @@ footer a { color: var(--faint); }
 <section class="wrap">
   <div class="future reveal">
     <div class="eyebrow">Account · Once you sign in</div>
-    <p>When you are not signed in, Murmur sends nothing to our servers. When you are signed in, our servers do these things:</p>
-    <p>① Sign-in and allowance. ② After each sentence, one report of how many words it was and whether it was dictation or Ask, without the text. ③ On the free allowance, each recording fetches a one-time pass, so the server knows you are recording at that moment. ④ On the free allowance, text for cleanup goes through the server and then to the model vendor. ⑤ With cloud candidates on in the input method, Pinyin you have not committed goes through the server to a third-party model service.</p>
-    <p>Recordings and history are not uploaded. Your dictionary and the words you type are not uploaded as a whole; only the words a sentence touches go with its cleanup request, as described in the “Typed words” row above. Every change to this page leaves its date at the bottom.</p>
+    <p>Even when you are not signed in, the app connects to our server: it reads a public config once at launch, and at most every 5 minutes again while it is in front. That request carries neither who you are nor anything you said. It also reads a version file on this website once a day.</p>
+    <p>When you are signed in, our servers also do these things:</p>
+    <p>① Sign-in and allowance. ② After each sentence, one report of how many words it was, how long you spoke, and whether it was dictation or Ask, without the text. ③ On the free allowance, each recording fetches a one-time pass, so the server knows you are recording at that moment. ④ On the free allowance, text for cleanup goes through the server and then to the model vendor. The same request carries the screen excerpt, and with personal style on, up to 3 sample sentences from your history. ⑤ With cloud candidates on in the input method, Pinyin you have not committed goes through the server to a third-party model service.</p>
+    <p>Recordings are not uploaded. History is not uploaded as a whole; with personal style on, a cleanup request carries up to 3 entries. Your dictionary and the words you type are not uploaded as a whole; only the words a sentence touches go with its cleanup request, as described in the “Typed words” row above. Every change to this page leaves its date at the bottom.</p>
   </div>
 </section>
 
@@ -503,7 +507,7 @@ if (reduced) {
 </script>
 
 <footer class="wrap">
-  <span>This page last updated: 2026-08-27</span>
+  <span>This page last updated: 2026-10-01</span>
   <span>Questions? Write to us: Others Studio</span>
   <a href="tos.html">Terms of Use</a>
   <a style="margin-left:auto" href="index.html">murmur home</a>
