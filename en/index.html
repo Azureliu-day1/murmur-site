@@ -864,6 +864,35 @@ body.is-sandbox .sandbox { display: inline-block; }
     <div><strong>Select some code and say how to change it.</strong>Press right ⌃ and describe the change. The edited code goes back where it was.</div>
     <div><strong>In an editor it leaves your identifiers alone.</strong>It can tell when the front app is a code editor and uses a separate set of rules there.</div>
   </div>
+
+  <!-- New in 0.53 (2026-10-01). Facts: PromptSkillSettings.swift:10-61 · PromptSkills.swift:41-42 ·
+       the name field of Resources/prompt-skills/*.json · PromptSkillCopy.howTo / disclosure -->
+  <h3 class="reveal" id="vibe-skills">Prompt skills</h3>
+  <div class="py-grid reveal">
+    <div>
+      <div class="py-step"><b>01</b><div><strong>Press ⌃⌥P and say the request.</strong>What lands is a structured prompt, not your raw words.</div></div>
+      <div class="py-step"><b>02</b><div><strong>Preview first.</strong>The result shows up on a preview card and lands only when you click Insert. You can switch skills on the card, or go back to plain cleanup.</div></div>
+      <div class="py-step"><b>03</b><div><strong>Seven skills.</strong>Four for coding: Build a feature, Fix a bug, Change or refactor code, Explain code. Three for chat: Research, Write, Decide.</div></div>
+      <div class="py-step"><b>04</b><div><strong>Where it works.</strong>Cursor gets the four coding skills. Claude desktop and ChatGPT / Codex get all seven. Not in terminals.</div></div>
+      <div class="py-step"><b>05</b><div><strong>Off by default.</strong>Turn it on in Settings → Cleanup → Prompt skills. A confirmation page comes first.</div></div>
+      <div class="py-step"><b>06</b><div><strong>What is sent.</strong>Once it is on, the transcript of that sentence is sent one extra time to the same model vendor that cleanup uses. No new recipient, no audio.</div></div>
+    </div>
+    <!-- shot: prompt-skill-card (preview card) / settings-prompt-skill (settings card), en light -->
+    <figure class="py-shot"><p><kbd>Settings</kbd> → <kbd>Cleanup</kbd> → <kbd>Prompt skills</kbd></p><figcaption>The skill key is ⌃⌥P by default. You can change it on the same card.</figcaption></figure>
+  </div>
+
+  <!-- SceneSettingsSection.swift:47-76 · AppSettings.swift:484-488 (on by default) -->
+  <h3 class="reveal" id="vibe-scene">Cleanup by scene</h3>
+  <div class="py-grid flip reveal">
+    <!-- shot: settings-scene-on (Cleanup by scene card, en light) -->
+    <figure class="py-shot"><p><kbd>Settings</kbd> → <kbd>Cleanup</kbd> → <kbd>Cleanup by scene</kbd></p><figcaption>The card shows which scene the front app is recognised as.</figcaption></figure>
+    <div>
+      <div class="py-step"><b>01</b><div><strong>Tone follows the app.</strong>Email reads like email. Chat stays casual.</div></div>
+      <div class="py-step"><b>02</b><div><strong>Terms stay as they are.</strong>In the terminal and in code editors, technical terms are left alone.</div></div>
+      <div class="py-step"><b>03</b><div><strong>On by default.</strong>You can turn it off on the same card, or set a scene for one app. When cleanup is set to leave text alone, this does nothing.</div></div>
+      <div class="py-step"><b>04</b><div><strong>What it reads.</strong>The app identifier and the field type, plus the page host name in supported browsers. The host name is not sent. The scene name goes with the cleanup request to the cleanup model.</div></div>
+    </div>
+  </div>
 </section>
 
 <!-- ── 模型提供表:不报厂商名 —— 场景才重要(口径同 App 内模型页) ── -->

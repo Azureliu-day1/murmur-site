@@ -869,6 +869,35 @@ body.is-sandbox .sandbox { display: inline-block; }
     <div><strong>选中一段代码,说怎么改。</strong>按右 ⌃ 说出改法,改好的代码落回原处。</div>
     <div><strong>在代码编辑器里不改标识符。</strong>它认得出前台是编辑器,落字时换用另一套规则。</div>
   </div>
+
+  <!-- 0.53 新增(2026-10-01)。事实:PromptSkillSettings.swift:10-61 · PromptSkills.swift:41-42 ·
+       Resources/prompt-skills/*.json 的 name · PromptSkillCopy.howTo / disclosure -->
+  <h3 class="reveal" id="vibe-skills">提示词技能</h3>
+  <div class="py-grid reveal">
+    <div>
+      <div class="py-step"><b>01</b><div><strong>按 ⌃⌥P 说需求。</strong>落下的是整理成结构的提示词,不是原话。</div></div>
+      <div class="py-step"><b>02</b><div>结果先出在预览卡上,点「确认落字」才落字。卡上可以换技能,也可以退回普通整理。</div></div>
+      <div class="py-step"><b>03</b><div><strong>七个技能。</strong>编程四个:写新功能、修 bug、改 / 重构代码、解释代码。聊天三个:调研、帮我写、帮我做决定。</div></div>
+      <div class="py-step"><b>04</b><div>Cursor 里用编程四个。Claude 桌面版、ChatGPT / Codex 里七个都能用。终端里不开。</div></div>
+      <div class="py-step"><b>05</b><div><strong>默认关。</strong>在 设置 → 整理 →「提示词技能」打开,打开前有一页确认。</div></div>
+      <div class="py-step"><b>06</b><div>开启后,这一句的转写文字会多发一次给整理用的同一家模型厂商。不新增接收方,不发录音。</div></div>
+    </div>
+    <!-- shot: prompt-skill-card(预览卡)/ settings-prompt-skill(设置卡),zh 浅 / 深 -->
+    <figure class="py-shot"><p><kbd>设置</kbd> → <kbd>整理</kbd> → <kbd>提示词技能</kbd></p><figcaption>技能键默认 ⌃⌥P,在同一张卡上可以换。</figcaption></figure>
+  </div>
+
+  <!-- SceneSettingsSection.swift:47-76 · AppSettings.swift:484-488(默认开) -->
+  <h3 class="reveal" id="vibe-scene">按场景整理</h3>
+  <div class="py-grid flip reveal">
+    <!-- shot: settings-scene-on(按场景整理卡,zh 浅 / 深) -->
+    <figure class="py-shot"><p><kbd>设置</kbd> → <kbd>整理</kbd> → <kbd>按场景整理</kbd></p><figcaption>卡上显示当前前台 App 被识别成哪个场景。</figcaption></figure>
+    <div>
+      <div class="py-step"><b>01</b><div><strong>按落进的 App 调口吻。</strong>邮件像邮件,聊天像平常话。</div></div>
+      <div class="py-step"><b>02</b><div>在终端和代码编辑器里,术语原样留下。</div></div>
+      <div class="py-step"><b>03</b><div><strong>默认开。</strong>在同一张卡上可以关掉,也可以给某个 App 指定场景。整理设成「不动」时这一项不起作用。</div></div>
+      <div class="py-step"><b>04</b><div>它读应用标识和输入框类型,在支持的浏览器里还读页面的主机名。主机名不发送。场景名随整理请求发给整理模型。</div></div>
+    </div>
+  </div>
 </section>
 
 <!-- ── 模型提供表:不报厂商名 —— 场景才重要(口径同 App 内模型页) ── -->
