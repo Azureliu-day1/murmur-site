@@ -598,7 +598,7 @@ body.is-sandbox .sandbox { display: inline-block; }
   </div>
   <!-- ⭐ New in this version: one line of text links into the sections below. Styles in pinyin.css (.whatsnew).
        Only features that are new in 0.53; the full list is at guide/#changes. -->
-  <p class="whatsnew reveal"><b>New in 0.53</b><a href="#pinyin">Pinyin input method</a><span class="sep">·</span><a href="guide/index.html#fuzzy">Double pinyin and fuzzy pinyin</a><span class="sep">·</span><a href="guide/index.html#smart">Smart punctuation</a><span class="sep">·</span><a href="guide/index.html#cloud">Cloud candidates</a><span class="sep">·</span><a href="#vibe-skills">Prompt skills</a><span class="sep">·</span><a href="#vibe-scene">Cleanup by scene</a></p>
+  <p class="whatsnew reveal"><b>New in 0.53</b><a href="#pinyin">Pinyin input method</a><span class="sep">·</span><a href="guide/index.html#fuzzy">Double pinyin and fuzzy pinyin</a><span class="sep">·</span><a href="guide/index.html#smart">Smart punctuation</a><span class="sep">·</span><a href="guide/index.html#cloud">Cloud candidates</a><span class="sep">·</span><a href="#vibe-skills">Prompt skills</a><span class="sep">·</span><a href="guide/index.html#scene">Cleanup by scene</a></p>
 
   <div class="stage reveal" id="demo">
     <div class="fake-input"><span class="ph">your cursor is here</span><span class="out"></span><span class="cursor"></span></div>
@@ -758,7 +758,7 @@ body.is-sandbox .sandbox { display: inline-block; }
   <!-- 2026-10-01 Wei: only what sets it apart; details in /guide/#prompt-skills and #scene.
        Facts: murmur-ime 809fdda7 (2026-10-01, separate skill key removed): PromptSkillSettings.swift PromptSkillAuto (15-unit threshold) · PromptSkillCopy.toggleLabel / scopeLine / disclosure / howTo / firstHint (off by default; not in terminals; no skill key, no preview card) -->
   <div class="detail-list reveal">
-    <div id="vibe-skills"><strong>Say the request and a prompt lands.</strong>In Cursor, Claude desktop or ChatGPT, press the dictation key and say what you want. It is turned into a prompt and lands directly. Short sentences and chat land as usual. Off by default.</div>
+    <div id="vibe-skills"><strong>Say the request and a prompt lands.</strong>In Cursor, Claude desktop, ChatGPT, and other apps and web pages recognised as an AI assistant, press the dictation key and say what you want. It is turned into a prompt and lands directly. Web pages need “Cleanup by scene” on. Short sentences and chat land as usual. Off by default.</div>
     <div id="vibe-scene"><strong>Terms land as they are.</strong>In the terminal and in editors, variable names, library names and errors stay in English. The Chinese around them lands as usual.</div>
     <div><strong>Fix a misheard library name once.</strong>Correct it and it goes into your dictionary. Next time it is heard right.</div>
     <div><strong>Select code and say how to change it.</strong>Press right ⌃ and describe the change. The edited code goes back where it was.</div>
@@ -774,7 +774,7 @@ body.is-sandbox .sandbox { display: inline-block; }
     We tested the recognition models on the market internally and kept three.
     Each one suits a different way of speaking, so they are split into three tiers.
     Their strengths and weaknesses are listed below.
-    You switch tiers with one click in the menu.
+    You switch tiers on the “Models” page of the main window.
   </p>
 
   <div class="tiers">
@@ -849,10 +849,11 @@ body.is-sandbox .sandbox { display: inline-block; }
 <section class="wrap" id="local">
   <div class="eyebrow reveal">Local · Where your data is</div>
   <h2 class="reveal">Recordings stay<br>on your Mac.</h2>
-  <p class="sub reveal">Our server handles accounts, sign-in and subscriptions. Your
-  recordings, transcripts, history and dictionary are stored on your Mac. For
+  <p class="sub reveal">Your
+  recordings, transcripts, history, dictionary and typed words are stored on your Mac. For
   cloud recognition the audio goes straight from your Mac to the provider you picked, not through us.
-  With on-device recognition the audio stays on this computer.</p>
+  With on-device recognition the audio stays on this computer.
+  Signed in on the free allowance, the text for cleanup passes through our server on its way to the language model.</p>
   <div class="flowstage reveal">
     <svg viewBox="0 0 760 250" aria-label="Audio goes from your Mac straight to the provider you picked, skipping our server">
       <!-- 航线(常显,极淡) -->
@@ -875,7 +876,7 @@ body.is-sandbox .sandbox { display: inline-block; }
       <g id="ghost" opacity=".8">
         <rect x="304" y="92" width="152" height="72" rx="14" fill="none" stroke="var(--line2)" stroke-dasharray="5 5"/>
         <text class="ghost-label" x="380" y="122" text-anchor="middle">Our server</text>
-        <text class="node-sub" x="380" y="142" text-anchor="middle">accounts and billing only</text>
+        <text class="node-sub" x="380" y="142" text-anchor="middle">audio skips this stop</text>
         <g id="ghostX" opacity="0">
           <circle cx="380" cy="76" r="13" fill="var(--coral)"/>
           <text x="380" y="81" text-anchor="middle" style="font-size:13px; font-weight:700" fill="#fff">✕</text>
@@ -920,7 +921,7 @@ body.is-sandbox .sandbox { display: inline-block; }
     </div>
     <div class="promise reveal">
       <h3>The numbers are measured</h3>
-      <p>The “second tap to text on screen” latency is a measured median. If a tier mishears you, switch to another one in the menu.</p>
+      <p>The “second tap to text on screen” latency is a measured median. If a tier mishears you, switch to another one on the “Models” page of the main window.</p>
     </div>
   </div>
 </section>
@@ -940,7 +941,7 @@ body.is-sandbox .sandbox { display: inline-block; }
     <div class="cap-lines" id="capLines"></div>
   </div>
   <p class="stage-note reveal" style="margin-top:14px">
-    The free tier includes 30 minutes of long recording a month. Pro has no limit on length.
+    The free tier includes 30 minutes of long recording a month.
   </p>
 </section>
 
@@ -1029,7 +1030,7 @@ body.is-sandbox .sandbox { display: inline-block; }
   <div class="faq reveal">
     <details>
       <summary>Where does my audio get sent?</summary>
-      <p class="a">Your recordings, transcripts, history and dictionary are stored on your Mac. Our server only handles accounts and subscriptions. For cloud recognition the audio goes straight to that one recognition service and does not pass through our server. That is also true on the free allowance we pay for. There is one exception: on the free allowance, the <strong>text</strong> for the cleanup step goes through our server before it reaches the model provider. With on-device recognition, dictation audio and its hint words are not sent anywhere. AI polishing still sends the words it touches (see the Pinyin section). Proper nouns from your dictionary are sent with the request so they are heard correctly. All of this is listed in Settings.</p>
+      <p class="a">Your recordings, transcripts, history, dictionary and typed words are stored on your Mac. For cloud recognition the audio goes straight to that one recognition service and does not pass through our server. That is also true on the free allowance we pay for. There are two exceptions. On the free allowance, the <strong>text</strong> for cleanup, translation, Ask and voice editing goes through our server before it reaches the model provider, and our server does not store it. With cloud candidates on in the input method, Pinyin you have not committed also goes through our server. With on-device recognition, dictation audio and its hint words are not sent anywhere; with cleanup on, the text still goes to a language model, and AI polishing still sends the words it touches (see the Pinyin section). Proper nouns from your dictionary are sent with the request so they are heard correctly. All of this is listed in Settings.</p>
     </details>
     <details>
       <summary>What happens when I am offline?</summary>

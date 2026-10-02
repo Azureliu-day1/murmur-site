@@ -256,11 +256,11 @@ footer a { color: var(--faint); }
   <h1>Where Murmur’s data goes.</h1>
   <p class="lede">Recordings, history, your dictionary and the words you type stay on your Mac.
   With cloud recognition, <b>the audio goes straight to the recognition provider for the tier you picked, not through our servers.</b>
-  When you are signed in and cleanup runs on the free allowance, the text goes through our servers first and then to the model vendor.
+  When you are signed in and have not entered your own key, the text for cleanup, translation, Ask and voice editing goes through our servers first and then to the model vendor; our servers do not store it.
   Below, for each kind of data: where it goes, where it is stored, and how to delete it, each with a way to check it yourself.</p>
 
   <div class="flowstage">
-    <svg viewBox="0 0 760 250" aria-label="Data travels from your Mac straight to the provider, skipping our servers">
+    <svg viewBox="0 0 760 250" aria-label="Audio travels from your Mac straight to the recognition provider, not through our servers">
       <!-- Flight paths (always visible, very faint) -->
       <path id="goPath"   d="M196 118 C 300 26, 460 26, 564 118" fill="none" stroke="var(--line2)" stroke-width="1.5" stroke-dasharray="3 6"/>
       <path id="backPath" d="M564 138 C 460 226, 300 226, 196 138" fill="none" stroke="var(--line2)" stroke-width="1.5" stroke-dasharray="3 6"/>
@@ -313,22 +313,23 @@ footer a { color: var(--faint); }
 
     <div class="jrow">
       <div class="what">Recordings<span class="mono">your voice</span></div>
-      <p>During recognition the audio goes <b>straight to the one provider behind the tier you picked</b> — which provider sits behind which tier is stated live in the app’s own “Privacy” panel (it is updated as the tiers change, so it is newer than this page). Pick <b>on-device recognition</b> and not one byte leaves this computer.
+      <p>During recognition the audio goes <b>straight to the one provider behind the tier you picked</b> — which provider sits behind which tier is stated live in the app’s own “Privacy” panel (it is updated as the tiers change, so it is newer than this page). Pick <b>on-device recognition</b> and not one byte of audio leaves this computer.
       Recording files sit on your Mac, kept 30 days by default so you can re-run them, then deleted automatically.</p>
-      <p>Settings can cut that to 7 days, or to “don’t keep them at all”. Delete the local folder and they are gone for real. Want it fully offline? Pick on-device recognition.</p>
+      <p>Settings can cut that to 7 days, or to “don’t keep them at all”. Delete the local folder and they are gone for real. With on-device recognition the audio stays on your Mac; with cleanup on, the text still goes to a language model. To keep what you say entirely on your Mac: pick on-device recognition, set cleanup to “Off (raw transcript)”, and don’t use translation, Ask or voice editing.</p>
     </div>
 
     <div class="jrow">
       <div class="what">Transcript and cleaned-up text<span class="mono">what you actually said</span></div>
-      <p>With AI cleanup, translation or ask-anything switched on, the transcript is handed to a language model once (which one, and whether it passes through our servers, is stated live in the app’s own “Privacy” panel);
-      the finished text and your history <b>live only in a database on your Mac</b>, synced to no cloud at all.
+      <p>With AI cleanup on, or when you use translation, Ask or voice editing, the transcript is handed to a language model once (voice editing also sends the passage you selected). With your own key it goes straight to that vendor; signed in without a key, on the free allowance, it passes through our servers first, which do not store it. The app’s own “Privacy” panel shows which path your current settings use.
+      With prompt skills on, a long enough sentence you say with the dictation key in an AI tool is sent one extra time over the same channel to the same vendor, to decide what kind of request it is; no audio is sent, and which window you are in is not sent.
+      The finished text and your history <b>live in a database on your Mac</b> and are not synced to any cloud as a whole.
       “Personal style” is off by default. Once it is on, each cleanup picks up to 3 of your earlier “what you said → cleaned-up text” pairs from recent dictation history and sends them with the cleanup request as samples.</p>
       <p>Switch cleanup off (the “raw transcript, untouched” setting) and the text reaches no language model. History can be deleted one entry at a time. To clear it all at once, go to Settings → System, set “Keep text” to “Don’t keep”, then click “Apply the retention rules now”. You set how long it is kept.</p>
     </div>
 
     <div class="jrow">
       <div class="what">Dictionary<span class="mono">your proper nouns</span></div>
-      <p>So it hears the names and terms you say often, the words in your dictionary are <b>sent along with every recognition request</b>. That is written in plain sight in Settings, not buried in terms.</p>
+      <p>So it hears the names and terms you say often, the words in your dictionary are <b>sent along with every recognition request</b>; with cleanup on, they also go with the cleanup request to the language model. That is written in plain sight in Settings, not buried in terms.</p>
       <p>Delete an entry whenever you like; once deleted it stops being sent.</p>
     </div>
 
@@ -345,7 +346,7 @@ footer a { color: var(--faint); }
       <p>At the moment you start speaking it reads the visible text of the frontmost window once (through Accessibility, no screenshot), to get proper nouns right. With cloud recognition, the proper nouns taken from it go to the recognition provider with the audio.
       With cleanup on, or in translate and Ask, <b>an excerpt of the screen text (1500 characters at most) goes to the model vendor with the transcript</b>. On the free allowance it passes through our server first; with your own key it goes straight to that vendor.
       On your Mac it is never written to the database, to disk or to a log, and words from your screen never enter your dictionary.</p>
-      <p>On by default. Turn off “Use the text on screen to get proper nouns right” in Settings → Recognition. With on-device dictation it is never read in the first place.</p>
+      <p>On by default. Turn off “Use the text on screen to get proper nouns right” in Settings → Recognition. With on-device recognition and cleanup off it is never read in the first place.</p>
     </div>
 
     <div class="jrow">
@@ -362,9 +363,9 @@ footer a { color: var(--faint); }
   <h2>In writing, so you can hold us to it.</h2>
   <div class="nots reveal">
     <div class="not"><span class="x">✕</span><p><b>We never handle your audio.</b> With cloud recognition the audio goes from your Mac straight to the recognition provider, through none of our servers. Text for cleanup is an exception; see “Once you sign in” below.</p></div>
-    <div class="not"><span class="x">✕</span><p><b>No behavioural tracking.</b> There is no analytics SDK in the app. Which app you were speaking into is never reported back to us. Once you sign in, each sentence reports its length in words and how long you spoke, to count your allowance; see “Once you sign in” below.</p></div>
+    <div class="not"><span class="x">✕</span><p><b>No behavioural tracking.</b> There is no analytics SDK in the app. Which app you were speaking into is never reported back to us. Once you sign in, each sentence (on-device ones included) reports its character count, how long you spoke and which path it took, to count your allowance, with no text attached; see “Once you sign in” below.</p></div>
     <div class="not"><span class="x">✕</span><p><b>No selling your data, no sharing it.</b> There are no advertisers and no “partners”. Your data is not the product.</p></div>
-    <div class="not"><span class="x">✕</span><p><b>This website doesn’t track you either.</b> There is no third-party analytics script on this page — open your browser’s network panel right now and check.</p></div>
+    <div class="not"><span class="x">✕</span><p><b>No analytics on this website.</b> No tracking, no ads. The sign-in and try-it pages load third-party scripts for sign-in and abuse protection, listed under “Website” below; open your browser’s network panel and check.</p></div>
   </div>
 </section>
 
@@ -379,7 +380,7 @@ footer a { color: var(--faint); }
   </div>
   <div class="receipt reveal">
     <b>② Where the app connects</b>
-    <p class="how">Point a free firewall like LuLu at Murmur and watch its outbound connections. You will see these: the recognition and language-model providers you picked; our server (sign-in, allowance, public config); this website (a version file, once a day); and GitHub when you download the Rime dictionary or a sentence model.</p>
+    <p class="how">Point a free firewall like LuLu at Murmur and watch its outbound connections. You will see these: the recognition and language-model providers you picked; our server (sign-in, allowance, public config, one-time passes for free-allowance recognition, and forwarding cleanup text); this website (a version file, once a day); GitHub when you download the Rime dictionary or a sentence model; and when you open the “Cleanup” page in Settings, one read of OpenRouter’s public model list, with none of your content.</p>
   </div>
   <div class="receipt reveal">
     <b>③ Every single entry says where it went</b>
@@ -391,10 +392,19 @@ footer a { color: var(--faint); }
 <section class="wrap">
   <div class="future reveal">
     <div class="eyebrow">Account · Once you sign in</div>
-    <p>Even when you are not signed in, the app connects to our server: it reads a public config once at launch, and at most every 5 minutes again while it is in front. That request carries neither who you are nor anything you said. It also reads a version file on this website once a day.</p>
+    <p>Even when you are not signed in, the app connects to our server to read a public config: only while the app is in front or within 5 minutes after you dictate, at an interval the server sets between 60 and 3600 seconds (5 minutes by default). That request carries neither who you are nor anything you said. It also reads a version file on this website once a day.</p>
     <p>When you are signed in, our servers also do these things:</p>
-    <p>① Sign-in and allowance. ② After each sentence, one report of how many words it was, how long you spoke, and whether it was dictation or Ask, without the text. ③ On the free allowance, each recording fetches a one-time pass, so the server knows you are recording at that moment. ④ On the free allowance, text for cleanup goes through the server and then to the model vendor. The same request carries the screen excerpt, and with personal style on, up to 3 sample sentences from your history. ⑤ With cloud candidates on in the input method, Pinyin you have not committed goes through the server to a third-party model service.</p>
-    <p>Recordings are not uploaded. History is not uploaded as a whole; with personal style on, a cleanup request carries up to 3 entries. Your dictionary and the words you type are not uploaded as a whole; only the words a sentence touches go with its cleanup request, as described in the “Typed words” row above. Every change to this page leaves its date at the bottom.</p>
+    <p>① Sign-in, allowance and the public config (signed in, it comes with your account). ② After each sentence, one report: character count, how long you spoke, dictation or Ask, which path it took (on-device / your own key / free allowance) and when it happened. On-device sentences are reported too and use no allowance. No text attached. ③ On the free allowance, each recording fetches a one-time pass, so the server knows you are recording at that moment; the audio still goes straight to the recognition provider. ④ On the free allowance (no key of your own), the text for cleanup, translation, Ask and voice editing goes through the server and then to the model vendor. The same request carries your dictionary and the screen excerpt (1500 characters at most); with personal style on, up to 3 sample sentences from your history; with prompt skills on, the sentence said in an AI tool is sent one extra time. Our servers only forward it and count the cost; they do not store the text, and no text goes into the logs. ⑤ With cloud candidates on in the input method (off by default), Pinyin you have not committed goes through the server to a third-party model service; only the Pinyin is sent.</p>
+    <p>Recordings are not uploaded. History is not uploaded as a whole; with personal style on, a cleanup request carries up to 3 entries. Your dictionary goes out whole with recognition and cleanup requests, as in the “Dictionary” row above. The words you type are not uploaded as a whole; only the ones a sentence touches go with a ⌥⇧Space polish request, as described in the “Typed words” row above. Every change to this page leaves its date at the bottom.</p>
+  </div>
+</section>
+
+<!-- ── Website ── -->
+<section class="wrap">
+  <div class="future reveal">
+    <div class="eyebrow">Website</div>
+    <p>This website has no analytics scripts and no ads. These are the places where something goes to our servers or a third party:</p>
+    <p>① The request-a-seat form stores your email, the line you wrote and the page language, plus a salted hash of your network address used only to limit how often it can be submitted. ② Trying cleanup on the web sends the text you paste to our servers, which pass it to a language model and do not store it. ③ The sign-in and try-it pages load the sign-in script from cdn.jsdelivr.net; when abuse protection is switched on, those two pages also load Cloudflare Turnstile. The page you land on after paying loads fonts from Google Fonts.</p>
   </div>
 </section>
 
@@ -507,7 +517,7 @@ if (reduced) {
 </script>
 
 <footer class="wrap">
-  <span>This page last updated: 2026-10-01</span>
+  <span>This page last updated: 2026-10-02</span>
   <span>Questions? Write to us: Others Studio</span>
   <a href="tos.html">Terms of Use</a>
   <a style="margin-left:auto" href="index.html">murmur home</a>

@@ -597,7 +597,7 @@ body.is-sandbox .sandbox { display: inline-block; }
   </div>
   <!-- ⭐ 这一版新增:一行文字链,跳到下面对应的板块。样式在 pinyin.css(.whatsnew)。
        只列 0.53 才有的功能;全部改动在 guide/#changes。 -->
-  <p class="whatsnew reveal"><b>0.53 新增</b><a href="#pinyin">拼音输入法</a><span class="sep">·</span><a href="guide/index.html#fuzzy">双拼与模糊音</a><span class="sep">·</span><a href="guide/index.html#smart">智能标点</a><span class="sep">·</span><a href="guide/index.html#cloud">云候选</a><span class="sep">·</span><a href="#vibe-skills">提示词技能</a><span class="sep">·</span><a href="#vibe-scene">按场景整理</a></p>
+  <p class="whatsnew reveal"><b>0.53 新增</b><a href="#pinyin">拼音输入法</a><span class="sep">·</span><a href="guide/index.html#fuzzy">双拼与模糊音</a><span class="sep">·</span><a href="guide/index.html#smart">智能标点</a><span class="sep">·</span><a href="guide/index.html#cloud">云候选</a><span class="sep">·</span><a href="#vibe-skills">提示词技能</a><span class="sep">·</span><a href="guide/index.html#scene">按场景整理</a></p>
 
   <div class="stage reveal" id="demo">
     <div class="fake-input"><span class="ph">光标在这里</span><span class="out"></span><span class="cursor"></span></div>
@@ -758,7 +758,7 @@ body.is-sandbox .sandbox { display: inline-block; }
   <!-- 2026-10-01 Wei:只留差异化,细节进 /guide/#prompt-skills 与 #scene。
        事实:murmur-ime 809fdda7(2026-10-01「去掉单独技能键」):PromptSkillSettings.swift PromptSkillAuto(15 字门)· PromptSkillCopy.toggleLabel / scopeLine / disclosure / howTo / firstHint(默认关;终端里不开;没有技能键、没有预览卡)· SceneSettingsSection.swift:56(术语原样) -->
   <div class="detail-list reveal">
-    <div id="vibe-skills"><strong>说需求,落下的是提示词。</strong>在 Cursor、Claude 桌面版、ChatGPT 里按听写键说需求,自动整理成提示词直接落字。短句和闲聊照常落字。默认关。</div>
+    <div id="vibe-skills"><strong>说需求,落下的是提示词。</strong>在 Cursor、Claude 桌面版、ChatGPT,以及被认成 AI 助手的其它 App 和网页里,按听写键说需求,自动整理成提示词直接落字。网页要开着「按场景整理」。短句和闲聊照常落字。默认关。</div>
     <div id="vibe-scene"><strong>术语原样落下。</strong>在终端和编辑器里,变量名、库名、报错保留英文,中间的中文照常落下。</div>
     <div><strong>听错的库名改一次。</strong>改对后它进词典,下次直接听对。</div>
     <div><strong>选中代码,说怎么改。</strong>按右 ⌃ 说出改法,改好的代码落回原处。</div>
@@ -773,7 +773,7 @@ body.is-sandbox .sandbox { display: inline-block; }
   <p class="sub reveal">
     我们在内部测了市面上的识别模型,留下三个,按说话场景分成三档。
     每一档的长处和短处都列在下面。
-    在菜单里点一下就能换档。
+    在主窗口「模型」页换档。
   </p>
 
   <div class="tiers">
@@ -847,9 +847,10 @@ body.is-sandbox .sandbox { display: inline-block; }
 <section class="wrap" id="local">
   <div class="eyebrow reveal">Local · 数据在哪</div>
   <h2 class="reveal">录音只存在<br>你的 Mac 上。</h2>
-  <p class="sub reveal">我们的服务器只管账号、登录和订阅。录音、转写、历史和词典都存在你的 Mac 上。
+  <p class="sub reveal">录音、转写、历史、词典和打过的词都存在你的 Mac 上。
   用云端识别时,音频直接发给你选的那家识别服务,不经过我们。
-  用本机识别时,音频不出这台电脑。</p>
+  用本机识别时,音频不出这台电脑。
+  登录后用免费额度整理时,文字先经过我们的服务器,再转给大模型。</p>
   <div class="flowstage reveal">
     <svg viewBox="0 0 760 250" aria-label="音频从你的 Mac 直接发给你选的模型商,不经过我们的服务器">
       <!-- 航线(常显,极淡) -->
@@ -872,7 +873,7 @@ body.is-sandbox .sandbox { display: inline-block; }
       <g id="ghost" opacity=".8">
         <rect x="304" y="92" width="152" height="72" rx="14" fill="none" stroke="var(--line2)" stroke-dasharray="5 5"/>
         <text class="ghost-label" x="380" y="122" text-anchor="middle">我们的服务器</text>
-        <text class="node-sub" x="380" y="142" text-anchor="middle">只管账号和订阅</text>
+        <text class="node-sub" x="380" y="142" text-anchor="middle">音频不经过这里</text>
         <g id="ghostX" opacity="0">
           <circle cx="380" cy="76" r="13" fill="var(--coral)"/>
           <text x="380" y="81" text-anchor="middle" style="font-size:13px; font-weight:700" fill="#fff">✕</text>
@@ -917,7 +918,7 @@ body.is-sandbox .sandbox { display: inline-block; }
     </div>
     <div class="promise reveal">
       <h3>数字是实测的</h3>
-      <p>「从再按一下到出字」的延迟写的是实测中位数。哪一档听得不准,在菜单里换一档就行。</p>
+      <p>「从再按一下到出字」的延迟写的是实测中位数。哪一档听得不准,在主窗口「模型」页换一档。</p>
     </div>
   </div>
 </section>
@@ -1022,7 +1023,7 @@ body.is-sandbox .sandbox { display: inline-block; }
   <div class="faq reveal">
     <details>
       <summary>我的录音会被传到哪里?</summary>
-      <p class="a">录音、转写、历史和词典都存在你的 Mac 上。我们的服务器只处理账号和订阅。用云端识别时,音频直接发给那一家识别服务,不经过我们的服务器。用我们代付的免费额度时也是这样。有一个例外:用免费额度时,整理用的<strong>文字</strong>会先经过我们的服务器,再转给模型厂商。用本机识别时,什么都不出电脑。词典里的专有名词会随请求发给识别服务,帮它听对这些词。这些在设置里都写着。</p>
+      <p class="a">录音、转写、历史、词典和打过的词都存在你的 Mac 上。用云端识别时,音频直接发给那一家识别服务,不经过我们的服务器。用我们代付的免费额度时也是这样。有两处例外。用免费额度时,整理、翻译、随心问和口述编辑的<strong>文字</strong>先经过我们的服务器,再转给模型厂商。服务器不存原文。开了输入法的云候选时,还没上屏的拼音也经过我们的服务器。本机识别时音频不出电脑;开着整理时,文字仍会发给大模型。按 ⌥⇧Space 让 AI 整理时,也会带上与这句沾边的词,见拼音一节。词典里的专有名词会随请求发给识别服务,帮它听对这些词。这些在设置里都写着。</p>
     </details>
     <details>
       <summary>断网了怎么办?</summary>

@@ -31,6 +31,39 @@ if [ -n "$pii" ]; then
 fi
 echo "PII 扫描:0 命中(白名单:$PII_ALLOW)"
 
+# ── 隐私承诺禁句(2026-10-02 FIX2-D):代码已经证伪的绝对说法,**含法律页**全站拦 ──
+# 事实(以 App 代码为准):登录后没填自己的 Key 时,整理 / 翻译 / 随心问 / 口述编辑的
+# 文字经我们的服务器转给大模型;服务器还管额度、用量上报、识别通行证;本机识别时
+# 只是**音频**不出电脑;换档在主窗口「模型」页,菜单里没有。
+# 只看用户看得见的字:先剥掉 HTML 注释(下架的定价段整段在注释里)再匹配。
+banned_claims=$(python3 - <<'PY'
+import glob, re
+PATS = [
+    r"只管账号", r"只处理账号", r"只处理「你是谁」", r"只认识「你是谁」",
+    r"永远不知道.{0,3}你说了什么", r"什么都不出(这台)?电脑", r"不经手你的音频和文字",
+    r"一个字都不会上传", r"只连你(配置|选)的服务商", r"任何第三方统计脚本",
+    r"在菜单里(点一下就能)?换(一)?档",
+    r"only handles? accounts", r"accounts and billing only", r"never know what you said",
+    r"nothing leaves (the|this) computer", r"connects only to the providers",
+    r"no third-party analytics script", r"(one click|another one) in the menu",
+    r"Pro has no limit on length",
+]
+hits = []
+for p in sorted(glob.glob("**/*.html", recursive=True)):
+    raw = re.sub(r"<!--.*?-->", "", open(p, encoding="utf-8").read(), flags=re.S)
+    for n, line in enumerate(raw.splitlines(), 1):
+        for pat in PATS:
+            if re.search(pat, line, re.I):
+                hits.append(f"{p}: 「{re.search(pat, line, re.I).group(0)}」 {line.strip()[:120]}")
+print("\n".join(hits))
+PY
+)
+if [ -n "$banned_claims" ]; then
+  echo "隐私承诺禁句命中(代码已证伪的说法):"; echo "$banned_claims"
+  exit 1
+fi
+echo "隐私承诺禁句:0 命中"
+
 exec python3 - "$@" <<'PY'
 import sys, re, glob, html.parser
 
