@@ -746,7 +746,7 @@ body.is-sandbox .sandbox { display: inline-block; }
   <p class="sub reveal">
     我们在内部测了市面上的识别模型,留下三个,按说话场景分成三档。
     每一档的长处和短处都列在下面。
-    在菜单里点一下就能换档。
+    在主窗口「模型」页换档。
   </p>
 
   <div class="tiers">
@@ -820,9 +820,10 @@ body.is-sandbox .sandbox { display: inline-block; }
 <section class="wrap" id="local">
   <div class="eyebrow reveal">Local · 数据在哪</div>
   <h2 class="reveal">录音只存在<br>你的 Mac 上。</h2>
-  <p class="sub reveal">我们的服务器只管账号、登录和订阅。录音、转写、历史和词典都存在你的 Mac 上。
+  <p class="sub reveal">录音、转写、历史和词典都存在你的 Mac 上。
   用云端识别时,音频直接发给你选的那家识别服务,不经过我们。
-  用本机识别时,音频不出这台电脑。</p>
+  用本机识别时,音频不出这台电脑。
+  登录后用免费额度整理时,文字先经过我们的服务器,再转给大模型。</p>
   <div class="flowstage reveal">
     <svg viewBox="0 0 760 250" aria-label="音频从你的 Mac 直接发给你选的模型商,不经过我们的服务器">
       <!-- 航线(常显,极淡) -->
@@ -845,7 +846,7 @@ body.is-sandbox .sandbox { display: inline-block; }
       <g id="ghost" opacity=".8">
         <rect x="304" y="92" width="152" height="72" rx="14" fill="none" stroke="var(--line2)" stroke-dasharray="5 5"/>
         <text class="ghost-label" x="380" y="122" text-anchor="middle">我们的服务器</text>
-        <text class="node-sub" x="380" y="142" text-anchor="middle">只管账号和订阅</text>
+        <text class="node-sub" x="380" y="142" text-anchor="middle">音频不经过这里</text>
         <g id="ghostX" opacity="0">
           <circle cx="380" cy="76" r="13" fill="var(--coral)"/>
           <text x="380" y="81" text-anchor="middle" style="font-size:13px; font-weight:700" fill="#fff">✕</text>
@@ -890,7 +891,7 @@ body.is-sandbox .sandbox { display: inline-block; }
     </div>
     <div class="promise reveal">
       <h3>数字是实测的</h3>
-      <p>「从再按一下到出字」的延迟写的是实测中位数。哪一档听得不准,在菜单里换一档就行。</p>
+      <p>「从再按一下到出字」的延迟写的是实测中位数。哪一档听得不准,在主窗口「模型」页换一档。</p>
     </div>
   </div>
 </section>
@@ -995,7 +996,7 @@ body.is-sandbox .sandbox { display: inline-block; }
   <div class="faq reveal">
     <details>
       <summary>我的录音会被传到哪里?</summary>
-      <p class="a">录音、转写、历史和词典都存在你的 Mac 上。我们的服务器只处理账号和订阅。用云端识别时,音频直接发给那一家识别服务,不经过我们的服务器。用我们代付的免费额度时也是这样。有一个例外:用免费额度时,整理用的<strong>文字</strong>会先经过我们的服务器,再转给模型厂商。用本机识别时,什么都不出电脑。词典里的专有名词会随请求发给识别服务,帮它听对这些词。这些在设置里都写着。</p>
+      <p class="a">录音、转写、历史和词典都存在你的 Mac 上。用云端识别时,音频直接发给那一家识别服务,不经过我们的服务器。用我们代付的免费额度时也是这样。有一个例外:用免费额度时,整理、翻译、随心问和口述编辑的<strong>文字</strong>会先经过我们的服务器,再转给模型厂商。服务器不存原文。本机识别时音频不出电脑;开着整理时,文字仍会发给大模型。词典里的专有名词会随请求发给识别服务,帮它听对这些词。这些在设置里都写着。</p>
     </details>
     <details>
       <summary>断网了怎么办?</summary>
