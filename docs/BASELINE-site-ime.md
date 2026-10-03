@@ -44,7 +44,7 @@
 | thanks/index.html | 12 |
 
 ## 事实核对表(页面声明 ↔ 源码 / 文档;⛔ 对不上的不写进页面)
-输入法仓 `~/Applications/murmur-ime`(ime-mac,HEAD 4b7b067),scout 09-26 13:5x 抄回。标 INFERENCE 的只写成保守说法。
+输入法仓 `murmur-ime` 仓(ime-mac,HEAD 4b7b067),scout 09-26 13:5x 抄回。标 INFERENCE 的只写成保守说法。
 | # | 页面可以写的声明 | 证据 |
 |---|---|---|
 | F1 | 输入法随 Murmur 一起装:设置 → 识别 → 「输入法」卡片,按钮「安装 / 更新 / 卸载」;引导完成页也能装 | `Sources/Murmur/UI/SettingsView.swift:472-475`;`UI/IMEInstallSection.swift:135,139,143`;`UI/OnboardingView.swift:1285`;`docs/RELEASE-0.53.0.md` 新增第 1 条 |
