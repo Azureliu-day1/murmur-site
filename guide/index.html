@@ -197,23 +197,33 @@
     </div>
   </section>
 
-  <!-- 事实:murmur-ime 809fdda7(2026-10-01「去掉单独技能键」):PromptSkillSettings.swift PromptSkillAuto(15 字门)· PromptSkillCopy.toggleLabel / scopeLine / disclosure / howTo / firstHint · PromptSkills.swift:41-42 ·
-       Resources/prompt-skills/*.json 的 name。⛔ 不再有技能键 ⌃⌥P 和预览卡(Wei 2026-10-01「直接做」)。 -->
+    <!-- 事实(方案 C,murmur-ime skills5 4745d296):PromptSkillSettings.swift PromptSkillAuto.minUnits = 15(短于它不发技能那一发)、maxWait 4 s ·
+       PromptSkills.swift PromptSkillApproach.minScalars = 40(附做法的门)· codeIDs / chatIDs(编程 7 / 聊天 5)· 冲突表 method-conflicts.json v4 ·
+       技能名取 Resources/prompt-skills/*.json 的 name。落进去的 = 普通整理稿 + 可选「做法」第 3–5 条,不再切格子。 -->
   <section class="g-sec" id="prompt-skills">
     <h2>提示词技能</h2>
     <div class="g-body">
       <div>
-        <div class="g-row"><span class="k">是什么</span><div>在 AI 编程和 AI 聊天工具里,把你说的需求整理成结构清楚的提示词,直接落字。</div></div>
-        <div class="g-row"><span class="k">试一下</span><div><a href="../skills/index.html">技能页</a>列出每个技能附的三条做法,也能粘一句看会落成什么。</div></div>
-        <div class="g-row"><span class="k">怎么用</span><div>
-          <p>在 Cursor、Claude 桌面版、ChatGPT,以及被认成 AI 助手的其它 App 和网页里,照常按听写键说需求。网页要开着「按场景整理」。整理好的提示词直接落在光标处,不用多按键。</p>
-          <p>短句和闲聊照常落字。少于 15 个字的句子不走技能。判不出是哪种需求时,落普通整理的结果。</p>
-          <p>Cursor 里是编程四个技能:写新功能、修 bug、改 / 重构代码、解释代码。Claude 桌面版、ChatGPT / Codex 里另有聊天三个:调研、帮我写、帮我做决定。其它被认成 AI 助手的 App 里是聊天三个。终端里不开。</p>
+        <div class="g-row"><span class="k">是什么</span><div>在 AI 编程和 AI 聊天工具里说需求时,先落通顺的整理稿,判得出是哪种需求就在后面附三条做法。</div></div>
+        <div class="g-row"><span class="k">落什么</span><div>
+          <p>落进输入框的是普通整理稿。下面三条同时满足时,空一行再附「做法」三条:</p>
+          <ul>
+            <li>这一句不少于 40 个字。</li>
+            <li>判得出是单一一种需求(判成两种以上或判不出时不附)。</li>
+            <li>你没在话里说明做法,比如「先别改」「只解释」「顺手改」。</li>
+          </ul>
+          <p>不满足就只落整理稿。少于 15 个字的句子不走技能。整理失败或翻译时也不附。</p>
         </div></div>
-        <div class="g-row"><span class="k">在哪打开</span><div><b>默认关。</b>在 设置 → 整理 →「提示词技能」卡打开,打开前有一页确认。七个技能在同一张卡上单独开关。关着时,你第一次在这些 App 里说够长的一句,录音条会提示一次在哪打开。</div></div>
+        <div class="g-row"><span class="k">十二个技能</span><div>
+          <p>编程七个:修 bug、写新功能、改 / 重构代码、解释代码、代码审查、写计划、写测试。</p>
+          <p>聊天五个:调研、帮我写、帮我做决定、总结提炼、回复消息。</p>
+          <p>Cursor 里只用编程七个。Claude 桌面版、ChatGPT / Codex 里十二个都可选。其它被认成 AI 助手的 App 里是聊天五个。终端里不开。</p>
+          <p>每个技能附哪三条做法,见<a href="../skills/index.html">技能页</a>,那里也能粘一句试。</p>
+        </div></div>
+        <div class="g-row"><span class="k">怎么用</span><div>在这些 App 和网页里照常按听写键说需求,网页要开着「按场景整理」。结果直接落在光标处,不用多按键。</div></div>
+        <div class="g-row"><span class="k">在哪打开</span><div><b>默认关。</b>在 设置 → 整理 →「提示词技能」卡打开,打开前有一页确认。十二个技能在同一张卡上单独开关。关着时,你第一次在这些 App 里说够长的一句,录音条会提示一次在哪打开。</div></div>
         <p class="g-note">开启后,够长的那一句的转写文字会多发一次给整理用的同一家模型厂商。不新增接收方,不发录音,不发你在哪个窗口。「整理」设成「不动」时技能也不发。</p>
       </div>
-      <!-- shot: settings-prompt-skill 仍缺:INT 那张是改口前的卡(还有技能键 ⌃⌥P 和预览卡说明),等 809fdda7 之后重出。预览卡已经没有了,不再要图。 -->
       <figure class="py-shot"><p><kbd>设置</kbd> → <kbd>整理</kbd> → <kbd>提示词技能</kbd></p><figcaption>默认关。打开前有一页确认。</figcaption></figure>
     </div>
   </section>

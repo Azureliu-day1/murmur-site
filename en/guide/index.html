@@ -53,7 +53,6 @@
     <div class="g-body">
       <div>
         <div class="g-row"><span class="k">What it is</span><div>A Pinyin input method for the Mac that comes with Murmur. It shares one vocabulary with dictation. Requires macOS 26 or later.</div></div>
-        <div class="g-row"><span class="k">Try it</span><div>The <a href="../skills/index.html">skills page</a> lists the three steps each skill adds, and lets you paste a sentence to see what lands.</div></div>
         <div class="g-row"><span class="k">How to use</span><div>
           <div class="py-step"><b>01</b><div>Open Settings → Input Method and click Install on the Input method card. No password.</div></div>
           <div class="py-step"><b>02</b><div>Check the input menu in the menu bar. If it already lists Murmur, use it. If not, log out once and log back in.</div></div>
@@ -197,22 +196,33 @@
     </div>
   </section>
 
-  <!-- Facts: murmur-ime 809fdda7 (2026-10-01, separate skill key removed): PromptSkillSettings.swift PromptSkillAuto (15-unit threshold) · PromptSkillCopy.toggleLabel / scopeLine / disclosure / howTo / firstHint · PromptSkills.swift:41-42 · name field of Resources/prompt-skills/*.json.
-       ⛔ No more ⌃⌥P skill key and no preview card (Wei 2026-10-01: "just do it"). -->
+    <!-- Facts (plan C, murmur-ime skills5 4745d296): PromptSkillSettings.swift PromptSkillAuto.minUnits = 15 (no skill call below it), maxWait 4 s ·
+       PromptSkills.swift PromptSkillApproach.minScalars = 40 (threshold for adding steps) · codeIDs / chatIDs (7 coding / 5 chat) · method-conflicts.json v4 ·
+       skill names from the name field of Resources/prompt-skills/*.json. What lands = the plain cleanup plus, optionally, steps 3 to 5 of the skill. No more slots. -->
   <section class="g-sec" id="prompt-skills">
     <h2>Prompt skills</h2>
     <div class="g-body">
       <div>
-        <div class="g-row"><span class="k">What it is</span><div>In AI coding and AI chat tools, the request you say is turned into a structured prompt and lands directly.</div></div>
-        <div class="g-row"><span class="k">How to use</span><div>
-          <p>In Cursor, Claude desktop, ChatGPT, and other apps and web pages recognised as an AI assistant, press the dictation key as usual and say the request. Web pages need “Cleanup by scene” on. The prompt lands at your cursor. There is no extra key.</p>
-          <p>Short sentences and chat land as usual. Sentences under 15 characters or words skip the skill. When no skill fits, the plain cleanup lands.</p>
-          <p>Cursor gets the four coding skills: Build a feature, Fix a bug, Change or refactor code, Explain code. Claude desktop and ChatGPT / Codex also get the three chat skills: Research, Write, Decide. Other apps recognised as an AI assistant get the three chat skills. Not in terminals.</p>
+        <div class="g-row"><span class="k">What it is</span><div>When you say a request in AI coding and AI chat tools, the clean tidied text lands first. If the app can tell what kind of request it is, three steps are added after it.</div></div>
+        <div class="g-row"><span class="k">What lands</span><div>
+          <p>The plain cleanup always lands. Three steps are added after a blank line only when all of these hold:</p>
+          <ul>
+            <li>The sentence is at least 40 characters long.</li>
+            <li>It reads as one single kind of request (nothing is added when it reads as two or more, or as none).</li>
+            <li>You did not already say how to go about it, for example “don’t change anything yet”, “just explain” or “fix it while you’re there”.</li>
+          </ul>
+          <p>Otherwise only the cleanup lands. Sentences under 15 characters or words skip the skill. Nothing is added when cleanup fails or when translating.</p>
         </div></div>
-        <div class="g-row"><span class="k">Where</span><div><b>Off by default.</b> Turn it on in Settings → Cleanup → Prompt skills. A confirmation page comes first. Each of the seven skills has its own switch on the same card. While it is off, the recording bar tells you once where to turn it on, the first time you say a long enough sentence in one of these apps.</div></div>
+        <div class="g-row"><span class="k">Twelve skills</span><div>
+          <p>Seven coding skills: Fix a bug, Build a feature, Change or refactor code, Explain code, Review code, Plan the work, Write tests.</p>
+          <p>Five chat skills: Research, Write, Decide, Summarize, Reply.</p>
+          <p>Cursor gets the seven coding skills. Claude desktop and ChatGPT / Codex can use all twelve. Other apps recognised as an AI assistant get the five chat skills. Not in terminals.</p>
+          <p>The three steps each skill adds are on the <a href="../skills/index.html">skills page</a>, where you can also paste a sentence to try it.</p>
+        </div></div>
+        <div class="g-row"><span class="k">How to use</span><div>In those apps and web pages, press the dictation key as usual and say the request. Web pages need “Cleanup by scene” on. The result lands at your cursor. There is no extra key.</div></div>
+        <div class="g-row"><span class="k">Where</span><div><b>Off by default.</b> Turn it on in Settings → Cleanup → Prompt skills. A confirmation page comes first. Each of the twelve skills has its own switch on the same card. While it is off, the recording bar tells you once where to turn it on, the first time you say a long enough sentence in one of these apps.</div></div>
         <p class="g-note">Once it is on, the transcript of a long enough sentence is sent one extra time to the same model vendor that cleanup uses. No new recipient, no audio, and which window you are in is not sent. When cleanup is set to leave text alone, the skill sends nothing either.</p>
       </div>
-      <!-- shot: settings-prompt-skill still missing: the INT render is the card from before the change (it still shows the ⌃⌥P skill key). Re-render after 809fdda7. The preview card is gone, so no shot is needed for it. -->
       <figure class="py-shot"><p><kbd>Settings</kbd> → <kbd>Cleanup</kbd> → <kbd>Prompt skills</kbd></p><figcaption>Off by default. A confirmation page comes first.</figcaption></figure>
     </div>
   </section>
