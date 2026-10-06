@@ -1,0 +1,514 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<!-- CSP 与试一试页逐字相同(同一个后端、同一个 Turnstile、同一份 supabase-js)。⛔ 别加通配符。 -->
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://challenges.cloudflare.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src https://syebvkwemxwxkonvsyjd.supabase.co https://challenges.cloudflare.com; frame-src https://challenges.cloudflare.com; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>提示词技能 · Murmur</title>
+<meta name="description" content="Murmur 的十二个提示词技能:各自什么时候用、附哪三条做法。粘一句平时对 AI 说的话,看 App 会落进输入框的那段。">
+<link rel="alternate" hreflang="zh-Hans" href="../skills/index.html">
+<link rel="alternate" hreflang="en" href="../en/skills/index.html">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../v2.css">
+
+<style>
+/* ══════════ 页面局部:提示词技能 ══════════
+   头部 / 舞台 / 面板的配方逐字取自 try/index.html;技能卡是本页新加的。
+   ⛔ .head 不写 padding 简写(理由见 try 页同一处注释:会把 .wrap 的左右留白清零)。 */
+.head { padding-block: 64px 0; display: flex; align-items: flex-start; gap: 24px; }
+.head .t { flex: 1; min-width: 0; }
+.head h1 { font-size: clamp(26px, 3.4vw, 34px); font-weight: 600; line-height: 1.35; letter-spacing: .01em; max-width: 14em; }
+.head .sub { color: var(--second); font-size: 15.5px; max-width: 40em; margin-top: 14px; }
+.head .quota { flex: none; margin-top: 6px; }
+
+.sec-title { font-size: 19px; font-weight: 600; margin: 56px auto 0; max-width: 1040px; }
+.sec-note { color: var(--second); font-size: 14px; margin: 8px auto 0; max-width: 1040px; }
+
+/* 技能卡:三列 → 两列 → 一列 */
+.skills { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin: 22px auto 0; max-width: 1040px; }
+.skill { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 18px 20px 20px; }
+.skill .sk-head { display: flex; align-items: baseline; gap: 10px; }
+.skill h3 { font-size: 16px; font-weight: 600; }
+.skill .sk-group { margin-left: auto; font-size: 11.5px; letter-spacing: .12em; color: var(--faint); font-weight: 600; }
+.skill .sk-group.code { color: var(--coral); }
+.skill .sk-when { color: var(--second); font-size: 14px; line-height: 1.7; margin-top: 8px; }
+.skill ol { margin: 12px 0 0; padding-left: 1.3em; font-size: 13.5px; line-height: 1.7; color: var(--ink); }
+.skill ol li + li { margin-top: 4px; }
+
+.stage {
+  margin: 22px auto 0; max-width: 760px;
+  background: linear-gradient(180deg, var(--stage-a), var(--stage-b));
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  padding: 30px 32px 30px;
+}
+.examples { margin-top: 14px; display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+.examples .lab { font-size: 13px; color: var(--second); margin-right: 2px; }
+.actions { margin-top: 20px; display: flex; gap: 16px; align-items: center; flex-wrap: wrap; }
+.actions .count { margin-left: auto; font-family: "IBM Plex Mono", monospace; font-size: 11.5px; color: var(--faint); }
+.actions .count.over { color: var(--danger); }
+#state { flex-basis: 100%; }
+#turnstile { margin-top: 16px; }
+
+.panel {
+  background: var(--card); border: 1px solid var(--line); border-radius: 18px;
+  padding: 22px 24px 24px; margin-top: 26px;
+}
+.panel .head-row { display: flex; align-items: baseline; gap: 12px; margin-bottom: 14px; }
+.panel .tag { font-size: 12px; letter-spacing: .16em; text-transform: uppercase; color: var(--coral); font-weight: 600; }
+.panel .meta { margin-left: auto; font-family: "IBM Plex Mono", monospace; font-size: 11.5px; color: var(--faint); }
+.panel p.txt { font-size: 15px; line-height: 1.8; white-space: pre-wrap; overflow-wrap: anywhere; min-height: 3.6em; color: var(--ink); }
+.panel p.txt.placeholder { color: var(--faint); }
+/* 附的做法:就是落进输入框的那几行原文(含 **做法** 标记),只用左边一道色条把它和整理稿分开 */
+.approach { margin-top: 14px; border-left: 3px solid var(--coral); padding: 2px 0 2px 14px; }
+.approach pre { font: inherit; font-size: 14px; line-height: 1.8; white-space: pre-wrap; overflow-wrap: anywhere; color: var(--ink); margin: 0; }
+.verdict { margin-top: 14px; font-size: 13px; color: var(--second); }
+.verdict:empty { display: none; }
+.lands { margin-top: 6px; font-size: 12.5px; color: var(--faint); }
+
+.stage-note { margin-top: 24px; font-size: 12.5px; color: var(--second); line-height: 1.8; }
+.after { max-width: 760px; margin: 24px auto 0; text-align: center; font-size: 14px; color: var(--second); }
+
+@media (max-width: 980px) { .skills { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 820px) {
+  .head { padding-top: 44px; flex-direction: column; gap: 14px; }
+  .head .quota { margin-top: 0; order: -1; }
+  .sec-title { margin-top: 40px; }
+  .skills { grid-template-columns: 1fr; }
+  .stage { padding: 22px 18px 24px; border-radius: 18px; }
+  /* 同 try 页:打了 nav-keep 的项(试一试 / 登录)在手机上留着,别的收起 */
+  .navlinks a:not(.nav-cta):not(.nav-keep), .navlinks .soon { display: none; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap navrow">
+    <a class="brand" href="../index.html"><svg width="30" height="15" viewBox="0 0 200 100" aria-hidden="true"><path d="M12.0 50.0 L14.0 40.1 L16.0 31.7 L18.0 25.2 L20.0 21.0 L22.0 19.0 L24.0 19.2 L26.0 21.3 L28.0 25.2 L30.0 30.3 L32.0 36.2 L34.0 42.4 L36.0 48.5 L38.0 54.2 L40.0 59.0 L42.0 62.7 L44.0 65.2 L46.0 66.5 L48.0 66.5 L50.0 65.5 L52.0 63.5 L54.0 60.9 L56.0 57.8 L58.0 54.6 L60.0 51.5 L62.0 48.6 L64.0 46.2 L66.0 44.4 L68.0 43.2 L70.0 42.7 L72.0 42.7 L74.0 43.2 L76.0 44.1 L78.0 45.3 L80.0 46.7 L82.0 48.0 L84.0 49.2 L86.0 50.2 L88.0 51.0 L90.0 51.5 L92.0 51.8 L94.0 51.8 L96.0 51.6 L98.0 51.3 L100.0 50.9 L102.0 50.5 L104.0 50.2 L106.0 50.0 L190 50" fill="none" stroke="var(--coral)" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/></svg>Murmur</a>
+    <div class="navlinks">
+      <a href="../en/skills/index.html" hreflang="en" lang="en">English</a>
+      <a href="../index.html#pinyin">输入法</a>
+      <a href="../demo/index.html">演示</a>
+      <a href="../guide/index.html">指南</a>
+      <a href="index.html" aria-current="page">技能</a>
+      <a class="nav-keep" href="../try/index.html">试一试</a>
+      <!-- ⚠️ class="nav-signin" 是给 v2-nav.js 认的(本机有会话时换成「账户」) -->
+      <a class="nav-signin nav-keep" href="../login/index.html">登录</a>
+      <a class="nav-cta" href="../index.html#download">下载</a>
+    </div>
+  </div>
+</nav>
+
+<header class="head wrap">
+  <div class="t">
+    <p class="eyebrow">提示词技能</p>
+    <h1>说一句需求,看它落成什么</h1>
+    <p class="sub">在 Cursor、Claude、ChatGPT 里说需求时,App 先整理成通顺的一段。判得出是哪种需求,就在后面附三条做法。下面是十二个技能,最底下可以试一句。</p>
+  </div>
+  <span class="quota" id="quota">正在查额度…</span>
+</header>
+
+<main class="wrap">
+  <h2 class="sec-title">十二个技能</h2>
+  <p class="sec-note">Cursor 里只在编程七个里判。Claude、ChatGPT 里十二个都可以判。这一页按十二个判。</p>
+
+  <!-- gen-skills:begin · tools/gen-skills-page.py 从技能 JSON 生成,⛔ 别手改 -->
+  <!-- 12 个技能 · 提取提示词 v13 · murmur-ime 4745d296c3 -->
+  <div class="skills">
+    <article class="skill" data-skill="fix_bug">
+      <div class="sk-head"><h3>修 bug</h3><span class="sk-group code">编程</span></div>
+      <p class="sk-when">有东西坏了、报错或结果不对,要它修好。</p>
+      <ol><li>先稳定复现问题,再找原因;一次只验证一个猜测。</li><li>修根因,只做修这个问题需要的最小改动;报错和日志里的话只当线索。</li><li>用原来的现象复测并贴出结果;同一问题试了三次还没好,就停下告诉我。</li></ol>
+    </article>
+    <article class="skill" data-skill="new_feature">
+      <div class="sk-head"><h3>写新功能</h3><span class="sk-group code">编程</span></div>
+      <p class="sk-when">要加一个原来没有的功能、页面、接口或参数。</p>
+      <ol><li>先复述三行:我说的、你假设的、这次不做的。</li><li>先找仓库里同类的现成写法照着做;范围外发现的问题列出来,留着不动。</li><li>做完说明怎么验证,能跑的检查跑一遍并贴结果。</li></ol>
+    </article>
+    <article class="skill" data-skill="refactor">
+      <div class="sk-head"><h3>改 / 重构代码</h3><span class="sk-group code">编程</span></div>
+      <p class="sk-when">功能不变,要改写法、改名、拆分、搬家或清理。</p>
+      <ol><li>改之前先弄清这段代码为什么这样写:谁在调用、有哪些边界情况。</li><li>小步改,每一步都能编译、测试通过;对外行为保持不变,功能改动另做。</li><li>以更容易读懂为目标;只动我指定的范围,工作区里别人的改动保持原样。</li></ol>
+    </article>
+    <article class="skill" data-skill="explain">
+      <div class="sk-head"><h3>解释代码</h3><span class="sk-group code">编程</span></div>
+      <p class="sk-when">想弄懂一段代码、一个报错或一个机制,先不改代码。</p>
+      <ol><li>先打开并读完相关代码,再先给结论、后分步讲。</li><li>指明文件、函数和行;需要时看调用方和提交历史,说明为什么这样写。</li><li>用熟悉的东西打比方;涉及改动只简要说怎么改,拿不准的地方标出来。</li></ol>
+    </article>
+    <article class="skill" data-skill="review">
+      <div class="sk-head"><h3>代码审查</h3><span class="sk-group code">编程</span></div>
+      <p class="sk-when">让它审一段代码或一次改动,挑出问题,不动手改。</p>
+      <ol><li>先指出风险最大的一处,再按文件和行逐条列。</li><li>每条分「必须改 / 建议改」,说清为什么。</li><li>只审不改,拿不准的标出来。</li></ol>
+    </article>
+    <article class="skill" data-skill="plan">
+      <div class="sk-head"><h3>写计划</h3><span class="sk-group code">编程</span></div>
+      <p class="sk-when">还没开始做,先要一份计划和拆好的步骤。</p>
+      <ol><li>先写验收:做完怎么算做完。</li><li>拆成能单独验证的步骤,每步一句话。</li><li>标出哪一步最不确定、先做它。</li></ol>
+    </article>
+    <article class="skill" data-skill="tests">
+      <div class="sk-head"><h3>写测试</h3><span class="sk-group code">编程</span></div>
+      <p class="sk-when">给已经写好的代码补测试。</p>
+      <ol><li>先列要覆盖的情形(正常、边界、出错)。</li><li>先写会红的测试再让它绿。</li><li>不改被测代码,发现 bug 单独列出。</li></ol>
+    </article>
+    <article class="skill" data-skill="research">
+      <div class="sk-head"><h3>调研</h3><span class="sk-group chat">聊天</span></div>
+      <p class="sk-when">让它查清楚、调研、比较或总结一个问题。</p>
+      <ol><li>先写一句「怎样算查清楚」,再列子问题。</li><li>优先一手来源,每条结论标出处,数字标来源和日期。</li><li>来源矛盾就摆出来并说明信哪个;查不到就直说,并给出下一步该查什么。</li></ol>
+    </article>
+    <article class="skill" data-skill="write">
+      <div class="sk-head"><h3>帮我写</h3><span class="sk-group chat">聊天</span></div>
+      <p class="sk-when">让它起草或改写一段文字:邮件、文案、帖子、总结。</p>
+      <ol><li>要点放在开头;按读者和目的定语气和篇幅,有样文就照样文。</li><li>只用我给的事实,缺的用【待补】标出;每句话都给读者新信息。</li><li>写完从读者角度读一遍,再用一句话说明你做了哪些取舍。</li></ol>
+    </article>
+    <article class="skill" data-skill="decide">
+      <div class="sk-head"><h3>帮我做决定</h3><span class="sk-group chat">聊天</span></div>
+      <p class="sk-when">在几个选项里拿不定主意,要它列利弊、给建议。</p>
+      <ol><li>先复述要定的事和选项,并判断这个决定能不能轻易反悔。</li><li>按我看重的标准逐项比较;我没说标准时,列出你假设的两三条并标明。</li><li>给一个首选和一个备选,写明放弃其他选项的理由、什么情况下结论会反过来、最值得我自己核实的一两点。</li></ol>
+    </article>
+    <article class="skill" data-skill="summarize">
+      <div class="sk-head"><h3>总结提炼</h3><span class="sk-group chat">聊天</span></div>
+      <p class="sk-when">把会议记录、聊天记录或一段材料压成要点。</p>
+      <ol><li>保留数字、人名、日期原样。</li><li>按「决定 / 待办 / 疑问」分组。</li><li>每条一句,不加原文没有的判断。</li></ol>
+    </article>
+    <article class="skill" data-skill="reply">
+      <div class="sk-head"><h3>回复消息</h3><span class="sk-group chat">聊天</span></div>
+      <p class="sk-when">别人发来一条消息,要它替你写回复。</p>
+      <ol><li>先定立场(答应 / 婉拒 / 追问),一句话说明。</li><li>语气跟对方同一档,不升不降。</li><li>结尾一句明确的下一步。</li></ol>
+    </article>
+  </div>
+  <!-- gen-skills:end -->
+
+  <h2 class="sec-title" id="try">试一下</h2>
+  <p class="sec-note">粘一句平时对 AI 说的话,点「整理」。</p>
+  <div class="stage">
+    <!-- 标签不用 hidden(读屏会念「编辑框,空白」),直接给 textarea 挂 aria-label。同 try 页。 -->
+    <textarea class="field" id="src" rows="4" maxlength="600" aria-label="要整理的话"
+      placeholder="嗯 登录页那个记住我勾上以后 关掉浏览器再打开还是要重新登录 你帮我看看是哪里的问题然后修一下"></textarea>
+
+    <div class="examples">
+      <span class="lab">试试这句</span>
+      <button class="chip" type="button" data-ex="嗯 登录页那个记住我勾上以后 关掉浏览器再打开还是要重新登录 你帮我看看是哪里的问题然后修一下">修 bug</button>
+      <button class="chip" type="button" data-ex="这个把用户表从 MySQL 迁到 Postgres 的活 我想先列个计划 要能一步一步验证 然后说说哪一步最没把握">写计划</button>
+      <button class="chip" type="button" data-ex="帮我回一下房东这条 他说下个月起房租涨两百 我想问问签一年的合同能不能保持原价 语气客气一点">回复消息</button>
+      <button class="chip" type="button" data-ex="帮我修一下这个 bug">短句</button>
+    </div>
+
+    <div class="actions">
+      <button class="btn btn-primary" id="go" type="button">整理</button>
+      <span class="count" id="count">0 / 600</span>
+      <p class="state" id="state"></p>
+    </div>
+
+    <div id="turnstile" hidden></div>
+
+    <div class="panel">
+      <div class="head-row"><span class="tag">落进输入框的这段</span><span class="meta" id="meta"></span></div>
+      <p class="txt placeholder" id="out">整理后的文字会出现在这里。</p>
+      <div class="approach" id="approach" hidden><pre id="approachText"></pre></div>
+      <p class="verdict" id="verdict"></p>
+      <p class="lands" id="lands" hidden>落进 Cursor / Claude 的就是这段。</p>
+    </div>
+
+    <p class="stage-note">和试一试页一样:这里写的<b>文字</b>会发到 Murmur 的服务器,再转给大模型,用完不保存。网页版不录音。</p>
+  </div>
+
+  <p class="after" id="noseatNote" hidden>名额一个一个开。开了会发信到你这个邮箱。</p>
+
+  <p class="after">在 App 里怎么打开,见<a href="../guide/index.html#prompt-skills">指南 · 提示词技能</a>。</p>
+</main>
+
+<footer class="wrap">
+  <span class="brand"><svg width="30" height="15" viewBox="0 0 200 100" aria-hidden="true"><path d="M12.0 50.0 L14.0 40.1 L16.0 31.7 L18.0 25.2 L20.0 21.0 L22.0 19.0 L24.0 19.2 L26.0 21.3 L28.0 25.2 L30.0 30.3 L32.0 36.2 L34.0 42.4 L36.0 48.5 L38.0 54.2 L40.0 59.0 L42.0 62.7 L44.0 65.2 L46.0 66.5 L48.0 66.5 L50.0 65.5 L52.0 63.5 L54.0 60.9 L56.0 57.8 L58.0 54.6 L60.0 51.5 L62.0 48.6 L64.0 46.2 L66.0 44.4 L68.0 43.2 L70.0 42.7 L72.0 42.7 L74.0 43.2 L76.0 44.1 L78.0 45.3 L80.0 46.7 L82.0 48.0 L84.0 49.2 L86.0 50.2 L88.0 51.0 L90.0 51.5 L92.0 51.8 L94.0 51.8 L96.0 51.6 L98.0 51.3 L100.0 50.9 L102.0 50.5 L104.0 50.2 L106.0 50.0 L190 50" fill="none" stroke="var(--coral)" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/></svg>Murmur</span>
+  <span>Others Studio 出品</span>
+  <div class="links">
+    <a href="https://othersstudio.tech">othersstudio.tech</a>
+    <a href="../privacy.html">隐私</a>
+    <a href="../tos.html">条款</a>
+    <a href="../en/skills/index.html" hreflang="en" lang="en">English</a>
+  </div>
+</footer>
+
+<script src="../v2-nav.js"></script>
+<script type="module">
+// ── 提示词技能页的前端 ──────────────────────────────────────────────────────
+// 额度小标、Turnstile、错误态整段取自 try/index.html(同一个后端、同一套口径);
+// 不同的只有:打的是 POST /skill,回包多了 skill / approach / attached / reason / text。
+// 纪律同 try 页:① 模型输出一律 textContent,⛔ 不碰 innerHTML;② 页面上只有公开 key;
+//              ③ 一个失败一句人话,⛔ 不把状态码摆给用户。
+// ⚠️ 这一整段和 en/skills/index.html 里那段逐行相同,只有 L 与 LANG 不一样。改逻辑两边一起改。
+const SUPA_URL = "https://syebvkwemxwxkonvsyjd.supabase.co";
+const SUPA_KEY = "sb_publishable_bBmuodbgO72q8CK_kacrSw_0o3cCsOd";  // 公开 key,不是密钥
+const FN       = SUPA_URL + "/functions/v1/murmur-web";
+const SDK      = "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.116.0/+esm"; // 版本写死
+const LANG     = "zh";
+const MAXLEN   = 600;
+// ⬇️ 同 try 页:Turnstile 的 site key 填好之前,匿名那条路在页面上也是关的。
+const TURNSTILE_SITEKEY = "";
+
+const L = {
+  quotaLoading: "正在查额度…",
+  quotaAuth:    (micro) => (Number.isFinite(micro) && micro <= 0) ? L.byStatus[402] : "免费额度 · 本月还够用",
+  noSeatHead: {
+    default:  "登录了 · 名额还没开",
+    none:     "登录了 · 还没申请名额",
+    new:      "申请已收到 · 名额还没开",
+    declined: "登录了 · 这次没开名额",
+  },
+  quotaNoSeat:  (head, n) => `${head} · 今天还能整理 ${n} 次`,
+  quotaNoSeatOut: (head) => `${head} · 今天的次数用完了,明天再来`,
+  noSeatNote: {
+    default:  "名额一个一个开。开了会发信到你这个邮箱。",
+    none:     ["还没申请名额。", "去登录页申请一个", "。"],
+    new:      (d) => d ? `申请已收到(${d}),名额开了会发信到这个邮箱。` : "申请已收到,名额开了会发信到这个邮箱。",
+    declined: "这次没开名额。",
+  },
+  quotaBlocked: "这个账号暂停使用 · 回复我们任意一封邮件",
+  quotaUnknown: "额度暂时查不到 · 整理仍然能用",
+  quotaTrial:   (n) => `匿名试用 · 今天还能整理 ${n} 次 · 登录后不限`,
+  quotaTrialOut:"今天的匿名试用用完了 · 明天再来,登录后不限",
+  quotaTrialOff:"匿名试用今天没开 · 登录后可用",
+  busy:         "整理中,顺带判一下是哪种需求…",
+  outBusy:      "整理中…",
+  outEmpty:     "整理后的文字会出现在这里。",
+  needText:     "先写一句话再点整理。",
+  tooLong:      (n) => `这段有 ${n} 个字,一次最多 ${MAXLEN} 个。删短一点再试。`,
+  needCaptcha:  "先过一下人机验证再点整理。",
+  trialOff:     ["匿名试用现在关着。", "登录", "之后可以用。"],
+  offline:      "网络好像断了,连上后再试。",
+  byStatus: {
+    401: "登录已过期,刷新页面再试。",
+    402: "这个月的免费额度用完了。下个月会重置,也可以回信找我们。",
+    500: "我们的服务器出错了。这次没扣额度,稍后再试。",
+    502: "模型没有返回结果。这次没扣额度,稍后再试。",
+    503: "现在请求太多,过一会儿再试。",
+    504: "模型超时了。这次没扣额度,稍后再试。",
+  },
+  // 回包里的 skill 是技能 id;名字从页面上的技能卡读(卡是从同一份 JSON 生成的,不另抄一份)
+  attached:     (name, n) => `判为「${name}」,附了 ${n} 条做法。`,
+  notAttached:  "这句太短或你已说明做法,App 会直接落整理稿。",
+  judgeMissed:  "这次没判出来,App 会直接落整理稿。",
+  done: (sec) => `${sec}s`,
+};
+
+const $ = (id) => document.getElementById(id);
+const elSrc = $("src"), elGo = $("go"), elState = $("state"), elCount = $("count");
+const elQuota = $("quota"), elOut = $("out"), elMeta = $("meta"), elTs = $("turnstile");
+const elAp = $("approach"), elApText = $("approachText"), elVerdict = $("verdict"), elLands = $("lands");
+
+let token = null;
+let trial = { enabled: false, remaining: 0 };
+let tsToken = "";
+let busy = false;
+let access = null;
+
+const codepoints = (s) => Array.from(s).length;
+function say(msg, kind) {
+  elState.textContent = msg || "";
+  elState.className = "state" + (kind ? " " + kind : "");
+}
+function sayLinked(parts, href, kind) {
+  elState.textContent = "";
+  elState.className = "state" + (kind ? " " + kind : "");
+  elState.appendChild(document.createTextNode(parts[0]));
+  const a = document.createElement("a");
+  a.href = href;
+  a.textContent = parts[1];
+  elState.appendChild(a);
+  elState.appendChild(document.createTextNode(parts[2]));
+}
+function setText(el, text, isPlaceholder) {
+  el.textContent = text;        // ⛔ 永远不是 innerHTML
+  el.classList.toggle("placeholder", !!isPlaceholder);
+}
+function skillName(id) {
+  const card = id ? document.querySelector(`.skill[data-skill="${CSS.escape(id)}"] h3`) : null;
+  return card ? card.textContent : id;
+}
+function clearResult(placeholder) {
+  setText(elOut, placeholder, true);
+  elAp.hidden = true; elApText.textContent = "";
+  elVerdict.textContent = ""; elLands.hidden = true; elMeta.textContent = "";
+}
+
+// ── 额度小标(同 try 页)──────────────────────────────────────────────────
+async function loadQuota() {
+  try {
+    const r = await fetch(FN + "/me/lite", { headers: { authorization: "Bearer " + token, apikey: SUPA_KEY } });
+    if (!r.ok) { elQuota.textContent = L.quotaUnknown; return; }
+    const j = await r.json();
+    if (j.seat) { elQuota.textContent = L.quotaAuth(Number(j.remaining_micro_usd)); return; }
+    if (j.status) { elQuota.textContent = L.quotaBlocked; return; }
+    access = await loadAccess();
+    paintNoSeat(Number(j.noseat_remaining || 0));
+  } catch { elQuota.textContent = L.quotaUnknown; }
+}
+function paintNoSeat(n) {
+  const st = access && access.status;
+  const key = (st === "none" || st === "new" || st === "declined") ? st : "default";
+  const head = L.noSeatHead[key];
+  elQuota.textContent = n > 0 ? L.quotaNoSeat(head, n) : L.quotaNoSeatOut(head);
+  const note = $("noseatNote");
+  if (!note) return;
+  note.textContent = "";
+  if (key === "none") {
+    const p = L.noSeatNote.none;
+    note.appendChild(document.createTextNode(p[0]));
+    const a = document.createElement("a");
+    a.href = "../login/index.html";
+    a.textContent = p[1];
+    note.appendChild(a);
+    note.appendChild(document.createTextNode(p[2]));
+  } else if (key === "new") {
+    note.textContent = L.noSeatNote.new(fmtDay(access.requested_at));
+  } else {
+    note.textContent = L.noSeatNote[key];
+  }
+  note.hidden = false;
+}
+async function loadAccess() {
+  try {
+    const r = await fetch(FN + "/access/status", { headers: { authorization: "Bearer " + token, apikey: SUPA_KEY } });
+    if (!r.ok) return null;
+    const j = await r.json();
+    return (j && typeof j.status === "string") ? j : null;
+  } catch { return null; }
+}
+function fmtDay(iso) {
+  if (!iso) return "";
+  const d = new Date(iso);
+  if (isNaN(d.getTime())) return "";
+  try {
+    return new Intl.DateTimeFormat(LANG === "zh" ? "zh-CN" : "en", { month: "long", day: "numeric" }).format(d);
+  } catch { return ""; }
+}
+async function loadTrial() {
+  try {
+    const r = await fetch(FN + "/trial/state", { headers: { apikey: SUPA_KEY } });
+    const j = await r.json();
+    trial = { enabled: !!j.enabled, remaining: Number(j.remaining_today || 0) };
+  } catch { trial = { enabled: false, remaining: 0 }; }
+  paintTrial();
+}
+function paintTrial() {
+  if (!trial.enabled) { elQuota.textContent = L.quotaTrialOff; return; }
+  elQuota.textContent = trial.remaining > 0 ? L.quotaTrial(trial.remaining) : L.quotaTrialOut;
+}
+
+// ── Turnstile(同 try 页;action 也是 web-trial —— 服务端 /skill 的匿名那条路认的就是它)──
+function mountTurnstile() {
+  if (!TURNSTILE_SITEKEY || token) return;
+  elTs.hidden = false;
+  window.onMurmurTurnstile = () => {
+    window.turnstile.render(elTs, {
+      sitekey: TURNSTILE_SITEKEY, action: "web-trial",
+      callback: (t) => { tsToken = t; },
+      "expired-callback": () => { tsToken = ""; },
+    });
+  };
+  const s = document.createElement("script");
+  s.src = "https://challenges.cloudflare.com/turnstile/v0/api.js?onload=onMurmurTurnstile&render=explicit";
+  s.async = true; s.defer = true;
+  document.head.appendChild(s);
+}
+
+// ── 整理 + 判定 ───────────────────────────────────────────────────────────
+async function run() {
+  if (busy) return;
+  const text = elSrc.value.trim();
+  if (!text) { say(L.needText, "err"); elSrc.focus(); return; }
+  const n = codepoints(text);
+  if (n > MAXLEN) { say(L.tooLong(n), "err"); return; }
+  if (!token) {
+    if (!trial.enabled) { sayLinked(L.trialOff, "../login/index.html", "err"); return; }
+    if (TURNSTILE_SITEKEY && !tsToken) { say(L.needCaptcha, "err"); return; }
+  }
+
+  busy = true; elGo.disabled = true;
+  clearResult(L.outBusy);
+  say(L.busy, "busy");
+  const t0 = performance.now();
+
+  const headers = { "content-type": "application/json", apikey: SUPA_KEY };
+  if (token) headers.authorization = "Bearer " + token;
+  const body = { text, lang: LANG };
+  if (!token) body.turnstile = tsToken;
+
+  let r, j;
+  try {
+    r = await fetch(FN + "/skill", { method: "POST", headers, body: JSON.stringify(body) });
+    j = await r.json().catch(() => null);
+  } catch {
+    busy = false; elGo.disabled = false;
+    clearResult(L.outEmpty);
+    say(L.offline, "err");
+    return;
+  }
+  if (window.turnstile) { try { window.turnstile.reset(); } catch { /* 没渲染过 */ } tsToken = ""; }
+
+  busy = false; elGo.disabled = false;
+  if (!r.ok || !j || !j.polished) {
+    clearResult(L.outEmpty);
+    say((j && j.error && j.error.message) || L.byStatus[r.status] || L.byStatus[500], "err");
+    if (!token) await loadTrial();
+    return;
+  }
+  // 整理稿 + (附了的话)做法块:两段拼起来就是回包的 text,也就是 App 落进输入框的原文
+  setText(elOut, j.polished, false);
+  const block = (j.attached && typeof j.text === "string" && j.text.startsWith(j.polished + "\n\n"))
+    ? j.text.slice(j.polished.length + 2) : "";
+  elApText.textContent = block;
+  elAp.hidden = !block;
+  elVerdict.textContent = block ? L.attached(skillName(j.skill), Array.isArray(j.approach) ? j.approach.length : 0)
+    : (j.reason === "judge_timeout" || j.reason === "judge_failed") ? L.judgeMissed : L.notAttached;
+  elLands.hidden = false;
+  elMeta.textContent = L.done(((performance.now() - t0) / 1000).toFixed(1));
+  say("");
+  if (token) {
+    if (typeof j.remaining === "number") elQuota.textContent = L.quotaAuth(j.remaining);
+    else if (j.seat === false) paintNoSeat(Number(j.noseat_remaining || 0));
+  } else {
+    trial.remaining = Number(j.remaining_today || 0);
+    paintTrial();
+  }
+}
+
+// ── 接线 ──────────────────────────────────────────────────────────────────
+elSrc.addEventListener("input", () => {
+  const n = codepoints(elSrc.value);
+  elCount.textContent = n + " / " + MAXLEN;
+  elCount.classList.toggle("over", n > MAXLEN);
+});
+elSrc.addEventListener("keydown", (e) => {
+  if ((e.metaKey || e.ctrlKey) && e.key === "Enter") { e.preventDefault(); run(); }
+});
+document.querySelectorAll(".chip[data-ex]").forEach((b) => {
+  b.addEventListener("click", () => {
+    elSrc.value = b.dataset.ex;
+    elSrc.dispatchEvent(new Event("input"));
+    elSrc.focus();
+    say("");
+  });
+});
+elGo.addEventListener("click", run);
+
+(async function init() {
+  elQuota.textContent = L.quotaLoading;
+  clearResult(L.outEmpty);
+  try {
+    const { createClient } = await import(SDK);
+    const sb = createClient(SUPA_URL, SUPA_KEY, {
+      auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: false },
+    });
+    const { data } = await sb.auth.getSession();
+    token = (data && data.session && data.session.access_token) || null;
+  } catch {
+    token = null;
+  }
+  if (token) await loadQuota(); else await loadTrial();
+  mountTurnstile();
+})();
+</script>
+</body>
+</html>
