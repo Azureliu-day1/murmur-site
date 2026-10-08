@@ -1,0 +1,11 @@
+# 自托管的 supabase-js 2.116.0 及其依赖(SEC-L5,2026-10-08;curl -fsSL 从 jsDelivr +esm 拉取)
+# 文件	来源	原始 sha256	落盘 sha256(加了文件头注释、引用改相对之后)
+iceberg-js-0.8.1.mjs	https://cdn.jsdelivr.net/npm/iceberg-js@0.8.1/+esm	9f07545eaa5090e8bc8a015036859061c9b1afcce3e7610730067cffc8cfcb0e	cea5ff48abee06363f8c1ca66a9a8bc69093765e47b18ecfb6df326ffc26a701
+supabase-auth-js-2.116.0.mjs	https://cdn.jsdelivr.net/npm/@supabase/auth-js@2.116.0/+esm	31f76cc8aea74950fbb3db117b02951d298cbc63ebf56d31a44d9ef188f810d2	6759c63414ba54e2fe3b4b955b501727d041320a47160814558335d80af836cf
+supabase-functions-js-2.116.0.mjs	https://cdn.jsdelivr.net/npm/@supabase/functions-js@2.116.0/+esm	b31db1225b86887ad61dfa8c73189fd1dcd89d7d6272bd9959707023b72ecc40	d5312577270f7025a32f7039745cf06915686e6d33654db60feef8accef0a95a
+supabase-js-2.116.0.mjs	https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.116.0/+esm	7b360772512765222dd06f961bc2dab5129862d382368f8688b8019131709989	8e0e72af7ffb2f2e4fa132ac9ba1528908a2ad628451728dce0feb064cdb8a58
+supabase-phoenix-0.4.5.mjs	https://cdn.jsdelivr.net/npm/@supabase/phoenix@0.4.5/+esm	b57054fe408779390d6563f17c45b8e164cecede4d3a8cad4159748f4d79f811	a82421b62c2dccceed68422f28d333860c6715b195ac9f531b3ce5c108f27bdf
+supabase-postgrest-js-2.116.0.mjs	https://cdn.jsdelivr.net/npm/@supabase/postgrest-js@2.116.0/+esm	1269b8eddeeb246fb876637c6d7828aa72dac614df000d4f32dbf0688e27081c	addd18ed038815b73ed3542f3b03795ae36e064ca42409bfee2413a9fef0b308
+supabase-realtime-js-2.116.0.mjs	https://cdn.jsdelivr.net/npm/@supabase/realtime-js@2.116.0/+esm	6ee30e79762b4850a30e1d84dda3d4c1f23a2248fe6dbeb76c1792e028c99a7a	78b2ca3ea9ddea19d76aa49debb4f373d617ac1a92724b252105004b0f51a6f8
+supabase-storage-js-2.116.0.mjs	https://cdn.jsdelivr.net/npm/@supabase/storage-js@2.116.0/+esm	fd95dbf4f473ce8c3e689312731fa7bbc017c1829f56c51efa09ed5bd06449ef	a59dde81f72d8f97bd955fe56d2fb2904293958f0a07163ef355bfa69fed048b
+tslib-2.8.1.mjs	https://cdn.jsdelivr.net/npm/tslib@2.8.1/+esm	87dfa73ce9e2ec672fd980fd4d575821f9e0b977c06065df602c7301d352a310	2b248e8d64c7e92b8d3cd1a3376eb0d9f0a7cb739b91501f11ff6fdaa6df6691

@@ -24,12 +24,41 @@ cd "$(dirname "$0")/.." || exit 2
 # 做法是逐行先删掉这一个地址再匹配,同一行里别的命中照样红。⛔ 不许再加白名单项。
 PII_ALLOW='contact@maobenbeginner.com'
 PII_RE='azureliu|@gmail|\+61|Example Street|sb_secret|service_role'
-pii=$(grep -rnE "$PII_RE" --exclude-dir=.git . | awk -v a="$PII_ALLOW" '{ l=$0; while ((i=index(l,a))>0) l=substr(l,1,i-1) substr(l,i+length(a)); print l }' | grep -E "$PII_RE" | grep -vE '^\./tools/copy-lint\.sh:[0-9]+:PII_RE=')   # 只放过本脚本定义模式的那一行
+# vendor/ 是逐字节自托管的第三方库(SEC-L5):supabase-js 里有「新版密钥前缀」判断这种字面量,会撞上下面的 PII 模式,但不是我们的密钥。
+#   它不进 PII 扫描,换成下面的「vendor 完整性」门:每个文件反做一遍改写后必须等于 jsDelivr 原文的 sha256 —— 一个字节都改不了,
+#   也就塞不进任何 PII。⛔ 只排除 vendor/ 这一个目录,别的照扫。
+pii=$(grep -rnE "$PII_RE" --exclude-dir=.git --exclude-dir=vendor . | awk -v a="$PII_ALLOW" '{ l=$0; while ((i=index(l,a))>0) l=substr(l,1,i-1) substr(l,i+length(a)); print l }' | grep -E "$PII_RE" | grep -vE '^\./tools/copy-lint\.sh:[0-9]+:PII_RE=')   # 只放过本脚本定义模式的那一行
 if [ -n "$pii" ]; then
   echo "PII 扫描命中(fail-closed,停):"; echo "$pii" | cut -c1-200
   exit 2
 fi
 echo "PII 扫描:0 命中(白名单:$PII_ALLOW)"
+
+# ── vendor 完整性(SEC-L5,fail-closed:不过就退 2)────────────────────────────────
+# vendor/SOURCES.txt 每行:文件 / 来源 URL / 原始 sha256 / 落盘 sha256。校验:①落盘 sha256 对得上;②去掉文件头注释、
+# 把同目录相对引用(./xxx.mjs)换回 jsDelivr 的 /npm/…/+esm 之后,sha256 = 原始 sha256;③目录里没有清单外的文件。
+if [ -d vendor ]; then
+  vend=$(python3 - <<'PY'
+import hashlib, os, re
+rows = [l.rstrip("\n").split("\t") for l in open("vendor/SOURCES.txt", encoding="utf-8") if l.strip() and not l.startswith("#")]
+back = {r[0]: r[1].replace("https://cdn.jsdelivr.net", "") for r in rows}
+errs = []
+for name, url, orig, final in rows:
+    b = open("vendor/" + name, "rb").read()
+    if hashlib.sha256(b).hexdigest() != final: errs.append(f"{name}: 落盘 sha256 对不上")
+    s = b.decode("utf-8")
+    i = s.find(" */\n")
+    if not s.startswith("/* SEC-L5") or i < 0: errs.append(f"{name}: 没有 SEC-L5 文件头"); continue
+    body = re.sub(r'"\./([^"/]+\.mjs)"', lambda m: '"' + back.get(m.group(1), "??" + m.group(1)) + '"', s[i + 4:])
+    if hashlib.sha256(body.encode("utf-8")).hexdigest() != orig: errs.append(f"{name}: 反做改写后 ≠ jsDelivr 原文 sha256")
+extra = sorted(set(os.listdir("vendor")) - set(back) - {"SOURCES.txt"})
+if extra: errs.append("清单外的文件:" + ", ".join(extra))
+print("\n".join(errs))
+PY
+)
+  if [ -n "$vend" ]; then echo "vendor 完整性不过(fail-closed,停):"; echo "$vend"; exit 2; fi
+  echo "vendor 完整性:$(grep -vc '^#' vendor/SOURCES.txt) 个文件与 jsDelivr 原文一致"
+fi
 
 # ── 隐私承诺禁句(2026-10-02 FIX2-D):代码已经证伪的绝对说法,**含法律页**全站拦 ──
 # 事实(以 App 代码为准):登录后没填自己的 Key 时,整理 / 翻译 / 随心问 / 口述编辑的
@@ -65,7 +94,7 @@ fi
 echo "隐私承诺禁句:0 命中"
 
 exec python3 - "$@" <<'PY'
-import sys, re, glob, html.parser
+import sys, re, glob, os, html.parser
 
 VERBOSE = "-v" in sys.argv[1:]
 LEGAL = {"privacy.html", "tos.html"}
@@ -106,9 +135,10 @@ def js_strings(src):
     return out
 
 class Page(html.parser.HTMLParser):
-    def __init__(self):
+    def __init__(self, base=""):
         super().__init__(convert_charrefs=True)
         self.blocks, self.cur, self.skip, self.scripts, self.lang = [], [], None, [], ""
+        self.base, self.srcs = base, []
     def flush(self):
         t = re.sub(r"\s+", " ", "".join(self.cur)).strip()
         if t: self.blocks.append(t)
@@ -117,6 +147,12 @@ class Page(html.parser.HTMLParser):
         a = dict(attrs)
         if tag == "html": self.lang = a.get("lang", "")
         if tag in ("script", "style"):
+            # SEC-L5:页面脚本搬成了外链文件(CSP 不放 unsafe-inline)。本站的 <script src> 一起读进来查,
+            # 否则搬出去的文案会悄悄不再被查。外站(http / //)不读。
+            src = a.get("src") if tag == "script" else None
+            if src and not re.match(r"^(https?:)?//", src):
+                path = os.path.normpath(os.path.join(self.base, src))
+                self.scripts.append(open(path, encoding="utf-8").read()); self.srcs.append(path)
             self.flush(); self.skip = tag; self._script = [] ; return
         if tag not in INLINE: self.flush()
         for k in ATTRS:
@@ -140,7 +176,7 @@ bad = 0
 print(f"{'页面':<22}{'语言':<5}{'字数':>6}{'最长一句':>8}{'小标题':>6}  ——/—  禁句")
 for p in pages:
     raw = open(p, encoding="utf-8").read()
-    pg = Page(); pg.feed(raw); pg.flush()
+    pg = Page(os.path.dirname(p)); pg.feed(raw); pg.flush()
     body = re.sub(r"<!--.*?-->", "", raw, flags=re.S)
     heads = [re.sub(r"<[^>]+>", "", h).strip() for h in re.findall(r"<h[23][^>]*>(.*?)</h[23]>", body, re.S)]
     zh = pg.lang.lower().startswith("zh")
@@ -165,6 +201,7 @@ for p in pages:
     bad |= bool(fail)
     print(f"{p:<22}{'zh' if zh else 'en':<5}{total:>6}{longest[0]:>8}{count(longhead, zh):>6}  {dash:>5}  {','.join(banned) or '-'}  {'FAIL' if fail else 'ok'}")
     print(f"    最长: {longest[1][:90]}")
+    if pg.srcs: print(f"    外链脚本也查了: {', '.join(pg.srcs)}")
     if longhead: print(f"    最长小标题: {longhead}")
     if VERBOSE:
         for c, s in sents[1:5]: print(f"    {c:>3}: {s[:90]}")

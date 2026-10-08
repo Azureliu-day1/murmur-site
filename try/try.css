@@ -1,0 +1,56 @@
+/* ══════════ 页面局部:试一试 ══════════
+   舞台与两栏的配方逐字取自首页的 .stage / .panel;共用零件在 v2.css。 */
+/* ⛔ 这里不许写 `padding` 简写:<header class="head wrap">,而简写会把 v2.css 里
+   .wrap 的左右 32px 一起清零(同为 0-1-0,页内 <style> 在外链之后 → 它赢)。
+   后果是窄屏上额度小标、标题、副标题直接贴着屏幕左边,而下面的 .stage 是 32px。
+   竖直方向的留白一律用 padding-block。 */
+.head { padding-block: 64px 0; display: flex; align-items: flex-start; gap: 24px; }
+.head .t { flex: 1; min-width: 0; }
+.head h1 { font-size: clamp(26px, 3.4vw, 34px); font-weight: 600; line-height: 1.35; letter-spacing: .01em; max-width: 12.5em; }
+.head .sub { color: var(--second); font-size: 15.5px; max-width: 38em; margin-top: 14px; }
+.head .quota { flex: none; margin-top: 6px; }
+
+.stage {
+  margin: 40px auto 0; max-width: 760px;
+  background: linear-gradient(180deg, var(--stage-a), var(--stage-b));
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  padding: 30px 32px 30px;
+}
+.examples { margin-top: 14px; display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+.examples .lab { font-size: 13px; color: var(--second); margin-right: 2px; }
+.actions { margin-top: 20px; display: flex; gap: 16px; align-items: center; flex-wrap: wrap; }
+.actions .count { margin-left: auto; font-family: "IBM Plex Mono", monospace; font-size: 11.5px; color: var(--faint); }
+.actions .count.over { color: var(--danger); }
+#state { flex-basis: 100%; }
+
+.compare { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 26px; }
+.panel {
+  background: var(--card); border: 1px solid var(--line); border-radius: 18px;
+  padding: 22px 24px 24px;
+}
+.panel .head-row { display: flex; align-items: baseline; gap: 12px; margin-bottom: 14px; }
+.panel .tag { font-size: 12px; letter-spacing: .16em; text-transform: uppercase; color: var(--faint); font-weight: 600; }
+.panel.clean .tag { color: var(--coral); }
+.panel .meta { margin-left: auto; font-family: "IBM Plex Mono", monospace; font-size: 11.5px; color: var(--faint); }
+.panel p.txt { font-size: 15px; line-height: 1.8; white-space: pre-wrap; overflow-wrap: anywhere; min-height: 3.6em; }
+.panel.raw p.txt { color: var(--second); }
+.panel.clean p.txt { color: var(--ink); }
+.panel p.txt.placeholder { color: var(--faint); }
+
+.stage-note { margin-top: 24px; font-size: 12.5px; color: var(--second); line-height: 1.8; }
+#turnstile { margin-top: 16px; }
+.after { max-width: 760px; margin: 24px auto 0; text-align: center; font-size: 14px; color: var(--second); }
+
+@media (max-width: 820px) {
+  .head { padding-top: 44px; flex-direction: column; gap: 14px; }
+  .head .quota { margin-top: 0; order: -1; }
+  .stage { margin-top: 28px; padding: 22px 18px 24px; border-radius: 18px; }
+  .compare { grid-template-columns: 1fr; gap: 14px; }
+  /* ⚠️ 占位项是 <span class="soon">,不是 <a> —— 只写 a:not(.nav-cta) 收不到它们,
+     窄屏上它们会留在顶栏里把「下载」挤成两行(375 宽实拍到过)。
+     ⭐ 2026-09-17:打了 class="nav-keep" 的项(试一试 / 登录)在手机上留着 ——
+        顶栏只剩一个「下载」的时候,手机上的人一条能走的路都没有。
+        尺寸收窄的那几条在 v2.css 的同一个断点里。 */
+  .navlinks a:not(.nav-cta):not(.nav-keep), .navlinks .soon { display: none; }
+}
