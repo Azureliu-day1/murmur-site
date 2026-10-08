@@ -313,14 +313,14 @@ footer a { color: var(--faint); }
 
     <div class="jrow">
       <div class="what">Recordings<span class="mono">your voice</span></div>
-      <p>During recognition the audio goes <b>straight to the one provider behind the tier you picked</b> — which provider sits behind which tier is stated live in the app’s own “Privacy” panel (it is updated as the tiers change, so it is newer than this page). Pick <b>on-device recognition</b> and not one byte of audio leaves this computer.
+      <p>During recognition the audio goes <b>straight to the one provider behind the tier you picked</b>: on free-allowance cloud recognition that is <b>Soniox (United States)</b>; with your own key, it is the provider whose key you entered. Pick <b>on-device recognition</b> and the audio stays on this computer; for a few languages where macOS has no offline recognition, Apple may process it.
       Recording files sit on your Mac, kept 30 days by default so you can re-run them, then deleted automatically.</p>
       <p>Settings can cut that to 7 days, or to “don’t keep them at all”. Delete the local folder and they are gone for real. With on-device recognition the audio stays on your Mac; with cleanup on, the text still goes to a language model. To keep what you say entirely on your Mac: pick on-device recognition, set cleanup to “Off (raw transcript)”, and don’t use translation, Ask or voice editing.</p>
     </div>
 
     <div class="jrow">
       <div class="what">Transcript and cleaned-up text<span class="mono">what you actually said</span></div>
-      <p>With AI cleanup on, or when you use translation, Ask or voice editing, the transcript is handed to a language model once (voice editing also sends the passage you selected). With your own key it goes straight to that vendor; signed in without a key, on the free allowance, it passes through our servers first, which do not store it. The app’s own “Privacy” panel shows which path your current settings use.
+      <p>With AI cleanup on, or when you use translation, Ask or voice editing, the transcript is handed to a language model once (voice editing also sends the passage you selected). With your own key it goes straight to that vendor; signed in without a key, on the free allowance, it passes through our servers and is processed by <b>DeepSeek (China)</b>; our servers do not store it. “Where did this go?” on the app’s History page shows which path your current settings use.
       With prompt skills on, a long enough sentence you say with the dictation key in an AI tool is sent one extra time over the same channel to the same vendor, to decide what kind of request it is; no audio is sent, and which window you are in is not sent.
       The finished text and your history <b>live in a database on your Mac</b> and are not synced to any cloud as a whole.
       “Personal style” is off by default. Once it is on, each cleanup picks up to 3 of your earlier “what you said → cleaned-up text” pairs from recent dictation history and sends them with the cleanup request as samples.</p>
@@ -364,7 +364,7 @@ footer a { color: var(--faint); }
   <div class="nots reveal">
     <div class="not"><span class="x">✕</span><p><b>We never handle your audio.</b> With cloud recognition the audio goes from your Mac straight to the recognition provider, through none of our servers. Text for cleanup is an exception; see “Once you sign in” below.</p></div>
     <div class="not"><span class="x">✕</span><p><b>No behavioural tracking.</b> There is no analytics SDK in the app. Which app you were speaking into is never reported back to us. Once you sign in, each sentence (on-device ones included) reports its character count, how long you spoke and which path it took, to count your allowance, with no text attached; see “Once you sign in” below.</p></div>
-    <div class="not"><span class="x">✕</span><p><b>No selling your data, no sharing it.</b> There are no advertisers and no “partners”. Your data is not the product.</p></div>
+    <div class="not"><span class="x">✕</span><p><b>We don’t sell your data.</b> It goes only to the processors needed to run the service (listed under “Once you sign in” below). There are no advertisers. Your data is not the product.</p></div>
     <div class="not"><span class="x">✕</span><p><b>No analytics on this website.</b> No tracking, no ads. The sign-in and try-it pages load third-party scripts for sign-in and abuse protection, listed under “Website” below; open your browser’s network panel and check.</p></div>
   </div>
 </section>
@@ -396,6 +396,9 @@ footer a { color: var(--faint); }
     <p>When you are signed in, our servers also do these things:</p>
     <p>① Sign-in, allowance and the public config (signed in, it comes with your account). ② After each sentence, one report: character count, how long you spoke, dictation or Ask, which path it took (on-device / your own key / free allowance) and when it happened. On-device sentences are reported too and use no allowance. No text attached. ③ On the free allowance, each recording fetches a one-time pass, so the server knows you are recording at that moment; the audio still goes straight to the recognition provider. ④ On the free allowance (no key of your own), the text for cleanup, translation, Ask and voice editing goes through the server and then to the model vendor. The same request carries your dictionary and the screen excerpt (1500 characters at most); with personal style on, up to 3 sample sentences from your history; with prompt skills on, the sentence said in an AI tool is sent one extra time. Our servers only forward it and count the cost; they do not store the text, and no text goes into the logs. ⑤ With cloud candidates on in the input method (off by default), Pinyin you have not committed goes through the server to a third-party model service; only the Pinyin is sent.</p>
     <p>Recordings are not uploaded. History is not uploaded as a whole; with personal style on, a cleanup request carries up to 3 entries. Your dictionary goes out whole with recognition and cleanup requests, as in the “Dictionary” row above. The words you type are not uploaded as a whole; only the ones a sentence touches go with a ⌥⇧Space polish request, as described in the “Typed words” row above. Every change to this page leaves its date at the bottom.</p>
+    <p><b>Who processes it, and where.</b> On the free allowance, the text for cleanup, translation, Ask and voice editing is processed by DeepSeek (China); cloud recognition audio goes to Soniox (United States); your account and usage are stored with Supabase (Singapore); email is sent through Resend. With your own key, the text or audio goes straight to the provider whose key you entered.</p>
+    <p><b>What our servers keep, and for how long.</b> Our servers keep: your email address; the allowance ledger (time, character count, speaking time, type and path of each entry); your subscription status; and the request-a-seat form (email, message, page language, a salted hash of your network address and a short browser type). We keep these until 30 days after you delete your account, then delete them. To delete your account or get a copy of your data, write to <a href="mailto:owner@example.com">owner@example.com</a>.</p>
+    <p>If a data breach affects you, we will tell you promptly.</p>
   </div>
 </section>
 
@@ -404,7 +407,7 @@ footer a { color: var(--faint); }
   <div class="future reveal">
     <div class="eyebrow">Website</div>
     <p>This website has no analytics scripts and no ads. These are the places where something goes to our servers or a third party:</p>
-    <p>① The request-a-seat form stores your email, the line you wrote and the page language, plus a salted hash of your network address used only to limit how often it can be submitted. ② Trying cleanup on the web sends the text you paste to our servers, which pass it to a language model and do not store it. ③ The sign-in and try-it pages load the sign-in script from cdn.jsdelivr.net; when abuse protection is switched on, those two pages also load Cloudflare Turnstile. The page you land on after paying loads fonts from Google Fonts.</p>
+    <p>① The request-a-seat form stores your email, the line you wrote, the page language and a short browser type, plus a salted hash of your network address used only to limit how often it can be submitted. Submitting it creates an identity for that email in our account system, and the form is forwarded to our inbox through Resend. ② Trying cleanup on the web sends the text you paste to our servers, which pass it to a language model and do not store it. ③ The sign-in and try-it pages load the sign-in script from cdn.jsdelivr.net; when abuse protection is switched on, those two pages also load Cloudflare Turnstile. The page you land on after paying loads fonts from Google Fonts.</p>
   </div>
 </section>
 
@@ -517,8 +520,8 @@ if (reduced) {
 </script>
 
 <footer class="wrap">
-  <span>This page last updated: 2026-10-02</span>
-  <span>Questions? Write to us: Others Studio</span>
+  <span>This page last updated: 2026-10-08</span>
+  <span>Questions or complaints? Write to <a href="mailto:owner@example.com">owner@example.com</a> (Others Studio). We reply within 30 days; if you are not satisfied, you can complain to the OAIC (oaic.gov.au) or the data protection authority where you live.</span>
   <a href="tos.html">Terms of Use</a>
   <a style="margin-left:auto" href="index.html">murmur home</a>
 </footer>
