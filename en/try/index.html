@@ -44,7 +44,7 @@
   <div class="t">
     <p class="eyebrow">Try it</p>
     <h1>Paste a spoken sentence</h1>
-    <p class="sub">Paste something you would say out loud and press “Tidy it”. The tidied version shows up below. <span id="trialLine">You do not need to download anything or sign up.</span> With the Mac app installed, the tidying happens in the text field your cursor is in.</p>
+    <p class="sub">Paste something you would say out loud and press “Clean it up”. The cleaned-up version shows up below. <span id="trialLine">You do not need to download anything or sign up.</span> With the Mac app installed, the cleanup happens in the text field your cursor is in.</p>
   </div>
   <span class="quota" id="quota">Checking your quota…</span>
 </header>
@@ -53,7 +53,7 @@
   <div class="stage">
     <!-- A label with `hidden` drops out of the accessibility tree together with its
          for= association, so screen readers announce an unnamed edit box. aria-label instead. -->
-    <textarea class="field" id="src" rows="4" maxlength="600" aria-label="Text to tidy"
+    <textarea class="field" id="src" rows="4" maxlength="600" aria-label="Text to clean up"
       placeholder="so um, about tomorrow's meeting, can we uh move it to three in the afternoon, because I've got a class in the morning, and yeah same place as usual is fine."></textarea>
 
     <div class="examples">
@@ -64,7 +64,7 @@
     </div>
 
     <div class="actions">
-      <button class="btn btn-primary" id="go" type="button">Tidy it</button>
+      <button class="btn btn-primary" id="go" type="button">Clean it up</button>
       <span class="count" id="count">0 / 600</span>
       <p class="state" id="state"></p>
     </div>
@@ -77,12 +77,12 @@
         <p class="txt placeholder" id="out-raw">Type a sentence above, or pick one of the samples.</p>
       </div>
       <div class="panel clean">
-        <div class="head-row"><span class="tag">Tidied</span><span class="meta" id="meta-clean"></span></div>
-        <p class="txt placeholder" id="out-clean">The tidied version will show up here.</p>
+        <div class="head-row"><span class="tag">Cleaned up</span><span class="meta" id="meta-clean"></span></div>
+        <p class="txt placeholder" id="out-clean">The cleaned-up version will show up here.</p>
       </div>
     </div>
 
-    <p class="stage-note">The <b>text</b> you type here is sent to Murmur's cloud to be tidied and is not kept afterwards. This web version does not record audio or use your microphone. The tidying uses the same rules as the Mac app.</p>
+    <p class="stage-note">The <b>text</b> you type here is sent to Murmur's cloud to be cleaned up and is not kept afterwards. This web version does not record audio or use your microphone. The cleanup uses the same rules as the Mac app.</p>
   </div>
 
   <p class="after" id="noseatNote" hidden>Seats open one at a time. We email this address when yours opens.</p>

@@ -105,7 +105,7 @@
   <div class="t">
     <p class="eyebrow">Prompt skills</p>
     <h1>Say a request, see what lands</h1>
-    <p class="sub">When you dictate a request in Cursor, Claude or ChatGPT, the app first tidies it into one clean passage. If it can tell what kind of request it is, it adds three steps after it. Below are the twelve skills, and you can try a sentence at the bottom.</p>
+    <p class="sub">When you dictate a request in Cursor, Claude or ChatGPT, the app first cleans it up into one clear passage. If it can tell what kind of request it is, it adds three steps after it. Below are the twelve skills, and you can try a sentence at the bottom.</p>
   </div>
   <span class="quota" id="quota">Checking your quota…</span>
 </header>
@@ -181,10 +181,10 @@
   <!-- gen-skills:end -->
 
   <h2 class="sec-title" id="try">Try one</h2>
-  <p class="sec-note">Paste something you would normally say to an AI, then press Tidy. <span id="trialLine"></span></p>
+  <p class="sec-note">Paste something you would normally say to an AI, then press Clean up. <span id="trialLine"></span></p>
   <div class="stage">
     <!-- 标签不用 hidden(读屏会念「编辑框,空白」),直接给 textarea 挂 aria-label。同 try 页。 -->
-    <textarea class="field" id="src" rows="4" maxlength="600" aria-label="Text to tidy"
+    <textarea class="field" id="src" rows="4" maxlength="600" aria-label="Text to clean up"
       placeholder="so the remember me box on the login page doesn't stick, after I close the browser and open it again I have to log in again, can you find out why and fix it"></textarea>
 
     <div class="examples">
@@ -196,7 +196,7 @@
     </div>
 
     <div class="actions">
-      <button class="btn btn-primary" id="go" type="button">Tidy</button>
+      <button class="btn btn-primary" id="go" type="button">Clean up</button>
       <span class="count" id="count">0 / 600</span>
       <p class="state" id="state"></p>
     </div>
@@ -205,7 +205,7 @@
 
     <div class="panel">
       <div class="head-row"><span class="tag">What lands in the input box</span><span class="meta" id="meta"></span></div>
-      <p class="txt placeholder" id="out">The tidied text will show up here.</p>
+      <p class="txt placeholder" id="out">The cleaned-up text will show up here.</p>
       <div class="approach" id="approach" hidden><pre id="approachText"></pre></div>
       <p class="verdict" id="verdict"></p>
       <p class="lands" id="lands" hidden>This is exactly what lands in Cursor or Claude.</p>
@@ -256,8 +256,8 @@ const L = {
     new:      "Request received · seat not open yet",
     declined: "Signed in · no seat this time",
   },
-  quotaNoSeat:  (head, n) => `${head} · ${n} tidy-ups left today`,
-  quotaNoSeatOut: (head) => `${head} · today's tidy-ups are used up`,
+  quotaNoSeat:  (head, n) => `${head} · ${n} cleanups left today`,
+  quotaNoSeatOut: (head) => `${head} · today's cleanups are used up`,
   noSeatNote: {
     default:  "Seats open one at a time. We email this address when yours opens.",
     none:     ["You have not asked for a seat yet. ", "Ask on the sign-in page", "."],
@@ -265,15 +265,15 @@ const L = {
     declined: "No seat this time.",
   },
   quotaBlocked: "This account is on hold · reply to any of our emails",
-  quotaUnknown: "Cannot read your quota right now · tidying still works",
+  quotaUnknown: "Cannot read your quota right now · cleanup still works",
   quotaTrial:   (n) => `Anonymous trial · ${n} left today · unlimited once you sign in`,
   quotaTrialOut:"Today's anonymous trial is used up · come back tomorrow, or sign in",
   quotaTrialOff:"Anonymous trial is off today · available once you sign in",
   // SITEFIX-1:匿名试用关着时,页头那句「不用下载,也不用注册」换成这句 + 申请入口(三段:前半 / 链接上的字 / 后半)。
   trialLineOff: ["Sign in to try it. No account yet? ", "Ask for a seat", "."],
-  busy:         "Tidying, and working out what kind of request it is…",
-  outBusy:      "Tidying…",
-  outEmpty:     "The tidied text will show up here.",
+  busy:         "Cleaning up, and working out what kind of request it is…",
+  outBusy:      "Cleaning up…",
+  outEmpty:     "The cleaned-up text will show up here.",
   needText:     "Type a sentence first.",
   tooLong:      (n) => `That is ${n} characters. The limit is ${MAXLEN} at a time, so try a shorter passage.`,
   needCaptcha:  "Clear the human check first.",
@@ -288,8 +288,8 @@ const L = {
     504: "The model timed out. Nothing was charged; try again shortly.",
   },
   attached:     (name, n) => `Read as "${name}", with ${n} ${n === 1 ? "step" : "steps"} added.`,
-  notAttached:  "Too short, or you already said how to do it. The app drops in the tidied text only.",
-  judgeMissed:  "The skill check did not come back this time. The app drops in the tidied text only.",
+  notAttached:  "Too short, or you already said how to do it. The app drops in the cleaned-up text only.",
+  judgeMissed:  "The skill check did not come back this time. The app drops in the cleaned-up text only.",
   done: (sec) => `${sec}s`,
 };
 
