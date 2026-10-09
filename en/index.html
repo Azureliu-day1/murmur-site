@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<script>document.documentElement.classList.add('js');</script>
 <title>Murmur · Voice typing for the Mac</title>
 <meta name="description" content="Voice typing for the Mac. Tap right ⌘, say a sentence, tap again, and the text is at your cursor. On-device or cloud recognition.">
 <link rel="canonical" href="https://maobenbeginner.com/en/">
@@ -186,11 +187,12 @@ a { color: var(--coral-ink); text-decoration: none; }
 a:hover { text-decoration: underline; text-underline-offset: 3px; }
 
 /* ── 入场:只动 transform/opacity,减弱动效时全部落终态 ── */
-.reveal { opacity: 0; transform: translateY(12px); transition: opacity .5s ease, transform .5s ease; }
-.reveal.on { opacity: 1; transform: none; }
+/* SITEFIX-19:只有 JS 跑起来(<html class="js">,head 里第一句脚本加上)才先藏后显;没有 JS 时 .reveal 照常可见。 */
+.js .reveal { opacity: 0; transform: translateY(12px); transition: opacity .5s ease, transform .5s ease; }
+.js .reveal.on { opacity: 1; transform: none; }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-  .reveal { opacity: 1; transform: none; transition: none; }
+  .js .reveal { opacity: 1; transform: none; transition: none; }
   .cursor { animation: none !important; }
 }
 

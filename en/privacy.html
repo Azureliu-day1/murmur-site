@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<script>document.documentElement.classList.add('js');</script>
 <title>Murmur — Where your data lives</title>
 <meta name="description" content="How Murmur handles your recordings and your words: a privacy page you can verify yourself, not terms to sign.">
 <link rel="canonical" href="https://maobenbeginner.com/en/privacy.html">
@@ -227,10 +228,11 @@ footer a { color: var(--faint); }
 .ghost-label { font-size: 13px; font-weight: 600; fill: var(--faint); }
 
 /* ── Reveal on scroll (same as the home page) ── */
-.reveal { opacity: 0; transform: translateY(12px); transition: opacity .5s ease, transform .5s ease; }
-.reveal.on { opacity: 1; transform: none; }
+/* SITEFIX-19:只有 JS 跑起来(<html class="js">,head 里第一句脚本加上)才先藏后显;没有 JS 时 .reveal 照常可见。 */
+.js .reveal { opacity: 0; transform: translateY(12px); transition: opacity .5s ease, transform .5s ease; }
+.js .reveal.on { opacity: 1; transform: none; }
 @media (prefers-reduced-motion: reduce) {
-  .reveal { opacity: 1; transform: none; transition: none; }
+  .js .reveal { opacity: 1; transform: none; transition: none; }
 }
 
 @media (max-width: 720px) {
