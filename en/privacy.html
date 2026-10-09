@@ -365,7 +365,7 @@ footer a { color: var(--faint); }
     <div class="not"><span class="x">✕</span><p><b>We never handle your audio.</b> With cloud recognition the audio goes from your Mac straight to the recognition provider, through none of our servers. Text for cleanup is an exception; see “Once you sign in” below.</p></div>
     <div class="not"><span class="x">✕</span><p><b>No behavioural tracking.</b> There is no analytics SDK in the app. Which app you were speaking into is never reported back to us. Once you sign in, each sentence (on-device ones included) reports its character count, how long you spoke and which path it took, to count your allowance, with no text attached; see “Once you sign in” below.</p></div>
     <div class="not"><span class="x">✕</span><p><b>We don’t sell your data.</b> It goes only to the processors needed to run the service (listed under “Once you sign in” below). There are no advertisers. Your data is not the product.</p></div>
-    <div class="not"><span class="x">✕</span><p><b>No analytics on this website.</b> No tracking, no ads. The sign-in and try-it pages load third-party scripts for sign-in and abuse protection, listed under “Website” below; open your browser’s network panel and check.</p></div>
+    <div class="not"><span class="x">✕</span><p><b>No analytics on this website.</b> No tracking, no ads. The sign-in, try-it and skills pages serve their scripts from this site; only when abuse protection is on do they load Cloudflare’s check, listed under “Website” below; open your browser’s network panel and check.</p></div>
   </div>
 </section>
 
@@ -407,7 +407,7 @@ footer a { color: var(--faint); }
   <div class="future reveal">
     <div class="eyebrow">Website</div>
     <p>This website has no analytics scripts and no ads. These are the places where something goes to our servers or a third party:</p>
-    <p>① The request-a-seat form stores your email, the line you wrote, the page language and a short browser type, plus a salted hash of your network address used only to limit how often it can be submitted. Submitting it creates an identity for that email in our account system, and the form is forwarded to our inbox through Resend. ② Trying cleanup on the web sends the text you paste to our servers, which pass it to a language model and do not store it. ③ The sign-in and try-it pages load the sign-in script from cdn.jsdelivr.net; when abuse protection is switched on, those two pages also load Cloudflare Turnstile. The page you land on after paying loads fonts from Google Fonts.</p>
+    <p>① The request-a-seat form stores your email, the line you wrote, the page language and a short browser type, plus a salted hash of your network address used only to limit how often it can be submitted. Submitting it creates an identity for that email in our account system, and the form is forwarded to our inbox through Resend. ② Trying cleanup on the web sends the text you paste to our servers, which pass it to a language model and do not store it. ③ The scripts on the sign-in, try-it and skills pages are all self-hosted on this site; when abuse protection is switched on, those three pages also load Cloudflare Turnstile. The page you land on after paying loads fonts from Google Fonts.</p>
   </div>
 </section>
 

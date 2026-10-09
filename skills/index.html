@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <!-- CSP 与试一试页逐字相同(同一个后端、同一个 Turnstile、同一份 supabase-js)。⛔ 别加通配符。 -->
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://challenges.cloudflare.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src https://syebvkwemxwxkonvsyjd.supabase.co https://challenges.cloudflare.com; frame-src https://challenges.cloudflare.com; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'unsafe-inline' https://challenges.cloudflare.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src https://syebvkwemxwxkonvsyjd.supabase.co https://challenges.cloudflare.com; frame-src https://challenges.cloudflare.com; object-src 'none'; base-uri 'none'; form-action 'none'">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>提示词技能 · Murmur</title>
 <meta name="description" content="Murmur 的十二个提示词技能:各自什么时候用、附哪三条做法。粘一句平时对 AI 说的话,看 App 会落进输入框的那段。">
@@ -241,7 +241,7 @@
 const SUPA_URL = "https://syebvkwemxwxkonvsyjd.supabase.co";
 const SUPA_KEY = "sb_publishable_bBmuodbgO72q8CK_kacrSw_0o3cCsOd";  // 公开 key,不是密钥
 const FN       = SUPA_URL + "/functions/v1/murmur-web";
-const SDK      = "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.116.0/+esm"; // 版本写死
+const SDK      = "../vendor/supabase-js-2.116.0.mjs"; // SITEFIX-3:同 try 页自托管,版本写死(来源与 sha256 见 vendor/SOURCES.txt);相对本页解析
 const LANG     = "zh";
 const MAXLEN   = 600;
 // ⬇️ 同 try 页:Turnstile 的 site key 填好之前,匿名那条路在页面上也是关的。
