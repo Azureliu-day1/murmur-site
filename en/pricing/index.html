@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<!-- CSP 与登录页同一套(SEC-L5,无 unsafe-inline):脚本与样式共用 /pricing/ 下那两份,
+     supabase-js 自托管在 /vendor/。connect-src 多一个 'self'(读本站 pricing.json)。⛔ 别加通配符、别加 unsafe-*。 -->
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self' https://syebvkwemxwxkonvsyjd.supabase.co; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pricing · Murmur</title>
+<meta name="description" content="Murmur pricing: about 20 minutes of cloud recording free, once. Pro and Max are monthly or yearly subscriptions.">
+<link rel="alternate" hreflang="en" href="../../en/pricing/index.html">
+<link rel="alternate" hreflang="zh-Hans" href="../../pricing/index.html">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../../v2.css">
+<link rel="stylesheet" href="../../pricing/pricing.css">
+</head>
+<body>
+
+<nav>
+  <div class="wrap navrow">
+    <a class="brand" href="../index.html"><svg width="30" height="15" viewBox="0 0 200 100" aria-hidden="true"><path d="M12.0 50.0 L14.0 40.1 L16.0 31.7 L18.0 25.2 L20.0 21.0 L22.0 19.0 L24.0 19.2 L26.0 21.3 L28.0 25.2 L30.0 30.3 L32.0 36.2 L34.0 42.4 L36.0 48.5 L38.0 54.2 L40.0 59.0 L42.0 62.7 L44.0 65.2 L46.0 66.5 L48.0 66.5 L50.0 65.5 L52.0 63.5 L54.0 60.9 L56.0 57.8 L58.0 54.6 L60.0 51.5 L62.0 48.6 L64.0 46.2 L66.0 44.4 L68.0 43.2 L70.0 42.7 L72.0 42.7 L74.0 43.2 L76.0 44.1 L78.0 45.3 L80.0 46.7 L82.0 48.0 L84.0 49.2 L86.0 50.2 L88.0 51.0 L90.0 51.5 L92.0 51.8 L94.0 51.8 L96.0 51.6 L98.0 51.3 L100.0 50.9 L102.0 50.5 L104.0 50.2 L106.0 50.0 L190 50" fill="none" stroke="var(--coral)" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/></svg>Murmur</a>
+    <div class="navlinks">
+      <a href="../index.html#pinyin">Pinyin</a>
+      <a href="../demo/index.html">Demo</a>
+      <a href="../guide/index.html">Guide</a>
+      <a href="../skills/index.html">Skills</a>
+      <a href="index.html" aria-current="page">Pricing</a>
+      <a class="nav-keep" href="../try/index.html">Try it</a>
+      <a class="nav-signin nav-keep" href="../login/index.html">Sign in</a>
+      <a href="../../pricing/index.html" hreflang="zh-Hans" lang="zh-Hans">中文</a>
+      <a class="nav-cta" href="../index.html#download">Download</a>
+    </div>
+  </div>
+</nav>
+
+<header class="head wrap">
+  <p class="eyebrow">Pricing</p>
+  <h1>Start free. Subscribe when it earns its place.</h1>
+  <p class="sub">The download is free and on-device recognition has no limit. Cloud allowance is counted in minutes recorded.</p>
+</header>
+
+<main class="wrap">
+
+  <div class="cycle" id="cycle" role="group" aria-label="Billing period" hidden>
+    <button type="button" data-cycle="month" aria-pressed="true">Monthly</button>
+    <button type="button" data-cycle="year" aria-pressed="false">Yearly</button>
+  </div>
+
+  <!-- ⛔ No price is written on this page. Prices and payment links come from /pricing.json;
+       a null slot shows "Coming soon" and its button cannot be clicked. -->
+  <div class="plans">
+    <article class="plan" data-plan="free">
+      <h2>Free</h2>
+      <p class="for">Try it out</p>
+      <p class="price"><span class="amount">Free</span></p>
+      <ul>
+        <li>About 20 minutes of cloud dictation and long recording, combined</li>
+        <li>A one-time allowance that does not reset</li>
+        <li>On-device recognition with no limit</li>
+      </ul>
+      <a class="btn btn-quiet btn-block" href="../index.html#download">Download free</a>
+    </article>
+
+    <article class="plan" data-plan="pro">
+      <h2>Pro</h2>
+      <p class="for">You talk to it every day</p>
+      <p class="price"><span class="amount">Coming soon</span><small class="per"></small></p>
+      <ul>
+        <li>A cloud allowance every month</li>
+        <li>Shared by dictation and long recording</li>
+        <li>Resets on your billing date, not the calendar month</li>
+      </ul>
+      <a class="btn btn-primary btn-block buy" aria-disabled="true">Coming soon</a>
+    </article>
+
+    <article class="plan" data-plan="max">
+      <h2>Max</h2>
+      <p class="for">You record lectures or meetings</p>
+      <p class="price"><span class="amount">Coming soon</span><small class="per"></small></p>
+      <ul>
+        <li>Close to unlimited use</li>
+        <li>More long recording</li>
+        <li>Everything in Pro</li>
+      </ul>
+      <a class="btn btn-primary btn-block buy" aria-disabled="true">Coming soon</a>
+    </article>
+  </div>
+
+  <p class="paynote" id="paynote">Pay with the email you use to sign in to the app.</p>
+
+  <section class="faq">
+    <h2>Questions</h2>
+    <div class="qa">
+      <h3>How is the allowance counted?</h3>
+      <p>By recording time. Dictation and long recording draw from the same allowance.</p>
+    </div>
+    <div class="qa">
+      <h3>Does a recording stop when I run out?</h3>
+      <p>No. The recording you are in finishes and is saved as usual, and the app tells you the allowance is used up. Cloud allowance stops from the next recording.</p>
+    </div>
+    <div class="qa">
+      <h3>How do I cancel?</h3>
+      <p id="cancelMail">Write to us at <a href="mailto:contact@maobenbeginner.com">contact@maobenbeginner.com</a> and we will cancel it for you.</p>
+      <p id="cancelPortal" hidden>Cancel any time on your <a id="portalLink" rel="noopener">Stripe account page</a>.</p>
+    </div>
+    <div class="qa">
+      <h3>Can I get a refund?</h3>
+      <p>Refunds follow section 5 of the <a href="../tos.html">Terms</a>.</p>
+    </div>
+    <div class="qa">
+      <h3>Is payment safe?</h3>
+      <p>Stripe handles the payment. We never see or store your card number.</p>
+    </div>
+  </section>
+
+</main>
+
+<footer class="wrap">
+  <span>Made by Others Studio</span>
+  <div class="links">
+    <a href="https://othersstudio.tech">othersstudio.tech</a>
+    <a href="../privacy.html">Privacy</a>
+    <a href="../tos.html">Terms</a>
+    <!-- 顶栏的语言切换在手机上是收起来的,页脚这一份是它在手机上的落点 -->
+    <a href="../../pricing/index.html" hreflang="zh-Hans" lang="zh-Hans">中文</a>
+  </div>
+</footer>
+
+<script src="../../v2-nav.js"></script>
+<script type="module" src="../../pricing/pricing.js"></script>
+</body>
+</html>
