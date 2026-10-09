@@ -304,6 +304,12 @@ kbd {
 .caption { margin-top: 16px; font-size: 14px; color: var(--second); min-height: 24px; text-align: center; }
 .caption .volatile { opacity: .45; }
 .stage-note { margin-top: 24px; font-size: 12.5px; color: var(--faint); text-align: center; }
+.install-more { margin: 22px auto 0; max-width: 560px; font-size: 13px; color: var(--faint); text-align: center; }
+.install-more summary { cursor: pointer; list-style: none; color: var(--muted, var(--faint)); }
+.install-more summary::-webkit-details-marker { display: none; }
+.install-more summary::after { content: " +"; }
+.install-more[open] summary::after { content: " −"; }
+.install-more p { margin: 10px 0 0; line-height: 1.7; }
 
 /* ── 少一道工序:打字 vs 说话 双演示 ── */
 .compare { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 48px; }
@@ -1065,16 +1071,13 @@ body.is-sandbox .sandbox { display: inline-block; }
   <div class="cta-row reveal">
     <a class="btn btn-primary" href="https://github.com/Azureliu-day1/murmur-site/releases/latest/download/Murmur.zip">下载 macOS 版</a>
   </div>
-  <!-- ⭐ 和 hero 里那一行同一句:滚到底才看见「下载」的手机用户,在这里也不该是死路。 -->
-  <p class="mobile-path reveal">手机上装不了。可以先<a href="login/index.html">申请名额</a>,或者<a href="try/index.html">在网页上试整理 →</a></p>
-  <p class="stage-note reveal"><b>需要 macOS 26 以上、M 系列芯片的 Mac</b> · 下载免费 · 云端额度要邀请</p>
-  <p class="stage-note reveal">Intel Mac 和 macOS 15 及更早的系统现在装不上。发封邮件到
-  <a href="mailto:contact@maobenbeginner.com?subject=Murmur%20%E7%AD%89%E6%94%AF%E6%8C%81">contact@maobenbeginner.com</a>,支持以后我们回信告诉你。</p>
-  <!-- ⭐ 申请名额只有一条路:登录页的表单(和 hero、手机提示同一个入口)。
-       以前这里另写了一个邮箱,两条路收进两个地方,申请的人不知道该走哪条。 -->
-  <p class="stage-note reveal">下载免费,<b>本机识别不用登录就能用</b>。云端额度现在要邀请,<a href="login/index.html">在这里申请名额</a>,写一句你想用它做什么。</p>
-  <p class="stage-note reveal">解压后把 Murmur 拖进「应用程序」。第一次打开时,它会请求麦克风和辅助功能权限。
-  辅助功能权限用来把字放进光标处。</p>
+  <p class="stage-note reveal"><b>macOS 26 以上 · M 系列芯片</b> · 免费下载,本机识别不用登录</p>
+  <p class="mobile-path reveal">手机或 Intel Mac 装不了?先<a href="login/index.html">申请云端名额</a>,或<a href="try/index.html">在网页上试整理 →</a></p>
+  <details class="install-more reveal">
+    <summary>安装说明</summary>
+    <p>解压后把 Murmur 拖进「应用程序」。第一次打开会请求麦克风和辅助功能权限,后者用来把字放进光标处。</p>
+    <p>云端额度现在要邀请,申请时写一句你想用它做什么。Intel Mac 和 macOS 15 以前的系统暂不支持,<a href="mailto:contact@maobenbeginner.com?subject=Murmur%20%E7%AD%89%E6%94%AF%E6%8C%81">写信给我们</a>,支持后回信。</p>
+  </details>
 </section>
 
 <footer class="wrap">
