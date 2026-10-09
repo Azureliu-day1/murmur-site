@@ -967,65 +967,7 @@ body.is-sandbox .sandbox { display: inline-block; }
   </p>
 </section>
 
-<!-- ── 定价(嫁接自 v1;IDs #pricing #buy #manage #pro-price 保留勿改) ── -->
-<!-- ⛔ 定价段暂时下架(2026-09-10,Wei:「收钱这条不做,现在」)。
-     原因:Stripe 还挂在沙盒链接上,页面会自己挂「沙盒测试中」徽章 ——
-     给人试用时,一个标着「测试中」的价格比没有价格更糟。
-     恢复方法:删掉本段首尾这两行注释即可,里面一个字没动;
-     恢复之前先把底部 PAY_LINK 换成正式链接并删掉 <meta robots noindex>。 -->
-<!--
-<section class="wrap" id="pricing">
-  <div class="eyebrow reveal">Pricing · 定价</div>
-  <h2 class="reveal">额度用完之前,不用付钱。<span class="sandbox">沙盒测试中</span></h2>
-  <p class="sub reveal">
-    免费额度是我们替你付的云端账单 —— 用完了自动切回本机识别,不会停在那里问你要钱。
-    云端额度现阶段是<strong>内测邀请制</strong>:下载免费、本机识别不用登录,
-    要云端名额,<a href="https://othersstudio.tech" rel="noopener">来找我们</a>要一个。
-  </p>
-
-  <div class="plans reveal">
-    <div class="plan">
-      <h3>Free</h3>
-      <div class="price">0<small> / 月</small></div>
-      <ul>
-        <li>每周 2000 字的云端听写与整理</li>
-        <li>每月 30 分钟长录音</li>
-        <li>额度用完自动切本机识别,继续能用</li>
-      </ul>
-    </div>
-    <div class="plan">
-      <h3>Pro</h3>
-      <div class="price" id="pro-price">AU$9<small> / 月</small></div>
-      <ul>
-        <li>听写、整理、翻译不限量</li>
-        <li>长录音不限时长</li>
-        <li>随时可取消,取消后用到当期结束</li>
-      </ul>
-    </div>
-  </div>
-
-  <p class="reveal" style="margin-bottom:8px">
-    <a class="buy" id="buy" href="#">订阅 Pro</a>
-  </p>
-
-  <div class="pricing-plain reveal">
-    <p>
-      <strong>从这里买的话,用同一个邮箱在 App 里登录就会自动到账。</strong>
-      网页上付款时我们还不知道你是谁 —— 收银台填的那个邮箱就是认领凭据,所以两边要用同一个。
-    </p>
-    <p>
-      已经在用 App 的话更省事:直接在 App 里点「升级 Pro」,付完回到 App,档位自己就变了。
-    </p>
-    <p>
-      <strong>取消也不用找人。</strong>
-      <a id="manage" href="#">管理订阅</a> —— 输入付款时用的邮箱,Stripe 会发一条直达链接给你,
-      在那儿自己取消或换卡。取消后用到当期结束,不退当期。
-      用<strong>兑换码</strong>开通的 Pro 不经收银台,门户里会查无此订阅 ——
-      它的到期与续期在 App 的账号页里看;拿到兑换码就在那里输入,不用走这里。
-    </p>
-  </div>
-</section>
--->
+<!-- 定价段已整段删除(SITEFIX-20,2026-10-09):下架期间源码注释里留着价格和测试标记,公开可见。要恢复,从 git 历史 a2779eb 及以前的 index.html 取回。 -->
 
 <!-- ── 细节合集:句句是已交付行为,不许吹 ── -->
 <section class="wrap" id="details">

@@ -969,70 +969,7 @@ body.is-sandbox .sandbox { display: inline-block; }
   </p>
 </section>
 
-<!-- ── 定价(嫁接自 v1;IDs #pricing #buy #manage #pro-price 保留勿改) ── -->
-<!-- ⛔ 定价段暂时下架(2026-09-12,与中文页 index.html 同步)。
-     ⚠️ 这一段是 2026-09-10 中文页下架时**漏掉的** —— 英文页一直挂着可点的沙盒收银台
-     (#buy 会被底部 JS 赋上 buy.stripe.com/test_…,body 还会加 is-sandbox 让「测试中」徽章亮起来)。
-     原因同中文页:给人试用时,一个标着「测试中」的价格比没有价格更糟。
-     恢复方法:删掉本段首尾这两行注释即可,里面一个字没动;
-     恢复之前先把底部 PAY_LINK / MANAGE_LINK 换成正式链接。 -->
-<!--
-<section class="wrap" id="pricing">
-  <div class="eyebrow reveal">Pricing</div>
-  <h2 class="reveal">Nothing to pay until the free allowance runs out.<span class="sandbox">sandbox mode</span></h2>
-  <p class="sub reveal">
-    The free allowance is a cloud bill we pay on your behalf — when it runs out the app switches back to
-    on-device recognition instead of stopping to ask you for money. Cloud allowance is
-    <strong>invite-only during the closed beta</strong>: the download is free, on-device recognition needs
-    no account at all, and for a cloud seat, <a href="https://othersstudio.tech" rel="noopener">come and ask us</a>.
-  </p>
-
-  <div class="plans reveal">
-    <div class="plan">
-      <h3>Free</h3>
-      <div class="price">0<small> / month</small></div>
-      <ul>
-        <li>2,000 words a week of cloud dictation and cleanup</li>
-        <li>30 minutes a month of long recording</li>
-        <li>Allowance gone: it switches to on-device and keeps working</li>
-      </ul>
-    </div>
-    <div class="plan">
-      <h3>Pro</h3>
-      <div class="price" id="pro-price">AU$9<small> / month</small></div>
-      <ul>
-        <li>Dictation, cleanup and translation, unmetered</li>
-        <li>Long recording with no limit on length</li>
-        <li>Cancel any time; it runs to the end of the period</li>
-      </ul>
-    </div>
-  </div>
-
-  <p class="reveal" style="margin-bottom:8px">
-    <a class="buy" id="buy" href="#">Subscribe to Pro</a>
-  </p>
-
-  <div class="pricing-plain reveal">
-    <p>
-      <strong>Buy here, then sign in to the app with the same email and it upgrades itself.</strong>
-      At the checkout we still do not know who you are — the email you type there is the claim ticket, so
-      it has to match. Prices are charged in Australian dollars; your bank may apply its own conversion rate.
-    </p>
-    <p>
-      Already running the app? Simpler still: hit “Upgrade to Pro” inside it, pay, come back, and the tier
-      has changed on its own.
-    </p>
-    <p>
-      <strong>Cancelling does not involve talking to anyone.</strong>
-      <a id="manage" href="#">Manage subscription</a> — enter the email you paid with and Stripe sends you a
-      direct link; cancel or change the card there. After cancelling it runs to the end of the period; the
-      current period is not refunded. Pro opened with a <strong>redemption code</strong> never went through
-      the checkout, so the portal will find no subscription for it — its expiry and renewal live on the
-      account page inside the app, which is also where you type the code in. You never need this link for that.
-    </p>
-  </div>
-</section>
--->
+<!-- 定价段已整段删除(SITEFIX-20,2026-10-09):下架期间源码注释里留着价格和测试标记,公开可见。要恢复,从 git 历史 a2779eb 及以前的 en/index.html 取回。 -->
 
 <!-- ── 细节合集:句句是已交付行为,不许吹 ── -->
 <section class="wrap" id="details">
