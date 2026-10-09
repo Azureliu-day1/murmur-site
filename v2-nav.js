@@ -71,41 +71,11 @@
     }
   }
 
-  function css() {
-    return [
-      ".nav-acct{position:relative;display:inline-flex;align-items:center}",
-      ".nav-account{display:inline-flex;align-items:center;justify-content:center;",
-      "width:82px;height:30px;padding:0 12px;border:1px solid var(--line2);border-radius:999px;",
-      "background:var(--capsule);color:var(--second);font:inherit;font-size:13px;line-height:1;",
-      "cursor:pointer;white-space:nowrap;transition:color .12s ease,border-color .12s ease}",
-      ".nav-account:hover{color:var(--ink);border-color:var(--line2)}",
-      ".nav-account[aria-expanded=\"true\"]{color:var(--ink);border-color:var(--coral)}",
-      ".nav-account:focus-visible{outline:2px solid var(--coral);outline-offset:2px}",
-      ".nav-pop{position:absolute;top:calc(100% + 10px);right:0;min-width:216px;max-width:280px;",
-      "background:var(--card);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);",
-      "padding:14px 16px;z-index:20;text-align:left}",
-      ".nav-pop .who{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);margin-bottom:5px}",
-      ".nav-pop .mail{font-family:\"IBM Plex Mono\",ui-monospace,monospace;font-size:12.5px;color:var(--ink);",
-      "line-height:1.5;overflow-wrap:anywhere;margin-bottom:12px}",
-      ".nav-pop .out{display:block;width:100%;font:inherit;font-size:13px;color:var(--second);",
-      "background:transparent;border:1px solid var(--line2);border-radius:999px;padding:7px 0;cursor:pointer;",
-      "text-align:center;transition:color .12s ease,border-color .12s ease}",
-      ".nav-pop .out:hover{color:var(--ink);border-color:var(--coral);text-decoration:none}",
-      ".nav-pop .out:focus-visible{outline:2px solid var(--coral);outline-offset:2px}",
-      // ⚠️ 2026-09-17 改:窄屏上「账户」不再收起来。它换掉的是 .nav-signin
-      // 那一枚 —— 而那一枚现在打了 class="nav-keep",在手机上是留着的。
-      // 把按钮收掉等于让手机上的登录用户既看不到「登录」也看不到「账户」,
-      // 顶栏上一个账号入口都没有。这里只把它按手机的尺寸缩一号。
-      "@media (max-width:820px){.nav-account{width:68px;height:28px;padding:0 10px;font-size:12.5px}}",
-    ].join("");
-  }
+  // SITEFIX-21:胶囊与面板的样式在 v2.css(首页在页内 <style>)。⛔ 不从脚本注入 <style>:
+  //   登录 / 试一试 / 技能页的 CSP 是 style-src 'self',注入的样式会被拦。
 
   function mount(link, session) {
     var loginHref = link.getAttribute("href") || "login/index.html";
-
-    var style = document.createElement("style");
-    style.textContent = css();           // 常量字符串,⛔ 不是用户数据
-    document.head.appendChild(style);
 
     var btn = document.createElement("button");
     btn.type = "button";
