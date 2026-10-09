@@ -23,11 +23,23 @@ cd "$(dirname "$0")/.." || exit 2
 # 隐私页与条款的联系 / 投诉处故意公开)。换地址只用 tools/set-contact-email.sh,它连这一行一起改。
 # 做法是逐行先删掉这一个地址再匹配,同一行里别的命中照样红。⛔ 不许再加白名单项。
 PII_ALLOW='contact@maobenbeginner.com'
-PII_RE='azureliu|@gmail|\+61|Example Street|sb_secret|service_role'
+# 仓库里只放**通用**模式(SITEFIX-22):邮箱地址(example.com / .org / .net 占位放过)、国际电话号码、密钥形状。
+#   跟某个人有关的模式(名字、住址、本人号码段)⛔ 不进公开仓,放本机不入库的 ~/.config/murmur/pii-extra.txt:
+#   一行一个 ERE,# 开头是注释;文件在就并进来一起扫,不在就跳过并打一行提示(CI / 别人的机器上只跑通用那一半)。
+PII_RE='[A-Za-z0-9._%+-]+@[A-Za-z][A-Za-z0-9-]*(\.[A-Za-z0-9-]+)*\.[A-Za-z]{2,}|\+[0-9]{2,3}[ -]?[0-9]{3}[ -]?[0-9]{3}[ -]?[0-9]{3}|sb_secret|service_role|sk_live_|sk_test_|rk_live_|whsec_'
+PII_EXTRA_FILE="$HOME/.config/murmur/pii-extra.txt"
+if [ -f "$PII_EXTRA_FILE" ]; then
+  extra=$(grep -vE '^[[:space:]]*(#|$)' "$PII_EXTRA_FILE" | paste -sd'|' -)
+  [ -n "$extra" ] && PII_RE="$PII_RE|$extra"
+  echo "PII 本机模式:读了 $(grep -cvE '^[[:space:]]*(#|$)' "$PII_EXTRA_FILE") 条($PII_EXTRA_FILE)"
+else
+  echo "PII 本机模式文件不存在,跳过(只扫通用模式):$PII_EXTRA_FILE"
+fi
 # vendor/ 是逐字节自托管的第三方库(SEC-L5):supabase-js 里有「新版密钥前缀」判断这种字面量,会撞上下面的 PII 模式,但不是我们的密钥。
 #   它不进 PII 扫描,换成下面的「vendor 完整性」门:每个文件反做一遍改写后必须等于 jsDelivr 原文的 sha256 —— 一个字节都改不了,
 #   也就塞不进任何 PII。⛔ 只排除 vendor/ 这一个目录,别的照扫。
-pii=$(grep -rnE "$PII_RE" --exclude-dir=.git --exclude-dir=vendor . | awk -v a="$PII_ALLOW" '{ l=$0; while ((i=index(l,a))>0) l=substr(l,1,i-1) substr(l,i+length(a)); print l }' | grep -E "$PII_RE" | grep -vE '^\./tools/copy-lint\.sh:[0-9]+:PII_RE=')   # 只放过本脚本定义模式的那一行
+# 逐行先删掉白名单地址和 example.com/.org/.net 占位地址,再匹配一遍;同一行里别的命中照样红。
+pii=$(grep -rnE "$PII_RE" --exclude-dir=.git --exclude-dir=vendor . | awk -v a="$PII_ALLOW" '{ l=$0; while ((i=index(l,a))>0) l=substr(l,1,i-1) substr(l,i+length(a)); print l }' | sed -E 's/[A-Za-z0-9._%+-]+@example\.(com|org|net)//g' | grep -E "$PII_RE" | grep -vE '^\./tools/copy-lint\.sh:[0-9]+:PII_RE=')   # 只放过本脚本定义模式的那一行
 if [ -n "$pii" ]; then
   echo "PII 扫描命中(fail-closed,停):"; echo "$pii" | cut -c1-200
   exit 2
