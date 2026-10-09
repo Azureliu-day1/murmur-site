@@ -24,6 +24,8 @@
 /* 两栏:三行 | 图框;窄屏单栏,图在后 */
 .g-body { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 28px 40px; align-items: start; margin-top: 18px; }
 .g-body > .py-shot { margin-top: 6px; }
+/* SITEFIX-14:没有图框的一节(装好后第一句)单栏,不留右侧空列 */
+.g-one { grid-template-columns: minmax(0, 46em); }
 
 /* 三行:左列小标签,右列正文 */
 .g-row {
