@@ -252,7 +252,6 @@ h2 { font-size: clamp(26px, 3.4vw, 34px); font-weight: 600; line-height: 1.35; l
 /* The phone path: one small line under the CTA. On desktop too, quietly.
    ⚠️ No .hero in the selector — the #download section at the foot reuses it. */
 .mobile-path { margin-top: 18px; font-size: 13.5px; color: var(--second); line-height: 1.7; }
-.hero .keys { margin-top: 26px; color: var(--faint); font-size: 13px; display: flex; gap: 18px; justify-content: center; flex-wrap: wrap; }
 kbd {
   font-family: "IBM Plex Mono", monospace; font-size: 12px; color: var(--ink);
   background: var(--card); border: 1px solid var(--line2); border-radius: 7px;
@@ -596,16 +595,6 @@ body.is-sandbox .sandbox { display: inline-block; }
        phone, and this line is the only road they have. Shown on desktop too —
        one small line, it does not compete with the CTA. -->
   <p class="mobile-path reveal">It does not install on a phone. You can <a href="login/index.html">ask for a seat</a> or <a href="try/index.html">try the tidying in the browser →</a></p>
-  <div class="keys reveal">
-    <span><kbd>Right ⌘</kbd>Dictate</span>
-    <span><kbd>Right ⌥</kbd>Translate</span>
-    <span><kbd>Right ⌃</kbd>Edit by voice</span>
-    <span><kbd>fn</kbd>Ask (off by default)</span>
-    <span><kbd>Esc</kbd>Cancel</span>
-  </div>
-  <!-- ⭐ New in this version: one line of text links into the sections below. Styles in pinyin.css (.whatsnew).
-       Only features that are new in 0.53; the full list is at guide/#changes. -->
-  <p class="whatsnew reveal"><b>New in 0.53</b><a href="#pinyin">Pinyin input method</a><span class="sep">·</span><a href="guide/index.html#fuzzy">Double pinyin and fuzzy pinyin</a><span class="sep">·</span><a href="guide/index.html#smart">Smart punctuation</a><span class="sep">·</span><a href="guide/index.html#cloud">Cloud candidates</a><span class="sep">·</span><a href="#vibe-skills">Prompt skills</a><span class="sep">·</span><a href="guide/index.html#scene">Cleanup by scene</a></p>
 
   <div class="stage reveal" id="demo">
     <div class="fake-input"><span class="ph">your cursor is here</span><span class="out"></span><span class="cursor"></span></div>

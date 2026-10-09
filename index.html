@@ -252,7 +252,6 @@ h2 { font-size: clamp(26px, 3.4vw, 34px); font-weight: 600; line-height: 1.35; l
 /* 手机上的那条路:一行小字,跟在 CTA 下面。桌面上也在,但不抢按钮的注意力。
    ⚠️ 选择器不带 .hero —— 页尾 #download 那枚「下载」下面用的是同一句。 */
 .mobile-path { margin-top: 18px; font-size: 13.5px; color: var(--second); line-height: 1.7; }
-.hero .keys { margin-top: 26px; color: var(--faint); font-size: 13px; display: flex; gap: 18px; justify-content: center; flex-wrap: wrap; }
 kbd {
   font-family: "IBM Plex Mono", monospace; font-size: 12px; color: var(--ink);
   background: var(--card); border: 1px solid var(--line2); border-radius: 7px;
@@ -595,16 +594,6 @@ body.is-sandbox .sandbox { display: inline-block; }
        从微信 / 小红书点进来的人多数在手机上,这一行是他们唯一能走的路。
        桌面上也显示 —— 一行小字,不抢 CTA。 -->
   <p class="mobile-path reveal">手机上装不了。可以先<a href="login/index.html">申请名额</a>,或者<a href="try/index.html">在网页上试整理 →</a></p>
-  <div class="keys reveal">
-    <span><kbd>右 ⌘</kbd>听写</span>
-    <span><kbd>右 ⌥</kbd>翻译</span>
-    <span><kbd>右 ⌃</kbd>口述编辑</span>
-    <span><kbd>fn</kbd>随心问(可开启)</span>
-    <span><kbd>Esc</kbd>取消</span>
-  </div>
-  <!-- ⭐ 这一版新增:一行文字链,跳到下面对应的板块。样式在 pinyin.css(.whatsnew)。
-       只列 0.53 才有的功能;全部改动在 guide/#changes。 -->
-  <p class="whatsnew reveal"><b>0.53 新增</b><a href="#pinyin">拼音输入法</a><span class="sep">·</span><a href="guide/index.html#fuzzy">双拼与模糊音</a><span class="sep">·</span><a href="guide/index.html#smart">智能标点</a><span class="sep">·</span><a href="guide/index.html#cloud">云候选</a><span class="sep">·</span><a href="#vibe-skills">提示词技能</a><span class="sep">·</span><a href="guide/index.html#scene">按场景整理</a></p>
 
   <div class="stage reveal" id="demo">
     <div class="fake-input"><span class="ph">光标在这里</span><span class="out"></span><span class="cursor"></span></div>
