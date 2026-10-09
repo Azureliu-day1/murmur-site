@@ -2,13 +2,16 @@
 <html lang="zh-CN">
 <head>
 <meta charset="utf-8">
+<!-- 免费档写的是**线上现行规则**(0.53 发布时):云端听写每周 2000 字、长录音每月 30 分钟(需要名额)、本机识别不限。
+     订阅 v2 上线时改成「一次性约 20 分钟、按录音时长、听写和长录音共用」,与 murmur-all-sec/docs/DESIGN-subs-v2.md 一致
+     (free_lifetime_seconds = 1200);meta description、免费卡、页头副标题、FAQ「额度怎么算」四处一起改,英文页同。 -->
 <!-- CSP 与登录页同一套(SEC-L5,无 unsafe-inline):脚本在 pricing.js、样式在 pricing.css,
      supabase-js 自托管在 /vendor/。connect-src 比登录页多一个 'self'(读本站 pricing.json),
      少了 Turnstile(这一页没有表单)。⛔ 别加通配符、别加 unsafe-*。 -->
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self' https://syebvkwemxwxkonvsyjd.supabase.co; object-src 'none'; base-uri 'none'; form-action 'none'">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>价格 · Murmur</title>
-<meta name="description" content="Murmur 的价格:免费一次性约 20 分钟云端录音,Pro 和 Max 按月或按年订阅。">
+<meta name="description" content="Murmur 的价格:免费档云端听写每周 2000 字、长录音每月 30 分钟,Pro 和 Max 按月或按年订阅。">
 <link rel="alternate" hreflang="zh-Hans" href="../pricing/index.html">
 <link rel="alternate" hreflang="en" href="../en/pricing/index.html">
 <link rel="icon" href="../favicon.svg" type="image/svg+xml">
@@ -37,7 +40,7 @@
 <header class="head wrap">
   <p class="eyebrow">价格</p>
   <h1>先免费用,够用再订阅</h1>
-  <p class="sub">下载免费,本机识别不限。云端额度按录音时长算。</p>
+  <p class="sub">下载免费,本机识别不限。云端听写按字数算。</p>
 </header>
 
 <main class="wrap">
@@ -56,8 +59,8 @@
       <p class="for">先试一试</p>
       <p class="price"><span class="amount">免费</span></p>
       <ul>
-        <li>云端听写和长录音,一共约 20 分钟</li>
-        <li>一次性额度,不按月重置</li>
+        <li>云端听写每周 2000 字</li>
+        <li>长录音每月 30 分钟(需要名额)</li>
         <li>本机识别不限</li>
       </ul>
       <a class="btn btn-quiet btn-block" href="../index.html#download">免费下载</a>
@@ -94,7 +97,7 @@
     <h2>常见问题</h2>
     <div class="qa">
       <h3>额度怎么算</h3>
-      <p>按录音时长算。听写和长录音从同一份额度里扣。</p>
+      <p>免费档的云端听写按字数算,每周 2000 字。长录音按录音时长算,每月 30 分钟,需要名额。本机识别不计。</p>
     </div>
     <div class="qa">
       <h3>录到一半用完会断吗</h3>

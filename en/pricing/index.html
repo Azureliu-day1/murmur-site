@@ -2,12 +2,17 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
+<!-- The free tier states the rules **live today** (at the 0.53 release): 2,000 characters of cloud dictation a week,
+     30 minutes of long recording a month (needs a seat), on-device recognition unlimited.
+     When subscriptions v2 ships, change it to "about 20 minutes once, counted by recording time, shared by dictation and
+     long recording", matching murmur-all-sec/docs/DESIGN-subs-v2.md (free_lifetime_seconds = 1200). Change the meta
+     description, the Free card, the header subline and the "How is the allowance counted?" answer together, same as the zh page. -->
 <!-- CSP 与登录页同一套(SEC-L5,无 unsafe-inline):脚本与样式共用 /pricing/ 下那两份,
      supabase-js 自托管在 /vendor/。connect-src 多一个 'self'(读本站 pricing.json)。⛔ 别加通配符、别加 unsafe-*。 -->
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self' https://syebvkwemxwxkonvsyjd.supabase.co; object-src 'none'; base-uri 'none'; form-action 'none'">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Pricing · Murmur</title>
-<meta name="description" content="Murmur pricing: about 20 minutes of cloud recording free, once. Pro and Max are monthly or yearly subscriptions.">
+<meta name="description" content="Murmur pricing: the free tier has 2,000 characters of cloud dictation a week and 30 minutes of long recording a month. Pro and Max are monthly or yearly subscriptions.">
 <link rel="alternate" hreflang="en" href="../../en/pricing/index.html">
 <link rel="alternate" hreflang="zh-Hans" href="../../pricing/index.html">
 <link rel="icon" href="../../favicon.svg" type="image/svg+xml">
@@ -36,7 +41,7 @@
 <header class="head wrap">
   <p class="eyebrow">Pricing</p>
   <h1>Start free. Subscribe when it earns its place.</h1>
-  <p class="sub">The download is free and on-device recognition has no limit. Cloud allowance is counted in minutes recorded.</p>
+  <p class="sub">The download is free and on-device recognition has no limit. Cloud dictation is counted in characters.</p>
 </header>
 
 <main class="wrap">
@@ -54,8 +59,8 @@
       <p class="for">Try it out</p>
       <p class="price"><span class="amount">Free</span></p>
       <ul>
-        <li>About 20 minutes of cloud dictation and long recording, combined</li>
-        <li>A one-time allowance that does not reset</li>
+        <li>2,000 characters of cloud dictation a week</li>
+        <li>30 minutes of long recording a month (needs a seat)</li>
         <li>On-device recognition with no limit</li>
       </ul>
       <a class="btn btn-quiet btn-block" href="../index.html#download">Download free</a>
@@ -92,7 +97,7 @@
     <h2>Questions</h2>
     <div class="qa">
       <h3>How is the allowance counted?</h3>
-      <p>By recording time. Dictation and long recording draw from the same allowance.</p>
+      <p>On the free tier, cloud dictation is counted in characters: 2,000 a week. Long recording is counted by recording time: 30 minutes a month, with a seat. On-device recognition is not counted.</p>
     </div>
     <div class="qa">
       <h3>Does a recording stop when I run out?</h3>
