@@ -49,6 +49,8 @@ const L = {
   quotaTrial:   (n) => `Anonymous trial · ${n} left today · unlimited once you sign in`,
   quotaTrialOut:"Today's anonymous trial is used up · come back tomorrow, or sign in",
   quotaTrialOff:"Anonymous trial is off today · available once you sign in",
+  // SITEFIX-1:匿名试用关着时,页头那句「不用下载,也不用注册」换成这句 + 申请入口(三段:前半 / 链接上的字 / 后半)。
+  trialLineOff: ["Sign in to try it. No account yet? ", "Ask for a seat", "."],
   busy:         "Tidying…",
   cleanBusy:    "Tidying…",
   rawEmpty:     "Type a sentence above, or pick one of the samples.",
@@ -186,7 +188,22 @@ async function loadTrial() {
   } catch { trial = { enabled: false, remaining: 0 }; }
   paintTrial();
 }
+// SITEFIX-1:匿名试用关着 → 页头那句(#trialLine)换成「登录后可以试」+ 申请入口;开着就不动(照旧)。
+//   只在匿名那条路上调(paintTrial),登录了的人看到的还是原句。⛔ 不用 innerHTML。
+function paintTrialLine() {
+  const el = document.getElementById("trialLine");
+  if (!el || trial.enabled) return;
+  const p = L.trialLineOff;
+  el.textContent = "";
+  el.appendChild(document.createTextNode(p[0]));
+  const a = document.createElement("a");
+  a.href = "../login/index.html#apply";
+  a.textContent = p[1];
+  el.appendChild(a);
+  el.appendChild(document.createTextNode(p[2]));
+}
 function paintTrial() {
+  paintTrialLine();
   if (!trial.enabled) { elQuota.textContent = L.quotaTrialOff; return; }
   elQuota.textContent = trial.remaining > 0 ? L.quotaTrial(trial.remaining) : L.quotaTrialOut;
 }

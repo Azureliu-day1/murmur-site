@@ -54,6 +54,8 @@ const L = {
   quotaTrial:   (n) => `匿名试用 · 今天还能整理 ${n} 次 · 登录后不限`,
   quotaTrialOut:"今天的匿名试用用完了 · 明天再来,登录后不限",
   quotaTrialOff:"匿名试用今天没开 · 登录后可用",
+  // SITEFIX-1:匿名试用关着时,页头那句「不用下载,也不用注册」换成这句 + 申请入口(三段:前半 / 链接上的字 / 后半)。
+  trialLineOff: ["登录后可以试。还没有账号,先", "申请名额", "。"],
   busy:         "整理中…",
   cleanBusy:    "整理中…",
   rawEmpty:     "在上面写一句,或者点一个例句。",
@@ -192,7 +194,22 @@ async function loadTrial() {
   } catch { trial = { enabled: false, remaining: 0 }; }
   paintTrial();
 }
+// SITEFIX-1:匿名试用关着 → 页头那句(#trialLine)换成「登录后可以试」+ 申请入口;开着就不动(照旧)。
+//   只在匿名那条路上调(paintTrial),登录了的人看到的还是原句。⛔ 不用 innerHTML。
+function paintTrialLine() {
+  const el = document.getElementById("trialLine");
+  if (!el || trial.enabled) return;
+  const p = L.trialLineOff;
+  el.textContent = "";
+  el.appendChild(document.createTextNode(p[0]));
+  const a = document.createElement("a");
+  a.href = "../login/index.html#apply";
+  a.textContent = p[1];
+  el.appendChild(a);
+  el.appendChild(document.createTextNode(p[2]));
+}
 function paintTrial() {
+  paintTrialLine();
   if (!trial.enabled) { elQuota.textContent = L.quotaTrialOff; return; }
   elQuota.textContent = trial.remaining > 0 ? L.quotaTrial(trial.remaining) : L.quotaTrialOut;
 }
