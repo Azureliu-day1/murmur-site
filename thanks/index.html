@@ -12,21 +12,21 @@
 /* 配色与主站同源(DesignSystem.swift)—— 珊瑚只做小面积 */
 :root {
   --paper:#F7F7F8; --card:#FFFFFF; --ink:#1B1B1F; --second:#55555C;
-  --faint:#8E8E96; --line:#E9E9EC; --line2:#D6D6DC;
+  --faint: #6F6F78; --coral-ink: #C44719; --coral-btn: #C44719; --line:#E9E9EC; --line2:#D6D6DC;
   --coral:#E2531F; --coral-tint:#FBEFE9; --green:#2E7D4F;
   --shadow: 0 1px 2px rgba(27,27,31,.04), 0 8px 24px rgba(27,27,31,.05);
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
     --paper:#161618; --card:#1E1E21; --ink:#F2F2F4; --second:#A0A0A8;
-    --faint:#6E6E76; --line:#2C2C31; --line2:#3A3A41;
+    --faint: #86868E; --coral-ink: #FF6B35; --coral-btn: #D93A00; --line:#2C2C31; --line2:#3A3A41;
     --coral:#FF6B35; --coral-tint:#3A2118; --green:#5FBF87;
     --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 24px rgba(0,0,0,.35);
   }
 }
 :root[data-theme="dark"] {
   --paper:#161618; --card:#1E1E21; --ink:#F2F2F4; --second:#A0A0A8;
-  --faint:#6E6E76; --line:#2C2C31; --line2:#3A3A41;
+  --faint: #86868E; --coral-ink: #FF6B35; --coral-btn: #D93A00; --line:#2C2C31; --line2:#3A3A41;
   --coral:#FF6B35; --coral-tint:#3A2118; --green:#5FBF87;
   --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 24px rgba(0,0,0,.35);
 }
@@ -61,7 +61,7 @@ p { margin:0 0 1.05rem; color:var(--second); font-size:.98rem; }
 p:last-child { margin-bottom:0; }
 .back {
   display:inline-flex; align-items:center; gap:.5rem;
-  background:var(--coral); color:#fff; text-decoration:none;
+  background:var(--coral-btn); color:#fff; text-decoration:none;
   font-size:.95rem; font-weight:500; padding:.7rem 1.45rem; border-radius:999px;
   margin:.5rem 0 1.4rem;
 }
@@ -70,7 +70,7 @@ p:last-child { margin-bottom:0; }
 .note { font-size:.86rem; color:var(--faint); line-height:1.7; }
 .note strong { color:var(--second); font-weight:500; }
 hr { border:none; border-top:1px solid var(--line); margin:1.6rem 0; }
-a.plainlink { color:var(--coral); text-decoration:none; border-bottom:1px solid transparent; }
+a.plainlink { color:var(--coral-ink); text-decoration:none; border-bottom:1px solid transparent; }
 a.plainlink:hover { border-bottom-color:var(--coral); }
 @media (prefers-reduced-motion: reduce) { * { animation:none !important; transition:none !important; } }
 </style>
