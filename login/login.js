@@ -304,6 +304,16 @@ function fmtDay(iso) {
   } catch (e) { return ""; }
 }
 
+// ── ⑥ 从「申请名额」链接进来(#apply)→ 直接展开申请表(SITEFIX-6)──────────
+// 站内所有申请入口都链 login/index.html#apply。已登录且有名额的人整段是藏着的,不去碰它;
+// 同一页里再点一次带 #apply 的链接也要生效,所以同时听 hashchange。
+const wantsApply = () => location.hash === "#apply";
+function openRequestIfAsked() {
+  if (!wantsApply() || $("reqSection").hidden || elReq.hidden) return;
+  openRequest();
+}
+window.addEventListener("hashchange", openRequestIfAsked);
+
 // ── Turnstile(有 site key 才加载)────────────────────────────────────────
 function mountTurnstile() {
   if (!TURNSTILE_SITEKEY) return;
@@ -362,6 +372,7 @@ $("signout").addEventListener("click", async () => {
     // CDN 拉不下来:登录这条路真的走不了,老实说一句,别让人对着一个死按钮点。
     say(elState, L.generic, "err");
     elSend.disabled = true;
+    openRequestIfAsked();        // 申请表不靠 SDK(直接 fetch),登录走不了也照样能申请
     return;
   }
   const wantsLogout = new URLSearchParams(location.search).get("logout") === "1";
@@ -379,8 +390,9 @@ $("signout").addEventListener("click", async () => {
     show("in");
     hideRequestIfSeated(data.session.access_token);            // 不 await:慢一拍也不挡这一页
     showRequestStatus(data.session.access_token);              // 同上;两个都只会往「藏」走
+    openRequestIfAsked();
     return;
   }
   show("email");
-  elEmail.focus();
+  if (wantsApply()) openRequestIfAsked(); else elEmail.focus();
 })();

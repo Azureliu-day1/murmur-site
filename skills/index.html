@@ -358,7 +358,7 @@ function paintNoSeat(n) {
     const p = L.noSeatNote.none;
     note.appendChild(document.createTextNode(p[0]));
     const a = document.createElement("a");
-    a.href = "../login/index.html";
+    a.href = "../login/index.html#apply";   // SITEFIX-6:申请入口一律带 #apply,登录页据此直接展开申请表
     a.textContent = p[1];
     note.appendChild(a);
     note.appendChild(document.createTextNode(p[2]));
