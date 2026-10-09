@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<!-- CSP: same as the demo page. No inline script on this page (only the v2-nav.js file), no network. -->
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>What is new in 0.53 · Murmur</title>
+<meta name="description" content="What changed in Murmur 0.53: a Pinyin input method, twelve prompt skills, more accurate cleanup, long recording, privacy and security hardening, and fixes.">
+<link rel="alternate" hreflang="en" href="../../en/changelog/index.html">
+<link rel="alternate" hreflang="zh-Hans" href="../../changelog/index.html">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../../v2.css">
+<link rel="stylesheet" href="../../pinyin.css">
+<link rel="stylesheet" href="../../guide/guide.css">
+</head>
+<body>
+
+<nav>
+  <div class="wrap navrow">
+    <a class="brand" href="../index.html"><svg width="30" height="15" viewBox="0 0 200 100" aria-hidden="true"><path d="M12.0 50.0 L14.0 40.1 L16.0 31.7 L18.0 25.2 L20.0 21.0 L22.0 19.0 L24.0 19.2 L26.0 21.3 L28.0 25.2 L30.0 30.3 L32.0 36.2 L34.0 42.4 L36.0 48.5 L38.0 54.2 L40.0 59.0 L42.0 62.7 L44.0 65.2 L46.0 66.5 L48.0 66.5 L50.0 65.5 L52.0 63.5 L54.0 60.9 L56.0 57.8 L58.0 54.6 L60.0 51.5 L62.0 48.6 L64.0 46.2 L66.0 44.4 L68.0 43.2 L70.0 42.7 L72.0 42.7 L74.0 43.2 L76.0 44.1 L78.0 45.3 L80.0 46.7 L82.0 48.0 L84.0 49.2 L86.0 50.2 L88.0 51.0 L90.0 51.5 L92.0 51.8 L94.0 51.8 L96.0 51.6 L98.0 51.3 L100.0 50.9 L102.0 50.5 L104.0 50.2 L106.0 50.0 L190 50" fill="none" stroke="var(--coral)" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/></svg>Murmur</a>
+    <div class="navlinks">
+      <a href="../index.html#pinyin">Pinyin</a>
+      <a href="../demo/index.html">Pinyin demo</a>
+      <a href="../guide/index.html">Guide</a>
+      <a href="../skills/index.html">Skills</a>
+      <a class="nav-keep" href="../try/index.html">Try it</a>
+      <!-- ⚠️ class="nav-signin" is what v2-nav.js looks for (swapped for "Account" when this machine has a session) -->
+      <a class="nav-signin nav-keep" href="../login/index.html">Sign in</a>
+      <a class="nav-keep" href="../../changelog/index.html" hreflang="zh-Hans" lang="zh-Hans">中文</a>
+      <a class="nav-cta" href="../index.html#download">Download</a>
+    </div>
+  </div>
+</nav>
+
+<!-- 0.53.0 release notes (RELEASE-053, 2026-10-09). Facts from murmur-ime rel-0.53 (build 3) commit log and
+     docs/FEATURE-FACTS-0.53.md; no prices. New file only; the guide page's change log section is left as it is. -->
+<header class="head wrap">
+  <p class="eyebrow">Changelog</p>
+  <h1>Murmur 0.53</h1>
+  <p class="sub">The biggest change: Murmur can now type Pinyin too. The list below is ordered by what you will notice first.</p>
+  <p class="g-toc"><a href="#new">New</a><span class="sep">·</span><a href="#privacy">Privacy and security</a><span class="sep">·</span><a href="#fixed">Fixed</a><span class="sep">·</span><a href="#upgrade">How to upgrade</a></p>
+</header>
+
+<main class="wrap">
+
+  <section class="g-sec" id="new">
+    <h2>New</h2>
+
+    <h3>Pinyin input method</h3>
+    <ul class="g-log">
+      <li>Murmur ships with its own Pinyin input method, sharing the same words as dictation.</li>
+      <li>Install, update and uninstall it in Settings → Input Method. Dictation works without it.</li>
+      <li>Full Pinyin, Flypy and Ziranma double Pinyin. Nine fuzzy Pinyin pairs; tick only the ones you mix up.</li>
+      <li>Full-width Chinese punctuation; URLs and email addresses stay in English.</li>
+      <li>Press Delete within 1.5 seconds of a commit and the whole word turns back into Pinyin.</li>
+      <li>A word you pick once moves up next time.</li>
+      <li>While typing, press ⌥⇧Space to have AI clean up the line you are on.</li>
+      <li>Cloud candidates (preview): press ⌥↩ and the cloud suggests a whole sentence. Off by default, sign-in required.</li>
+    </ul>
+
+    <h3>Prompt skills</h3>
+    <ul class="g-log">
+      <li>In AI tools such as Claude desktop, ChatGPT and Cursor, press the dictation key and say what you want.</li>
+      <li>What lands is a ready-to-send prompt.</li>
+      <li>Twelve skills: build a feature, fix a bug, change or refactor code, explain code, review code, plan the work, write tests, research, write, decide, summarize, reply.</li>
+      <li>Off by default; turn it on in Settings → Cleanup. It does not run in terminals and never presses send for you.</li>
+    </ul>
+
+    <h3>More accurate cleanup</h3>
+    <ul class="g-log">
+      <li>Technical terms and names that were clearly misheard are restored to the right spelling.</li>
+      <li>Chinese cleanup always uses full-width punctuation.</li>
+      <li>Cleanup by scene: the tone follows the app the text lands in. Email reads like email, chat reads like chat.</li>
+    </ul>
+
+    <h3>Long recording</h3>
+    <ul class="g-log">
+      <li>Signed in, you get 30 minutes of long recording a month, for meetings and lectures.</li>
+      <li>Before it starts, Murmur reminds you to get the consent of the people in the room.</li>
+    </ul>
+
+    <h3>Easier to find</h3>
+    <ul class="g-log">
+      <li>A new Features page in the main window: one line per feature, one click to its setting. It opens once by itself after you upgrade.</li>
+      <li>Settings now has five tabs; all input method settings are on the Input Method tab.</li>
+      <li>About in the menu bar shows the version and can check for updates. Murmur checks the website once a day and says so in the menu bar. It never downloads by itself.</li>
+      <li>Every history entry has a Fix button. Fix it and press ⌘↩ to save.</li>
+    </ul>
+  </section>
+
+  <section class="g-sec" id="privacy">
+    <h2>Privacy and security</h2>
+    <ul class="g-log">
+      <li>"Use the text on screen to get proper nouns right" is now off for new installs. If you already use Murmur, your choice is kept.</li>
+      <li>The setting now says what is sent when it is on, to whom, and in which country the data is.</li>
+      <li>Murmur never reads the screen in password fields, password managers, or while secure input is on.</li>
+      <li>"Where your data goes" on the History page names the processor and country for each step.</li>
+      <li>Text Murmur puts on the clipboard is marked as temporary, asking clipboard tools not to keep it.</li>
+      <li>File permissions on history, recordings and word lists are tightened so only your account can read or write them.</li>
+    </ul>
+  </section>
+
+  <section class="g-sec" id="fixed">
+    <h2>Fixed</h2>
+    <ul class="g-log">
+      <li>In Claude desktop and some other apps, a sentence was sometimes pasted twice.</li>
+      <li>AirPods switching to call mode no longer shows "input device changed". It shows only when the device really changes, and hides after 2 seconds.</li>
+      <li>With the n / l fuzzy pair on, typing a single l no longer gives 嗯.</li>
+      <li>Tags such as &lt;/transcript&gt; no longer slip into cleaned-up text.</li>
+      <li>Text fields where the selection cannot be read now get the text directly, with no manual ⌘V.</li>
+      <li>Switch to another window and back to the original field, and the text goes in within 60 seconds.</li>
+      <li>"Inserted" shows only after it is checked. Otherwise it says "Inserted (not checked)".</li>
+      <li>If the microphone picks up no sound while recording, the capsule says so.</li>
+      <li>The English interface no longer shows Chinese error messages.</li>
+      <li>After a force quit or crash, the unfinished sentence is kept in history.</li>
+    </ul>
+  </section>
+
+  <section class="g-sec" id="upgrade">
+    <h2>How to upgrade</h2>
+    <ul class="g-log">
+      <li>From 0.52: download the new version from the website, unzip it and drag it into Applications to replace the old one.</li>
+      <li>0.52 cannot check for updates by itself. From 0.53 on, About in the menu bar can.</li>
+      <li>Requires macOS 26 or later on an Apple Silicon Mac.</li>
+      <li>Questions: write to contact@maobenbeginner.com.</li>
+    </ul>
+    <p style="margin-top:22px"><a class="nav-cta" href="../index.html#download">Download 0.53</a></p>
+  </section>
+
+</main>
+
+
+<footer class="wrap">
+  <span class="brand"><svg width="30" height="15" viewBox="0 0 200 100" aria-hidden="true"><path d="M12.0 50.0 L14.0 40.1 L16.0 31.7 L18.0 25.2 L20.0 21.0 L22.0 19.0 L24.0 19.2 L26.0 21.3 L28.0 25.2 L30.0 30.3 L32.0 36.2 L34.0 42.4 L36.0 48.5 L38.0 54.2 L40.0 59.0 L42.0 62.7 L44.0 65.2 L46.0 66.5 L48.0 66.5 L50.0 65.5 L52.0 63.5 L54.0 60.9 L56.0 57.8 L58.0 54.6 L60.0 51.5 L62.0 48.6 L64.0 46.2 L66.0 44.4 L68.0 43.2 L70.0 42.7 L72.0 42.7 L74.0 43.2 L76.0 44.1 L78.0 45.3 L80.0 46.7 L82.0 48.0 L84.0 49.2 L86.0 50.2 L88.0 51.0 L90.0 51.5 L92.0 51.8 L94.0 51.8 L96.0 51.6 L98.0 51.3 L100.0 50.9 L102.0 50.5 L104.0 50.2 L106.0 50.0 L190 50" fill="none" stroke="var(--coral)" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/></svg>Murmur</span>
+  <span>Made by Others Studio</span>
+  <div class="links">
+    <a href="https://othersstudio.tech">othersstudio.tech</a>
+    <a href="../privacy.html">Privacy</a>
+    <a href="../tos.html">Terms</a>
+    <a href="../../changelog/index.html" hreflang="zh-Hans" lang="zh-Hans">中文</a>
+  </div>
+</footer>
+
+<script src="../../v2-nav.js" defer></script>
+</body>
+</html>

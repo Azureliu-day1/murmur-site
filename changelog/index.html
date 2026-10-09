@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<!-- CSP:同演示页。本页零内联脚本(只有 v2-nav.js 外链),零网络。 -->
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>0.53 更新说明 · Murmur</title>
+<meta name="description" content="Murmur 0.53 更新了什么:拼音输入法、12 个提示词技能、整理更准、长录音、隐私与安全加固,以及修掉的问题。">
+<link rel="alternate" hreflang="zh-Hans" href="../changelog/index.html">
+<link rel="alternate" hreflang="en" href="../en/changelog/index.html">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../v2.css">
+<link rel="stylesheet" href="../pinyin.css">
+<link rel="stylesheet" href="../guide/guide.css">
+</head>
+<body>
+
+<nav>
+  <div class="wrap navrow">
+    <a class="brand" href="../index.html"><svg width="30" height="15" viewBox="0 0 200 100" aria-hidden="true"><path d="M12.0 50.0 L14.0 40.1 L16.0 31.7 L18.0 25.2 L20.0 21.0 L22.0 19.0 L24.0 19.2 L26.0 21.3 L28.0 25.2 L30.0 30.3 L32.0 36.2 L34.0 42.4 L36.0 48.5 L38.0 54.2 L40.0 59.0 L42.0 62.7 L44.0 65.2 L46.0 66.5 L48.0 66.5 L50.0 65.5 L52.0 63.5 L54.0 60.9 L56.0 57.8 L58.0 54.6 L60.0 51.5 L62.0 48.6 L64.0 46.2 L66.0 44.4 L68.0 43.2 L70.0 42.7 L72.0 42.7 L74.0 43.2 L76.0 44.1 L78.0 45.3 L80.0 46.7 L82.0 48.0 L84.0 49.2 L86.0 50.2 L88.0 51.0 L90.0 51.5 L92.0 51.8 L94.0 51.8 L96.0 51.6 L98.0 51.3 L100.0 50.9 L102.0 50.5 L104.0 50.2 L106.0 50.0 L190 50" fill="none" stroke="var(--coral)" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/></svg>Murmur</a>
+    <div class="navlinks">
+      <a class="nav-keep" href="../en/changelog/index.html" hreflang="en" lang="en">English</a>
+      <a href="../index.html#pinyin">输入法</a>
+      <a href="../demo/index.html">拼音演示</a>
+      <a href="../guide/index.html">指南</a>
+      <a href="../skills/index.html">技能</a>
+      <a class="nav-keep" href="../try/index.html">试一试</a>
+      <!-- ⚠️ class="nav-signin" 是给 v2-nav.js 认的(本机有会话时换成「账户」) -->
+      <a class="nav-signin nav-keep" href="../login/index.html">登录</a>
+      <a class="nav-cta" href="../index.html#download">下载</a>
+    </div>
+  </div>
+</nav>
+
+<!-- 0.53.0 更新说明(RELEASE-053,2026-10-09)。事实取自 murmur-ime rel-0.53 @ 构建号 3 的提交记录与
+     docs/FEATURE-FACTS-0.53.md;不写价格。⛔ 新增文件,不改指南页里的「更新记录」(那一节仍是 10-01 的版本)。 -->
+<header class="head wrap">
+  <p class="eyebrow">Changelog · 更新说明</p>
+  <h1>Murmur 0.53</h1>
+  <p class="sub">这一版最大的变化:Murmur 也能打拼音了。下面按你用得到的顺序排。</p>
+  <p class="g-toc"><a href="#new">新东西</a><span class="sep">·</span><a href="#privacy">隐私与安全</a><span class="sep">·</span><a href="#fixed">修掉的问题</a><span class="sep">·</span><a href="#upgrade">怎么升级</a></p>
+</header>
+
+<main class="wrap">
+
+  <section class="g-sec" id="new">
+    <h2>新东西</h2>
+
+    <h3>拼音输入法</h3>
+    <ul class="g-log">
+      <li>Murmur 自带一个拼音输入法,和听写用同一套词。</li>
+      <li>在 设置 → 输入法 里一键安装、更新、卸载。不装也不影响听写。</li>
+      <li>支持全拼、小鹤双拼、自然码双拼。模糊音 9 对,只勾你分不清的。</li>
+      <li>中文标点出全角;网址和邮箱直接按英文走。</li>
+      <li>上屏后 1.5 秒内按退格,整个词退回拼音重选。</li>
+      <li>选过一次的词,下次就排到前面。</li>
+      <li>打字时按 ⌥⇧Space,让 AI 整理正在打的这句。</li>
+      <li>云候选(预览):按 ⌥↩ 让云端猜整句。默认关,要登录。</li>
+    </ul>
+
+    <h3>提示词技能</h3>
+    <ul class="g-log">
+      <li>在 Claude 桌面版、ChatGPT、Cursor 这类 AI 工具里,按听写键说需求。</li>
+      <li>落下的是整理好的提示词。</li>
+      <li>一共 12 个:写新功能、修 bug、改代码、解释代码、代码审查、写计划、写测试。</li>
+      <li>还有调研、帮我写、帮我做决定、总结提炼、回复消息。</li>
+      <li>默认关,在 设置 → 整理 打开。终端里不触发,也不会替你按发送。</li>
+    </ul>
+
+    <h3>整理更准</h3>
+    <ul class="g-log">
+      <li>明显听错的技术词和专名,整理时会还原成对的写法。</li>
+      <li>中文整理稿一律用全角标点。</li>
+      <li>按场景整理:按文字落进的 App 调口吻。邮件像邮件,聊天像平常说话。</li>
+    </ul>
+
+    <h3>长录音</h3>
+    <ul class="g-log">
+      <li>登录后,长录音每月 30 分钟。适合会议和讲座。</li>
+      <li>开录前会提醒你:先取得在场的人同意。</li>
+    </ul>
+
+    <h3>更好找</h3>
+    <ul class="g-log">
+      <li>主窗口新增「功能一览」:每项功能一行,点一下直达对应设置。升级后第一次打开会自动显示一次。</li>
+      <li>设置改成五个页签,输入法的设置都在「输入法」这一页。</li>
+      <li>菜单栏「关于」显示版本,可以手动检查更新。App 每天查一次官网,有新版在菜单栏说一句,不自动下载。</li>
+      <li>历史里每条都有「听错了」,改完按 ⌘↩ 保存。</li>
+    </ul>
+  </section>
+
+  <section class="g-sec" id="privacy">
+    <h2>隐私与安全</h2>
+    <ul class="g-log">
+      <li>「参考屏幕上的文字纠正专名」新装默认关。老用户保持原来的选择。</li>
+      <li>这个开关下面写明了:打开后发什么、发给谁、数据在哪个国家。</li>
+      <li>密码框、密码管理器、安全输入开着的时候,一律不读屏幕。</li>
+      <li>历史页「数据去哪了」写明每一步的处理方和所在国家。</li>
+      <li>听写写进剪贴板时会标成临时内容,请剪贴板工具不要留存。</li>
+      <li>历史、录音和词库文件的权限收紧到只有你的账户能读写。</li>
+    </ul>
+  </section>
+
+  <section class="g-sec" id="fixed">
+    <h2>修掉的问题</h2>
+    <ul class="g-log">
+      <li>在 Claude 桌面版等 App 里,一句话偶尔会贴两遍。</li>
+      <li>AirPods 切到通话模式时误报「换了输入设备」。现在只在真换了设备时提示,2 秒后自动收起。</li>
+      <li>开了 n / l 模糊音后,单打一个 l 会出「嗯」。</li>
+      <li>整理结果里偶尔夹进 &lt;/transcript&gt; 这类标签。</li>
+      <li>读不到选区的输入框也能直接落字,不用再自己按 ⌘V。</li>
+      <li>切到别的窗口再切回原来的输入框,60 秒内字自动进去。</li>
+      <li>「已插入」只在核对过后显示。没核对时写「已插入(未核对)」。</li>
+      <li>录音时麦克风没声音,胶囊上会提示。</li>
+      <li>英文界面不再出现中文报错。</li>
+      <li>被强制退出或崩溃后重开,上次没写完的那句留在历史里。</li>
+    </ul>
+  </section>
+
+  <section class="g-sec" id="upgrade">
+    <h2>怎么升级</h2>
+    <ul class="g-log">
+      <li>从 0.52 升级:去官网下载新版,解压后拖进「应用程序」替换旧版。</li>
+      <li>0.52 还不会自己查新版。从 0.53 起,菜单栏「关于」里可以检查更新。</li>
+      <li>要 macOS 26 以上,Apple Silicon 的 Mac。</li>
+      <li>有问题直接写信给 contact@maobenbeginner.com。</li>
+    </ul>
+    <p style="margin-top:22px"><a class="nav-cta" href="../index.html#download">下载 0.53</a></p>
+  </section>
+
+</main>
+
+
+<footer class="wrap">
+  <span class="brand"><svg width="30" height="15" viewBox="0 0 200 100" aria-hidden="true"><path d="M12.0 50.0 L14.0 40.1 L16.0 31.7 L18.0 25.2 L20.0 21.0 L22.0 19.0 L24.0 19.2 L26.0 21.3 L28.0 25.2 L30.0 30.3 L32.0 36.2 L34.0 42.4 L36.0 48.5 L38.0 54.2 L40.0 59.0 L42.0 62.7 L44.0 65.2 L46.0 66.5 L48.0 66.5 L50.0 65.5 L52.0 63.5 L54.0 60.9 L56.0 57.8 L58.0 54.6 L60.0 51.5 L62.0 48.6 L64.0 46.2 L66.0 44.4 L68.0 43.2 L70.0 42.7 L72.0 42.7 L74.0 43.2 L76.0 44.1 L78.0 45.3 L80.0 46.7 L82.0 48.0 L84.0 49.2 L86.0 50.2 L88.0 51.0 L90.0 51.5 L92.0 51.8 L94.0 51.8 L96.0 51.6 L98.0 51.3 L100.0 50.9 L102.0 50.5 L104.0 50.2 L106.0 50.0 L190 50" fill="none" stroke="var(--coral)" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/></svg>Murmur</span>
+  <span>Others Studio 出品</span>
+  <div class="links">
+    <a href="https://othersstudio.tech">othersstudio.tech</a>
+    <a href="../privacy.html">隐私</a>
+    <a href="../tos.html">条款</a>
+    <!-- 顶栏的语言切换在手机上是收起来的,页脚这一份是它在手机上的落点 -->
+    <a href="../en/changelog/index.html" hreflang="en" lang="en">English</a>
+  </div>
+</footer>
+
+<script src="../v2-nav.js" defer></script>
+</body>
+</html>
