@@ -1,0 +1,31 @@
+/* 付款成功页:一张卡居中。颜色、字体 token 全在 v2.css(含本站 IBM Plex Mono),⛔ 不另起一套。 */
+body {
+  min-height: 100vh; display: flex; align-items: center; justify-content: center;
+  padding: 2rem 1.25rem; font-size: 17px; line-height: 1.75;
+}
+.card {
+  background: var(--card); border: 1px solid var(--line); border-radius: 18px;
+  box-shadow: var(--shadow); max-width: 34rem; width: 100%; padding: 2.75rem 2.25rem;
+}
+.eyebrow {
+  font-family: "IBM Plex Mono", ui-monospace, monospace; font-weight: 400;
+  font-size: .72rem; letter-spacing: .14em; display: flex; align-items: center; gap: .75rem; margin: 0 0 1.4rem;
+}
+.eyebrow::after { content: ""; flex: 1; height: 1px; background: var(--line); }
+.tick {
+  width: 34px; height: 34px; border-radius: 50%; background: var(--green);
+  display: flex; align-items: center; justify-content: center; margin-bottom: 1.25rem;
+}
+.tick svg { display: block; }
+h1 { margin: 0 0 1.1rem; font-weight: 600; font-size: 1.65rem; line-height: 1.35; letter-spacing: .01em; }
+.back {
+  display: inline-flex; align-items: center; gap: .5rem;
+  background: var(--coral); color: #fff; text-decoration: none;
+  font-size: .95rem; font-weight: 500; padding: .7rem 1.45rem; border-radius: 999px; margin: 0 0 1.2rem;
+}
+.back:hover { filter: brightness(1.06); text-decoration: none; }
+.back:focus-visible { outline: 2px solid var(--coral); outline-offset: 3px; }
+.note { font-size: .9rem; color: var(--second); line-height: 1.7; margin: 0; }
+hr { border: none; border-top: 1px solid var(--line); margin: 1.6rem 0; }
+.plainlink { overflow-wrap: anywhere; }
+@media (max-width: 480px) { .card { padding: 2rem 1.4rem; } }
