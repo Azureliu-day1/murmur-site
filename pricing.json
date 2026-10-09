@@ -1,0 +1,11 @@
+{
+  "portal_url": null,
+  "pro": {
+    "month": { "price_display": null, "currency": null, "payment_link_url": null, "interval": "month" },
+    "year":  { "price_display": null, "currency": null, "payment_link_url": null, "interval": "year" }
+  },
+  "max": {
+    "month": { "price_display": null, "currency": null, "payment_link_url": null, "interval": "month" },
+    "year":  { "price_display": null, "currency": null, "payment_link_url": null, "interval": "year" }
+  }
+}
