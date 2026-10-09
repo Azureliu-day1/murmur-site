@@ -739,7 +739,6 @@ body.is-sandbox .sandbox { display: inline-block; }
   </div>
   <!-- First-choice accuracy: only this one line is kept (with its basis). F18 -->
   <p class="py-note reveal">First-choice accuracy on our own set of 125 spoken phrases not in the dictionary: 80.0%, and 89.6% with the language model installed.</p>
-  <p class="py-note reveal">⌥⇧Space sends the words from your vocabulary that this sentence touches. Cloud candidates send the Pinyin you have not committed. Details are in the <a href="guide/index.html#words">guide</a>.</p>
   <p class="py-install reveal"><b>Install:</b> Settings → Input Method → Install. How to switch to it and how each feature works are in the <a href="guide/index.html">guide</a>.</p>
   <div class="py-cta reveal">
     <a class="btn btn-primary" href="#download">Download for macOS</a>
@@ -851,11 +850,17 @@ body.is-sandbox .sandbox { display: inline-block; }
 <section class="wrap" id="local">
   <div class="eyebrow reveal">Local · Where your data is</div>
   <h2 class="reveal">Recording files stay<br>on your Mac.</h2>
+  <!-- SITEFIX-12: where data goes is told in full only here; FAQ 1 is two sentences linking back here and to the privacy page; the Pinyin section no longer repeats it. -->
   <p class="sub reveal">Your
   recordings, transcripts, history, dictionary and typed words are stored on your Mac. For
   cloud recognition the audio goes straight from your Mac to the provider you picked, not through us.
-  With on-device recognition the audio stays on this computer.
-  Signed in on the free allowance, the text for cleanup passes through our server on its way to the language model.</p>
+  With on-device recognition the audio stays on this computer.</p>
+  <p class="sub reveal">Signed in on the free allowance, the text for cleanup, translation, Ask and voice editing passes through our server on its way to the language model. Our server does not store it.
+  With cleanup on, the text still goes to a language model even with on-device recognition.
+  Proper nouns from your dictionary go with the request so they are heard correctly.
+  With cloud candidates on in the input method, Pinyin you have not committed also goes through our server.
+  The AI cleanup card (⌥⇧Space) sends the words from your vocabulary that the sentence touches.
+  All of this is listed in Settings.</p>
   <div class="flowstage reveal">
     <svg viewBox="0 0 760 250" aria-label="Audio goes from your Mac straight to the provider you picked, skipping our server">
       <!-- 航线(常显,极淡) -->
@@ -1032,7 +1037,7 @@ body.is-sandbox .sandbox { display: inline-block; }
   <div class="faq reveal">
     <details>
       <summary>Where does my audio get sent?</summary>
-      <p class="a">Your recordings, transcripts, history, dictionary and typed words are stored on your Mac. For cloud recognition the audio goes straight to that one recognition service and does not pass through our server. That is also true on the free allowance we pay for. There are two exceptions. On the free allowance, the <strong>text</strong> for cleanup, translation, Ask and voice editing goes through our server before it reaches the model provider, and our server does not store it. With cloud candidates on in the input method, Pinyin you have not committed also goes through our server. With on-device recognition, dictation audio and its hint words are not sent anywhere; with cleanup on, the text still goes to a language model, and the AI cleanup card still sends the words it touches (see the Pinyin section). Proper nouns from your dictionary are sent with the request so they are heard correctly. All of this is listed in Settings.</p>
+      <p class="a">Your recordings, transcripts, history, dictionary and typed words are stored on your Mac, and for cloud recognition the audio goes straight to the recognition service, not through our server. What text requests, cloud candidates and the AI cleanup card send is listed under <a href="#local">“Where your data is”</a> above and on the <a href="privacy.html">privacy page</a>.</p>
     </details>
     <details>
       <summary>What happens when I am offline?</summary>
