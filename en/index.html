@@ -110,7 +110,7 @@
 @font-face {
   font-family: 'Newsreader';
   font-style: normal;
-  font-weight: 500;
+  font-weight: 500 600;   /* SITEFIX-18:500 与 600 原是同一个可变字体文件,只留一份 */
   font-display: swap;
   src: url('../fonts/Newsreader-normal-500-latin-ext.woff2') format('woff2');
   unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
@@ -118,25 +118,9 @@
 @font-face {
   font-family: 'Newsreader';
   font-style: normal;
-  font-weight: 500;
+  font-weight: 500 600;   /* SITEFIX-18:500 与 600 原是同一个可变字体文件,只留一份 */
   font-display: swap;
   src: url('../fonts/Newsreader-normal-500-latin.woff2') format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
-@font-face {
-  font-family: 'Newsreader';
-  font-style: normal;
-  font-weight: 600;
-  font-display: swap;
-  src: url('../fonts/Newsreader-normal-600-latin-ext.woff2') format('woff2');
-  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
-}
-@font-face {
-  font-family: 'Newsreader';
-  font-style: normal;
-  font-weight: 600;
-  font-display: swap;
-  src: url('../fonts/Newsreader-normal-600-latin.woff2') format('woff2');
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 
@@ -761,7 +745,7 @@ body.is-sandbox .sandbox { display: inline-block; }
       <div class="py-step"><b>03</b><div><strong>⌥⇧Space opens the AI cleanup card.</strong>Press it before the Pinyin commits. AI fixes punctuation and word order and shows the result on a card first.</div></div>
       <div class="py-step"><b>04</b><div><strong>Cloud candidates, off by default.</strong>Press ⌥↩ and the cloud suggests a whole sentence. Sign-in required. The text next to the switch says what is sent.</div></div>
     </div>
-    <figure class="py-shot"><img src="../shots/en/nihao.png" alt="Murmur candidate bar: ni hao, candidates 1 你好 2 尼好 3 拟好 4 泥好 5 妮好" width="925" height="184"><figcaption>The candidate bar, rendered by the input method itself.</figcaption></figure>
+    <figure class="py-shot"><img src="../shots/en/nihao.webp" alt="Murmur candidate bar: ni hao, candidates 1 你好 2 尼好 3 拟好 4 泥好 5 妮好" width="925" height="184" loading="lazy" decoding="async"><figcaption>The candidate bar, rendered by the input method itself.</figcaption></figure>
   </div>
   <!-- First-choice accuracy: only this one line is kept (with its basis). F18 -->
   <p class="py-note reveal">First-choice accuracy on our own set of 125 spoken phrases not in the dictionary: 80.0%, and 89.6% with the language model installed.</p>
