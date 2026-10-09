@@ -201,3 +201,9 @@ main { padding-bottom: 88px; }
 @media (prefers-reduced-motion: reduce) {
   .state.busy { animation: none; opacity: .8; }
 }
+
+/* ── SITEFIX-17:404 页(/404.html)。CSP 是 style-src 'self',样式只能放这里,不能写在页里 ── */
+.nf-code { margin-top: 96px; }
+.nf-title { font-size: clamp(28px, 4vw, 40px); font-weight: 600; line-height: 1.3; }
+.nf-sub { color: var(--second); font-size: 15.5px; margin-top: 12px; max-width: 34em; }
+.nf-cta { margin-top: 32px; display: flex; gap: 14px; flex-wrap: wrap; }
