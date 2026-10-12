@@ -786,7 +786,7 @@ body.is-sandbox .sandbox { display: inline-block; }
       <div class="py-step"><b>03</b><div><strong>⌥⇧Space opens the AI cleanup card.</strong>Press it before the Pinyin commits. AI fixes punctuation and word order and shows the result on a card first.</div></div>
       <div class="py-step"><b>04</b><div><strong>Cloud candidates, off by default.</strong>Press ⌥↩ and the cloud suggests a whole sentence. Sign-in required. The text next to the switch says what is sent.</div></div>
     </div>
-    <figure class="py-shot"><img src="../shots/en/nihao.webp" alt="Murmur candidate bar: ni hao, candidates 1 你好 2 尼好 3 拟好 4 泥好 5 妮好" width="925" height="184" loading="lazy" decoding="async"><figcaption>The candidate bar, rendered by the input method itself.</figcaption></figure>
+    <figure class="py-shot py-demo" id="pyDemo" role="img" aria-label="Demo: type shu ru fa and press 1 to commit 输入法. After a wrong pick (书如法), Delete within 1.5 s turns the whole word back into Pinyin to pick again."><div class="py-doc"><span class="py-doc-text">输入法<span class="py-timer"></span></span><span class="py-caret"></span></div><div class="py-stage"><div class="py-panel off"><span class="py-pinyin">shu ru fa</span><span class="py-cands"><span class="py-cand on"><i>1</i>输入法</span><span class="py-cand"><i>2</i>输入</span><span class="py-cand"><i>3</i>书</span><span class="py-cand"><i>4</i>书如法</span><span class="py-cand"><i>5</i>数</span></span></div></div><figcaption class="py-demo-cap">Pick 1 again: 输入法</figcaption></figure>
   </div>
   <!-- First-choice accuracy: only this one line is kept (with its basis). F18 -->
   <p class="py-note reveal">First-choice accuracy on our own set of 125 spoken phrases not in the dictionary: 80.0%, and 89.6% with the language model installed.</p>
@@ -1317,6 +1317,54 @@ speakDemo(document.getElementById('fdemoAsk'), {
   words: ['what undoes ', 'the last ', 'commit'],
   result: 'git reset --soft HEAD~1',                 // 落下的是答案,不是问题
 });
+
+/* ── 拼音打字演示(#pinyin):和上面的演示同一个引擎,每帧只按循环里的时刻算 ──
+   ① 敲 shu ru fa,按 1 上屏「输入法」 ② 再打一遍,选错按了 4 上屏「书如法」,
+   1.5 秒内退格,整个词退回拼音,重选 1。一轮 9 秒,停 1.5 秒再来。 */
+function pinyinDemo(root, caps) {
+  if (!root) return;
+  const doc = root.querySelector('.py-doc-text'), timer = root.querySelector('.py-timer');
+  const panel = root.querySelector('.py-panel'), py = root.querySelector('.py-pinyin');
+  const cands = [...root.querySelectorAll('.py-cand')], cap = root.querySelector('.py-demo-cap');
+  const KEYS = ['s', 'sh', 'shu', 'shu r', 'shu ru', 'shu ru f', 'shu ru fa'];
+  const SETS = [
+    ['是', '说', '上', '时', '所'], ['是', '说', '上', '时', '生'], ['书', '数', '输', '树', '属'],
+    ['输入', '书', '数', '树', '属'], ['输入', '书', '数', '树', '属'], ['输入法', '输入', '书', '数', '树'],
+    ['输入法', '输入', '书', '书如法', '数'],
+  ];
+  const T = { a: 400, aPer: 140, pick: 2500, clear: 3700, b: 3900, bPer: 110,
+              wrong: 5200, commitWrong: 5450, back: 6250, repick: 7400, end: 9000 };
+  const CYCLE = T.end + 1500;                           // 轮间停 1.5 秒(停在最后一帧)
+  const typed = (t, t0, per) => Math.max(0, Math.min(KEYS.length, Math.floor((t - t0) / per)));
+  function at(t) {                                      // 时刻 → { 文档里的字, 拼音键数(0 = 不显示候选窗), 高亮第几个, 说明, 退格窗口剩多少 }
+    if (t < T.pick)        return { text: '', n: typed(t, T.a, T.aPer), on: 0, c: 0 };
+    if (t < T.clear)       return { text: '输入法', n: 0, c: 1 };
+    if (t < T.wrong)       return { text: '', n: t < T.b ? 0 : typed(t, T.b, T.bPer), on: 0, c: 2 };
+    if (t < T.commitWrong) return { text: '', n: KEYS.length, on: 3, c: 3 };
+    if (t < T.back)        return { text: '书如法', n: 0, c: 3, left: 1 - (t - T.commitWrong) / 1500 };
+    if (t < T.repick)      return { text: '', n: KEYS.length, on: 0, c: 4 };
+    return { text: '输入法', n: 0, c: 5 };
+  }
+  let last = '';
+  function paint(f) {
+    const key = [f.text, f.n, f.on, f.c, f.left ? Math.round(f.left * 100) : 0].join('|');
+    if (key === last) return;
+    last = key;
+    doc.textContent = f.text;
+    if (f.text) doc.appendChild(timer);                 // 细线挂在字下面,随字走
+    timer.style.width = f.left ? (f.left * 100).toFixed(1) + '%' : '0';
+    panel.classList.toggle('off', f.n === 0);
+    if (f.n > 0) {                                      // 候选窗收起时保留最后的内容,淡出才不空
+      py.textContent = KEYS[f.n - 1];
+      SETS[f.n - 1].forEach((w, i) => { cands[i].lastChild.textContent = w; });
+      cands.forEach((el, i) => el.classList.toggle('on', i === f.on));
+    }
+    cap.textContent = caps[f.c];
+  }
+  if (reduced) { paint(at(T.end)); return; }           // 减弱动效:只给最后一帧
+  register(root, (now, tRaw) => paint(at(tRaw % CYCLE)));
+}
+pinyinDemo(document.getElementById('pyDemo'), ["Type shu ru fa", "Press 1: 输入法 commits", "Type it again", "Wrong pick: 4 commits 书如法", "Delete within 1.5 s: the whole word goes back to Pinyin", "Pick 1 again: 输入法"]);
 
 
 /* ── 数据旅程(#local):与 privacy 页同一场戏,接进统一 rAF ── */

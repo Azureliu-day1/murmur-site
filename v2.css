@@ -119,6 +119,9 @@ nav {
   font-size: 12px; font-weight: 600; letter-spacing: .18em;
   text-transform: uppercase; color: var(--faint); margin-bottom: 14px;
 }
+/* 中文页的小标题只写中文(2026-10-13):大写和 .18em 宽字距是给拉丁字母的,中文用正常字距。
+   只管正文里的(main / section / header);thanks 页卡片上的「Murmur」字标不在其中。 */
+:lang(zh) :is(main, section, header) .eyebrow { font-size: 13px; letter-spacing: .04em; text-transform: none; }
 .btn {
   display: inline-block; font-size: 15px; font-weight: 500;
   padding: 13px 28px; border-radius: 999px; transition: opacity .12s ease;

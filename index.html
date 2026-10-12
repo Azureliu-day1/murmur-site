@@ -223,6 +223,8 @@ nav {
   font-size: 12px; font-weight: 600; letter-spacing: .18em;
   text-transform: uppercase; color: var(--faint); margin-bottom: 14px;
 }
+/* 中文页的小标题只写中文(2026-10-13):大写和 .18em 宽字距是给拉丁字母的,中文用正常字距 */
+:lang(zh) :is(main, section, header) .eyebrow { font-size: 13px; letter-spacing: .04em; text-transform: none; }
 
 section { padding: 110px 0 0; }
 
@@ -669,7 +671,7 @@ body.is-sandbox .sandbox { display: inline-block; }
 
 <!-- ── 少一道工序:打字 vs 说话,双演示对照 ── -->
 <section class="wrap">
-  <div class="eyebrow reveal">Subtract · 少一道工序</div>
+  <div class="eyebrow reveal">少一道工序</div>
   <h2 class="reveal">打字对比说话。</h2>
   <div class="compare reveal">
     <div class="panel type" id="panelType">
@@ -702,7 +704,7 @@ body.is-sandbox .sandbox { display: inline-block; }
 
 <!-- ── 三个核心功能 + 各自的展示区 ── -->
 <section class="wrap" id="features">
-  <div class="eyebrow reveal">Keys · 四个键</div>
+  <div class="eyebrow reveal">四个键</div>
   <h2 class="reveal">每个键管一件事。</h2>
   <div class="features">
     <div class="feature reveal">
@@ -773,7 +775,7 @@ body.is-sandbox .sandbox { display: inline-block; }
 
 <!-- ── 拼音输入法:只讲差异化(Wei 2026-10-01),细节在 /guide/。样式在 pinyin.css ── -->
 <section class="wrap" id="pinyin">
-  <div class="eyebrow reveal">Pinyin · 拼音输入法</div>
+  <div class="eyebrow reveal">拼音输入法</div>
   <h2 class="reveal">拼音输入法,<br>随 Murmur 一起装。</h2>
   <!-- 2026-10-01 Wei:首页这一节只讲差异化,细节全在 /guide/。四条各一句,≤ 30 字。
        事实:F15 / F13(同一套词)· F6(退格退回)· PersonalLexiconSection.swift:82 + AIActionCard(⌥⇧Space)·
@@ -786,7 +788,7 @@ body.is-sandbox .sandbox { display: inline-block; }
       <div class="py-step"><b>03</b><div><strong>⌥⇧Space 让 AI 整理这一句。</strong>拼音还没上屏时按一下,AI 补标点、理语序,结果先出在卡上。</div></div>
       <div class="py-step"><b>04</b><div><strong>云候选,默认关。</strong>按 ⌥↩ 让云端猜一个整句候选。要登录,打开前会写明发什么。</div></div>
     </div>
-    <figure class="py-shot"><img src="shots/zh/nihao.webp" alt="Murmur 候选窗:ni hao,候选 1 你好 2 尼好 3 拟好 4 泥好 5 妮好" width="925" height="184" loading="lazy" decoding="async"><figcaption>候选窗,输入法自己渲染的图。</figcaption></figure>
+    <figure class="py-shot py-demo" id="pyDemo" role="img" aria-label="演示:敲 shu ru fa,按 1 上屏「输入法」。选错上屏「书如法」后,1.5 秒内按退格,整个词退回拼音重选。"><div class="py-doc"><span class="py-doc-text">输入法<span class="py-timer"></span></span><span class="py-caret"></span></div><div class="py-stage"><div class="py-panel off"><span class="py-pinyin">shu ru fa</span><span class="py-cands"><span class="py-cand on"><i>1</i>输入法</span><span class="py-cand"><i>2</i>输入</span><span class="py-cand"><i>3</i>书</span><span class="py-cand"><i>4</i>书如法</span><span class="py-cand"><i>5</i>数</span></span></div></div><figcaption class="py-demo-cap">重选 1,上屏「输入法」</figcaption></figure>
   </div>
   <!-- 口语首选命中:只留这一句(带口径)。F18 -->
   <p class="py-note reveal">口语首选命中:我们自己的 125 句表外口语,首选 80.0%,装上语言模型后 89.6%。</p>
@@ -799,7 +801,7 @@ body.is-sandbox .sandbox { display: inline-block; }
 
 <!-- ── Vibe Coding:对着 AI 编码工具口述 —— 只写系统级听写真做得到的 ── -->
 <section class="wrap" id="vibe">
-  <div class="eyebrow reveal">Vibe Coding · 对着 AI 说话</div>
+  <div class="eyebrow reveal">对着 AI 说话</div>
   <h2 class="reveal">对 Claude Code<br>口述需求。</h2>
   <p class="sub reveal">
     光标停在终端的提示符后面,按右 ⌘ 说:
@@ -820,7 +822,7 @@ body.is-sandbox .sandbox { display: inline-block; }
 
 <!-- ── 模型提供表:不报厂商名 —— 场景才重要(口径同 App 内模型页) ── -->
 <section class="wrap" id="models">
-  <div class="eyebrow reveal">Engines · 提供表</div>
+  <div class="eyebrow reveal">提供表</div>
   <h2 class="reveal">识别引擎<br>分三档。</h2>
   <p class="sub reveal">
     我们在内部测了市面上的识别模型,留下三个,按说话场景分成三档。
@@ -902,7 +904,7 @@ body.is-sandbox .sandbox { display: inline-block; }
 
 <!-- ── 数据在哪:全站最硬的一句话 ── -->
 <section class="wrap" id="local">
-  <div class="eyebrow reveal">Local · 数据在哪</div>
+  <div class="eyebrow reveal">数据在哪</div>
   <h2 class="reveal">录音文件只在<br>你的 Mac 上。</h2>
   <!-- SITEFIX-12:数据去向全站只在这一节讲全;FAQ 第 1 条压到两句链回这里和隐私页,拼音一节不再重复。 -->
   <p class="sub reveal">录音、转写、历史、词典和打过的词都存在你的 Mac 上。
@@ -964,7 +966,7 @@ body.is-sandbox .sandbox { display: inline-block; }
 
 <!-- ── 敢写下来的承诺 ── -->
 <section class="wrap" id="promises">
-  <div class="eyebrow reveal">Promises · 承诺</div>
+  <div class="eyebrow reveal">承诺</div>
   <h2 class="reveal">四条承诺。</h2>
   <div class="promises">
     <div class="promise reveal">
@@ -989,7 +991,7 @@ body.is-sandbox .sandbox { display: inline-block; }
 <!-- ── FAQ ── -->
 <!-- ── 长录音:实时字幕(可牺牲预览)+ 整段转写(说话人分离) ── -->
 <section class="wrap" id="lecture">
-  <div class="eyebrow reveal">Lecture · 长录音</div>
+  <div class="eyebrow reveal">长录音</div>
   <h2 class="reveal">上课开长录音。</h2>
   <p class="sub reveal">
     开长录音后,字幕浮窗盖在全屏网课上面,边放边出字。
@@ -1010,7 +1012,7 @@ body.is-sandbox .sandbox { display: inline-block; }
 
 <!-- ── 细节合集:句句是已交付行为,不许吹 ── -->
 <section class="wrap" id="details">
-  <div class="eyebrow reveal">Details · 顺手的小事</div>
+  <div class="eyebrow reveal">顺手的小事</div>
   <h2 class="reveal">顺手的小功能。</h2>
   <div class="detail-list reveal">
     <div><strong>词典自动加词。</strong>你改对过的专有名词会进词典,下次直接听对。没把握的词不加。</div>
@@ -1024,7 +1026,7 @@ body.is-sandbox .sandbox { display: inline-block; }
 </section>
 
 <section class="wrap">
-  <div class="eyebrow reveal">Questions · 常见问题</div>
+  <div class="eyebrow reveal">常见问题</div>
   <div class="faq reveal">
     <details>
       <summary>我的录音会被传到哪里?</summary>
@@ -1317,6 +1319,54 @@ speakDemo(document.getElementById('fdemoAsk'), {
   words: ['一英里', '等于', '多少', '公里'],
   result: '1 英里 ≈ 1.609 公里',                    // 落下的是答案,不是问题
 });
+
+/* ── 拼音打字演示(#pinyin):和上面的演示同一个引擎,每帧只按循环里的时刻算 ──
+   ① 敲 shu ru fa,按 1 上屏「输入法」 ② 再打一遍,选错按了 4 上屏「书如法」,
+   1.5 秒内退格,整个词退回拼音,重选 1。一轮 9 秒,停 1.5 秒再来。 */
+function pinyinDemo(root, caps) {
+  if (!root) return;
+  const doc = root.querySelector('.py-doc-text'), timer = root.querySelector('.py-timer');
+  const panel = root.querySelector('.py-panel'), py = root.querySelector('.py-pinyin');
+  const cands = [...root.querySelectorAll('.py-cand')], cap = root.querySelector('.py-demo-cap');
+  const KEYS = ['s', 'sh', 'shu', 'shu r', 'shu ru', 'shu ru f', 'shu ru fa'];
+  const SETS = [
+    ['是', '说', '上', '时', '所'], ['是', '说', '上', '时', '生'], ['书', '数', '输', '树', '属'],
+    ['输入', '书', '数', '树', '属'], ['输入', '书', '数', '树', '属'], ['输入法', '输入', '书', '数', '树'],
+    ['输入法', '输入', '书', '书如法', '数'],
+  ];
+  const T = { a: 400, aPer: 140, pick: 2500, clear: 3700, b: 3900, bPer: 110,
+              wrong: 5200, commitWrong: 5450, back: 6250, repick: 7400, end: 9000 };
+  const CYCLE = T.end + 1500;                           // 轮间停 1.5 秒(停在最后一帧)
+  const typed = (t, t0, per) => Math.max(0, Math.min(KEYS.length, Math.floor((t - t0) / per)));
+  function at(t) {                                      // 时刻 → { 文档里的字, 拼音键数(0 = 不显示候选窗), 高亮第几个, 说明, 退格窗口剩多少 }
+    if (t < T.pick)        return { text: '', n: typed(t, T.a, T.aPer), on: 0, c: 0 };
+    if (t < T.clear)       return { text: '输入法', n: 0, c: 1 };
+    if (t < T.wrong)       return { text: '', n: t < T.b ? 0 : typed(t, T.b, T.bPer), on: 0, c: 2 };
+    if (t < T.commitWrong) return { text: '', n: KEYS.length, on: 3, c: 3 };
+    if (t < T.back)        return { text: '书如法', n: 0, c: 3, left: 1 - (t - T.commitWrong) / 1500 };
+    if (t < T.repick)      return { text: '', n: KEYS.length, on: 0, c: 4 };
+    return { text: '输入法', n: 0, c: 5 };
+  }
+  let last = '';
+  function paint(f) {
+    const key = [f.text, f.n, f.on, f.c, f.left ? Math.round(f.left * 100) : 0].join('|');
+    if (key === last) return;
+    last = key;
+    doc.textContent = f.text;
+    if (f.text) doc.appendChild(timer);                 // 细线挂在字下面,随字走
+    timer.style.width = f.left ? (f.left * 100).toFixed(1) + '%' : '0';
+    panel.classList.toggle('off', f.n === 0);
+    if (f.n > 0) {                                      // 候选窗收起时保留最后的内容,淡出才不空
+      py.textContent = KEYS[f.n - 1];
+      SETS[f.n - 1].forEach((w, i) => { cands[i].lastChild.textContent = w; });
+      cands.forEach((el, i) => el.classList.toggle('on', i === f.on));
+    }
+    cap.textContent = caps[f.c];
+  }
+  if (reduced) { paint(at(T.end)); return; }           // 减弱动效:只给最后一帧
+  register(root, (now, tRaw) => paint(at(tRaw % CYCLE)));
+}
+pinyinDemo(document.getElementById('pyDemo'), ["敲拼音 shu ru fa", "按 1,上屏「输入法」", "再打一遍", "选错了:按 4,上屏「书如法」", "1.5 秒内按退格,整个词退回拼音", "重选 1,上屏「输入法」"]);
 
 
 /* ── 数据旅程(#local):与 privacy 页同一场戏,接进统一 rAF ── */

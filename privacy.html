@@ -164,6 +164,8 @@ nav {
 .navlinks a { color: var(--second); font-size: 13.5px; }
 
 .eyebrow { font-size: 12px; font-weight: 600; letter-spacing: .18em; text-transform: uppercase; color: var(--faint); margin-bottom: 14px; }
+/* 中文页的小标题只写中文(2026-10-13):大写和 .18em 宽字距是给拉丁字母的,中文用正常字距 */
+:lang(zh) :is(main, section, header) .eyebrow { font-size: 13px; letter-spacing: .04em; text-transform: none; }
 header.page { padding: 88px 0 0; }
 h1 { font-size: clamp(30px, 4.4vw, 42px); font-weight: 600; line-height: 1.3; }
 .lede { color: var(--second); font-size: 16.5px; max-width: 40em; margin-top: 18px; }
@@ -253,7 +255,7 @@ footer a { color: var(--faint); }
 </nav>
 
 <header class="page wrap">
-  <div class="eyebrow">Privacy · 你的数据在哪</div>
+  <div class="eyebrow">你的数据在哪</div>
   <h1>Murmur 的数据去向。</h1>
   <p class="lede">录音、历史、词典和打过的词存在你的 Mac 上。
   云端识别时,<b>音频直接发给你选的那一档的识别服务商,不经过我们的服务器。</b>
@@ -307,7 +309,7 @@ footer a { color: var(--faint); }
 
 <!-- ── 数据的旅程 ── -->
 <section class="wrap">
-  <div class="eyebrow">Journey · 每类数据的去向</div>
+  <div class="eyebrow">每类数据的去向</div>
   <h2>六类数据,各自的旅程。</h2>
   <div class="journey reveal">
     <div class="jhead"><span>是什么</span><span>去哪 · 存哪</span><span>怎么删 · 怎么关</span></div>
@@ -360,7 +362,7 @@ footer a { color: var(--faint); }
 
 <!-- ── 我们不做的事 ── -->
 <section class="wrap">
-  <div class="eyebrow">Never · 我们不做的事</div>
+  <div class="eyebrow">我们不做的事</div>
   <h2>写下来,就是承诺不做。</h2>
   <div class="nots reveal">
     <div class="not"><span class="x">✕</span><p><b>不经手你的音频。</b>云端识别的音频从你的 Mac 直达识别服务商,不经过我们的服务器。整理用的文字有例外,见下面「登录之后」一节。</p></div>
@@ -372,7 +374,7 @@ footer a { color: var(--faint); }
 
 <!-- ── 自己验证 ── -->
 <section class="wrap">
-  <div class="eyebrow">Verify · 不用信我们,自己看</div>
+  <div class="eyebrow">不用信我们,自己看</div>
   <h2>三件你现在就能亲手核实的事。</h2>
 
   <div class="receipt reveal">
@@ -392,7 +394,7 @@ footer a { color: var(--faint); }
 <!-- ── 未来 ── -->
 <section class="wrap">
   <div class="future reveal">
-    <div class="eyebrow">Account · 登录之后</div>
+    <div class="eyebrow">登录之后</div>
     <p>不登录时,App 也会连我们的服务器读公开配置:只在 App 在前台、或听写后 5 分钟内读,间隔由服务器在 60–3600 秒之间调(默认 5 分钟)。这个请求里没有你的身份,也没有你说的内容。另外每天读一次官网的版本文件。</p>
     <p>登录后,我们的服务器还做这几件事:</p>
     <p>① 登录、额度和公开配置(登录后改走带身份的那份)。② 每说完一句,报一次:字数、说话时长、是听写还是随心问、走了哪条路(本机 / 自己的 Key / 免费额度)、发生的时间。本机识别的那句也报,不扣额度。不带原文。③ 用免费额度识别时,每次开录换一张一次性通行证,所以服务器知道你此刻在录音;音频仍然直连识别服务商。④ 用免费额度(没填自己的 Key)时,整理、翻译、随心问和口述编辑的文字先经过服务器,再转给模型厂商。同一个请求里还有词典、屏幕节选(最多 1500 字);开了个人风格时,还有最多 3 条历史例句;开了提示词技能时,AI 工具里那句会多发一次。服务器只转发和记账,不存原文,日志里也没有正文。⑤ 开了输入法的云候选(默认关)时,还没上屏的拼音经我们的服务器转给 DeepSeek(中国);只发拼音。</p>
@@ -406,7 +408,7 @@ footer a { color: var(--faint); }
 <!-- ── 官网 ── -->
 <section class="wrap">
   <div class="future reveal">
-    <div class="eyebrow">Website · 官网</div>
+    <div class="eyebrow">官网</div>
     <p>这个网站没有统计脚本,也没有广告。下面几处会把东西交给我们的服务器或第三方:</p>
     <p>① 申请名额的表单:存你的邮箱、你写的那句话、界面语言和浏览器类型简写;另存一个加盐散列过的网络地址,只用来限制提交次数。提交即在我们的账号系统里为这个邮箱建一个身份;表单内容经 Resend 转发到我们的邮箱。② 网页试整理:你贴的文字发到我们的服务器,再转给大模型整理,服务器不存原文。③ 登录页、试一试页和技能页的脚本都由本站自托管;防刷验证开着时,这三页还会加载 Cloudflare Turnstile。④ 价格页读取你在本站的登录状态,用来把付款对上你的账号:点付款时,账号编号和邮箱随付款链接交给 Stripe。</p>
   </div>

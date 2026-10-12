@@ -5,7 +5,7 @@
    --coral --green --shadow),这里不新增颜色 token。⛔ 不改 v2.css。
    例外只有 .py-panel:候选窗只有深色一套,这是产品事实(IMEStyle.swift:13),
    亮色站点上也是深色玻璃,所以它的 sRGB 数值写死,亮暗一样。
-   没有动画,所以不用写 prefers-reduced-motion。
+   动画只有首页的打字演示(.py-demo,文件末尾),它自己写了 prefers-reduced-motion。
    ══════════════════════════════════════════════════════════════════════════ */
 
 /* ── 小节:两栏(文字 | 图),.flip 图在左 ──
@@ -162,3 +162,44 @@
 /* 首页 #pinyin 末尾「装:」那一行(2026-10-01 · 首页只讲差异化后,安装压成一行) */
 .py-install { margin-top: 14px; font-size: 14px; line-height: 1.75; color: var(--second); }
 .py-install b { color: var(--ink); font-weight: 600; }
+
+/* ── 打字演示(#pinyin · 2026-10-13):一行「文档」+ 候选窗复刻,循环演示
+   ① 敲 shu ru fa → 按 1 上屏「输入法」 ② 选错上屏「书如法」→ 1.5 秒内退格 → 退回拼音重选。
+   每一帧由页面脚本 pinyinDemo() 按「循环里的时刻」算出来(同站上其它演示的引擎);
+   这里只管样子。过渡只用 opacity / transform,时长同站上 .capsule 的 .12–.22s。
+   减弱动效 / 没有脚本时停在 HTML 里写好的最后一帧:上屏「输入法」。 */
+.py-demo {
+  margin: 0; background: var(--card); border: 1px solid var(--line2);
+  border-radius: 16px; padding: 22px 22px 14px; box-shadow: var(--shadow);
+}
+.py-doc {
+  display: flex; align-items: center; min-height: 46px; padding: 0 2px 10px;
+  border-bottom: 1px solid var(--line);
+  font-size: 19px; line-height: 1.5; color: var(--ink);
+}
+.py-doc-text { position: relative; white-space: nowrap; }
+/* 「书如法」下面那条细线:1.5 秒的退格窗口,随时间缩短(宽度由脚本给) */
+.py-timer {
+  position: absolute; left: 0; bottom: -4px; height: 2px; width: 0;
+  border-radius: 1px; background: var(--faint);
+}
+.py-caret {
+  flex: none; width: 2px; height: 1.15em; margin-left: 1px;
+  background: var(--coral);   /* 不闪:光标常亮,演示里只有候选窗在动 */
+}
+/* 候选窗的位置留好(折成两行时也够),出现 / 消失不推动下面的字 */
+.py-stage { min-height: 76px; padding-top: 12px; }
+.py-demo .py-panel {
+  margin: 0; display: inline-flex; width: auto;
+  transition: opacity .16s ease, transform .16s ease;
+}
+.py-demo .py-panel.off { opacity: 0; transform: translateY(-4px); }
+.py-demo-cap { margin-top: 6px; min-height: 1.7em; font-size: 12.5px; color: var(--faint); }
+@media (prefers-reduced-motion: reduce) {
+  .py-demo .py-panel { transition: none; }
+}
+@media (max-width: 820px) {
+  .py-demo { padding: 18px 16px 12px; }
+  .py-doc { font-size: 17px; }
+  .py-stage { min-height: 100px; }
+}

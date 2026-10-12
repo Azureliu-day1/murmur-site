@@ -163,6 +163,8 @@ nav {
 .navlinks a { color: var(--second); font-size: 13.5px; }
 
 .eyebrow { font-size: 12px; font-weight: 600; letter-spacing: .18em; text-transform: uppercase; color: var(--faint); margin-bottom: 14px; }
+/* 中文页的小标题只写中文(2026-10-13):大写和 .18em 宽字距是给拉丁字母的,中文用正常字距 */
+:lang(zh) :is(main, section, header) .eyebrow { font-size: 13px; letter-spacing: .04em; text-transform: none; }
 header.page { padding: 88px 0 0; }
 h1 { font-size: clamp(30px, 4.4vw, 42px); font-weight: 600; line-height: 1.3; }
 .lede { color: var(--second); font-size: 16.5px; max-width: 40em; margin-top: 18px; }
@@ -251,7 +253,7 @@ footer a { color: var(--faint); }
 </nav>
 
 <header class="page wrap">
-  <div class="eyebrow">Terms · 使用条款</div>
+  <div class="eyebrow">使用条款</div>
   <h1>Murmur 使用条款。</h1>
   <p class="lede">这是你和 Others Studio 之间关于 Murmur 的约定。
   <b>它现在处在内测阶段</b> —— 软件会变、可能出错、可能停;下面把「我们保证什么、不保证什么、钱怎么算、出了事怎么办」写清楚。
