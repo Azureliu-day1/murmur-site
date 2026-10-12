@@ -19,10 +19,10 @@
 cd "$(dirname "$0")/.." || exit 2
 
 # ── PII / 密钥扫描(fail-closed:命中就退 2,文案检查也不跑)──────────────────
-# 白名单只有一个地址:foraiandfocus+murmur@gmail.com —— 公开联系地址,Wei 定
+# 白名单只有一个地址:support@day1aifitness.com —— 公开联系地址,Wei 定
 # (首页「Intel Mac 等支持」「要云端名额」两处故意公开,基线就有、线上就在)。
 # 做法是逐行先删掉这一个地址再匹配,同一行里别的命中照样红。⛔ 不许再加白名单项。
-PII_ALLOW='foraiandfocus+murmur@gmail.com'
+PII_ALLOW='support@day1aifitness.com'
 PII_RE='azureliu|@gmail|\+61|Horizon Way|sb_secret|service_role'
 pii=$(grep -rnE "$PII_RE" --exclude-dir=.git . | awk -v a="$PII_ALLOW" '{ l=$0; while ((i=index(l,a))>0) l=substr(l,1,i-1) substr(l,i+length(a)); print l }' | grep -E "$PII_RE" | grep -vE '^\./tools/copy-lint\.sh:[0-9]+:PII_RE=')   # 只放过本脚本定义模式的那一行
 if [ -n "$pii" ]; then
