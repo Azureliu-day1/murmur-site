@@ -396,6 +396,9 @@ kbd {
 /* ── 收尾 ── */
 .outro { text-align: center; padding-bottom: 40px; }
 .outro h2 { font-size: clamp(28px, 4vw, 40px); }
+.win-note { max-width: 420px; margin: 44px auto 0; padding-top: 28px; border-top: 1px solid var(--line); scroll-margin-top: 96px; }
+.win-note h3 { font-size: 16.5px; font-weight: 600; }
+.win-note p { margin-top: 8px; font-size: 14.5px; color: var(--second); }
 /* 真截图(App 离屏出图,见 shots/README.md);暗色跟系统换一张。 */
 .real-shot { max-width: 560px; margin: 28px auto 0; }
 .real-shot img { display: block; width: 100%; height: auto; border-radius: 14px; }
@@ -574,6 +577,7 @@ body.is-sandbox .sandbox { display: inline-block; }
   The ums and uhs are removed, and English mixed with Chinese comes out right. It works in chat, email and the terminal. Requires macOS 26 or later.</p>
   <div class="cta-row reveal">
     <a class="btn btn-primary" href="#download">Download for macOS</a>
+    <a class="btn btn-quiet" href="#windows">About Windows</a>
     <a class="btn btn-quiet" href="#demo">Watch the demo</a>
   </div>
   <!-- ⭐ The path for someone on a phone: the button above is a Mac app they
@@ -1026,6 +1030,7 @@ body.is-sandbox .sandbox { display: inline-block; }
   <h2 class="reveal">Install it, press right ⌘, <span class="serif">speak</span>.</h2>
   <div class="cta-row reveal">
     <a class="btn btn-primary" href="https://github.com/Azureliu-day1/murmur-site/releases/latest/download/Murmur.zip">Download for macOS</a>
+    <a class="btn btn-quiet" href="#windows">About Windows</a>
   </div>
   <!-- ⭐ Same line as in the hero: someone who scrolled all the way down on a
        phone should not hit a dead end here either. -->
@@ -1039,6 +1044,11 @@ body.is-sandbox .sandbox { display: inline-block; }
   The cloud allowance is invite-only for now. <a href="login/index.html">Ask for a seat here</a>, with one line on what you would use it for.</p>
   <p class="stage-note reveal">Unzip it and drag Murmur into Applications. On first launch it asks for
   microphone and accessibility permission. Accessibility is what lets it put the words at your cursor.</p>
+  <!-- ⭐ Windows (Wei 10-12): only that it is in testing and expected within two months. No date, no feature list, no sign-up. -->
+  <div class="win-note reveal" id="windows">
+    <h3>Windows</h3>
+    <p>The Windows version is in testing. We expect to release it within two months.</p>
+  </div>
 </section>
 
 <footer class="wrap">
