@@ -1,5 +1,6 @@
 #!/bin/bash
-# 文案自查(Wei 2026-09-25 定的口味:说明书型,短,只说事实)。
+# 文案自查。口味:2026-09-25 起「短,只说事实」;2026-10-13 起按 COPY.md / round2 定稿「每一节先说你得到什么,
+# 操作交给演示,条件放到你要做决定的那一步」(audits/2026-10-13/site-copy/)。
 #
 # 查的是**用户看得见的字**:HTML 正文、<title>、meta description、placeholder /
 # aria-label / title / alt 属性、SVG <text>,以及内联脚本里会被塞进页面的字符串。
@@ -9,7 +10,10 @@
 #
 # 规矩(中文页):
 #   ① 「——」出现次数 = 0          ② 「就是这个页面」「代码画的」零命中
-#   ③ 最长一句 ≤ 45 字            (字数 = 汉字个数 + 英文 / 数字词个数,标点不算)
+#   ③ 最长一句 ≤ 50 字            (字数 = 汉字个数 + 英文 / 数字词个数,标点不算)
+#   ⑤ 首页(中英)与隐私 / 条款页:不点服务商名字;首页另不讲「本机 / 云端」、不出现内部名「名额 / 随心问 / 口述编辑」
+#      (SITE-V3,Wei 10-13:首页和隐私摘要只讲类别 + 国家;隐私页正文也按类别写。内部名只查页面正文,不查脚本:
+#      共享录音条 capsule.js 里的模式名照 App 原样)
 #   ④ 区块小标题(h2 / h3)≤ 10 字
 # 规矩(英文页):
 #   ① em-dash「—」出现次数 = 0    (最长一句只报数,不设门)
@@ -110,8 +114,10 @@ import sys, re, glob, os, html.parser
 
 VERBOSE = "-v" in sys.argv[1:]
 LEGAL = {"privacy.html", "tos.html"}
-MAX_ZH = 45
-MAX_HEAD = 10
+MAX_ZH = 50     # SITE-V3:45 → 50。round2 定稿「数据在哪」一节「登录后,把你说的话转成文字…处理完回到你这里。」48 字,Wei 10-13 认可
+MAX_HEAD = 16   # SITE-V3:10 → 16。round2 定稿标题「录音和历史,存在你自己的设备上。」15 字
+VENDORS = re.compile(r"Soniox|DeepSeek|AssemblyAI|Supabase|OpenRouter|Resend|Cloudflare|Turnstile|阿里云|Alibaba|Qwen|通义", re.I)
+HOME_BANNED = {True: ["本机", "云端", "名额", "随心问", "口述编辑"], False: ["on-device", "cloud", "seat"]}
 BANNED = ["就是这个页面", "代码画的"]
 INLINE = {"a", "b", "strong", "em", "i", "s", "span", "kbd", "code", "small", "label", "br", "u", "sup", "sub", "abbr", "mark", "q", "time"}
 ATTRS = {"placeholder", "aria-label", "title", "alt"}
@@ -200,6 +206,10 @@ for p in pages:
     text = "\n".join(segs)
     dash = text.count("——") if zh else text.count("—")
     banned = [b for b in BANNED if b in text]
+    banned += sorted(set(m.group(0) for m in VENDORS.finditer(text)))
+    if p in ("index.html", "en/index.html"):
+        page_text = "\n".join(pg.blocks)          # 只查页面正文,不查外链脚本(capsule.js 的模式名照 App)
+        banned += [b for b in HOME_BANNED[zh] if re.search(re.escape(b), page_text, re.I)]
     sents = []
     for s in segs:
         for piece in re.split(r"(?<=[。!?;!?;])|(?<=[.!?])\s+(?=[A-Z])" if not zh else r"(?<=[。!?;!?;])", s):
@@ -220,6 +230,11 @@ for p in pages:
     if dash:
         for s in segs:
             if ("——" if zh else "—") in s: print(f"    带破折号: {s[:90]}")
+for p in ("privacy.html", "tos.html", "en/privacy.html", "en/tos.html"):
+    raw = re.sub(r"<!--.*?-->", "", open(p, encoding="utf-8").read(), flags=re.S)
+    hit = sorted(set(m.group(0) for m in VENDORS.finditer(re.sub(r"<[^>]+>", " ", raw))))
+    print(f"{p:<22}服务商名字:{','.join(hit) or '0'}  {'FAIL' if hit else 'ok'}")
+    bad |= bool(hit)
 print("copy-lint:", "FAIL" if bad else "PASS")
 sys.exit(1 if bad else 0)
 PY

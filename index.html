@@ -780,6 +780,25 @@ body.is-sandbox .sandbox { display: inline-block; }
   .nav-cta { padding: 6px 13px; }
 }
 
+/* ── SITE-V3 首页文案(COPY.md + round2 FINAL,2026-10-13) ── */
+.keys4 .feature { grid-template-columns: 240px 1fr auto; }
+.keys-foot { margin-top: 22px; color: var(--faint); font-size: 13.5px; }
+#promises .promises { grid-template-columns: repeat(3, 1fr); gap: 32px 44px; }
+.plain-list { margin-top: 26px; display: grid; gap: 10px; max-width: 46em; }
+.plain-list p { color: var(--second); font-size: 15px; }
+.fine { text-wrap: pretty; margin-top: 18px; font-size: 13px; color: var(--faint); max-width: 46em; }
+.local-body { margin-top: 18px; display: grid; gap: 12px; max-width: 42em; }
+.local-body p { color: var(--second); font-size: 15.5px; }
+.local-link { margin-top: 20px; font-size: 14.5px; }
+.lec-note { margin-top: 14px; text-align: left; }
+#download .req { margin-top: 14px; }
+#download .stage-note { margin-top: 10px; }
+@media (max-width: 820px) {
+  #promises .promises { grid-template-columns: 1fr; }
+  .keys4 .feature { grid-template-columns: 1fr; gap: 8px; }
+  .keys4 .feature p, .keys4 .feature kbd { grid-column: 1; }
+}
+
 /* ── 顶栏「账户」胶囊与面板(v2-nav.js 有会话时换上的那一枚)──────────────────
    SITEFIX-21:原来由 v2-nav.js 运行时塞一个 <style> 进页面;登录 / 试一试 / 技能页的 CSP 是
    style-src 'self'(不放 unsafe-inline),那个 <style> 被拦,胶囊没样式。⛔ 别再从脚本注入样式。
@@ -828,7 +847,7 @@ body.is-sandbox .sandbox { display: inline-block; }
       <a href="guide/index.html">指南</a>
       <a href="skills/index.html">技能</a>
       <a href="pricing/index.html">价格</a>
-      <a href="#promises">承诺</a>
+      <a href="#local">隐私</a>
 <!-- 定价段下架期间,导航也去掉这一项(否则点了滚到空处) -->
       <!-- ⭐ class="nav-keep" = 手机上也要留着的项(见 @media 里的说明) -->
       <a class="nav-keep" href="try/index.html">试一试</a>
@@ -862,10 +881,9 @@ body.is-sandbox .sandbox { display: inline-block; }
   </div>
 </header>
 
-<!-- ── 少一道工序:打字 vs 说话,双演示对照 ── -->
+<!-- ── 少改一遍:打字 vs 说话,双演示对照 ── -->
 <section class="wrap">
-  <div class="eyebrow reveal">少一道工序</div>
-  <h2 class="reveal">打字对比说话。</h2>
+  <h2 class="reveal">少改一遍。</h2>
   <div class="compare reveal">
     <div class="panel type" id="panelType">
       <div class="head">
@@ -883,94 +901,17 @@ body.is-sandbox .sandbox { display: inline-block; }
       <div class="fake-input"><span class="ph">光标在这里</span><span class="out"></span><span class="cursor"></span></div>
       <div class="capsule-row">
         <div class="capsule-mount" data-size="mini" data-caption="none"></div>
-        <span class="done-chip">✓ 已插入光标处</span>
+        <span class="done-chip">✓ 已在光标处</span>
       </div>
     </div>
   </div>
-  <p class="subtract-note reveal">一天回几十条消息,每条都省掉打字后的回头删改。</p>
-</section>
-
-<!-- ── 三个核心功能 + 各自的展示区 ── -->
-<section class="wrap" id="features">
-  <div class="eyebrow reveal">四个键</div>
-  <h2 class="reveal">每个键管一件事。</h2>
-  <div class="features">
-    <div class="feature reveal">
-      <div class="num">01</div>
-      <div class="name">听写</div>
-      <p>按右 ⌘ 说一句,再按一下落字(按住说完松手也行)。「嗯、那个、就是说」会被删掉,留下通顺的句子。</p>
-      <kbd>右 ⌘</kbd>
-    </div>
-    <div class="feature reveal">
-      <div class="num">02</div>
-      <div class="name">翻译</div>
-      <p>按右 ⌥ 说一句中文,光标处落下英文。说英文会落下中文,方向自动判断。</p>
-      <kbd>右 ⌥</kbd>
-    </div>
-    <div class="feature reveal">
-      <div class="num">03</div>
-      <div class="name">随心问</div>
-      <p>按 fn 说「一英里等于多少公里」,落下的是答案。默认关闭,可在设置里开启。</p>
-      <kbd>fn</kbd>
-    </div>
-    <div class="feature reveal">
-      <div class="num">04</div>
-      <div class="name">口述编辑</div>
-      <p>选中一段字,按右 ⌃ 说要怎么改。改好的版本会替换原文。</p>
-      <kbd>右 ⌃</kbd>
-    </div>
-  </div>
-
-  <div class="feature-demos">
-    <div class="fdemo reveal" id="fdemoDictate">
-      <div class="head"><span class="name">听写</span><kbd>右 ⌘</kbd></div>
-      <div class="fake-input"><span class="ph">光标在这里</span><span class="out"></span><span class="cursor"></span></div>
-      <div class="capsule-mount" data-size="mini" data-caption="above"></div>
-    </div>
-    <div class="fdemo reveal" id="fdemoTranslate">
-      <div class="head"><span class="name">翻译</span><kbd>右 ⌥</kbd></div>
-      <div class="fake-input"><span class="ph">光标在这里</span><span class="out"></span><span class="cursor"></span></div>
-      <div class="capsule-mount" data-size="mini" data-caption="above"></div>
-    </div>
-    <div class="fdemo reveal" id="fdemoAsk">
-      <div class="head"><span class="name">随心问</span><kbd>fn</kbd></div>
-      <div class="fake-input"><span class="ph">光标在这里</span><span class="out"></span><span class="cursor"></span></div>
-      <div class="capsule-mount" data-size="mini" data-caption="above"></div>
-    </div>
-  </div>
-</section>
-
-<!-- ── 拼音输入法:只讲差异化(Wei 2026-10-01),细节在 /guide/。样式在 pinyin.css ── -->
-<section class="wrap" id="pinyin">
-  <div class="eyebrow reveal">拼音输入法</div>
-  <h2 class="reveal">拼音输入法,<br>随 Murmur 一起装。</h2>
-  <!-- 2026-10-01 Wei:首页这一节只讲差异化,细节全在 /guide/。四条各一句,≤ 30 字。
-       事实:F15 / F13(同一套词)· F6(退格退回)· PersonalLexiconSection.swift:82 + AIActionCard(⌥⇧Space)·
-       IMECloudSection.swift / CloudCandidates.swift:67(云候选,默认关) -->
-  <p class="sub reveal">Murmur 自带一个 Mac 拼音输入法。要 macOS 26 以上。</p>
-  <div class="py-grid reveal">
-    <div>
-      <div class="py-step"><b>01</b><div><strong>说话和打字同一套词。</strong>听写词典里的名字打字时在候选里,打过的词说话时也认得。</div></div>
-      <div class="py-step"><b>02</b><div><strong>选错了,按退格。</strong>上屏后 1.5 秒内按一下退格,整个词退回拼音重选。</div></div>
-      <div class="py-step"><b>03</b><div><strong>⌥⇧Space 让 AI 整理这一句。</strong>拼音还没上屏时按一下,AI 补标点、理语序,结果先出在卡上。</div></div>
-      <div class="py-step"><b>04</b><div><strong>云候选,默认关。</strong>按 ⌥↩ 让云端猜一个整句候选。要登录,打开前会写明发什么。</div></div>
-    </div>
-    <figure class="py-shot py-demo" id="pyDemo" role="img" aria-label="演示:敲 shu ru fa,按 1 上屏「输入法」。选错上屏「书如法」后,1.5 秒内按退格,整个词退回拼音重选。"><div class="py-doc"><span class="py-doc-text">输入法<span class="py-timer"></span></span><span class="py-caret"></span></div><div class="py-stage"><div class="py-panel off"><span class="py-pinyin">shu ru fa</span><span class="py-cands"><span class="py-cand on"><i>1</i>输入法</span><span class="py-cand"><i>2</i>输入</span><span class="py-cand"><i>3</i>书</span><span class="py-cand"><i>4</i>书如法</span><span class="py-cand"><i>5</i>数</span></span></div></div><figcaption class="py-demo-cap">重选 1,上屏「输入法」</figcaption></figure>
-  </div>
-  <!-- 口语首选命中:只留这一句(带口径)。F18 -->
-  <p class="py-note reveal">口语首选命中:我们自己的 125 句表外口语,首选 80.0%,装上语言模型后 89.6%。</p>
-  <p class="py-install reveal"><b>装:</b>设置 → 输入法 → 安装。怎么切换、每个功能怎么用,见<a href="guide/index.html">使用指南</a>。</p>
-  <div class="py-cta reveal">
-    <a class="btn btn-primary" href="#download">下载 macOS 版</a>
-    <a class="btn btn-quiet" href="demo/index.html">在浏览器里试打</a>
-  </div>
+  <p class="subtract-note reveal">左边打字:打一半,删掉,重打。右边说话:说完再按一下,整句出现在光标处。</p>
 </section>
 
 <!-- ── 对着 AI 说话:说一段乱话,落下转达版提示词(SITE-VIBE 2026-10-13)。
      默认标记 = 最终一帧;没有 JS / 减弱动效时就停在这里。动画在 vibe.js。
      口语原话放在 data-ex 里(copy-lint 对 data-ex 豁免:那是「整理之前」的一半)。 ── -->
 <section class="wrap vb" id="vibe">
-  <div class="eyebrow reveal">对着 AI 说话</div>
   <h2 class="reveal">说得乱,<br>落下来是清楚的。</h2>
   <p class="sub reveal">打开提示词技能,对 AI 工具想到哪说到哪,落下的提示词去掉口头禅、拆好条,限制原样保留。</p>
 
@@ -1028,258 +969,184 @@ body.is-sandbox .sandbox { display: inline-block; }
 
   <ul class="vb-tags reveal">
     <li>中英夹着说,变量名和报错保留英文。</li>
-    <li>听错的库名改一次,下次直接听对。</li>
+    <li>听错的库名改一次,下次更容易听对。</li>
     <li>常用的提示词存成短语,说触发词落下整段。</li>
     <li>选中一段代码,按<kbd>右 ⌃</kbd>说怎么改。</li>
   </ul>
 </section>
 
-<!-- ── 模型提供表:不报厂商名 —— 场景才重要(口径同 App 内模型页) ── -->
-<section class="wrap" id="models">
-  <div class="eyebrow reveal">提供表</div>
-  <h2 class="reveal">识别引擎<br>分三档。</h2>
-  <p class="sub reveal">
-    我们在内部测了市面上的识别模型,留下三个,按说话场景分成三档。
-    每一档的长处和短处都列在下面。
-    在主窗口「模型」页换档。
-  </p>
-
-  <p class="tier-now reveal"><strong>现在能用的只有「标准」档</strong>,另外两档在内测,会逐步开放。</p>
-
-  <div class="tiers">
-    <article class="tier reveal">
-      <div class="tier-top"><h3>标准</h3><span class="tier-cost">额度 ×1</span></div>
-      <div class="tier-for">默认档,日常中英混说</div>
-      <div class="stars">
-        <div><span>日常使用</span><i><b>●●●●●</b></i></div>
-        <div><span>中文为主</span><i><b>●●●●</b><s>●</s></i></div>
-        <div><span>英文为主</span><i><b>●●●</b><s>●●</s></i></div>
-      </div>
-      <ul class="tier-good">
-        <li>边说边出字幕,再按一下马上落字</li>
-        <li>中英混说错得最少(我们自己测的)</li>
-        <li>额度消耗最低</li>
-      </ul>
-      <ul class="tier-bad">
-        <li>纯英文长句:公开流式评测里排中游</li>
-      </ul>
-    </article>
-  </div>
-  <details class="tier-more reveal">
-    <summary>另有两档内测中:中文优先、精准</summary>
-    <div class="tiers-beta">
-        <article class="tier">
-          <div class="tier-top"><h3>中文优先</h3><span class="tier-cost">额度 ×1</span></div>
-          <div class="tier-for">中文为主、带方言口音</div>
-          <div class="tier-soon">内测中 · 逐步开放</div>
-          <div class="stars">
-            <div><span>日常使用</span><i><b>●●●●</b><s>●</s></i></div>
-            <div><span>中文为主</span><i><b>●●●●●</b></i></div>
-            <div><span>英文为主</span><i><b>●●●</b><s>●●</s></i></div>
-          </div>
-          <ul class="tier-good">
-            <li>中文和混说:准确率高的一档</li>
-            <li>粤语、川渝、吴语口音也听得准</li>
-            <li>边说边出字幕,再按一下马上落字</li>
-          </ul>
-          <ul class="tier-bad">
-            <li>实时字幕还不认词典里的专名,最终文字会按词典校正</li>
-          </ul>
-        </article>
-
-        <article class="tier">
-          <div class="tier-top"><h3>精准</h3><span class="tier-cost">额度 ×2</span></div>
-          <div class="tier-for">英文为主、专有名词多</div>
-          <div class="tier-soon">内测中 · 逐步开放</div>
-          <div class="stars">
-            <div><span>日常使用</span><i><b>●●●</b><s>●●</s></i></div>
-            <div><span>中文为主</span><i><b>●●●</b><s>●●</s></i></div>
-            <div><span>英文为主</span><i><b>●●●●●</b></i></div>
-          </div>
-          <ul class="tier-good">
-            <li>英文和混说:准确率高的一档</li>
-            <li>口音重、专有名词多时错得最少</li>
-          </ul>
-          <ul class="tier-bad">
-            <li>没有实时字幕,说完要等整段结果</li>
-            <li>中文输出偶有简繁混杂</li>
-            <li>额度按两倍扣</li>
-          </ul>
-        </article>
+<!-- ── 四个键:先记住一个 ── -->
+<section class="wrap" id="features">
+  <h2 class="reveal">先记住一个键。</h2>
+  <p class="sub reveal">右 ⌘ 是听写,够你用很久。另外三个,用到再学。</p>
+  <div class="features keys4">
+    <div class="feature reveal">
+      <div class="name">说,写下来。</div>
+      <p>按一下开始,再按一下停。按住说、说完松开也行。</p>
+      <kbd>右 ⌘</kbd>
     </div>
-  </details>
-
-  <p class="tier-note reveal">
-    「额度 ×2」指这一档按两倍扣:长录音录 1 分钟,从时长池里扣 2 分钟。
-    断网或额度用完时,自动换成本机识别。
-    本机识别比云端慢,中英混说也没那么准,但录下的话不会丢。
-  </p>
-</section>
-
-<!-- ── 数据在哪:全站最硬的一句话 ── -->
-<section class="wrap" id="local">
-  <div class="eyebrow reveal">数据在哪</div>
-  <h2 class="reveal">录音文件只在<br>你的 Mac 上。</h2>
-  <!-- SITEFIX-12:数据去向全站只在这一节讲全;FAQ 第 1 条压到两句链回这里和隐私页,拼音一节不再重复。 -->
-  <p class="sub reveal">录音、转写、历史、词典和打过的词都存在你的 Mac 上。
-  用云端识别时,音频直接发给你选的那家识别服务,不经过我们。
-  用本机识别时,音频不出这台电脑。</p>
-  <p class="sub reveal">登录后用免费额度整理、翻译、随心问和口述编辑时,文字先经过我们的服务器,再转给大模型。服务器不存原文。
-  开着整理时,即使用本机识别,文字也会发给大模型。
-  词典里的专有名词会随请求发给识别服务,帮它听对。
-  开了输入法的云候选时,还没上屏的拼音也经过我们的服务器。
-  按 ⌥⇧Space 让 AI 整理时,会带上与这句沾边的用词。
-  这些在设置里都写着。</p>
-  <div class="flowstage reveal">
-    <svg viewBox="0 0 760 250" aria-label="音频从你的 Mac 直接发给你选的模型商,不经过我们的服务器">
-      <!-- 航线(常显,极淡) -->
-      <path id="goPath"   d="M196 118 C 300 26, 460 26, 564 118" fill="none" stroke="var(--line2)" stroke-width="1.5" stroke-dasharray="3 6"/>
-      <path id="backPath" d="M564 138 C 460 226, 300 226, 196 138" fill="none" stroke="var(--line2)" stroke-width="1.5" stroke-dasharray="3 6"/>
-
-      <!-- 你的 Mac -->
-      <g>
-        <rect x="36" y="86" width="160" height="84" rx="14" fill="var(--paper)" stroke="var(--line2)"/>
-        <text class="node-label" x="116" y="122" text-anchor="middle">你的 Mac</text>
-        <text class="node-sub" x="116" y="144" text-anchor="middle">录音·历史·词典都在这</text>
-        <rect id="macGlow" x="36" y="86" width="160" height="84" rx="14" fill="none" stroke="var(--coral)" stroke-width="2.5" opacity="0"/>
-        <g id="savedChip" opacity="0">
-          <rect x="52" y="176" width="128" height="26" rx="13" fill="var(--coral-tint)"/>
-          <text x="116" y="194" text-anchor="middle" style="font-size:12px; font-weight:600" fill="var(--coral)">✓ 已存在本地</text>
-        </g>
-      </g>
-
-      <!-- 我们的服务器(虚位) -->
-      <g id="ghost" opacity=".8">
-        <rect x="304" y="92" width="152" height="72" rx="14" fill="none" stroke="var(--line2)" stroke-dasharray="5 5"/>
-        <text class="ghost-label" x="380" y="122" text-anchor="middle">我们的服务器</text>
-        <text class="node-sub" x="380" y="142" text-anchor="middle">音频不经过这里</text>
-        <g id="ghostX" opacity="0">
-          <circle cx="380" cy="76" r="13" fill="var(--coral)"/>
-          <text x="380" y="81" text-anchor="middle" style="font-size:13px; font-weight:700" fill="#fff">✕</text>
-        </g>
-      </g>
-
-      <!-- 你选的模型商 -->
-      <g>
-        <rect x="564" y="86" width="160" height="84" rx="14" fill="var(--paper)" stroke="var(--line2)"/>
-        <text class="node-label" x="644" y="122" text-anchor="middle">你选的模型商</text>
-        <text class="node-sub" x="644" y="144" text-anchor="middle">只连你选的那一家</text>
-        <rect id="provGlow" x="564" y="86" width="160" height="84" rx="14" fill="none" stroke="var(--coral)" stroke-width="2.5" opacity="0"/>
-      </g>
-
-      <!-- 包裹 -->
-      <circle id="pktGo"   r="7" fill="var(--coral)" opacity="0"/>
-      <circle id="pktBack" r="7" fill="var(--ink)"  opacity="0"/>
-    </svg>
-    <p class="cap" id="flowCap">你说话,音频从你的 Mac 发出</p>
+    <div class="feature reveal">
+      <div class="name">说中文,写成英文。</div>
+      <p>反过来也行,方向它自己判断。</p>
+      <kbd>右 ⌥</kbd>
+    </div>
+    <div class="feature reveal">
+      <div class="name">选中一段,说怎么改。</div>
+      <p>改好的版本替换原文,代码也行。</p>
+      <kbd>右 ⌃</kbd>
+    </div>
+    <div class="feature reveal">
+      <div class="name">问一句,写下答案。</div>
+      <p>问「一英里是多少公里」,光标处出现的是答案。这个键要先在设置里打开。</p>
+      <kbd>fn</kbd>
+    </div>
   </div>
+  <p class="keys-foot reveal">这句不要了,按 Esc。四个键都可以在设置里换成别的键。</p>
 
-  <p class="local-path reveal"><span class="mono">~/Library/Application Support/Murmur/</span><br>
-  <span class="path-note">录音和转写都在这个文件夹里,可以随时打开看。在这里删掉,就是彻底删掉。</span></p>
+  <div class="feature-demos">
+    <div class="fdemo reveal" id="fdemoDictate">
+      <div class="head"><span class="name">说,写下来</span><kbd>右 ⌘</kbd></div>
+      <div class="fake-input"><span class="ph">光标在这里</span><span class="out"></span><span class="cursor"></span></div>
+      <div class="capsule-mount" data-size="mini" data-caption="above"></div>
+    </div>
+    <div class="fdemo reveal" id="fdemoTranslate">
+      <div class="head"><span class="name">说中文,写成英文</span><kbd>右 ⌥</kbd></div>
+      <div class="fake-input"><span class="ph">光标在这里</span><span class="out"></span><span class="cursor"></span></div>
+      <div class="capsule-mount" data-size="mini" data-caption="above"></div>
+    </div>
+    <div class="fdemo reveal" id="fdemoAsk">
+      <div class="head"><span class="name">问一句,写下答案</span><kbd>fn</kbd></div>
+      <div class="fake-input"><span class="ph">光标在这里</span><span class="out"></span><span class="cursor"></span></div>
+      <div class="capsule-mount" data-size="mini" data-caption="above"></div>
+    </div>
+  </div>
 </section>
 
-<!-- ── 敢写下来的承诺 ── -->
+<!-- ── 拼音输入法(只随 0.53 上线):不方便出声的时候。打字演示的样式在 pinyin.css ── -->
+<section class="wrap" id="pinyin">
+  <h2 class="reveal">不方便出声的时候。</h2>
+  <p class="sub reveal">会议室里、图书馆里,还是得打字。Murmur 带一个拼音输入法,和听写共用一本词典:你教它听对的名字,打字时出现在候选里;你打过的词,说话时它也认得。</p>
+  <div class="py-grid reveal">
+    <div>
+      <div class="py-step"><b>01</b><div>选错了,上屏后 1.5 秒内按退格,整个词退回拼音重选。</div></div>
+      <div class="py-step"><b>02</b><div>我们拿自己准备的 125 句口语测过,第一个候选就对的有 80.0%。</div></div>
+      <div class="py-step"><b>03</b><div>在 设置 → 输入法 里装上。怎么切换、每个功能怎么用,见<a href="guide/index.html">使用指南</a>。</div></div>
+    </div>
+    <figure class="py-shot py-demo" id="pyDemo" role="img" aria-label="演示:敲 shu ru fa,按 1 上屏「输入法」。选错上屏「书如法」后,1.5 秒内按退格,整个词退回拼音重选。"><div class="py-doc"><span class="py-doc-text">输入法<span class="py-timer"></span></span><span class="py-caret"></span></div><div class="py-stage"><div class="py-panel off"><span class="py-pinyin">shu ru fa</span><span class="py-cands"><span class="py-cand on"><i>1</i>输入法</span><span class="py-cand"><i>2</i>输入</span><span class="py-cand"><i>3</i>书</span><span class="py-cand"><i>4</i>书如法</span><span class="py-cand"><i>5</i>数</span></span></div></div><figcaption class="py-demo-cap">重选 1,上屏「输入法」</figcaption></figure>
+  </div>
+  <div class="py-cta reveal">
+    <a class="btn btn-primary" href="#download">下载 Mac 版</a>
+    <a class="btn btn-quiet" href="demo/index.html">在浏览器里试打</a>
+  </div>
+</section>
+
+<!-- ── 数据在哪(round2 定稿):首页只讲用的人关心的三件事;服务商类别、国家、留多久在隐私页。不点厂商名、不讲本机 / 云端。 ── -->
+<section class="wrap" id="local">
+  <h2 class="reveal">录音和历史,存在<br>你自己的设备上。</h2>
+  <div class="local-body reveal">
+    <p>录音默认留 30 天,历史一直留,都能在设置里改,也能随时删掉。</p>
+    <p>登录后,把你说的话转成文字、再把文字理顺时,这一句会交给帮我们做识别和文字处理的服务商,处理完回到你这里。我们自己不留你说的原文,也不卖你的数据。</p>
+    <p>开始说话时,它会看一眼当前窗口里的文字,好把人名和术语写对。它不截屏,读到的字不会存在你的设备上。登录后,这些字会和这一句一起交给服务商处理。不想要,在设置里关掉就行。</p>
+  </div>
+  <p class="local-link reveal"><a href="privacy.html">交给了哪类服务商、它们在哪个国家、东西留多久,写在隐私页 →</a></p>
+</section>
+
+<!-- ── 出了错:三条故障时的行为(原「四条承诺」) ── -->
 <section class="wrap" id="promises">
-  <div class="eyebrow reveal">承诺</div>
-  <h2 class="reveal">四条承诺。</h2>
+  <h2 class="reveal">出了错,录音还在。</h2>
   <div class="promises">
     <div class="promise reveal">
-      <h3>说过的话不丢</h3>
-      <p>每次听写都存一份录音和一条历史。云端出错或识别错了,可以在历史里换个模型重新识别。</p>
+      <h3>断网,或者额度用完</h3>
+      <p>地铁里信号断了,它换个方式接着认,录音照样存着。这时候慢一些,中英夹着说没那么准。联网以后,可以在历史里再识别一遍。</p>
     </div>
     <div class="promise reveal">
-      <h3>出错会告诉你</h3>
-      <p>翻译失败时,屏幕上会提示。麦克风没收到声音,也会当场提示。它不会往你的窗口里塞乱码。</p>
+      <h3>听错了</h3>
+      <p>每一句都有录音。在历史里重新识别,或者直接改字。改过的字,以后识别时会参照。</p>
     </div>
     <div class="promise reveal">
-      <h3>音频去哪看得到</h3>
-      <p>用本机识别时,音频不出这台电脑。用云端时,设置里写着发给了哪家、发了什么。</p>
-    </div>
-    <div class="promise reveal">
-      <h3>数字是实测的</h3>
-      <p>哪一档听得不准,在主窗口「模型」页换一档。</p>
+      <h3>没收到声音</h3>
+      <p>麦克风没收到声音,或者翻译没成,屏幕上当场告诉你,窗口里不写任何东西。</p>
     </div>
   </div>
 </section>
 
-<!-- ── FAQ ── -->
-<!-- ── 长录音:实时字幕(可牺牲预览)+ 整段转写(说话人分离) ── -->
+<!-- ── 长录音:实时字幕(预览)+ 整段转写(说话人分离) ── -->
 <section class="wrap" id="lecture">
-  <div class="eyebrow reveal">长录音</div>
-  <h2 class="reveal">上课开长录音。</h2>
-  <p class="sub reveal">
-    开长录音后,字幕浮窗盖在全屏网课上面,边放边出字。
-    要看译文,可以开双栏。
-    字幕只是预览,中途断了也不影响录音。
-    录完后完整转写存进历史,分得出谁在说话。
-  </p>
+  <h2 class="reveal">网课全屏,<br>字幕浮在上面。</h2>
+  <p class="sub reveal">开长录音,全屏放网课,字幕窗盖在画面上,老师说一句,出一句。要看译文,开第二栏。录完,完整转写进历史,分得出谁在说话。字幕只是预览,底下的录音一直在录。</p>
   <div class="cap-demo reveal" id="capDemo" aria-label="实时字幕演示">
     <div class="cap-head"><span class="cap-dot"></span>实时字幕<span class="cap-tag">预览 · 录完存进历史</span></div>
     <div class="cap-lines" id="capLines"></div>
   </div>
-  <p class="stage-note reveal" style="margin-top:14px">
-    免费档有名额时,每月可以录 30 分钟长录音。
-  </p>
+  <p class="stage-note reveal lec-note">登录后,免费每月可录 30 分钟。</p>
 </section>
 
-<!-- 定价段已整段删除(SITEFIX-20,2026-10-09):下架期间源码注释里留着价格和测试标记,公开可见。要恢复,从 git 历史 a2779eb 及以前的 index.html 取回。 -->
+<!-- ── 识别(round2 定稿,版本 A):照平时的样子说。不报档位、不讲本机 / 云端 ── -->
+<section class="wrap" id="models">
+  <h2 class="reveal">照你平时的样子说。</h2>
+  <div class="plain-list reveal">
+    <p>边说边出字,说的时候就看得到。</p>
+    <p>一句话里中文夹着英文,不用切换。</p>
+    <p>登录后,常说的人名、术语加进词典,认和理顺时都会参考。</p>
+    <p>网络断了,或者这周的额度用完了,它会换个方式接着认,说过的话不会丢。</p>
+  </div>
+  <p class="fine reveal">不登录也能用,不限次数,一次认一种语言。中英混着说和理顺要登录,额度用完时照原话输出。现在登录要先申请。</p>
+</section>
 
-<!-- ── 细节合集:句句是已交付行为,不许吹 ── -->
+<!-- ── 它会看场合:句句是已交付行为 ── -->
 <section class="wrap" id="details">
-  <div class="eyebrow reveal">顺手的小事</div>
-  <h2 class="reveal">顺手的小功能。</h2>
+  <h2 class="reveal">它会看场合。</h2>
   <div class="detail-list reveal">
-    <div><strong>词典自动加词。</strong>你改对过的专有名词会进词典,下次直接听对。没把握的词不加。</div>
-    <div><strong>快捷短语。</strong>说一个触发词,落下整段地址或常用回复。这一步不经过大模型。</div>
-    <div><strong>分应用语气。</strong>落进邮件时,措辞比落进微信正式。在代码编辑器里不改你的标识符。</div>
-    <div><strong>在历史里改错字。</strong>每条听写都留着原文和录音。你改过的字,以后识别时会参照。</div>
-    <div><strong>悄悄话模式。</strong>在图书馆用气声说话,它先把声音放大再识别。</div>
-    <div><strong>「半小时后提醒我」。</strong>在随心问(fn)里说这一句就设好提醒,到点弹出。随心问默认不开。这句在本机处理,不花额度,断网也能用。</div>
-    <div><strong>参考屏幕上的专名。</strong>开始录音时,它读一次前台窗口的文字,找出专有名词帮忙识别。不截屏,这些词也不进词典。默认关,可在 设置 → 识别 打开。细节见<a href="privacy.html">「你的数据在哪」</a>。</div>
+    <div><strong>邮件里像邮件,微信里像聊天。</strong>同一句话,写进邮件时措辞更正式。</div>
+    <div><strong>图书馆里,用气声说。</strong>它先把声音放大,再识别。</div>
   </div>
 </section>
 
+<!-- ── 常见问题 ── -->
 <section class="wrap">
-  <div class="eyebrow reveal">常见问题</div>
+  <h2 class="reveal">下载前常问的。</h2>
   <div class="faq reveal">
     <details>
-      <summary>我的录音会被传到哪里?</summary>
-      <p class="a">录音、转写、历史、词典和打过的词都存在你的 Mac 上;用云端识别时,音频直接发给识别服务,不经过我们的服务器。文字请求、云候选和 ⌥⇧Space 会发出什么,见上面<a href="#local">「数据在哪」</a>和<a href="privacy.html">隐私页</a>。</p>
+      <summary>要付钱吗?</summary>
+      <p class="a">下载免费。不登录也能用,不限次数。登录后有免费额度,费用我们付。额度用完,它换个方式接着认,照原话写下来,不会停下来让你付钱。现在登录要先申请。</p>
     </details>
     <details>
-      <summary>断网了怎么办?</summary>
-      <p class="a">断网或额度用完时,会自动换成本机识别。本机识别慢一些,中英混说没那么准,录音照样保存。联网后,可以在历史里用云端档位重新识别任何一条。</p>
+      <summary>哪些要登录?</summary>
+      <p class="a">理顺句子、去掉口头禅、中英夹着说、翻译、提问和改写,要登录用免费额度,或者填你自己的 Key。不登录时,写下的是你说的原话。</p>
+    </details>
+    <details>
+      <summary>要自己配 API Key 吗?</summary>
+      <p class="a">不用。登录以后就能用。</p>
+    </details>
+    <details>
+      <summary>在哪些 App 里能用?</summary>
+      <p class="a">大多数放得进光标的输入框都行,微信、邮件、终端、Cursor 都可以。它用辅助功能权限把字放到光标处。</p>
     </details>
     <details>
       <summary>支持哪些语言?</summary>
-      <p class="a">中文、英文,以及一句话里中英夹着说。带粤语、川渝、吴语口音的中文有专门的档位,目前在内测。</p>
-    </details>
-    <details>
-      <summary>需要自己配 API Key 吗?</summary>
-      <p class="a">不需要。云端额度现在是邀请制,拿到名额并登录后就有免费额度。免费额度的云端费用由我们付。用完后自动换成本机识别,不会停下来让你付费。</p>
+      <p class="a">中文、英文,以及一句话里两种夹着说。</p>
     </details>
   </div>
 </section>
 
-<!-- ── 收尾 ── -->
+<!-- ── 收尾:下载 ── -->
 <section class="wrap outro" id="download">
-  <h2 class="reveal">装好后按右 ⌘ <span class="serif">说</span>一句。</h2>
+  <h2 class="reveal">装好以后,按右 ⌘ 说一句。</h2>
   <div class="cta-row reveal">
-    <a class="btn btn-primary" href="https://github.com/Azureliu-day1/murmur-site/releases/latest/download/Murmur.zip">下载 macOS 版</a>
-    <a class="btn btn-quiet" href="#windows">关于 Windows 版</a>
+    <a class="btn btn-primary" href="https://github.com/Azureliu-day1/murmur-site/releases/latest/download/Murmur.zip">下载 Mac 版</a>
   </div>
-  <p class="stage-note reveal"><b>macOS 26 以上 · M 系列芯片</b> · 约 45 MB · 免费下载,本机识别不用登录</p>
-  <p class="mobile-path reveal">手机或 Intel Mac 装不了?先<a href="login/index.html#apply">申请云端名额</a>,或<a href="try/index.html">在网页上试整理 →</a></p>
+  <p class="req reveal">免费 · macOS 26 及以上 · M 系列芯片 · 约 45 MB</p>
+  <p class="stage-note reveal">现在登录要先申请。<a href="login/index.html#apply">申请时写一句你打算拿它做什么 →</a></p>
+  <p class="stage-note reveal">用 Intel Mac 或更早的 macOS?写信到 <a href="mailto:support@day1aifitness.com?subject=Murmur%20%E7%AD%89%E6%94%AF%E6%8C%81">support@day1aifitness.com</a>,支持以后我们回信。</p>
   <details class="install-more reveal">
     <summary>安装说明</summary>
-    <p>解压后把 Murmur 拖进「应用程序」。第一次打开会请求麦克风和辅助功能权限,后者用来把字放进光标处。</p>
+    <p>解压后把 Murmur 拖进「应用程序」。第一次打开会请求麦克风和辅助功能权限,后者用来把字写进光标处。</p>
     <p>从 0.52 升级:先退出旧版,再把新下载的拖进「应用程序」替换。<a href="changelog/index.html">这一版更新了什么 →</a></p>
-    <p>云端额度现在要邀请,申请时写一句你想用它做什么。App 需要 macOS 26 以上、M 系列芯片。别的 Mac <a href="mailto:support@day1aifitness.com?subject=Murmur%20%E7%AD%89%E6%94%AF%E6%8C%81">写信给我们</a>,支持后回信。</p>
   </details>
-  <!-- ⭐ Windows 版(Wei 10-12):只说在测试、预计两个月内。不写日期、不列功能、不收申请。 -->
+  <!-- ⭐ Windows 版(Wei 10-12):只说在测试、预计两个月内。不写日期、不列功能、不收申请。首屏「关于 Windows 版」跳到这里。 -->
   <div class="win-note reveal" id="windows">
     <h3>Windows 版</h3>
-    <p>Windows 版正在测试,预计两个月内发布。</p>
+    <p>Windows 版在测试,预计两个月内发布。</p>
   </div>
 </section>
 
@@ -1585,74 +1452,6 @@ function pinyinDemo(root, caps) {
 }
 pinyinDemo(document.getElementById('pyDemo'), ["敲拼音 shu ru fa", "按 1,上屏「输入法」", "再打一遍", "选错了:按 4,上屏「书如法」", "1.5 秒内按退格,整个词退回拼音", "重选 1,上屏「输入法」"]);
 
-
-/* ── 数据旅程(#local):与 privacy 页同一场戏,接进统一 rAF ── */
-(function () {
-  const stage = document.querySelector('.flowstage');
-  if (!stage) return;
-  const g = id => document.getElementById(id);
-  const goPath = g('goPath'), backPath = g('backPath');
-  const goLen = goPath.getTotalLength(), backLen = backPath.getTotalLength();
-  const CAPS = [
-    '你说话,音频从你的 Mac 发出',
-    '音频直接发给你选的那家,不经过我们',
-    '那家服务把音频转成文字',
-    '文字回到你的 Mac',
-    '文字存在你的 Mac 上。',
-  ];
-  let capIdx = -1;
-  function setCap(i) {
-    if (i === capIdx) return;
-    capIdx = i;
-    const el = g('flowCap');
-    el.style.opacity = 0;
-    setTimeout(() => { el.textContent = CAPS[i]; el.style.opacity = 1; }, 180);
-  }
-  const easeIO = t => t < .5 ? 2*t*t : 1 - (-2*t+2)**2/2;
-  if (reduced) {
-    g('ghostX').setAttribute('opacity', 1);
-    g('savedChip').setAttribute('opacity', 1);
-    g('flowCap').textContent = '音频直接发给你选的服务商,不经过我们。文字回来后存在本地。';
-    return;
-  }
-  const CYCLE = 7600;
-  register(stage, (now, tRaw) => {
-    const t = tRaw % CYCLE;
-    const mp = g('macGlow');
-    if (t < 1000) { mp.setAttribute('opacity', Math.sin(t / 1000 * Math.PI)); setCap(0); }
-    else mp.setAttribute('opacity', 0);
-
-    const go = g('pktGo'), gx = g('ghostX');
-    if (t >= 1000 && t < 2800) {
-      const k = easeIO((t - 1000) / 1800);
-      const p = goPath.getPointAtLength(k * goLen);
-      go.setAttribute('transform', `translate(${p.x},${p.y})`);
-      go.setAttribute('opacity', 1);
-      gx.setAttribute('opacity', k > 0.3 && k < 0.75 ? 1 : Math.max(0, 1 - Math.abs(k - 0.52) * 6));
-      setCap(1);
-    } else { go.setAttribute('opacity', 0); if (t >= 2800) gx.setAttribute('opacity', 0); }
-
-    const pp = g('provGlow');
-    if (t >= 2800 && t < 3600) { pp.setAttribute('opacity', Math.sin((t - 2800) / 800 * Math.PI)); setCap(2); }
-    else pp.setAttribute('opacity', 0);
-
-    const back = g('pktBack');
-    if (t >= 3600 && t < 5400) {
-      const k = easeIO((t - 3600) / 1800);
-      const p = backPath.getPointAtLength(k * backLen);
-      back.setAttribute('transform', `translate(${p.x},${p.y})`);
-      back.setAttribute('opacity', 1);
-      setCap(3);
-    } else back.setAttribute('opacity', 0);
-
-    const chip = g('savedChip');
-    if (t >= 5400) {
-      const k = Math.min((t - 5400) / 300, 1);
-      chip.setAttribute('opacity', t > CYCLE - 400 ? Math.max(0, (CYCLE - t) / 400) : k);
-      setCap(4);
-    } else chip.setAttribute('opacity', 0);
-  });
-})();
 
 /* ── 唯一的 rAF 循环:不可见的演示整段跳过 ── */
 function loop(now) {
