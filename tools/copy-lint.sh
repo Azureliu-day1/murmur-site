@@ -22,7 +22,7 @@ cd "$(dirname "$0")/.." || exit 2
 # 白名单只有一个地址:下面 PII_ALLOW 那一个 —— 公开联系地址(首页「Intel Mac 等支持」、
 # 隐私页与条款的联系 / 投诉处故意公开)。换地址只用 tools/set-contact-email.sh,它连这一行一起改。
 # 做法是逐行先删掉这一个地址再匹配,同一行里别的命中照样红。⛔ 不许再加白名单项。
-PII_ALLOW='contact@maobenbeginner.com'
+PII_ALLOW='support@day1aifitness.com'
 # 仓库里只放**通用**模式(SITEFIX-22):邮箱地址(example.com / .org / .net 占位放过)、国际电话号码、密钥形状。
 #   跟某个人有关的模式(名字、住址、本人号码段)⛔ 不进公开仓,放本机不入库的 ~/.config/murmur/pii-extra.txt:
 #   一行一个 ERE,# 开头是注释;文件在就并进来一起扫,不在就跳过并打一行提示(CI / 别人的机器上只跑通用那一半)。
