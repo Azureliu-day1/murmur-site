@@ -1,0 +1,11 @@
+{
+  "_说明": "首屏标题与副标题只在这里写一次。改完跑 python3 tools/set-hero-title.py,它把字铺到中英首页的 h1 / 副标题 / <title> / description / og 标签和全站 og:image:alt;再跑 tools/og/render.sh 重出分享图。「|」= 两行排版时的换行处。",
+  "zh": {
+    "title": "符合你的|AI 智能语音输入体。",
+    "lede": "打字的时候,想法要等手。|说出来就不用等,说乱了也没关系,出来的是顺的。"
+  },
+  "en": {
+    "title": "An AI voice typing agent|that fits the way you talk.",
+    "lede": "When you type, your thoughts wait for your fingers.|Say it instead. If it comes out messy, what gets written down is not."
+  }
+}

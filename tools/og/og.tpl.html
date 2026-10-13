@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="{{LANG}}">
+<head>
+<meta charset="utf-8">
+<!-- 分享图模板(1200×630)。tools/og/render.sh 按 tools/hero-title.json 填字后用无头 Chrome 截图;不对外发布。 -->
+<style>
+@font-face { font-family: 'Newsreader'; font-weight: 500 600; src: url('{{FONTS}}/Newsreader-normal-500-latin.woff2') format('woff2'); }
+html, body { margin: 0; width: 1200px; height: 630px; overflow: hidden; }
+body {
+  background: radial-gradient(900px 520px at 100% 100%, rgba(226, 83, 31, .16), transparent 70%), #161618;
+  color: #F2F2F4; -webkit-font-smoothing: antialiased;
+  font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", sans-serif;
+  box-sizing: border-box; padding: 104px 96px 52px; display: flex; flex-direction: column;
+}
+.brand { display: flex; align-items: center; gap: 34px; }
+.brand svg { width: 150px; height: 75px; }
+.brand b { font-family: "Newsreader", Georgia, serif; font-weight: 600; font-size: 132px; line-height: 1; letter-spacing: -.01em; }
+h1 { margin: 64px 0 0; font-size: 46px; text-wrap: balance; font-weight: 600; line-height: 1.3; letter-spacing: .01em; }
+html[lang=en] h1 { font-size: 42px; }
+p { margin: 20px 0 0; font-size: 25px; text-wrap: pretty; line-height: 1.5; color: #A0A0A8; max-width: 1000px; }
+.site { margin-top: auto; font-size: 21px; color: #86868E; letter-spacing: .02em; }
+</style>
+</head>
+<body>
+<div class="brand"><svg viewBox="0 0 200 100" aria-hidden="true"><path d="M12.0 50.0 L14.0 40.1 L16.0 31.7 L18.0 25.2 L20.0 21.0 L22.0 19.0 L24.0 19.2 L26.0 21.3 L28.0 25.2 L30.0 30.3 L32.0 36.2 L34.0 42.4 L36.0 48.5 L38.0 54.2 L40.0 59.0 L42.0 62.7 L44.0 65.2 L46.0 66.5 L48.0 66.5 L50.0 65.5 L52.0 63.5 L54.0 60.9 L56.0 57.8 L58.0 54.6 L60.0 51.5 L62.0 48.6 L64.0 46.2 L66.0 44.4 L68.0 43.2 L70.0 42.7 L72.0 42.7 L74.0 43.2 L76.0 44.1 L78.0 45.3 L80.0 46.7 L82.0 48.0 L84.0 49.2 L86.0 50.2 L88.0 51.0 L90.0 51.5 L92.0 51.8 L94.0 51.8 L96.0 51.6 L98.0 51.3 L100.0 50.9 L102.0 50.5 L104.0 50.2 L106.0 50.0 L190 50" fill="none" stroke="#FF6B35" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/></svg><b>Murmur</b></div>
+<h1>{{TITLE}}</h1>
+<p>{{LEDE}}</p>
+<div class="site">maobenbeginner.com</div>
+</body>
+</html>

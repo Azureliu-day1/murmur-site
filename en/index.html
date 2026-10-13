@@ -5,19 +5,19 @@
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script>document.documentElement.classList.add('js');</script>
-<title>Murmur · Voice typing for the Mac</title>
-<meta name="description" content="Voice typing for the Mac. Tap right ⌘, say a sentence, tap again, and the text is at your cursor. On-device or cloud recognition.">
+<title>Murmur · An AI voice typing agent that fits the way you talk</title>
+<meta name="description" content="An AI voice typing agent that fits the way you talk. When you type, your thoughts wait for your fingers. Say it instead. If it comes out messy, what gets written down is not.">
 <link rel="canonical" href="https://maobenbeginner.com/en/">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Murmur">
 <meta property="og:locale" content="en_US">
 <meta property="og:url" content="https://maobenbeginner.com/en/">
-<meta property="og:title" content="Murmur · Voice typing for the Mac">
-<meta property="og:description" content="Voice typing for the Mac. Tap right ⌘, say a sentence, tap again, and the text is at your cursor. On-device or cloud recognition.">
+<meta property="og:title" content="Murmur · An AI voice typing agent that fits the way you talk">
+<meta property="og:description" content="An AI voice typing agent that fits the way you talk. When you type, your thoughts wait for your fingers. Say it instead. If it comes out messy, what gets written down is not.">
 <meta property="og:image" content="https://maobenbeginner.com/og-en.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="Murmur · Voice typing for the Mac">
+<meta property="og:image:alt" content="Murmur · An AI voice typing agent that fits the way you talk">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="../favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="../apple-touch-icon.png">
@@ -236,7 +236,14 @@ h2 { font-size: clamp(26px, 3.4vw, 34px); font-weight: 600; line-height: 1.35; l
   font-size: clamp(34px, 5.4vw, 56px);
   font-weight: 600; line-height: 1.28; letter-spacing: .01em;
 }
-.hero h1 .serif { font-weight: 500; font-style: italic; }
+/* SITE-V3(Wei 10-13「字体统一」):首屏标题一种字体、一种字重 —— 站点正文的无衬线;不再给某几个字换衬线斜体。
+   标题和副标题的字只在 tools/hero-title.json 里写,tools/set-hero-title.py 铺到页面。 */
+.hero h1 { font-family: inherit; }
+.hero .lede, .hero .mobile-path { text-wrap: balance; }
+@media (max-width: 600px) { .hero .lede br, .hero h1 br { display: none; } }   /* 英文标题在手机上按词自然折行 */
+.hero h1 { text-wrap: balance; }
+.req { margin-top: 18px; font-size: 13.5px; color: var(--faint); letter-spacing: .02em; }
+.only-phone { display: none; }
 .hero .lede {
   color: var(--second); font-size: clamp(15.5px, 1.8vw, 17.5px);
   max-width: 34em; margin: 22px auto 0;
@@ -745,9 +752,10 @@ body.is-sandbox .sandbox { display: inline-block; }
 
 .cta-apply { display: none; }
 @media (max-width: 820px) {
+  /* 手机上 Mac 版装不了:主按钮换成「申请账号」,下载收起;关于 Windows 版、看演示照留(round2 定稿) */
   .hero .cta-apply { display: inline-block; }
-  .hero .cta-dl { background: transparent; color: var(--second); border: 1px solid var(--line2); }
-  .hero .cta-demo { display: none; }
+  .hero .cta-dl { display: none; }
+  .only-phone { display: block; }
   section { padding-top: 80px; }
   .compare, .promises { grid-template-columns: 1fr; }
   .detail-list { grid-template-columns: 1fr; }
@@ -833,26 +841,23 @@ body.is-sandbox .sandbox { display: inline-block; }
 
 <!-- ── Hero:全页最大的一场动画只留给「说完,字落下」── -->
 <header class="hero wrap" id="top">
-  <h1 class="reveal">Voice typing<br>for the <span class="serif">Mac</span>.</h1>
-  <p class="lede reveal">Put the cursor in a text field, tap right ⌘ and say a sentence. Tap again and the text is there.
-  The ums and uhs are removed, and English mixed with Chinese comes out right. It works in chat, email and the terminal. Requires macOS 26 or later.</p>
-  <!-- SITEFIX-7:手机(≤820px)上 Mac 版装不了 → 主按钮换成「申请名额」,下载降为次按钮,「看演示」收起(演示就在下面)。 -->
+  <h1 class="reveal" data-hero-title>An AI voice typing agent <br>that fits the way you talk.</h1>
+  <p class="lede reveal" data-hero-lede>When you type, your thoughts wait for your fingers. <br>Say it instead. If it comes out messy, what gets written down is not.</p>
+  <!-- SITEFIX-7 → SITE-V3:手机(≤820px)上 Mac 版装不了 → 主按钮换成「申请账号」,「下载 Mac 版」收起;关于 Windows 版、看演示照留。 -->
   <div class="cta-row reveal">
-    <a class="btn btn-primary cta-apply" href="login/index.html#apply">Ask for a seat</a>
-    <a class="btn btn-primary cta-dl" href="#download">Download for macOS</a>
+    <a class="btn btn-primary cta-dl" href="#download">Download for Mac</a>
+    <a class="btn btn-primary cta-apply" href="login/index.html#apply">Request an account</a>
     <a class="btn btn-quiet" href="#windows">About Windows</a>
     <a class="btn btn-quiet cta-demo" href="#demo">Watch the demo</a>
   </div>
-  <!-- ⭐ The path for someone on a phone: the button above is a Mac app they
-       cannot install here. Most people arriving from social links are on a
-       phone, and this line is the only road they have. Shown on desktop too —
-       one small line, it does not compete with the CTA. -->
-  <p class="mobile-path reveal">It does not install on a phone. You can <a href="login/index.html#apply">ask for a seat</a> or <a href="try/index.html">try the cleanup in the browser →</a></p>
+  <p class="req reveal">Free · macOS 26 or later · Apple silicon</p>
+  <!-- ⭐ The path for someone on a phone: the Mac app does not install there. Shown at phone widths only. -->
+  <p class="mobile-path only-phone reveal">The download is for Mac for now. On your phone, paste something you would say and <a href="try/index.html">see what it turns into →</a></p>
 
   <div class="stage reveal" id="demo">
     <div class="fake-input"><span class="ph">your cursor is here</span><span class="out"></span><span class="cursor"></span></div>
     <div class="capsule-mount" data-caption="above"></div>
-    <p class="stage-note">This capsule shows up while you speak. Press Esc to cancel the sentence.</p>
+    <p class="stage-note">Tap right ⌘ to start. Tap again to stop.</p>
   </div>
 </header>
 
