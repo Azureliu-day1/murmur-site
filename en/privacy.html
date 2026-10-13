@@ -4,16 +4,15 @@
 <meta charset="utf-8">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<script>document.documentElement.classList.add('js');</script>
-<title>Murmur — Where your data lives</title>
-<meta name="description" content="How Murmur handles your recordings and your words: a privacy page you can verify yourself, not terms to sign.">
+<title>Privacy Policy · Murmur</title>
+<meta name="description" content="How Murmur handles your data: what stays on your device, what goes to service providers, and what our servers keep and for how long.">
 <link rel="canonical" href="https://maobenbeginner.com/en/privacy.html">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Murmur">
 <meta property="og:locale" content="en_US">
 <meta property="og:url" content="https://maobenbeginner.com/en/privacy.html">
-<meta property="og:title" content="Murmur — Where your data lives">
-<meta property="og:description" content="How Murmur handles your recordings and your words: a privacy page you can verify yourself, not terms to sign.">
+<meta property="og:title" content="Privacy Policy · Murmur">
+<meta property="og:description" content="How Murmur handles your data: what stays on your device, what goes to service providers, and what our servers keep and for how long.">
 <meta property="og:image" content="https://maobenbeginner.com/og-en.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -24,508 +23,371 @@
 <link rel="alternate" hreflang="zh-CN" href="https://maobenbeginner.com/privacy.html">
 <link rel="alternate" hreflang="en" href="https://maobenbeginner.com/en/privacy.html">
 <link rel="alternate" hreflang="x-default" href="https://maobenbeginner.com/privacy.html">
-
 <style>
-/* Self-hosted fonts: zero third-party requests, so "this website doesn’t track you either" is literally true */
-@font-face {
-  font-family: 'IBM Plex Mono';
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: url('../fonts/IBMPlexMono-normal-400-latin-ext.woff2') format('woff2');
-  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
-}
-@font-face {
-  font-family: 'IBM Plex Mono';
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: url('../fonts/IBMPlexMono-normal-400-latin.woff2') format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
-@font-face {
-  font-family: 'IBM Plex Mono';
-  font-style: normal;
-  font-weight: 500;
-  font-display: swap;
-  src: url('../fonts/IBMPlexMono-normal-500-latin-ext.woff2') format('woff2');
-  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
-}
-@font-face {
-  font-family: 'IBM Plex Mono';
-  font-style: normal;
-  font-weight: 500;
-  font-display: swap;
-  src: url('../fonts/IBMPlexMono-normal-500-latin.woff2') format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
-@font-face {
-  font-family: 'Newsreader';
-  font-style: italic;
-  font-weight: 300;
-  font-display: swap;
-  src: url('../fonts/Newsreader-italic-300-latin-ext.woff2') format('woff2');
-  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
-}
-@font-face {
-  font-family: 'Newsreader';
-  font-style: italic;
-  font-weight: 300;
-  font-display: swap;
-  src: url('../fonts/Newsreader-italic-300-latin.woff2') format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
-@font-face {
-  font-family: 'Newsreader';
-  font-style: normal;
-  font-weight: 300;
-  font-display: swap;
-  src: url('../fonts/Newsreader-normal-300-latin-ext.woff2') format('woff2');
-  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
-}
-@font-face {
-  font-family: 'Newsreader';
-  font-style: normal;
-  font-weight: 300;
-  font-display: swap;
-  src: url('../fonts/Newsreader-normal-300-latin.woff2') format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
-@font-face {
-  font-family: 'Newsreader';
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: url('../fonts/Newsreader-normal-400-latin-ext.woff2') format('woff2');
-  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
-}
-@font-face {
-  font-family: 'Newsreader';
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: url('../fonts/Newsreader-normal-400-latin.woff2') format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
-@font-face {
-  font-family: 'Newsreader';
-  font-style: normal;
-  font-weight: 500 600;   /* SITEFIX-18:500 与 600 原是同一个可变字体文件,只留一份 */
-  font-display: swap;
-  src: url('../fonts/Newsreader-normal-500-latin-ext.woff2') format('woff2');
-  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
-}
-@font-face {
-  font-family: 'Newsreader';
-  font-style: normal;
-  font-weight: 500 600;   /* SITEFIX-18:500 与 600 原是同一个可变字体文件,只留一份 */
-  font-display: swap;
-  src: url('../fonts/Newsreader-normal-500-latin.woff2') format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
+@font-face { font-family: 'Newsreader'; font-style: normal; font-weight: 500 600; font-display: swap;
+  src: url('../fonts/Newsreader-normal-500-latin.woff2') format('woff2'); }
+@font-face { font-family: 'IBM Plex Mono'; font-style: normal; font-weight: 400; font-display: swap;
+  src: url('../fonts/IBMPlexMono-normal-400-latin.woff2') format('woff2'); }
 
 :root {
-  --paper:  #F7F7F8; --card: #FFFFFF; --ink: #1B1B1F; --second: #55555C;
-  --faint: #6F6F78; --coral-ink: #C44719; --coral-btn: #C44719; --line: #E9E9EC; --line2: #D6D6DC;
-  --coral:  #E2531F; --coral-tint: #FBEFE9; --green: #2E7D4F;
-  --shadow: 0 1px 2px rgba(27,27,31,.04), 0 12px 32px rgba(27,27,31,.07);
+  --paper: #F7F7F8; --card: #FFFFFF; --ink: #1B1B1F; --body: #2E2E33; --second: #55555C;
+  --faint: #6F6F78; --coral-ink: #C44719; --line: #E9E9EC; --line2: #D6D6DC; --coral: #E2531F; --code: #EFEFF2;
 }
 @media (prefers-color-scheme: dark) {
-  :root {
-    --paper: #161618; --card: #1E1E21; --ink: #F2F2F4; --second: #A0A0A8;
-    --faint: #86868E; --coral-ink: #FF6B35; --coral-btn: #D93A00; --line: #2C2C31; --line2: #3A3A41;
-    --coral: #FF6B35; --coral-tint: #3A2118; --green: #5FBF87;
-    --shadow: 0 1px 2px rgba(0,0,0,.3), 0 12px 32px rgba(0,0,0,.4);
+  :root:not([data-theme="light"]) {
+    --paper: #161618; --card: #1E1E21; --ink: #F2F2F4; --body: #D9D9DE; --second: #A0A0A8;
+    --faint: #86868E; --coral-ink: #FF6B35; --line: #2C2C31; --line2: #3A3A41; --coral: #FF6B35; --code: #26262A;
   }
 }
-*, *::before, *::after { box-sizing: border-box; margin: 0; }
-body {
-  background: var(--paper); color: var(--ink);
-  font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", sans-serif;
-  font-size: 16px; line-height: 1.75; -webkit-font-smoothing: antialiased;
+:root[data-theme="dark"] {
+  --paper: #161618; --card: #1E1E21; --ink: #F2F2F4; --body: #D9D9DE; --second: #A0A0A8;
+  --faint: #86868E; --coral-ink: #FF6B35; --line: #2C2C31; --line2: #3A3A41; --coral: #FF6B35; --code: #26262A;
 }
-.serif { font-family: "Newsreader", Georgia, serif; }
-.mono  { font-family: "IBM Plex Mono", ui-monospace, monospace; }
-.wrap { max-width: 880px; margin: 0 auto; padding-left: 32px; padding-right: 32px; }
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  background: var(--paper); color: var(--body);
+  font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", "PingFang SC", "Hiragino Sans GB", "Helvetica Neue", sans-serif;
+  font-size: 16px; line-height: 1.8; -webkit-font-smoothing: antialiased;
+}
 a { color: var(--coral-ink); text-decoration: none; }
 a:hover { text-decoration: underline; text-underline-offset: 3px; }
+.wrap { max-width: 760px; margin: 0 auto; padding: 0 32px; }
 
-nav {
-  position: sticky; top: 0; z-index: 10;
-  background: color-mix(in srgb, var(--paper) 86%, transparent);
-  backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
-  border-bottom: 1px solid var(--line);
-}
-.navrow { display: flex; align-items: center; gap: 28px; height: 60px; }
-.brand { display: flex; align-items: center; gap: 9px; font-family: "Newsreader", serif; font-weight: 600; font-size: 19px; color: var(--ink); }
+nav { position: sticky; top: 0; z-index: 10; border-bottom: 1px solid var(--line);
+  background: color-mix(in srgb, var(--paper) 88%, transparent);
+  backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); }
+.navrow { display: flex; align-items: center; height: 56px; }
+.brand { display: flex; align-items: center; gap: 9px; font-family: "Newsreader", Georgia, serif;
+  font-weight: 600; font-size: 19px; color: var(--ink); }
 .brand:hover { text-decoration: none; }
 .dot { width: 9px; height: 9px; border-radius: 50%; background: var(--coral); }
-.navlinks { margin-left: auto; display:flex; gap:18px; align-items:center; }
-.navlinks a { color: var(--second); font-size: 13.5px; }
+.navlinks { margin-left: auto; display: flex; align-items: center; gap: 22px; font-size: 14px; }
+.navlinks a { color: var(--second); }
+.navlinks a[aria-current] { color: var(--ink); font-weight: 500; }
+.navlinks .sep { width: 1px; height: 14px; background: var(--line2); }
 
-.eyebrow { font-size: 12px; font-weight: 600; letter-spacing: .18em; text-transform: uppercase; color: var(--faint); margin-bottom: 14px; }
-header.page { padding: 88px 0 0; }
-h1 { font-size: clamp(30px, 4.4vw, 42px); font-weight: 600; line-height: 1.3; }
-.lede { color: var(--second); font-size: 16.5px; max-width: 40em; margin-top: 18px; }
-.lede b { color: var(--ink); }
+header.page { padding-top: 72px; }
+h1 { font-size: clamp(30px, 4.6vw, 40px); font-weight: 600; line-height: 1.25; color: var(--ink); letter-spacing: -0.01em; }
+.updated { margin-top: 12px; font-size: 14px; color: var(--faint); }
 
-section { padding-top: 88px; }
-h2 { font-size: clamp(22px, 2.8vw, 27px); font-weight: 600; line-height: 1.4; }
-.sub { color: var(--second); font-size: 15px; margin-top: 10px; max-width: 46em; }
+.summary { margin-top: 40px; background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 24px 28px; }
+.summary .label { font-size: 13px; font-weight: 600; color: var(--faint); margin-bottom: 8px; }
+.summary p, .summary li { color: var(--ink); font-size: 15.5px; }
+.summary ul { margin-top: 6px; }
 
-/* The journey: one row per kind of data, three columns (what it is / where it goes / how to delete it) */
-.journey { margin-top: 40px; border-top: 1px solid var(--line); }
-.jrow { display: grid; grid-template-columns: 150px 1fr 1fr; gap: 24px; padding: 26px 0; border-bottom: 1px solid var(--line); }
-.jrow .what { font-size: 15.5px; font-weight: 600; }
-.jrow .what .mono { display: block; font-size: 11.5px; color: var(--faint); font-weight: 400; margin-top: 4px; }
-.jrow p { font-size: 14px; color: var(--second); }
-.jrow p b { color: var(--ink); font-weight: 600; }
-.jhead { display: grid; grid-template-columns: 150px 1fr 1fr; gap: 24px; padding: 14px 0 10px; }
-.jhead span { font-size: 11.5px; letter-spacing: .14em; text-transform: uppercase; font-weight: 600; color: var(--faint); }
+main { padding-bottom: 24px; }
+h2 { margin-top: 64px; padding-top: 28px; border-top: 1px solid var(--line);
+  font-size: 21px; font-weight: 600; line-height: 1.4; color: var(--ink); }
+h3 { margin-top: 36px; font-size: 17px; font-weight: 600; line-height: 1.45; color: var(--ink); }
+.num { display: inline-block; min-width: 1.8em; color: var(--faint); font-weight: 500; font-variant-numeric: tabular-nums; }
+h3 .num { min-width: 2.6em; }
+main p { margin-top: 14px; }
+main h2 + p, main h3 + p, main h2 + ul, main h3 + ul { margin-top: 16px; }
+ul { margin-top: 12px; padding-left: 1.2em; }
+li { margin-top: 8px; padding-left: 2px; }
+li::marker { color: var(--faint); }
+strong { color: var(--ink); font-weight: 600; }
+code { font-family: "IBM Plex Mono", ui-monospace, Menlo, monospace; font-size: 0.86em; background: var(--code);
+  border-radius: 4px; padding: 1px 5px; overflow-wrap: anywhere; }
 
-/* What we don’t do */
-.nots { margin-top: 36px; display: grid; grid-template-columns: 1fr 1fr; gap: 18px 40px; }
-.not { display: flex; gap: 12px; align-items: baseline; }
-.not .x { color: var(--coral); font-family: "Newsreader", serif; font-weight: 600; font-size: 18px; flex: none; }
-.not p { color: var(--second); font-size: 14.5px; }
-.not p b { color: var(--ink); }
+.tbl { margin-top: 20px; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+table { width: 100%; border-collapse: collapse; font-size: 14px; line-height: 1.65; }
+th { text-align: left; font-weight: 600; color: var(--faint); font-size: 13px; padding: 0 16px 10px 0; border-bottom: 1px solid var(--line2); }
+td { padding: 12px 16px 12px 0; border-bottom: 1px solid var(--line); vertical-align: top; }
+td:first-child { color: var(--ink); font-weight: 500; white-space: nowrap; }
+th:last-child, td:last-child { padding-right: 0; }
 
-/* Receipt cards */
-.receipt {
-  margin-top: 36px; background: var(--card); border: 1px solid var(--line);
-  border-radius: 14px; padding: 22px 26px; box-shadow: var(--shadow);
-}
-.receipt + .receipt { margin-top: 14px; }
-.receipt .how { font-size: 13px; color: var(--faint); margin-top: 6px; }
-.receipt .mono { font-size: 13.5px; }
-.receipt b { font-size: 14.5px; }
+footer { margin-top: 88px; border-top: 1px solid var(--line); padding: 28px 0 48px;
+  display: flex; flex-wrap: wrap; gap: 8px 24px; font-size: 13px; color: var(--faint); }
+footer a { color: var(--second); }
+footer .grow { margin-left: auto; }
 
-.future {
-  margin-top: 40px; background: var(--coral-tint); border-radius: 16px; padding: 26px 30px;
-}
-.future p { color: var(--ink); font-size: 15px; max-width: 52em; }
-.future .eyebrow { color: var(--coral); margin-bottom: 8px; }
-
-footer {
-  margin-top: 110px; border-top: 1px solid var(--line);
-  padding-top: 36px; padding-bottom: 48px; color: var(--faint); font-size: 13px;
-  display: flex; gap: 24px; flex-wrap: wrap; align-items: center;
-}
-footer a { color: var(--faint); }
-
-/* ── Journey animation: one packet skips right past “our servers” ── */
-.flowstage {
-  margin-top: 48px; background: var(--card); border: 1px solid var(--line);
-  border-radius: 16px; padding: 28px 24px 18px; box-shadow: var(--shadow);
-}
-.flowstage svg { display: block; width: 100%; height: auto; }
-.flowstage .cap {
-  text-align: center; font-size: 13.5px; color: var(--second);
-  min-height: 24px; margin-top: 6px; transition: opacity .22s ease;
-}
-.node-label { font-size: 14px; font-weight: 600; fill: var(--ink); }
-.node-sub { font-size: 11px; fill: var(--faint); }
-.ghost-label { font-size: 13px; font-weight: 600; fill: var(--faint); }
-
-/* ── Reveal on scroll (same as the home page) ── */
-/* SITEFIX-19:只有 JS 跑起来(<html class="js">,head 里第一句脚本加上)才先藏后显;没有 JS 时 .reveal 照常可见。 */
-.js .reveal { opacity: 0; transform: translateY(12px); transition: opacity .5s ease, transform .5s ease; }
-.js .reveal.on { opacity: 1; transform: none; }
-@media (prefers-reduced-motion: reduce) {
-  .js .reveal { opacity: 1; transform: none; transition: none; }
-}
-
-@media (max-width: 720px) {
-  .jrow, .jhead { grid-template-columns: 1fr; gap: 8px; padding: 20px 0; }
-  .jhead { display: none; }
-  .nots { grid-template-columns: 1fr; }
+@media (max-width: 640px) {
+  .wrap { padding: 0 16px; }
+  header.page { padding-top: 44px; }
+  .navlinks { gap: 16px; }
+  .summary { padding: 20px; margin-top: 32px; }
+  h2 { margin-top: 48px; padding-top: 24px; font-size: 19px; }
+  .tbl { overflow: visible; }
+  table, tbody, tr, td { display: block; width: 100%; }
+  thead { display: none; }
+  tr { padding: 14px 0; border-bottom: 1px solid var(--line); }
+  tr:first-child { border-top: 1px solid var(--line2); }
+  td { border: 0; padding: 2px 0; white-space: normal; }
+  td:first-child { font-size: 15px; padding-bottom: 6px; white-space: normal; }
+  td[data-label]:not(:first-child)::before { content: attr(data-label); display: block; font-size: 12px; font-weight: 600; color: var(--faint); margin-top: 6px; }
+  footer .grow { margin-left: 0; }
 }
 </style>
 </head>
 <body>
-
 <nav>
   <div class="wrap navrow">
-    <a class="brand" href="index.html"><span class="dot"></span>Murmur</a>
-    <div class="navlinks"><a href="index.html">← Home</a><a href="../privacy.html">中文</a><a href="index.html#pinyin">Pinyin</a><a href="demo/index.html">Pinyin demo</a></div>
+    <a class="brand" href="../index.html"><span class="dot"></span>Murmur</a>
+    <div class="navlinks">
+      <a href="tos.html">Terms</a>
+      <a href="privacy.html" aria-current="page">Privacy</a>
+      <span class="sep" aria-hidden="true"></span>
+      <a href="../privacy.html" hreflang="zh-Hans">中文</a>
+    </div>
   </div>
 </nav>
 
 <header class="page wrap">
-  <div class="eyebrow">Privacy · Where your data lives</div>
-  <h1>Where Murmur’s data goes.</h1>
-  <p class="lede">Recordings, history, your dictionary and the words you type stay on your Mac.
-  With cloud recognition, <b>the audio goes straight to the recognition provider for the tier you picked, not through our servers.</b>
-  When you are signed in and have not entered your own key, the text for cleanup, translation, Ask and voice editing goes through our servers first and then to the model vendor; our servers do not store it.
-  Below, for each kind of data: where it goes, where it is stored, and how to delete it, each with a way to check it yourself.</p>
-
-  <div class="flowstage">
-    <svg viewBox="0 0 760 250" aria-label="Audio travels from your Mac straight to the recognition provider, not through our servers">
-      <!-- Flight paths (always visible, very faint) -->
-      <path id="goPath"   d="M196 118 C 300 26, 460 26, 564 118" fill="none" stroke="var(--line2)" stroke-width="1.5" stroke-dasharray="3 6"/>
-      <path id="backPath" d="M564 138 C 460 226, 300 226, 196 138" fill="none" stroke="var(--line2)" stroke-width="1.5" stroke-dasharray="3 6"/>
-
-      <!-- Your Mac -->
-      <g>
-        <rect x="36" y="86" width="160" height="84" rx="14" fill="var(--paper)" stroke="var(--line2)"/>
-        <text class="node-label" x="116" y="122" text-anchor="middle">Your Mac</text>
-        <text class="node-sub" x="116" y="144" text-anchor="middle">Audio, history, dictionary</text>
-        <rect id="macGlow" x="36" y="86" width="160" height="84" rx="14" fill="none" stroke="var(--coral)" stroke-width="2.5" opacity="0"/>
-        <g id="savedChip" opacity="0">
-          <rect x="52" y="176" width="128" height="26" rx="13" fill="var(--coral-tint)"/>
-          <text x="116" y="194" text-anchor="middle" style="font-size:12px; font-weight:600" fill="var(--coral)">✓ Saved locally</text>
-        </g>
-      </g>
-
-      <!-- Our servers (the empty seat) -->
-      <g id="ghost" opacity=".8">
-        <rect x="304" y="92" width="152" height="72" rx="14" fill="none" stroke="var(--line2)" stroke-dasharray="5 5"/>
-        <text class="ghost-label" x="380" y="122" text-anchor="middle">Our servers</text>
-        <text class="node-sub" x="380" y="142" text-anchor="middle">Audio skips this</text>
-        <g id="ghostX" opacity="0">
-          <circle cx="380" cy="76" r="13" fill="var(--coral)"/>
-          <text x="380" y="81" text-anchor="middle" style="font-size:13px; font-weight:700" fill="#fff">✕</text>
-        </g>
-      </g>
-
-      <!-- The provider you picked -->
-      <g>
-        <rect x="564" y="86" width="160" height="84" rx="14" fill="var(--paper)" stroke="var(--line2)"/>
-        <text class="node-label" x="644" y="122" text-anchor="middle">Your chosen provider</text>
-        <text class="node-sub" x="644" y="144" text-anchor="middle">One tier, one destination</text>
-        <rect id="provGlow" x="564" y="86" width="160" height="84" rx="14" fill="none" stroke="var(--coral)" stroke-width="2.5" opacity="0"/>
-      </g>
-
-      <!-- Packets -->
-      <circle id="pktGo"   r="7" fill="var(--coral)" opacity="0"/>
-      <circle id="pktBack" r="7" fill="var(--ink)"  opacity="0"/>
-    </svg>
-    <p class="cap" id="flowCap">You speak — the audio leaves from your Mac and nowhere else</p>
+  <h1>Privacy Policy</h1>
+  <p class="updated">Covers Murmur 0.53. Updated 13 October 2026.</p>
+  <div class="summary">
+    <p class="label">In short</p>
+    <ul>
+<li>Your recordings, history and dictionary are kept on your own device, for as long as you choose in Settings.</li>
+<li>When you&rsquo;re signed out, your speech is turned into text by the recognition built into your device&rsquo;s system, not sent to us.</li>
+<li>When you&rsquo;re signed in, turning your speech into text, tidying it up and translating means that sentence goes to the speech recognition and text processing services we use. Those services are in the United States and China; our account database is in Singapore. Section 5 lists what each kind of service handles.</li>
+<li>We don&rsquo;t store what you said. When you&rsquo;re signed in, we record your email, sign-in details and usage (word count, duration and time), never the content.</li>
+<li>With screen context on, the app reads the text in the front window once when you start speaking, to get names and terms right, including other people&rsquo;s messages in that window. It is off on new installs, and an upgrade keeps your earlier choice; switch it in Settings › Recognition.</li>
+<li>We don&rsquo;t sell your data, and there are no ads or third-party analytics in the app.</li>
+<li>To see, export, correct or delete your data, or to ask anything, write to <a href="mailto:support@day1aifitness.com">support@day1aifitness.com</a>.</li>
+</ul>
   </div>
 </header>
 
-<!-- ── The journey of each kind of data ── -->
-<section class="wrap">
-  <div class="eyebrow">Journey · Where each kind of data goes</div>
-  <h2>Six kinds of data. Six journeys.</h2>
-  <div class="journey reveal">
-    <div class="jhead"><span>What it is</span><span>Where it goes · where it sits</span><span>How to delete it · how to switch it off</span></div>
-
-    <div class="jrow">
-      <div class="what">Recordings<span class="mono">your voice</span></div>
-      <p>During recognition the audio goes <b>straight to the one provider behind the tier you picked</b>: on free-allowance cloud recognition that is <b>Soniox (United States)</b>; with your own key, it is the provider whose key you entered. Pick <b>on-device recognition</b> and the audio stays on this computer; for a few languages where macOS has no offline recognition, Apple may process it.
-      Recording files sit on your Mac, kept 30 days by default so you can re-run them, then deleted automatically.</p>
-      <p>Settings can cut that to 7 days, or to “don’t keep them at all”. Delete the local folder and they are gone for real. With on-device recognition the audio stays on your Mac; with cleanup on, the text still goes to a language model. To keep what you say entirely on your Mac: pick on-device recognition, set cleanup to “Off (raw transcript)”, and don’t use translation, Ask or voice editing.</p>
-    </div>
-
-    <div class="jrow">
-      <div class="what">Transcript and cleaned-up text<span class="mono">what you actually said</span></div>
-      <p>With AI cleanup on, or when you use translation, Ask or voice editing, the transcript is handed to a language model once (voice editing also sends the passage you selected). With your own key it goes straight to that vendor; signed in without a key, on the free allowance, it passes through our servers and is processed by <b>DeepSeek (China)</b>; our servers do not store it. “Where did this go?” on the app’s History page shows which path your current settings use.
-      With prompt skills on, a long enough sentence you say with the dictation key in an AI tool is sent one extra time over the same channel to the same vendor, to decide what kind of request it is; no audio is sent, and which window you are in is not sent.
-      The finished text and your history <b>live in a database on your Mac</b> and are not synced to any cloud as a whole.
-      “Personal style” is off by default. Once it is on, each cleanup picks up to 3 of your earlier “what you said → cleaned-up text” pairs from recent dictation history and sends them with the cleanup request as samples.</p>
-      <p>Switch cleanup off (the “raw transcript, untouched” setting) and the text reaches no language model. History can be deleted one entry at a time. To clear it all at once, go to Settings → System, set “Keep text” to “Don’t keep”, then click “Apply the retention rules now”. You set how long it is kept.</p>
-    </div>
-
-    <div class="jrow">
-      <div class="what">Dictionary<span class="mono">your proper nouns</span></div>
-      <p>So it hears the names and terms you say often, the words in your dictionary are <b>sent along with every recognition request</b>; with cleanup on, they also go with the cleanup request to the language model. That is written in plain sight in Settings, not buried in terms.</p>
-      <p>Delete an entry whenever you like; once deleted it stops being sent.</p>
-    </div>
-
-    <div class="jrow">
-      <div class="what">Typed words<span class="mono">words the pinyin keyboard has learned</span></div>
-      <p>They are stored on this Mac at ~/Library/Application Support/Murmur/lexicon.sqlite. Learning is on by default. Password fields and apps on the deny list are never recorded.
-      When you dictate, these words go to the recognition provider as hints, <b>sent with each recognition request</b>. This is the same path as the Dictionary row above. Pick on-device recognition and they do not leave the Mac. The first version does not sync across devices.
-      When you press ⌥⇧Space for the AI cleanup card, the words the sentence touches from your dictionary and from what you typed go with that request (at most 500). This happens with on-device recognition too.</p>
-      <p>Settings → Input Method → the "Words I've typed (learned by the input method)" card: turn off "Learn the words I type" and no new words are learned after that; turn off "Let AI use my own words" and the AI cleanup card sends none of your words. Settings → System → "Clear data…" wipes the learned words in one go. The "Suggest the next word (from what you've typed)" switch sits on the same card.</p>
-    </div>
-
-    <div class="jrow">
-      <div class="what">Screen context<span class="mono">text in the frontmost window at the moment you record</span></div>
-      <p>At the moment you start speaking it reads the visible text of the frontmost window once (through Accessibility, no screenshot), to get proper nouns right. With cloud recognition, the proper nouns taken from it go to the recognition provider with the audio.
-      With cleanup on, or in translate and Ask, <b>an excerpt of the screen text (1500 characters at most) goes to the model vendor with the transcript</b>. On the free allowance it passes through our server first; with your own key it goes straight to that vendor.
-      On your Mac it is never written to the database, to disk or to a log, and words from your screen never enter your dictionary.</p>
-      <p>Off by default on new installs; if you upgraded, your previous choice is kept. Switch “Use the text on screen to get proper nouns right” in Settings → Recognition. With on-device recognition and cleanup off it is never read in the first place.</p>
-    </div>
-
-    <div class="jrow">
-      <div class="what">Sign-in, API keys and settings<span class="mono">your credentials</span></div>
-      <p>Your sign-in credentials are kept in the macOS Keychain. If you entered your own API key, it is in the Keychain too, <b>on this Mac only</b>, and we never receive it. Settings are kept in system preferences.</p>
-      <p>Deleting the app cleans them up the way macOS normally does; keys can be cleared in Settings at any time.</p>
-    </div>
-  </div>
-</section>
-
-<!-- ── What we don’t do ── -->
-<section class="wrap">
-  <div class="eyebrow">Never · What we don’t do</div>
-  <h2>In writing, so you can hold us to it.</h2>
-  <div class="nots reveal">
-    <div class="not"><span class="x">✕</span><p><b>We never handle your audio.</b> With cloud recognition the audio goes from your Mac straight to the recognition provider, through none of our servers. Text for cleanup is an exception; see “Once you sign in” below.</p></div>
-    <div class="not"><span class="x">✕</span><p><b>No behavioural tracking.</b> There is no analytics SDK in the app. Which app you were speaking into is never reported back to us. Once you sign in, each sentence (on-device ones included) reports its character count, how long you spoke and which path it took, to count your allowance, with no text attached; see “Once you sign in” below.</p></div>
-    <div class="not"><span class="x">✕</span><p><b>We don’t sell your data.</b> It goes only to the processors needed to run the service (listed under “Once you sign in” below). There are no advertisers. Your data is not the product.</p></div>
-    <div class="not"><span class="x">✕</span><p><b>No analytics on this website.</b> No tracking, no ads. The sign-in, try-it and skills pages serve their scripts from this site; only when abuse protection is on do they load Cloudflare’s check, listed under “Website” below; open your browser’s network panel and check.</p></div>
-  </div>
-</section>
-
-<!-- ── Verify it yourself ── -->
-<section class="wrap">
-  <div class="eyebrow">Verify · Don’t take our word for it. Look.</div>
-  <h2>Three things you can check yourself, right now.</h2>
-
-  <div class="receipt reveal">
-    <b>① Your data is sitting in this folder</b>
-    <p class="how"><span class="mono">~/Library/Application Support/Murmur/</span> — the recordings and every word you have ever said to it are in there. Open it whenever you want. Delete it and it is really deleted.</p>
-  </div>
-  <div class="receipt reveal">
-    <b>② Where the app connects</b>
-    <p class="how">Point a free firewall like LuLu at Murmur and watch its outbound connections. You will see these: the recognition and language-model providers you picked (plus the web-search provider, if you entered your own key for it); our server (sign-in, allowance, public config, one-time passes for free-allowance recognition, and forwarding cleanup text); this website (a version file, once a day); GitHub when you download the Rime dictionary or a sentence model; and when you open the “Cleanup” page in Settings, one read of OpenRouter’s public model list, with none of your content.</p>
-  </div>
-  <div class="receipt reveal">
-    <b>③ Every single entry says where it went</b>
-    <p class="how">“Where did this go?” on the app’s History page reports it honestly, against your current settings: which recognition tier handled this entry, whether the text passed through a language model, whether screen context was on.</p>
-  </div>
-</section>
-
-<!-- ── What happens next ── -->
-<section class="wrap">
-  <div class="future reveal">
-    <div class="eyebrow">Account · Once you sign in</div>
-    <p>Even when you are not signed in, the app connects to our server to read a public config: only while the app is in front or within 5 minutes after you dictate, at an interval the server sets between 60 and 3600 seconds (5 minutes by default). That request carries neither who you are nor anything you said. It also reads a version file on this website once a day.</p>
-    <p>When you are signed in, our servers also do these things:</p>
-    <p>① Sign-in, allowance and the public config (signed in, it comes with your account). ② After each sentence, one report: character count, how long you spoke, dictation or Ask, which path it took (on-device / your own key / free allowance) and when it happened. On-device sentences are reported too and use no allowance. No text attached. ③ On the free allowance, each recording fetches a one-time pass, so the server knows you are recording at that moment; the audio still goes straight to the recognition provider. ④ On the free allowance (no key of your own), the text for cleanup, translation, Ask and voice editing goes through the server and then to the model vendor. The same request carries your dictionary and the screen excerpt (1500 characters at most); with personal style on, up to 3 sample sentences from your history; with prompt skills on, the sentence said in an AI tool is sent one extra time. Our servers only forward it and count the cost; they do not store the text, and no text goes into the logs. ⑤ With cloud candidates on in the input method (off by default), Pinyin you have not committed goes through our servers to DeepSeek (China); only the Pinyin is sent.</p>
-    <p>Recordings are not uploaded. History is not uploaded as a whole; with personal style on, a cleanup request carries up to 3 entries. Your dictionary goes out whole with recognition and cleanup requests, as in the “Dictionary” row above. The words you type are not uploaded as a whole; only the ones a sentence touches go with a ⌥⇧Space AI cleanup card request, as described in the “Typed words” row above. Every change to this page leaves its date at the bottom.</p>
-    <p><b>Who processes it, and where.</b> On the free allowance, the text for cleanup, translation, Ask and voice editing is processed by DeepSeek (China); Pinyin sent for cloud candidates in the input method is processed by DeepSeek (China); cloud recognition audio goes to Soniox (United States); your account and usage are stored with Supabase (Singapore); email is sent through Resend. With your own key, the text or audio goes straight to the provider whose key you entered. Requests from the app are processed in Singapore; requests from the website and older versions of the app may pass through Australia (Sydney); the database is in Singapore.</p>
-    <p><b>What our servers keep, and for how long.</b> Our servers keep: your email address; the allowance ledger (time, character count, speaking time, type and path of each entry); your subscription status; and the request-a-seat form (email, message, page language, a salted hash of your network address and a short browser type). We keep these until 30 days after you delete your account, then delete them. To delete your account or get a copy of your data, write to <a href="mailto:support@day1aifitness.com">support@day1aifitness.com</a>.</p>
-    <p>If a data breach affects you, we will tell you promptly.</p>
-  </div>
-</section>
-
-<!-- ── Website ── -->
-<section class="wrap">
-  <div class="future reveal">
-    <div class="eyebrow">Website</div>
-    <p>This website has no analytics scripts and no ads. These are the places where something goes to our servers or a third party:</p>
-    <p>① The request-a-seat form stores your email, the line you wrote, the page language and a short browser type, plus a salted hash of your network address used only to limit how often it can be submitted. Submitting it creates an identity for that email in our account system, and the form is forwarded to our inbox through Resend. ② Trying cleanup on the web sends the text you paste to our servers, which pass it to a language model and do not store it. ③ The scripts on the sign-in, try-it and skills pages are all self-hosted on this site; when abuse protection is switched on, those three pages also load Cloudflare Turnstile. ④ The pricing page reads whether you are signed in on this site, to match your payment to your account: when you pay, your account ID and email go to Stripe with the payment link.</p>
-  </div>
-</section>
-
-<script>
-/* Reveal on scroll (same as the home page) */
-const io = new IntersectionObserver((entries) => {
-  for (const e of entries) if (e.isIntersecting) {
-    const idx = [...e.target.parentElement.querySelectorAll(':scope > .reveal')].indexOf(e.target);
-    e.target.style.transitionDelay = `${Math.max(idx, 0) * 60}ms`;
-    e.target.classList.add('on');
-    io.unobserve(e.target);
-  }
-}, { threshold: 0.15 });
-document.querySelectorAll('.reveal').forEach(el => io.observe(el));
-
-/* ── The journey: a pure function of time; skipped entirely when off-screen ──
-   0.0-1.0s  Mac pulses as you speak
-   1.0-2.8s  coral packet rides the upper arc straight to the provider; "our servers" lights up an X on the way past
-   2.8-3.6s  provider pulses (transcribing)
-   3.6-5.4s  ink-coloured packet (the text) rides the lower arc back to the Mac
-   5.4-7.2s  the "Saved locally" chip lights up and holds a beat
-   loops every 7.6s */
-const $ = id => document.getElementById(id);
-const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
-const goPath = $('goPath'), backPath = $('backPath');
-const goLen = goPath.getTotalLength(), backLen = backPath.getTotalLength();
-const CAPS = [
-  'You speak — the audio leaves from your Mac and nowhere else',
-  'Straight to the provider you picked — no stop in between',
-  'Transcribed on their side',
-  'The text comes back to your Mac',
-  'Saved on your Mac. That is where it ends.',
-];
-let capIdx = 0;
-function setCap(i) {
-  if (i === capIdx) return;
-  capIdx = i;
-  const el = $('flowCap');
-  el.style.opacity = 0;
-  setTimeout(() => { el.textContent = CAPS[i]; el.style.opacity = 1; }, 180);
-}
-const ease = t => t < .5 ? 2*t*t : 1 - (-2*t+2)**2/2;   // easeInOut
-
-let stageVisible = false, stageStart = performance.now();
-new IntersectionObserver(es => {
-  if (es[0].isIntersecting && !stageVisible) stageStart = performance.now();
-  stageVisible = es[0].isIntersecting;
-}, { threshold: 0.3 }).observe(document.querySelector('.flowstage'));
-
-if (reduced) {
-  // Reduced motion: hold the end state — paths visible, X lit, chip lit, one line of summary
-  $('ghostX').setAttribute('opacity', 1);
-  $('savedChip').setAttribute('opacity', 1);
-  $('flowCap').textContent = 'The audio goes straight to the provider you picked, skipping us; the text comes back and stays on your Mac.';
-} else {
-  const CYCLE = 7600;
-  function frame(now) {
-    requestAnimationFrame(frame);
-    if (!stageVisible) return;
-    const t = (now - stageStart) % CYCLE;
-
-    // Mac card breathes
-    const mp = $('macGlow');
-    if (t < 1000) {
-      const k = t / 1000;
-      mp.setAttribute('opacity', Math.sin(k * Math.PI));
-      setCap(0);
-    } else mp.setAttribute('opacity', 0);
-
-    // Outbound packet + the X
-    const go = $('pktGo'), gx = $('ghostX');
-    if (t >= 1000 && t < 2800) {
-      const k = ease((t - 1000) / 1800);
-      const p = goPath.getPointAtLength(k * goLen);
-      go.setAttribute('transform', `translate(${p.x},${p.y})`);
-      go.setAttribute('opacity', 1);
-      // light the X as it passes the midpoint
-      gx.setAttribute('opacity', k > 0.3 && k < 0.75 ? 1 : Math.max(0, 1 - Math.abs(k - 0.52) * 6));
-      setCap(1);
-    } else { go.setAttribute('opacity', 0); if (t >= 2800) gx.setAttribute('opacity', 0); }
-
-    // Provider card breathes
-    const pp = $('provGlow');
-    if (t >= 2800 && t < 3600) {
-      const k = (t - 2800) / 800;
-      pp.setAttribute('opacity', Math.sin(k * Math.PI));
-      setCap(2);
-    } else pp.setAttribute('opacity', 0);
-
-    // Return packet (the text)
-    const back = $('pktBack');
-    if (t >= 3600 && t < 5400) {
-      const k = ease((t - 3600) / 1800);
-      const p = backPath.getPointAtLength(k * backLen);
-      back.setAttribute('transform', `translate(${p.x},${p.y})`);
-      back.setAttribute('opacity', 1);
-      setCap(3);
-    } else back.setAttribute('opacity', 0);
-
-    // The chip settles in
-    const chip = $('savedChip');
-    if (t >= 5400) {
-      const k = Math.min((t - 5400) / 300, 1);
-      chip.setAttribute('opacity', t > CYCLE - 400 ? Math.max(0, (CYCLE - t) / 400) : k);
-      setCap(4);
-    } else chip.setAttribute('opacity', 0);
-  }
-  requestAnimationFrame(frame);
-}
-</script>
+<main class="wrap">
+<h2><span class="num">1</span>Scope and who is responsible</h2>
+<p>This policy applies to the Murmur apps on every platform and the Murmur website, provided by Others Studio (Victoria, Australia). Others Studio is responsible for the personal information described here.</p>
+<p>Where your data goes depends on the feature, so each one is covered separately below. Some of it depends on your settings; section 11 explains how to check this in the app.</p>
+<h2><span class="num">2</span>Data stored on your device</h2>
+<p>On your Mac, the following is stored in <code>~/Library/Application Support/Murmur/</code>, in the macOS Keychain, or in macOS preferences. The sections below explain which features send part of it with a request.</p>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Data</th>
+<th>Kept by default</th>
+<th>How to delete</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td data-label="Data">Recordings</td>
+<td data-label="Kept by default">Deleted automatically after 30 days. Can be set to 7 days, 90 days, forever, or not kept</td>
+<td data-label="How to delete">Change the retention period in Settings, or delete the folder above</td>
+</tr>
+<tr>
+<td data-label="Data">Transcripts and cleaned-up text (history)</td>
+<td data-label="Kept by default">Kept until you set a retention period</td>
+<td data-label="How to delete">Delete items one by one, or set Keep text to Don&rsquo;t keep in Settings › System and run the cleanup</td>
+</tr>
+<tr>
+<td data-label="Data">Dictionary (names and terms you add)</td>
+<td data-label="Kept by default">Kept</td>
+<td data-label="How to delete">Delete entries at any time; deleted entries are no longer sent</td>
+</tr>
+<tr>
+<td data-label="Data">Words learned by the input method</td>
+<td data-label="Kept by default">Kept. Learning is on by default and skips password fields and apps on your exclusion list</td>
+<td data-label="How to delete">Turn learning off in Settings › Input Method; clear learned words under Settings › System › Clear Data</td>
+</tr>
+<tr>
+<td data-label="Data">Candidate choice log</td>
+<td data-label="Kept by default">Off by default. When on, it records the times you skip the first candidate and may contain private text; deleted after 1 or 7 days, and switches itself off at 23:59 on the day you turn it on</td>
+<td data-label="How to delete">Clear it under Settings › System › Clear Data</td>
+</tr>
+<tr>
+<td data-label="Data">Input method usage statistics</td>
+<td data-label="Kept by default">Counts and durations only, none of what you type</td>
+<td data-label="How to delete">Clear it under Settings › System › Clear Data</td>
+</tr>
+<tr>
+<td data-label="Data">Sign-in credentials and service keys</td>
+<td data-label="Kept by default">macOS Keychain</td>
+<td data-label="How to delete">Deleting the app does not clear the Keychain. Clear service keys in Settings, or remove items in Keychain Access</td>
+</tr>
+<tr>
+<td data-label="Data">Settings</td>
+<td data-label="Kept by default">macOS preferences</td>
+<td data-label="How to delete">Change them in the app</td>
+</tr>
+</tbody>
+</table></div>
+<h2><span class="num">3</span>What each feature sends</h2>
+<h3><span class="num">3.1</span>On-device recognition</h3>
+<p>With on-device recognition, transcription happens on your Mac and the audio is not sent to us or to any recognition provider. There is one exception: if your macOS version can&rsquo;t recognise the current language offline, the system may send the audio to the operating system provider, under its privacy policy.</p>
+<h3><span class="num">3.2</span>Cloud recognition</h3>
+<ul>
+<li>On the free allowance, audio goes from your Mac to the speech recognition provider (United States). Each time you start recording, our server issues a single-use temporary credential, so we know when you start recording, but the audio does not pass through our servers.</li>
+<li>With your own service key, audio goes directly to that provider.</li>
+<li>Sent along with each recognition request: words from your dictionary, words learned by the input method, and, if screen context is on, up to 40 proper nouns taken from the text on screen. These help the recogniser get names and terms right.</li>
+<li>Long recordings are transcribed with speakers identified. On the free allowance, they stream to the speech recognition provider in real time, like dictation. With your own key, the whole recording is uploaded to that provider as a file, and the app asks the provider to delete it once transcription is done. If the app quits during transcription, the file may be kept for the provider&rsquo;s own retention period.</li>
+</ul>
+<h3><span class="num">3.3</span>Cleanup, translation, and voice commands</h3>
+<p>These features send the transcript to a language model once:</p>
+<ul>
+<li>Cleanup, which turns spoken text into written text;</li>
+<li>Translation;</li>
+<li>Ask, which treats what you say as an instruction and inserts the AI&rsquo;s answer. Any text you have selected is sent too;</li>
+<li>Voice editing, which changes the text you have selected according to what you say, and sends that selection.</li>
+</ul>
+<p>Where the text goes:</p>
+<ul>
+<li>On the free allowance, the text goes to our server and then to the text processing provider (China). Our server only forwards and meters it. It does not keep the text, and the text does not appear in our logs.</li>
+<li>With your own service key, the text goes to the provider you added the key for; some pass it on to the model provider you chose.</li>
+<li>If web search is on for Ask and you have added your own search service key, your search queries go to that service.</li>
+</ul>
+<p>The same request may also include:</p>
+<ul>
+<li>your dictionary;</li>
+<li>if screen context is on, up to 1,500 characters of on-screen text;</li>
+<li>if Personal style is on (it is off by default), up to 3 examples of what you said and how it was cleaned up, taken from your recent history.</li>
+</ul>
+<p>Prompt skills tidies up prompts you dictate into AI tools. When it is on, a longer sentence is sent once more to the same provider to work out what kind of request it is. Only the text is sent, with no audio and no window details.</p>
+<p>Even with on-device recognition, cleanup still sends text to a language model. To keep everything you say on your Mac, choose on-device recognition, set cleanup to Off, and don&rsquo;t use translation, Ask, or voice editing.</p>
+<h3><span class="num">3.4</span>Input method</h3>
+<ul>
+<li>Words the input method learns are stored on this Mac only.</li>
+<li>When you press the shortcut to have AI clean up the current sentence, the related words from your dictionary and learned words (up to 500) go with the request, including when you use on-device recognition. Turning off &ldquo;Let AI use my words&rdquo; in Settings › Input Method stops this entirely.</li>
+<li>Cloud candidates are off by default. When on, pinyin you have not yet confirmed goes through our server to the text processing provider (China). Only the pinyin is sent.</li>
+</ul>
+<h3><span class="num">3.5</span>Screen context</h3>
+<ul>
+<li>Off by default on new installs. If you upgraded from an earlier version, your previous choice is kept. Turn it on or off in Settings › Recognition.</li>
+<li>When on, Murmur reads the visible text of the front window once, at the moment you start recording. It uses macOS accessibility features and takes no screenshot. If the front app is on your exclusion list, macOS secure input is active, or the cursor is in a password field, nothing in the window is read.</li>
+<li>With cloud recognition, proper nouns taken from that text go to the recognition provider with the audio.</li>
+<li>With cleanup on, or when you use translation or Ask, up to 1,500 characters of it go to the language model provider with the transcript. On the free allowance it goes through our server; with your own key it goes to the provider for that key.</li>
+<li>The text is not stored or logged on your Mac, and words from the screen are never added to your dictionary. With on-device recognition and cleanup off, nothing is read.</li>
+</ul>
+<h2><span class="num">4</span>Records on our servers</h2>
+<p>Our servers keep:</p>
+<ul>
+<li><strong>Account.</strong> Your email address, account status, and allowance.</li>
+<li><strong>Sign-in sessions.</strong> Network address and device or browser information, used to keep your account secure.</li>
+<li><strong>Usage records.</strong> For each sentence you dictate (including on-device ones, which don&rsquo;t use allowance), the character count, how long you spoke, the feature, the path it took (on-device, your own key, or the free allowance), and the time. We use these to calculate allowance and prevent abuse. They don&rsquo;t include anything you said.</li>
+<li><strong>Language model forwarding records.</strong> For each request we forward, the tier, model, provider, estimated usage, and cost. No text.</li>
+<li><strong>Beta place applications.</strong> See section 6.</li>
+<li><strong>Invite code attempts.</strong> Network address, email address, the first characters of the code, and the result, used to prevent invite code abuse. Kept for 30 days.</li>
+<li><strong>Email delivery records.</strong> The delivery status of the email that tells you your beta place is ready.</li>
+<li><strong>Request logs.</strong> Time, route, status, duration, and account ID. No email address, content, or keys.</li>
+</ul>
+<p>Even when you are not signed in, the app reads public configuration from time to time and checks for a new version once a day. These requests carry no identity and none of your content.</p>
+<p><strong>How long we keep it.</strong> When you delete your account, we delete your account, sign-in sessions, usage records, email delivery records, application, and invite code attempts from our live systems within 30 days. Request logs are deleted automatically under our hosting provider&rsquo;s retention period. Copies in backups are overwritten when the backup cycle ends.</p>
+<h2><span class="num">5</span>Providers and locations</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Provider type</th>
+<th>Country</th>
+<th>What it processes</th>
+<th>When</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td data-label="Provider type">Speech recognition provider</td>
+<td data-label="Country">United States<!-- to be checked (round2 G10): processing region of the recognition project --></td>
+<td data-label="What it processes">The sound of your voice; words from your dictionary; with on-screen text on, up to 40 names and terms taken from it</td>
+<td data-label="When">Recognition on the free allowance once signed in</td>
+</tr>
+<tr>
+<td data-label="Provider type">Text processing (language model) provider</td>
+<td data-label="Country">China</td>
+<td data-label="What it processes">Text to tidy up, translate, ask about or edit by voice; your dictionary; with on-screen text on, up to 1,500 characters of it; with Personal style on, up to 3 of your earlier examples; your answers to the three career questions; text you paste into the website trial</td>
+<td data-label="When">On the free allowance once signed in; in the website trial</td>
+</tr>
+<tr>
+<td data-label="Provider type">Cloud hosting and database provider</td>
+<td data-label="Country">Singapore (database)</td>
+<td data-label="What it processes">Accounts, usage records, server functions</td>
+<td data-label="When">Once signed in; when reading public configuration</td>
+</tr>
+<tr>
+<td data-label="Provider type">Email provider</td>
+<td data-label="Country">United States<!-- to be checked: sending region --></td>
+<td data-label="What it processes">Your email address; sign-in emails; forwarding applications</td>
+<td data-label="When">Signing in, applying</td>
+</tr>
+<tr>
+<td data-label="Provider type">Website hosting and download provider</td>
+<td data-label="Country">United States</td>
+<td data-label="What it processes">Standard access information such as your network address; dictionary downloads</td>
+<td data-label="When">Visiting the website, downloading dictionaries</td>
+</tr>
+<tr>
+<td data-label="Provider type">Website bot protection provider</td>
+<td data-label="Country">United States</td>
+<td data-label="What it processes">Browser information needed for bot protection</td>
+<td data-label="When">Signing in and trying Murmur on the website</td>
+</tr>
+<tr>
+<td data-label="Provider type">Model list service</td>
+<td data-label="Country">United States</td>
+<td data-label="What it processes">Reads a public list only, without your content</td>
+<td data-label="When">Opening the Cleanup page in Settings</td>
+</tr>
+<tr>
+<td data-label="Provider type">Operating system provider</td>
+<td data-label="Country">United States</td>
+<td data-label="What it processes">Recognition for a few languages</td>
+<td data-label="When">Signed out, when the current language is not supported offline</td>
+</tr>
+<tr>
+<td data-label="Provider type">A provider you added your own key for</td>
+<td data-label="Country">Depends on the provider you chose</td>
+<td data-label="What it processes">Audio or text for that feature; some pass it on to the model provider you chose</td>
+<td data-label="When">When you use your own key</td>
+</tr>
+</tbody>
+</table></div>
+<ul>
+<li><strong>Where requests are handled.</strong> The database is in Singapore. Requests from the app and the website may also pass through the country of the server nearest you.</li>
+<li><strong>International transfers.</strong> Your data may be transferred to the United States, China, Singapore, and the countries of the servers mentioned above. Data protection laws there may differ from those where you live. China does not have an adequacy decision from the European Union. We give each provider only the data it needs for the feature you use. If you are in the European Economic Area or the UK, we make these transfers because they are necessary to provide the features you use under our contract with you.</li>
+<li><strong>Model training.</strong> We don&rsquo;t train models on your content. The speech recognition provider states that it does not train on customer content and does not store real-time audio by default. The text processing provider&rsquo;s API terms do not rule out training on submitted content, and we have not found a published retention period. If you don&rsquo;t want your content to reach the text processing provider, use Murmur signed out; or, once signed in, set cleanup to Off, don&rsquo;t use translation, Ask, voice editing or the website trial, and skip the three career questions. To find out exactly which providers we use, write to us and we will tell you.</li>
+<li><strong>No selling.</strong> We don&rsquo;t sell your personal information or share it for advertising. Data goes only to the providers above, as needed to run the service, and to any provider you have added your own key for.</li>
+</ul>
+<h2><span class="num">6</span>Information the website collects</h2>
+<ul>
+<li><strong>Beta place applications.</strong> Your email address, the message you write, the interface language, and your browser type, plus a one-way hash of your network address used only to limit repeat submissions. Submitting sets up an account for that email in advance, and the form is forwarded to our inbox through our email provider.</li>
+<li><strong>Trying cleanup on the website.</strong> The text you paste goes through our server to the text processing provider (China). Our server does not keep it. We also keep a daily one-way hash of your network address to limit the number of tries.</li>
+<li><strong>Scripts.</strong> Scripts on the sign-in, try, and skills pages are hosted on this site. When bot protection is on, those three pages also load a script from our bot protection provider.</li>
+<li><strong>Cookies and local storage.</strong> The website uses no advertising or analytics cookies. Once you sign in, your sign-in state is stored in your browser. The bot protection provider may set the cookies it needs to work.</li>
+<li><strong>Do Not Track.</strong> We don&rsquo;t track you across websites, so we don&rsquo;t respond differently to a browser&rsquo;s Do Not Track signal.</li>
+<li><strong>Hosting.</strong> The website is hosted by our website hosting provider, which receives standard access information such as your network address when you visit.</li>
+</ul>
+<h2><span class="num">7</span>Legal bases</h2>
+<p>If you are in the European Economic Area or the UK, we rely on these legal bases:</p>
+<ul>
+<li>Providing the features you use (recognition, cleanup, your account, allowance): performance of our contract with you.</li>
+<li>Usage metering, abuse prevention, sign-in sessions, and request logs: our legitimate interest in keeping the service secure and fair.</li>
+<li>Beta place applications: steps taken at your request, when you apply, before entering into a contract.</li>
+<li>Responding to legal requirements: compliance with a legal obligation.</li>
+</ul>
+<h2><span class="num">8</span>Your rights</h2>
+<ul>
+<li>Data on your device is yours to manage directly; see section 2.</li>
+<li>For data on our servers, you can ask for a copy, ask us to correct it, or ask us to delete your account. Email <a href="mailto:support@day1aifitness.com">support@day1aifitness.com</a> from your registered address so we can confirm it is you. We reply within 30 days.</li>
+<li>If you are in the European Economic Area or the UK, you can also object to certain processing or ask us to restrict it, and ask for your data in a commonly used format.</li>
+<li>If you have a complaint, please email us first. We will reply within 30 days. If you are not satisfied with our response, you can complain to the Office of the Australian Information Commissioner (<a href="https://www.oaic.gov.au/">oaic.gov.au</a>) or to the data protection authority where you live.</li>
+</ul>
+<h2><span class="num">9</span>Children</h2>
+<p>We don&rsquo;t knowingly collect personal information from anyone under 16. If we learn that we have, we will delete it.</p>
+<h2><span class="num">10</span>Data breaches and changes to this policy</h2>
+<ul>
+<li>If a data breach is likely to affect you, we will notify you promptly and report it to regulators as applicable law requires.</li>
+<li>Each update to this policy is dated at the top of the page. For significant changes to how existing features handle your data that are to your disadvantage, we will email registered users at least 30 days before they take effect and show a notice in the app.</li>
+<li>Information about how a new feature handles data takes effect when that feature launches and applies to people who start using it.</li>
+</ul>
+<h2><span class="num">11</span>Checking these claims yourself</h2>
+<ul>
+<li><strong>Files on your Mac.</strong> Everything stored locally is in <code>~/Library/Application Support/Murmur/</code>, and you can open it at any time. Deleting that folder deletes the copy on your Mac; records on our servers and with providers are handled as described in sections 4 and 5.</li>
+<li><strong>Network connections.</strong> A network monitor such as LuLu shows the addresses Murmur connects to. To check which kind of provider each address belongs to, email us.</li>
+<li><strong>Where your data went.</strong> In the app&rsquo;s History, &ldquo;Where did my data go&rdquo; uses your current settings to show what a dictation sends and where.</li>
+</ul>
+<h2><span class="num">12</span>Contact</h2>
+<p>For questions about this policy or your data, email <a href="mailto:support@day1aifitness.com">support@day1aifitness.com</a>.</p>
+</main>
 
 <footer class="wrap">
-  <span>This page last updated: 2026-10-08</span>
-  <span>Questions or complaints? Write to <a href="mailto:support@day1aifitness.com">support@day1aifitness.com</a> (Others Studio). We reply within 30 days; if you are not satisfied, you can complain to the OAIC (oaic.gov.au) or the data protection authority where you live.</span>
-  <a href="tos.html">Terms of Use</a>
-  <a href="changelog/index.html">Changelog</a>
-  <a style="margin-left:auto" href="index.html">murmur home</a>
+  <span>Others Studio</span>
+  <a href="mailto:support@day1aifitness.com">support@day1aifitness.com</a>
+  <a class="grow" href="tos.html">Terms of Use</a>
+  <a href="../index.html">Home</a>
 </footer>
-
 </body>
 </html>

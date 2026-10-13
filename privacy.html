@@ -4,16 +4,15 @@
 <meta charset="utf-8">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<script>document.documentElement.classList.add('js');</script>
-<title>Murmur — 你的数据在哪</title>
-<meta name="description" content="Murmur 怎么处理你的录音和文字:能自己验证的隐私说明,不是条款。">
+<title>隐私说明 · Murmur</title>
+<meta name="description" content="Murmur 如何处理你的数据:哪些留在你的设备上,哪些会发给服务商,我们的服务器保存什么、保存多久。">
 <link rel="canonical" href="https://maobenbeginner.com/privacy.html">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Murmur">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:url" content="https://maobenbeginner.com/privacy.html">
-<meta property="og:title" content="Murmur — 你的数据在哪">
-<meta property="og:description" content="Murmur 怎么处理你的录音和文字:能自己验证的隐私说明,不是条款。">
+<meta property="og:title" content="隐私说明 · Murmur">
+<meta property="og:description" content="Murmur 如何处理你的数据:哪些留在你的设备上,哪些会发给服务商,我们的服务器保存什么、保存多久。">
 <meta property="og:image" content="https://maobenbeginner.com/og.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -24,511 +23,371 @@
 <link rel="alternate" hreflang="x-default" href="https://maobenbeginner.com/privacy.html">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
-
 <style>
-/* 字体自托管(D2):零第三方请求,「官网也不追踪你」字面成立 */
-@font-face {
-  font-family: 'IBM Plex Mono';
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: url('fonts/IBMPlexMono-normal-400-latin-ext.woff2') format('woff2');
-  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
-}
-@font-face {
-  font-family: 'IBM Plex Mono';
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: url('fonts/IBMPlexMono-normal-400-latin.woff2') format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
-@font-face {
-  font-family: 'IBM Plex Mono';
-  font-style: normal;
-  font-weight: 500;
-  font-display: swap;
-  src: url('fonts/IBMPlexMono-normal-500-latin-ext.woff2') format('woff2');
-  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
-}
-@font-face {
-  font-family: 'IBM Plex Mono';
-  font-style: normal;
-  font-weight: 500;
-  font-display: swap;
-  src: url('fonts/IBMPlexMono-normal-500-latin.woff2') format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
-@font-face {
-  font-family: 'Newsreader';
-  font-style: italic;
-  font-weight: 300;
-  font-display: swap;
-  src: url('fonts/Newsreader-italic-300-latin-ext.woff2') format('woff2');
-  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
-}
-@font-face {
-  font-family: 'Newsreader';
-  font-style: italic;
-  font-weight: 300;
-  font-display: swap;
-  src: url('fonts/Newsreader-italic-300-latin.woff2') format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
-@font-face {
-  font-family: 'Newsreader';
-  font-style: normal;
-  font-weight: 300;
-  font-display: swap;
-  src: url('fonts/Newsreader-normal-300-latin-ext.woff2') format('woff2');
-  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
-}
-@font-face {
-  font-family: 'Newsreader';
-  font-style: normal;
-  font-weight: 300;
-  font-display: swap;
-  src: url('fonts/Newsreader-normal-300-latin.woff2') format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
-@font-face {
-  font-family: 'Newsreader';
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: url('fonts/Newsreader-normal-400-latin-ext.woff2') format('woff2');
-  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
-}
-@font-face {
-  font-family: 'Newsreader';
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: url('fonts/Newsreader-normal-400-latin.woff2') format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
-@font-face {
-  font-family: 'Newsreader';
-  font-style: normal;
-  font-weight: 500 600;   /* SITEFIX-18:500 与 600 原是同一个可变字体文件,只留一份 */
-  font-display: swap;
-  src: url('fonts/Newsreader-normal-500-latin-ext.woff2') format('woff2');
-  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
-}
-@font-face {
-  font-family: 'Newsreader';
-  font-style: normal;
-  font-weight: 500 600;   /* SITEFIX-18:500 与 600 原是同一个可变字体文件,只留一份 */
-  font-display: swap;
-  src: url('fonts/Newsreader-normal-500-latin.woff2') format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
+@font-face { font-family: 'Newsreader'; font-style: normal; font-weight: 500 600; font-display: swap;
+  src: url('fonts/Newsreader-normal-500-latin.woff2') format('woff2'); }
+@font-face { font-family: 'IBM Plex Mono'; font-style: normal; font-weight: 400; font-display: swap;
+  src: url('fonts/IBMPlexMono-normal-400-latin.woff2') format('woff2'); }
 
 :root {
-  --paper:  #F7F7F8; --card: #FFFFFF; --ink: #1B1B1F; --second: #55555C;
-  --faint: #6F6F78; --coral-ink: #C44719; --coral-btn: #C44719; --line: #E9E9EC; --line2: #D6D6DC;
-  --coral:  #E2531F; --coral-tint: #FBEFE9; --green: #2E7D4F;
-  --shadow: 0 1px 2px rgba(27,27,31,.04), 0 12px 32px rgba(27,27,31,.07);
+  --paper: #F7F7F8; --card: #FFFFFF; --ink: #1B1B1F; --body: #2E2E33; --second: #55555C;
+  --faint: #6F6F78; --coral-ink: #C44719; --line: #E9E9EC; --line2: #D6D6DC; --coral: #E2531F; --code: #EFEFF2;
 }
 @media (prefers-color-scheme: dark) {
-  :root {
-    --paper: #161618; --card: #1E1E21; --ink: #F2F2F4; --second: #A0A0A8;
-    --faint: #86868E; --coral-ink: #FF6B35; --coral-btn: #D93A00; --line: #2C2C31; --line2: #3A3A41;
-    --coral: #FF6B35; --coral-tint: #3A2118; --green: #5FBF87;
-    --shadow: 0 1px 2px rgba(0,0,0,.3), 0 12px 32px rgba(0,0,0,.4);
+  :root:not([data-theme="light"]) {
+    --paper: #161618; --card: #1E1E21; --ink: #F2F2F4; --body: #D9D9DE; --second: #A0A0A8;
+    --faint: #86868E; --coral-ink: #FF6B35; --line: #2C2C31; --line2: #3A3A41; --coral: #FF6B35; --code: #26262A;
   }
 }
-*, *::before, *::after { box-sizing: border-box; margin: 0; }
-body {
-  background: var(--paper); color: var(--ink);
-  font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", sans-serif;
-  font-size: 16px; line-height: 1.75; -webkit-font-smoothing: antialiased;
+:root[data-theme="dark"] {
+  --paper: #161618; --card: #1E1E21; --ink: #F2F2F4; --body: #D9D9DE; --second: #A0A0A8;
+  --faint: #86868E; --coral-ink: #FF6B35; --line: #2C2C31; --line2: #3A3A41; --coral: #FF6B35; --code: #26262A;
 }
-.serif { font-family: "Newsreader", Georgia, serif; }
-.mono  { font-family: "IBM Plex Mono", ui-monospace, monospace; }
-.wrap { max-width: 880px; margin: 0 auto; padding-left: 32px; padding-right: 32px; }
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  background: var(--paper); color: var(--body);
+  font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "PingFang SC", "Hiragino Sans GB", "Helvetica Neue", sans-serif;
+  font-size: 16px; line-height: 1.8; -webkit-font-smoothing: antialiased;
+}
 a { color: var(--coral-ink); text-decoration: none; }
 a:hover { text-decoration: underline; text-underline-offset: 3px; }
+.wrap { max-width: 760px; margin: 0 auto; padding: 0 32px; }
 
-nav {
-  position: sticky; top: 0; z-index: 10;
-  background: color-mix(in srgb, var(--paper) 86%, transparent);
-  backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
-  border-bottom: 1px solid var(--line);
-}
-.navrow { display: flex; align-items: center; gap: 28px; height: 60px; }
-.brand { display: flex; align-items: center; gap: 9px; font-family: "Newsreader", serif; font-weight: 600; font-size: 19px; color: var(--ink); }
+nav { position: sticky; top: 0; z-index: 10; border-bottom: 1px solid var(--line);
+  background: color-mix(in srgb, var(--paper) 88%, transparent);
+  backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); }
+.navrow { display: flex; align-items: center; height: 56px; }
+.brand { display: flex; align-items: center; gap: 9px; font-family: "Newsreader", Georgia, serif;
+  font-weight: 600; font-size: 19px; color: var(--ink); }
 .brand:hover { text-decoration: none; }
 .dot { width: 9px; height: 9px; border-radius: 50%; background: var(--coral); }
-.navlinks { margin-left: auto; display:flex; gap:18px; align-items:center; }
-.navlinks a { color: var(--second); font-size: 13.5px; }
+.navlinks { margin-left: auto; display: flex; align-items: center; gap: 22px; font-size: 14px; }
+.navlinks a { color: var(--second); }
+.navlinks a[aria-current] { color: var(--ink); font-weight: 500; }
+.navlinks .sep { width: 1px; height: 14px; background: var(--line2); }
 
-.eyebrow { font-size: 12px; font-weight: 600; letter-spacing: .18em; text-transform: uppercase; color: var(--faint); margin-bottom: 14px; }
-/* 中文页的小标题只写中文(2026-10-13):大写和 .18em 宽字距是给拉丁字母的,中文用正常字距 */
-:lang(zh) :is(main, section, header) .eyebrow { font-size: 13px; letter-spacing: .04em; text-transform: none; }
-header.page { padding: 88px 0 0; }
-h1 { font-size: clamp(30px, 4.4vw, 42px); font-weight: 600; line-height: 1.3; }
-.lede { color: var(--second); font-size: 16.5px; max-width: 40em; margin-top: 18px; }
-.lede b { color: var(--ink); }
+header.page { padding-top: 72px; }
+h1 { font-size: clamp(30px, 4.6vw, 40px); font-weight: 600; line-height: 1.25; color: var(--ink); letter-spacing: -0.01em; }
+.updated { margin-top: 12px; font-size: 14px; color: var(--faint); }
 
-section { padding-top: 88px; }
-h2 { font-size: clamp(22px, 2.8vw, 27px); font-weight: 600; line-height: 1.4; }
-.sub { color: var(--second); font-size: 15px; margin-top: 10px; max-width: 46em; }
+.summary { margin-top: 40px; background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 24px 28px; }
+.summary .label { font-size: 13px; font-weight: 600; color: var(--faint); margin-bottom: 8px; }
+.summary p, .summary li { color: var(--ink); font-size: 15.5px; }
+.summary ul { margin-top: 6px; }
 
-/* 数据的旅程:每类数据一行,三列(它是什么/去哪/怎么删) */
-.journey { margin-top: 40px; border-top: 1px solid var(--line); }
-.jrow { display: grid; grid-template-columns: 150px 1fr 1fr; gap: 24px; padding: 26px 0; border-bottom: 1px solid var(--line); }
-.jrow .what { font-size: 15.5px; font-weight: 600; }
-.jrow .what .mono { display: block; font-size: 11.5px; color: var(--faint); font-weight: 400; margin-top: 4px; }
-.jrow p { font-size: 14px; color: var(--second); }
-.jrow p b { color: var(--ink); font-weight: 600; }
-.jhead { display: grid; grid-template-columns: 150px 1fr 1fr; gap: 24px; padding: 14px 0 10px; }
-.jhead span { font-size: 11.5px; letter-spacing: .14em; text-transform: uppercase; font-weight: 600; color: var(--faint); }
+main { padding-bottom: 24px; }
+h2 { margin-top: 64px; padding-top: 28px; border-top: 1px solid var(--line);
+  font-size: 21px; font-weight: 600; line-height: 1.4; color: var(--ink); }
+h3 { margin-top: 36px; font-size: 17px; font-weight: 600; line-height: 1.45; color: var(--ink); }
+.num { display: inline-block; min-width: 1.8em; color: var(--faint); font-weight: 500; font-variant-numeric: tabular-nums; }
+h3 .num { min-width: 2.6em; }
+main p { margin-top: 14px; }
+main h2 + p, main h3 + p, main h2 + ul, main h3 + ul { margin-top: 16px; }
+ul { margin-top: 12px; padding-left: 1.2em; }
+li { margin-top: 8px; padding-left: 2px; }
+li::marker { color: var(--faint); }
+strong { color: var(--ink); font-weight: 600; }
+code { font-family: "IBM Plex Mono", ui-monospace, Menlo, monospace; font-size: 0.86em; background: var(--code);
+  border-radius: 4px; padding: 1px 5px; overflow-wrap: anywhere; }
 
-/* 不做的事 */
-.nots { margin-top: 36px; display: grid; grid-template-columns: 1fr 1fr; gap: 18px 40px; }
-.not { display: flex; gap: 12px; align-items: baseline; }
-.not .x { color: var(--coral); font-family: "Newsreader", serif; font-weight: 600; font-size: 18px; flex: none; }
-.not p { color: var(--second); font-size: 14.5px; }
-.not p b { color: var(--ink); }
+.tbl { margin-top: 20px; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+table { width: 100%; border-collapse: collapse; font-size: 14px; line-height: 1.65; }
+th { text-align: left; font-weight: 600; color: var(--faint); font-size: 13px; padding: 0 16px 10px 0; border-bottom: 1px solid var(--line2); }
+td { padding: 12px 16px 12px 0; border-bottom: 1px solid var(--line); vertical-align: top; }
+td:first-child { color: var(--ink); font-weight: 500; white-space: nowrap; }
+th:last-child, td:last-child { padding-right: 0; }
 
-/* 收据卡 */
-.receipt {
-  margin-top: 36px; background: var(--card); border: 1px solid var(--line);
-  border-radius: 14px; padding: 22px 26px; box-shadow: var(--shadow);
-}
-.receipt + .receipt { margin-top: 14px; }
-.receipt .how { font-size: 13px; color: var(--faint); margin-top: 6px; }
-.receipt .mono { font-size: 13.5px; }
-.receipt b { font-size: 14.5px; }
+footer { margin-top: 88px; border-top: 1px solid var(--line); padding: 28px 0 48px;
+  display: flex; flex-wrap: wrap; gap: 8px 24px; font-size: 13px; color: var(--faint); }
+footer a { color: var(--second); }
+footer .grow { margin-left: auto; }
 
-.future {
-  margin-top: 40px; background: var(--coral-tint); border-radius: 16px; padding: 26px 30px;
-}
-.future p { color: var(--ink); font-size: 15px; max-width: 52em; }
-.future .eyebrow { color: var(--coral); margin-bottom: 8px; }
-
-footer {
-  margin-top: 110px; border-top: 1px solid var(--line);
-  padding-top: 36px; padding-bottom: 48px; color: var(--faint); font-size: 13px;
-  display: flex; gap: 24px; flex-wrap: wrap; align-items: center;
-}
-footer a { color: var(--faint); }
-
-/* ── 数据旅程动画:一颗包裹跳过「我们的服务器」── */
-.flowstage {
-  margin-top: 48px; background: var(--card); border: 1px solid var(--line);
-  border-radius: 16px; padding: 28px 24px 18px; box-shadow: var(--shadow);
-}
-.flowstage svg { display: block; width: 100%; height: auto; }
-.flowstage .cap {
-  text-align: center; font-size: 13.5px; color: var(--second);
-  min-height: 24px; margin-top: 6px; transition: opacity .22s ease;
-}
-.node-label { font-size: 14px; font-weight: 600; fill: var(--ink); }
-.node-sub { font-size: 11px; fill: var(--faint); }
-.ghost-label { font-size: 13px; font-weight: 600; fill: var(--faint); }
-
-/* ── 入场(与首页同一套) ── */
-/* SITEFIX-19:只有 JS 跑起来(<html class="js">,head 里第一句脚本加上)才先藏后显;没有 JS 时 .reveal 照常可见。 */
-.js .reveal { opacity: 0; transform: translateY(12px); transition: opacity .5s ease, transform .5s ease; }
-.js .reveal.on { opacity: 1; transform: none; }
-@media (prefers-reduced-motion: reduce) {
-  .js .reveal { opacity: 1; transform: none; transition: none; }
-}
-
-@media (max-width: 720px) {
-  .jrow, .jhead { grid-template-columns: 1fr; gap: 8px; padding: 20px 0; }
-  .jhead { display: none; }
-  .nots { grid-template-columns: 1fr; }
+@media (max-width: 640px) {
+  .wrap { padding: 0 16px; }
+  header.page { padding-top: 44px; }
+  .navlinks { gap: 16px; }
+  .summary { padding: 20px; margin-top: 32px; }
+  h2 { margin-top: 48px; padding-top: 24px; font-size: 19px; }
+  .tbl { overflow: visible; }
+  table, tbody, tr, td { display: block; width: 100%; }
+  thead { display: none; }
+  tr { padding: 14px 0; border-bottom: 1px solid var(--line); }
+  tr:first-child { border-top: 1px solid var(--line2); }
+  td { border: 0; padding: 2px 0; white-space: normal; }
+  td:first-child { font-size: 15px; padding-bottom: 6px; white-space: normal; }
+  td[data-label]:not(:first-child)::before { content: attr(data-label); display: block; font-size: 12px; font-weight: 600; color: var(--faint); margin-top: 6px; }
+  footer .grow { margin-left: 0; }
 }
 </style>
 </head>
 <body>
-
 <nav>
   <div class="wrap navrow">
     <a class="brand" href="index.html"><span class="dot"></span>Murmur</a>
     <div class="navlinks">
-      <a href="en/privacy.html" hreflang="en" lang="en">English</a><a href="index.html#pinyin">输入法</a><a href="demo/index.html">拼音演示</a><a href="index.html">← 回首页</a></div>
+      <a href="tos.html">条款</a>
+      <a href="privacy.html" aria-current="page">隐私</a>
+      <span class="sep" aria-hidden="true"></span>
+      <a href="en/privacy.html" hreflang="en">English</a>
+    </div>
   </div>
 </nav>
 
 <header class="page wrap">
-  <div class="eyebrow">你的数据在哪</div>
-  <h1>Murmur 的数据去向。</h1>
-  <p class="lede">录音、历史、词典和打过的词存在你的 Mac 上。
-  云端识别时,<b>音频直接发给你选的那一档的识别服务商,不经过我们的服务器。</b>
-  登录后没填自己的 Key 时,整理、翻译、随心问和口述编辑的文字先经过我们的服务器,再转给模型厂商;服务器不存原文。
-  下面按数据类别写去向、存放和删除办法,每一条附一个你能自己核实的办法。</p>
-
-  <div class="flowstage">
-    <svg viewBox="0 0 760 250" aria-label="音频从你的 Mac 直连识别服务商,不经过我们的服务器">
-      <!-- 航线(常显,极淡) -->
-      <path id="goPath"   d="M196 118 C 300 26, 460 26, 564 118" fill="none" stroke="var(--line2)" stroke-width="1.5" stroke-dasharray="3 6"/>
-      <path id="backPath" d="M564 138 C 460 226, 300 226, 196 138" fill="none" stroke="var(--line2)" stroke-width="1.5" stroke-dasharray="3 6"/>
-
-      <!-- 你的 Mac -->
-      <g>
-        <rect x="36" y="86" width="160" height="84" rx="14" fill="var(--paper)" stroke="var(--line2)"/>
-        <text class="node-label" x="116" y="122" text-anchor="middle">你的 Mac</text>
-        <text class="node-sub" x="116" y="144" text-anchor="middle">录音·历史·词典都在这</text>
-        <rect id="macGlow" x="36" y="86" width="160" height="84" rx="14" fill="none" stroke="var(--coral)" stroke-width="2.5" opacity="0"/>
-        <g id="savedChip" opacity="0">
-          <rect x="52" y="176" width="128" height="26" rx="13" fill="var(--coral-tint)"/>
-          <text x="116" y="194" text-anchor="middle" style="font-size:12px; font-weight:600" fill="var(--coral)">✓ 已存在本地</text>
-        </g>
-      </g>
-
-      <!-- 我们的服务器(虚位) -->
-      <g id="ghost" opacity=".8">
-        <rect x="304" y="92" width="152" height="72" rx="14" fill="none" stroke="var(--line2)" stroke-dasharray="5 5"/>
-        <text class="ghost-label" x="380" y="122" text-anchor="middle">我们的服务器</text>
-        <text class="node-sub" x="380" y="142" text-anchor="middle">音频不经过这里</text>
-        <g id="ghostX" opacity="0">
-          <circle cx="380" cy="76" r="13" fill="var(--coral)"/>
-          <text x="380" y="81" text-anchor="middle" style="font-size:13px; font-weight:700" fill="#fff">✕</text>
-        </g>
-      </g>
-
-      <!-- 你选的模型商 -->
-      <g>
-        <rect x="564" y="86" width="160" height="84" rx="14" fill="var(--paper)" stroke="var(--line2)"/>
-        <text class="node-label" x="644" y="122" text-anchor="middle">你选的模型商</text>
-        <text class="node-sub" x="644" y="144" text-anchor="middle">选哪一档,就只连那一家</text>
-        <rect id="provGlow" x="564" y="86" width="160" height="84" rx="14" fill="none" stroke="var(--coral)" stroke-width="2.5" opacity="0"/>
-      </g>
-
-      <!-- 包裹 -->
-      <circle id="pktGo"   r="7" fill="var(--coral)" opacity="0"/>
-      <circle id="pktBack" r="7" fill="var(--ink)"  opacity="0"/>
-    </svg>
-    <p class="cap" id="flowCap">你说话 —— 音频只从你的 Mac 出发</p>
+  <h1>隐私说明</h1>
+  <p class="updated">本页对应 Murmur 0.53。2026 年 10 月 13 日更新。</p>
+  <div class="summary">
+    <p class="label">要点</p>
+    <ul>
+<li>录音、历史和词典存在你自己的设备上,留多久由你在设置里定。</li>
+<li>不登录时,你说的话由设备系统自带的识别功能转成文字,不交给我们。</li>
+<li>登录后,把你说的话转成文字、理顺、翻译时,这一句会交给帮我们做语音识别和文字处理的服务商。这些服务商分别在美国和中国;我们的账号数据库在新加坡。每一类服务商处理什么,见第 5 节。</li>
+<li>我们不保存你说的原文。登录后会记下你的邮箱、登录信息和用量(字数、时长、时间),不含你说的内容。</li>
+<li>开着「参考屏幕上的文字纠正专名」时,开始说话那一刻 App 会读一次当前窗口的文字,用来写对人名和术语,窗口里别人发来的消息也会读到。新安装默认关,从旧版本升级的保持原来的选择,在 设置 → 识别 开关。</li>
+<li>我们不卖你的数据,App 里没有广告和第三方统计。</li>
+<li>想查看、导出、更正或删除你的数据,或者有问题,写信到 <a href="mailto:support@day1aifitness.com">support@day1aifitness.com</a>。</li>
+</ul>
   </div>
 </header>
 
-<!-- ── 数据的旅程 ── -->
-<section class="wrap">
-  <div class="eyebrow">每类数据的去向</div>
-  <h2>六类数据,各自的旅程。</h2>
-  <div class="journey reveal">
-    <div class="jhead"><span>是什么</span><span>去哪 · 存哪</span><span>怎么删 · 怎么关</span></div>
-
-    <div class="jrow">
-      <div class="what">录音<span class="mono">你的声音</span></div>
-      <p>识别时<b>直连你所选档位对应的那一家</b>识别服务商:用免费额度的云端识别时,音频发给 <b>Soniox(美国)</b>;自己填了 Key 时,发给你填 Key 的那一家。选「本机识别」时,<b>音频不出这台电脑</b>;个别语言系统不支持离线识别时,可能由 Apple 处理。
-      录音文件存在你 Mac 本地,默认保留 30 天供重跑,之后自动删除。</p>
-      <p>设置里可把保留期改成 7 天或「不保存」;删掉本地文件夹即彻底删除。本机识别时音频不出电脑;开着整理时,文字仍会发给大模型。想让说的内容完全不出电脑:选本机识别,整理设成「不动」,也不用翻译、随心问和口述编辑。</p>
-    </div>
-
-    <div class="jrow">
-      <div class="what">转写与整理的文字<span class="mono">你说的内容</span></div>
-      <p>开着 AI 整理,或用翻译、随心问、口述编辑时,转写文字会交给大模型处理一次(口述编辑还带上你选中的那段)。自己填了 Key 就直连那家厂商;登录后没填 Key、用免费额度时,先经过我们的服务器,再转给 <b>DeepSeek(中国)</b>处理,我们的服务器不存原文。App 历史页的「数据去哪了」按你当前设置写着走哪条路。
-      开了「提示词技能」时,在 AI 工具里用听写键说的够长的一句,转写文字会多发一次给同一条通道和同一家厂商,用来判断是哪种需求;不发录音,不发你在哪个窗口。
-      成品与历史记录<b>存在你 Mac 本地的数据库里</b>,不整份同步到任何云。
-      「个人风格」默认关。打开后,每次整理会从最近的听写记录里挑最多 3 条「原话 → 整理稿」当范例,随整理请求一起发出。</p>
-      <p>关掉整理(「不动·直出转写」档)则文字不经过任何大模型。历史可以单条删。想一次清空:在 设置 → 系统 把「保留文字」设成「不保存」,再点「立即按保留期清理」。保留期可设。</p>
-    </div>
-
-    <div class="jrow">
-      <div class="what">词典<span class="mono">你的专有名词</span></div>
-      <p>为了听对你常说的名字,词典里的词会<b>随每次识别请求</b>发给识别服务商;开着整理时,也随整理请求发给大模型。这件事写在设置里的明面上,不藏在条款里。</p>
-      <p>词典条目随时可删;删掉后不再随请求发送。</p>
-    </div>
-
-    <div class="jrow">
-      <div class="what">打过的词<span class="mono">拼音输入法学到的词</span></div>
-      <p>存在这台 Mac 上:~/Library/Application Support/Murmur/lexicon.sqlite。学词默认开着。密码框与拒绝名单里的 App 一律不记。
-      听写时,这些词当提示词<b>随识别请求</b>发给识别服务商。这和上面「词典」一行走同一条路。选本机识别时不出机。第一版不跨设备。
-      按 ⌥⇧Space 让 AI 整理这句时,词典里登记的词和学到的词里与这句沾边的(最多 500 个)随整理请求出机。选本机识别也一样。</p>
-      <p>设置 → 输入法 → 「我打过的词(输入法学的)」卡:关「学我平时打的字」,之后不再学新词;关「允许 AI 参考我的用词」,AI 整理时一个词都不发。设置 → 系统 → 「清除数据…」一键清掉已学的词。联想开关「联想(根据你打过的词)」在同一张卡上。</p>
-    </div>
-
-    <div class="jrow">
-      <div class="what">屏幕上下文<span class="mono">录音那一刻的前台窗口文字</span></div>
-      <p>录音那一刻读一次前台窗口的可见文字(走辅助功能,不截屏),用来矫正专有名词。选了云端识别时,从中抽出的专名随录音发给识别服务商。
-      开着整理,或用翻译、随心问时,<b>屏幕文字的节选(最多 1500 字)随转写发给模型厂商</b>;用免费额度时先经过我们的服务器,自己填 Key 时直连那家厂商。
-      在本机不落库、不落盘、不进日志,屏幕上的词也永不进词典。</p>
-      <p>新装默认关;从旧版升级的保持你原来的选择。在 设置 → 识别 开关「参考屏幕上的文字纠正专名」;本机识别且不整理时根本不读。</p>
-    </div>
-
-    <div class="jrow">
-      <div class="what">登录凭据、API Key 与设置<span class="mono">你的凭证</span></div>
-      <p>登录凭据存在 macOS 钥匙串。你自己填了 API Key 的话,它也存在钥匙串,<b>只在本机</b>,我们收不到。设置存在系统偏好里。</p>
-      <p>删除 App 时按系统惯例清理;Key 可在设置里随时清空。</p>
-    </div>
-  </div>
-</section>
-
-<!-- ── 我们不做的事 ── -->
-<section class="wrap">
-  <div class="eyebrow">我们不做的事</div>
-  <h2>写下来,就是承诺不做。</h2>
-  <div class="nots reveal">
-    <div class="not"><span class="x">✕</span><p><b>不经手你的音频。</b>云端识别的音频从你的 Mac 直达识别服务商,不经过我们的服务器。整理用的文字有例外,见下面「登录之后」一节。</p></div>
-    <div class="not"><span class="x">✕</span><p><b>不做行为埋点。</b>App 里没有统计 SDK,不把你在哪个 App 里说话报给我们。登录后每说完一句(本机识别的那句也算),会报这句的字数、说话时长和走了哪条路,用来算额度,不带原文,见下面「登录之后」一节。</p></div>
-    <div class="not"><span class="x">✕</span><p><b>不卖数据。</b>只交给为提供服务所必需的处理方(名单见下面「登录之后」一节)。没有广告主,你的数据不是商品。</p></div>
-    <div class="not"><span class="x">✕</span><p><b>官网没有统计脚本。</b>没有埋点、没有广告。登录页、试一试页和技能页的脚本由本站自托管,只有防刷验证开着时加载 Cloudflare 的验证脚本,写在下面「官网」一节,你可以打开浏览器的网络面板核实。</p></div>
-  </div>
-</section>
-
-<!-- ── 自己验证 ── -->
-<section class="wrap">
-  <div class="eyebrow">不用信我们,自己看</div>
-  <h2>三件你现在就能亲手核实的事。</h2>
-
-  <div class="receipt reveal">
-    <b>① 数据就在这个文件夹里</b>
-    <p class="how"><span class="mono">~/Library/Application Support/Murmur/</span> —— 录音和你说过的每一个字都在这,随时打开看。删掉,就是真的删掉了。</p>
-  </div>
-  <div class="receipt reveal">
-    <b>② App 会连哪些地方</b>
-    <p class="how">用「小火苗 LuLu」这类免费防火墙观察 Murmur 的网络连接,你会看到这几类:你选的识别 / 大模型服务商(自己填了联网搜索的 Key 时还有那一家);我们的服务器(登录、额度、公开配置、免费额度的识别通行证和整理转发);官网(每天读一次版本文件);下载 Rime 词库或句子模型时还有 GitHub;打开设置的「整理」页时,读一次 OpenRouter 的公开模型清单,不带你的内容。</p>
-  </div>
-  <div class="receipt reveal">
-    <b>③ 每一条的去向,历史页里都写着</b>
-    <p class="how">App 内历史页的「数据去哪了」按你当前设置如实列出:这条用了哪家识别、文字有没有过大模型、屏幕上下文开没开。</p>
-  </div>
-</section>
-
-<!-- ── 未来 ── -->
-<section class="wrap">
-  <div class="future reveal">
-    <div class="eyebrow">登录之后</div>
-    <p>不登录时,App 也会连我们的服务器读公开配置:只在 App 在前台、或听写后 5 分钟内读,间隔由服务器在 60–3600 秒之间调(默认 5 分钟)。这个请求里没有你的身份,也没有你说的内容。另外每天读一次官网的版本文件。</p>
-    <p>登录后,我们的服务器还做这几件事:</p>
-    <p>① 登录、额度和公开配置(登录后改走带身份的那份)。② 每说完一句,报一次:字数、说话时长、是听写还是随心问、走了哪条路(本机 / 自己的 Key / 免费额度)、发生的时间。本机识别的那句也报,不扣额度。不带原文。③ 用免费额度识别时,每次开录换一张一次性通行证,所以服务器知道你此刻在录音;音频仍然直连识别服务商。④ 用免费额度(没填自己的 Key)时,整理、翻译、随心问和口述编辑的文字先经过服务器,再转给模型厂商。同一个请求里还有词典、屏幕节选(最多 1500 字);开了个人风格时,还有最多 3 条历史例句;开了提示词技能时,AI 工具里那句会多发一次。服务器只转发和记账,不存原文,日志里也没有正文。⑤ 开了输入法的云候选(默认关)时,还没上屏的拼音经我们的服务器转给 DeepSeek(中国);只发拼音。</p>
-    <p>录音不上传。历史不整份上传,只有开了个人风格时,整理请求里带最多 3 条。词典会随识别请求和整理请求整份发出,见上面「词典」一行。打过的词不整份上传,只有按 ⌥⇧Space 整理时带上与这句沾边的那些,见上面「打过的词」一行。这一页每次修改,页面底部都会留下日期。</p>
-    <p><b>处理方和所在地。</b>用免费额度时,整理、翻译、随心问和口述编辑的文字由 DeepSeek(中国)处理;输入法云候选的拼音由 DeepSeek(中国)处理;云端识别的音频发给 Soniox(美国);账号和用量存在 Supabase(新加坡);邮件经 Resend 发出。自己填了 Key 时,文字或音频直接发给你填 Key 的那一家。App 的请求在新加坡处理,网页和旧版 App 可能经由澳大利亚(悉尼)中转;数据库在新加坡。</p>
-    <p><b>服务器存什么、存多久。</b>我们的服务器存:你的邮箱;额度账本(每一笔的时间、字数、说话时长、类型和走了哪条路);订阅状态;申请名额时的表单(邮箱、留言、界面语言、加盐散列过的网络地址和浏览器类型简写)。这些保留到你删除账号后 30 天,然后删掉。要删账号或要一份副本,写信到 <a href="mailto:support@day1aifitness.com">support@day1aifitness.com</a> 就行。</p>
-    <p>发生影响你的数据泄露,我们会及时通知你。</p>
-  </div>
-</section>
-
-<!-- ── 官网 ── -->
-<section class="wrap">
-  <div class="future reveal">
-    <div class="eyebrow">官网</div>
-    <p>这个网站没有统计脚本,也没有广告。下面几处会把东西交给我们的服务器或第三方:</p>
-    <p>① 申请名额的表单:存你的邮箱、你写的那句话、界面语言和浏览器类型简写;另存一个加盐散列过的网络地址,只用来限制提交次数。提交即在我们的账号系统里为这个邮箱建一个身份;表单内容经 Resend 转发到我们的邮箱。② 网页试整理:你贴的文字发到我们的服务器,再转给大模型整理,服务器不存原文。③ 登录页、试一试页和技能页的脚本都由本站自托管;防刷验证开着时,这三页还会加载 Cloudflare Turnstile。④ 价格页读取你在本站的登录状态,用来把付款对上你的账号:点付款时,账号编号和邮箱随付款链接交给 Stripe。</p>
-  </div>
-</section>
-
-<script>
-/* 入场(与首页同一套) */
-const io = new IntersectionObserver((entries) => {
-  for (const e of entries) if (e.isIntersecting) {
-    const idx = [...e.target.parentElement.querySelectorAll(':scope > .reveal')].indexOf(e.target);
-    e.target.style.transitionDelay = `${Math.max(idx, 0) * 60}ms`;
-    e.target.classList.add('on');
-    io.unobserve(e.target);
-  }
-}, { threshold: 0.15 });
-document.querySelectorAll('.reveal').forEach(el => io.observe(el));
-
-/* ── 数据旅程:时间的纯函数,不可见就整段跳过 ──
-   0.0–1.0s  Mac 说话脉冲
-   1.0–2.8s  珊瑚包裹沿上弧直达模型商,途中「我们的服务器」亮 ✕
-   2.8–3.6s  模型商脉冲(转写)
-   3.6–5.4s  墨色包裹(文字)沿下弧回 Mac
-   5.4–7.2s  「已存在本地」chip 亮起,停一拍
-   循环 7.6s */
-const $ = id => document.getElementById(id);
-const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
-const goPath = $('goPath'), backPath = $('backPath');
-const goLen = goPath.getTotalLength(), backLen = backPath.getTotalLength();
-const CAPS = [
-  '你说话 —— 音频只从你的 Mac 出发',
-  '直连你选的那家 —— 跳过任何中间站',
-  '云端转写完成',
-  '文字回到你的 Mac',
-  '存进本地,到此为止。',
-];
-let capIdx = 0;
-function setCap(i) {
-  if (i === capIdx) return;
-  capIdx = i;
-  const el = $('flowCap');
-  el.style.opacity = 0;
-  setTimeout(() => { el.textContent = CAPS[i]; el.style.opacity = 1; }, 180);
-}
-const ease = t => t < .5 ? 2*t*t : 1 - (-2*t+2)**2/2;   // easeInOut
-
-let stageVisible = false, stageStart = performance.now();
-new IntersectionObserver(es => {
-  if (es[0].isIntersecting && !stageVisible) stageStart = performance.now();
-  stageVisible = es[0].isIntersecting;
-}, { threshold: 0.3 }).observe(document.querySelector('.flowstage'));
-
-if (reduced) {
-  // 减弱动效:静态终态 —— 航线常显,✕ 常亮,chip 常亮,一句总结
-  $('ghostX').setAttribute('opacity', 1);
-  $('savedChip').setAttribute('opacity', 1);
-  $('flowCap').textContent = '音频直连你选的服务商,跳过我们;文字回来,存进本地。';
-} else {
-  const CYCLE = 7600;
-  function frame(now) {
-    requestAnimationFrame(frame);
-    if (!stageVisible) return;
-    const t = (now - stageStart) % CYCLE;
-
-    // Mac 卡片呼吸
-    const mp = $('macGlow');
-    if (t < 1000) {
-      const k = t / 1000;
-      mp.setAttribute('opacity', Math.sin(k * Math.PI));
-      setCap(0);
-    } else mp.setAttribute('opacity', 0);
-
-    // 去程包裹 + ✕
-    const go = $('pktGo'), gx = $('ghostX');
-    if (t >= 1000 && t < 2800) {
-      const k = ease((t - 1000) / 1800);
-      const p = goPath.getPointAtLength(k * goLen);
-      go.setAttribute('transform', `translate(${p.x},${p.y})`);
-      go.setAttribute('opacity', 1);
-      // 途经中点前后亮 ✕
-      gx.setAttribute('opacity', k > 0.3 && k < 0.75 ? 1 : Math.max(0, 1 - Math.abs(k - 0.52) * 6));
-      setCap(1);
-    } else { go.setAttribute('opacity', 0); if (t >= 2800) gx.setAttribute('opacity', 0); }
-
-    // 模型商卡片呼吸
-    const pp = $('provGlow');
-    if (t >= 2800 && t < 3600) {
-      const k = (t - 2800) / 800;
-      pp.setAttribute('opacity', Math.sin(k * Math.PI));
-      setCap(2);
-    } else pp.setAttribute('opacity', 0);
-
-    // 回程包裹(文字)
-    const back = $('pktBack');
-    if (t >= 3600 && t < 5400) {
-      const k = ease((t - 3600) / 1800);
-      const p = backPath.getPointAtLength(k * backLen);
-      back.setAttribute('transform', `translate(${p.x},${p.y})`);
-      back.setAttribute('opacity', 1);
-      setCap(3);
-    } else back.setAttribute('opacity', 0);
-
-    // 落定 chip
-    const chip = $('savedChip');
-    if (t >= 5400) {
-      const k = Math.min((t - 5400) / 300, 1);
-      chip.setAttribute('opacity', t > CYCLE - 400 ? Math.max(0, (CYCLE - t) / 400) : k);
-      setCap(4);
-    } else chip.setAttribute('opacity', 0);
-  }
-  requestAnimationFrame(frame);
-}
-</script>
+<main class="wrap">
+<h2><span class="num">1</span>适用范围与负责方</h2>
+<p>本说明适用于 Others Studio(澳大利亚维多利亚州)提供的 Murmur 各平台 App 和 Murmur 网站。本说明所述的个人信息由 Others Studio 负责处理。</p>
+<p>不同功能的数据去向不同,下面按功能分别说明。部分内容取决于你的设置,第 11 节介绍了在 App 里查看的方法。</p>
+<h2><span class="num">2</span>存在你设备上的数据</h2>
+<p>在 Mac 上,下面这些数据保存在 <code>~/Library/Application Support/Murmur/</code>、系统钥匙串或系统偏好设置中。下文写明哪些功能会把其中一部分随请求发出。</p>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>数据</th>
+<th>默认保留</th>
+<th>怎么删除</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td data-label="数据">录音文件</td>
+<td data-label="默认保留">30 天后自动删除。可改为 7 天、90 天、永久或不保存</td>
+<td data-label="怎么删除">在设置中修改保留期,或删除上述文件夹</td>
+</tr>
+<tr>
+<td data-label="数据">转写与整理后的文字(历史)</td>
+<td data-label="默认保留">一直保留,可设置保留期</td>
+<td data-label="怎么删除">单条删除;或在「设置 → 系统」把「保留文字」设为「不保存」,再点「立即按保留期清理」</td>
+</tr>
+<tr>
+<td data-label="数据">词典(你添加的专有名词)</td>
+<td data-label="默认保留">一直保留</td>
+<td data-label="怎么删除">随时删除条目,删除后不再随请求发送</td>
+</tr>
+<tr>
+<td data-label="数据">输入法学到的词</td>
+<td data-label="默认保留">一直保留。学词默认开启,密码框和你列入拒绝名单的 App 里打的字不会被记录</td>
+<td data-label="怎么删除">在「设置 → 输入法」关闭学词;在「设置 → 系统 → 清除数据…」清除已学的词</td>
+</tr>
+<tr>
+<td data-label="数据">选词问题记录</td>
+<td data-label="默认保留">默认关闭。开启后,记录你没选首选候选的那几次,可能含私人内容;1 天或 7 天后自动删除,开启当天 23:59 自动关闭</td>
+<td data-label="怎么删除">在「设置 → 系统 → 清除数据…」清除</td>
+</tr>
+<tr>
+<td data-label="数据">输入法使用统计</td>
+<td data-label="默认保留">只记次数和时长这类数字,不含你打的字</td>
+<td data-label="怎么删除">在「设置 → 系统 → 清除数据…」清除</td>
+</tr>
+<tr>
+<td data-label="数据">登录凭据和服务密钥</td>
+<td data-label="默认保留">存在 macOS 钥匙串</td>
+<td data-label="怎么删除">删除 App 不会自动清除钥匙串。服务密钥可在设置中清空;其他条目可在「钥匙串访问」中删除</td>
+</tr>
+<tr>
+<td data-label="数据">设置</td>
+<td data-label="默认保留">存在系统偏好设置中</td>
+<td data-label="怎么删除">随 App 设置修改</td>
+</tr>
+</tbody>
+</table></div>
+<h2><span class="num">3</span>各项功能发出的数据</h2>
+<h3><span class="num">3.1</span>本机识别</h3>
+<p>选择本机识别时,识别在你的 Mac 上完成,音频不会发给我们或任何识别服务商。只有一种例外:如果当前语言在你的 macOS 上不支持离线识别,系统可能把音频交给操作系统提供方处理,适用其隐私政策。</p>
+<h3><span class="num">3.2</span>云端识别</h3>
+<ul>
+<li>用免费额度时,音频从你的 Mac 发给语音识别服务商(美国)。每次开始录音,我们的服务器会签发一个只能用一次的临时凭证,因此我们知道你开始录音的时间,但音频不经过我们的服务器。</li>
+<li>用你自己的服务密钥时,音频直接发给该服务商。</li>
+<li>随识别请求一起发出的还有:词典里的词;输入法学到的词;开启屏幕上下文时,从屏幕文字中提取的专有名词(最多 40 个)。这些词用来提高专有名词的识别准确度。</li>
+<li>长录音会区分说话人。用免费额度时,长录音和听写一样实时发给语音识别服务商。用你自己的密钥时,整段录音文件上传给该服务商转写,转完由 App 请求删除;如果 App 在转写途中退出,文件可能按该服务商自己的期限保留。</li>
+</ul>
+<h3><span class="num">3.3</span>整理、翻译与语音指令</h3>
+<p>以下功能会把转写文字发给大模型处理一次:</p>
+<ul>
+<li>整理:把口语转写整理成书面文字;</li>
+<li>翻译;</li>
+<li>随心问:把你说的话当作指令,插入 AI 的回答。如果你选中了文字,选中的文字一并发送;</li>
+<li>口述编辑:用语音修改你选中的文字,选中的文字一并发送。</li>
+</ul>
+<p>文字的去向:</p>
+<ul>
+<li>用免费额度时,文字先到我们的服务器,再转给文字处理服务商(中国)。我们的服务器只做转发和计量,不保存原文,日志里也没有正文。</li>
+<li>用你自己的服务密钥时,文字发给你填了密钥的服务商;有的会再转给你选的模型服务商。</li>
+<li>如果随心问开启了联网,并且你填了自己的搜索服务密钥,搜索内容会发给该搜索服务。</li>
+</ul>
+<p>同一个请求里还可能包含:</p>
+<ul>
+<li>你的词典;</li>
+<li>开启屏幕上下文时,屏幕文字的节选,最多 1500 字;</li>
+<li>开启「个人风格」时(默认关闭),从你最近的记录里挑选的最多 3 条「原话与整理稿」范例。</li>
+</ul>
+<p>「提示词技能」会整理你对 AI 工具口述的提示词。开启后,较长的一句会多发一次给同一服务商,用来判断需求类型;只发文字,不发录音和窗口信息。</p>
+<p>即使选择本机识别,开启整理时文字仍会发给大模型。如果你希望说的内容完全不离开 Mac:选择本机识别,把整理设为「不动」,并且不使用翻译、随心问和口述编辑。</p>
+<h3><span class="num">3.4</span>输入法</h3>
+<ul>
+<li>输入法学到的词只存在这台 Mac 上。</li>
+<li>在输入法里按快捷键请 AI 整理当前这句时,词典和学到的词里与这句相关的部分(最多 500 个)随请求发出,本机识别时也是如此。在「设置 → 输入法」关闭「允许 AI 参考我的用词」后,一个词都不发送。</li>
+<li>「云候选」默认关闭。开启后,还没选定的拼音经我们的服务器转给文字处理服务商(中国),只发送拼音。</li>
+</ul>
+<h3><span class="num">3.5</span>屏幕上下文</h3>
+<ul>
+<li>新安装默认关闭,从旧版本升级的保持原来的选择。在「设置 → 识别」中开关「参考屏幕上的文字纠正专名」。</li>
+<li>开启后,在开始录音的那一刻读取一次前台窗口的可见文字。读取通过系统辅助功能完成,不截屏。如果前台 App 在你的拒绝名单里、系统处于安全输入状态,或光标在密码框里,整个窗口都不读取。</li>
+<li>云端识别时,从中提取的专有名词随音频发给识别服务商。</li>
+<li>开启整理,或使用翻译和随心问时,屏幕文字的节选(最多 1500 字)随转写发给大模型服务商。用免费额度时经过我们的服务器;用自己的密钥时发给该密钥对应的服务商。</li>
+<li>读到的文字在本机不存储、不写入日志,屏幕上的词也不会加入词典。选择本机识别且不整理时,完全不读取。</li>
+</ul>
+<h2><span class="num">4</span>我们的服务器保存的记录</h2>
+<p>我们的服务器保存:</p>
+<ul>
+<li><strong>账号。</strong> 你的邮箱、账号状态和额度。</li>
+<li><strong>登录会话。</strong> 网络地址和设备或浏览器信息,用于保护账号安全。</li>
+<li><strong>用量记录。</strong> 每说完一句(本机识别的句子也算,但不扣额度),记录字数、说话时长、功能类型、所走的路径(本机、你自己的密钥或免费额度)和时间。用于计算额度和防止滥用,不含你说的内容。</li>
+<li><strong>大模型转发记录。</strong> 每次转发的档位、模型、服务商、估算用量和费用,不含文字。</li>
+<li><strong>名额申请表。</strong> 见第 6 节。</li>
+<li><strong>邀请码尝试记录。</strong> 网络地址、邮箱、邀请码的前几位和结果,用于防止滥用邀请码,保留 30 天。</li>
+<li><strong>邮件发送记录。</strong> 开通名额通知邮件的发送状态。</li>
+<li><strong>请求日志。</strong> 时间、路径、状态、耗时和账号编号,不含邮箱、内容和密钥。</li>
+</ul>
+<p>不登录时,App 也会定期读取公开配置,并每天检查一次版本。这些请求不带身份,也不含你的内容。</p>
+<p><strong>保留期限。</strong> 删除账号后,我们在 30 天内从在用系统中删除你的账号、登录会话、用量记录、邮件发送记录、名额申请表和邀请码尝试记录。请求日志按托管平台的保留期限自动删除。备份中的副本在备份周期结束时被覆盖。</p>
+<h2><span class="num">5</span>服务商与所在地</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>服务商类别</th>
+<th>所在国家</th>
+<th>处理什么</th>
+<th>什么时候</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td data-label="服务商类别">语音识别服务商</td>
+<td data-label="所在国家">美国<!-- 待核(round2 G10):识别服务商项目的数据处理地区 --></td>
+<td data-label="处理什么">你说话的声音;词典里的词;开着读屏幕文字时,从中抽出的人名和术语(最多 40 个)</td>
+<td data-label="什么时候">登录后用免费额度识别时</td>
+</tr>
+<tr>
+<td data-label="服务商类别">文字处理(大模型)服务商</td>
+<td data-label="所在国家">中国</td>
+<td data-label="处理什么">要理顺、翻译、提问或口述修改的文字;词典;开着读屏幕文字时最多 1500 字的节选;开了「个人风格」时最多 3 条你以前的例句;职业三问的回答;网页试用里贴的文字</td>
+<td data-label="什么时候">登录后用免费额度时;网页试用时</td>
+</tr>
+<tr>
+<td data-label="服务商类别">云托管与数据库服务商</td>
+<td data-label="所在国家">新加坡(数据库)</td>
+<td data-label="处理什么">账号、用量记录、服务器功能</td>
+<td data-label="什么时候">登录后;读取公开配置时</td>
+</tr>
+<tr>
+<td data-label="服务商类别">邮件服务商</td>
+<td data-label="所在国家">美国<!-- 待核:邮件服务商的发送区域 --></td>
+<td data-label="处理什么">你的邮箱;登录邮件;申请表转发</td>
+<td data-label="什么时候">登录、申请时</td>
+</tr>
+<tr>
+<td data-label="服务商类别">网站托管与下载服务商</td>
+<td data-label="所在国家">美国</td>
+<td data-label="处理什么">访问网站时的网络地址等常规信息;词库的下载</td>
+<td data-label="什么时候">访问网站、下载词库时</td>
+</tr>
+<tr>
+<td data-label="服务商类别">网站防刷验证服务商</td>
+<td data-label="所在国家">美国</td>
+<td data-label="处理什么">防刷验证需要的浏览器信息</td>
+<td data-label="什么时候">在网站登录、试用时</td>
+</tr>
+<tr>
+<td data-label="服务商类别">模型清单服务</td>
+<td data-label="所在国家">美国</td>
+<td data-label="处理什么">只读公开清单,不含你的内容</td>
+<td data-label="什么时候">打开设置里的「整理」页时</td>
+</tr>
+<tr>
+<td data-label="服务商类别">操作系统提供方</td>
+<td data-label="所在国家">美国</td>
+<td data-label="处理什么">少数语言的语音识别</td>
+<td data-label="什么时候">不登录时,当前语言系统不支持离线识别</td>
+</tr>
+<tr>
+<td data-label="服务商类别">你自己填了密钥的服务商</td>
+<td data-label="所在国家">取决于你选的那家</td>
+<td data-label="处理什么">对应功能的声音或文字;有的会再转给你选的模型服务商</td>
+<td data-label="什么时候">用你自己的密钥时</td>
+</tr>
+</tbody>
+</table></div>
+<ul>
+<li><strong>处理地点。</strong> 数据库在新加坡。App 和网页的请求也可能经过离你最近的服务器所在的国家。</li>
+<li><strong>跨境传输。</strong> 你的数据可能被传输到美国、中国、新加坡,以及上面提到的服务器所在国家。这些地方的数据保护法律可能和你所在地不同;中国没有获得欧盟的数据保护「充分性认定」。我们只向服务商提供完成相应功能所需的数据。如果你在欧洲经济区或英国,这些传输的依据是:它们是提供你所使用的功能、履行与你的合同所必需的。</li>
+<li><strong>模型训练。</strong> 我们不用你的内容训练模型。语音识别服务商声明不用客户内容训练模型,实时识别的声音默认不保存。文字处理服务商的接口条款没有排除用提交的内容训练模型,我们也没有找到它公开的保留期限。不想让内容交给文字处理服务商:不登录使用;或者登录后把「整理」设成「不动」,不用翻译、随心问、口述编辑和网页试用,职业三问跳过。想知道具体是哪几家服务商,写信问我们,我们会告诉你。</li>
+<li><strong>不出售。</strong> 我们不出售你的个人信息,也不为投放广告而与他人共享。数据只交给上表中为提供服务所必需的服务商,以及你自己填了密钥的服务商。</li>
+</ul>
+<h2><span class="num">6</span>网站收集的信息</h2>
+<ul>
+<li><strong>名额申请表。</strong> 保存你的邮箱、你写的留言、界面语言和浏览器类型,另存一个网络地址的单向摘要,只用来限制提交次数。提交后,我们会在账号系统中为这个邮箱预先建立账号,表单内容经邮件服务商转发到我们的邮箱。</li>
+<li><strong>网页试用整理。</strong> 你贴入的文字经我们的服务器转给文字处理服务商(中国)整理,服务器不保存原文。我们另按天保存一个网络地址的单向摘要,用来限制试用次数。</li>
+<li><strong>脚本。</strong> 登录页、试用页和技能页的脚本由本站自己托管。防刷验证开启时,这三个页面会加载防刷验证服务商的脚本。</li>
+<li><strong>Cookie 与本地存储。</strong> 网站不使用广告或统计 Cookie。登录后,登录状态保存在你的浏览器中;防刷验证服务商可能设置其运行所需的 Cookie。</li>
+<li><strong>请勿追踪。</strong> 我们不跨网站追踪你,因此对浏览器发出的「请勿追踪」信号不做区别处理。</li>
+<li><strong>网站托管。</strong> 网站由网站托管服务商托管,访问时它会收到你的网络地址等常规访问信息。</li>
+</ul>
+<h2><span class="num">7</span>处理依据</h2>
+<p>如果你在欧洲经济区或英国,我们处理个人信息的法律依据如下:</p>
+<ul>
+<li>提供你使用的功能(识别、整理、账号、额度):履行与你的合同。</li>
+<li>用量计量、防止滥用、登录会话和请求日志:我们保障服务安全、公平运行的正当利益。</li>
+<li>名额申请:你提交申请时,应你的请求在订立合同前采取的步骤。</li>
+<li>回应法律要求:履行法律义务。</li>
+</ul>
+<h2><span class="num">8</span>你的权利</h2>
+<ul>
+<li>存在你设备上的数据由你直接管理,方法见第 2 节。</li>
+<li>对于我们服务器上的数据,你可以要求获取副本、更正信息或删除账号。请用注册邮箱写信给 <a href="mailto:support@day1aifitness.com">support@day1aifitness.com</a>,便于我们确认是你本人。我们在 30 天内答复。</li>
+<li>如果你在欧洲经济区或英国,也可以反对某些处理,或要求限制处理,并要求以常用格式获取你的数据。</li>
+<li>有投诉请先写信给我们,我们会在 30 天内答复。如果对答复不满意,可以向澳大利亚信息专员办公室(<a href="https://www.oaic.gov.au/">oaic.gov.au</a>)或你所在地的数据保护机构投诉。</li>
+</ul>
+<h2><span class="num">9</span>未成年人</h2>
+<p>我们不会有意收集未满 16 岁者的个人信息。如果发现收到了这类信息,我们会将其删除。</p>
+<h2><span class="num">10</span>数据泄露与本说明的变更</h2>
+<ul>
+<li>如果发生可能影响你的数据泄露,我们会及时通知你,并按适用法律向监管机构报告。</li>
+<li>本说明每次更新都会在页首标明日期。对现有功能的数据处理做出不利于你的重要变更时,我们会至少提前 30 天通过邮件通知已注册的用户,并在 App 内提示。</li>
+<li>新功能的数据处理说明随该功能上线生效,只适用于开始使用该功能的人。</li>
+</ul>
+<h2><span class="num">11</span>如何自行核对</h2>
+<ul>
+<li><strong>本机文件。</strong> 本机数据都在 <code>~/Library/Application Support/Murmur/</code>,可以随时打开查看。删除这个文件夹会删除本机的副本;服务器和服务商那边的记录按第 4 节和第 5 节处理。</li>
+<li><strong>网络连接。</strong> 用网络监控工具(例如 LuLu)可以看到 Murmur 连接的地址。想核对每个地址是哪一类服务商,写信问我们。</li>
+<li><strong>数据去向说明。</strong> App 历史页的「数据去哪了」按你现在的设置,说明一次听写会把哪些数据发到哪里。</li>
+</ul>
+<h2><span class="num">12</span>联系我们</h2>
+<p>关于本说明或你的数据,请写信给 <a href="mailto:support@day1aifitness.com">support@day1aifitness.com</a>。</p>
+</main>
 
 <footer class="wrap">
-  <span>本页最后更新:2026-10-08</span>
-  <span>有疑问或要投诉,直接来信:<a href="mailto:support@day1aifitness.com">support@day1aifitness.com</a>(Others Studio)。30 天内答复;不满意可向 OAIC(oaic.gov.au)或你所在地的数据保护机构投诉。</span>
-  <a href="tos.html">使用条款</a>
-  <a href="changelog/index.html">更新记录</a>
-  <a style="margin-left:auto" href="index.html">murmur 首页</a>
+  <span>Others Studio</span>
+  <a href="mailto:support@day1aifitness.com">support@day1aifitness.com</a>
+  <a class="grow" href="tos.html">使用条款</a>
+  <a href="index.html">首页</a>
 </footer>
-
 </body>
 </html>
