@@ -2,10 +2,10 @@
   "_说明": "首屏标题与副标题只在这里写一次。改完跑 python3 tools/set-hero-title.py,它把字铺到中英首页的 h1 / 副标题 / <title> / description / og 标签和全站 og:image:alt;再跑 tools/og/render.sh 重出分享图。「|」= 两行排版时的换行处。",
   "zh": {
     "title": "符合你的|AI 智能语音输入体。",
-    "lede": "想事情的时候,说出来比写下来快得多。|它把你说出的想法整理成清楚的文字,直接写进你正在用的输入框。"
+    "lede": "想事情的时候,说出来比写下来快得多。|比起打字和手写,说话让思考和记录同时发生,想法不会在敲键盘时丢掉。"
   },
   "en": {
     "title": "An AI voice typing agent|that fits the way you talk.",
-    "lede": "When you're thinking something through, saying it is far faster than writing it.|It turns what you say into clear writing, right in the text field you're already using."
+    "lede": "When you're thinking something through, saying it is far faster than writing it.|Unlike typing or handwriting, speaking lets you think and record at the same time, so ideas don't get lost at the keyboard."
   }
 }
