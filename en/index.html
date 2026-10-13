@@ -22,6 +22,7 @@
 <link rel="icon" href="../favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="../apple-touch-icon.png">
 <link rel="stylesheet" href="../pinyin.css">
+<link rel="stylesheet" href="../capsule.css">
 <link rel="alternate" hreflang="zh-CN" href="https://maobenbeginner.com/">
 <link rel="alternate" hreflang="en" href="https://maobenbeginner.com/en/">
 <link rel="alternate" hreflang="x-default" href="https://maobenbeginner.com/">
@@ -280,26 +281,9 @@ kbd {
 }
 @keyframes blink { 50% { opacity: 0; } }
 
-.capsule-row { display: flex; justify-content: center; margin-top: 30px; min-height: 44px; }
-.capsule {
-  display: flex; align-items: center; gap: 11px;
-  background: var(--capsule); border: 1px solid var(--line);
-  border-radius: 999px; padding: 0 13px; height: 42px;
-  box-shadow: var(--shadow);
-  transition: opacity .22s ease, transform .22s ease;
-}
-.capsule.mini { height: 36px; gap: 9px; }
-.capsule.hidden { opacity: 0; transform: translateY(6px); }
-.capsule .round {
-  width: 22px; height: 22px; border-radius: 50%; flex: none;
-  display: grid; place-items: center; font-size: 10px; font-weight: 700;
-  color: var(--second); background: color-mix(in srgb, var(--ink) 8%, transparent);
-}
-.capsule.mini .round { width: 19px; height: 19px; font-size: 9px; }
-.capsule .round.go { color: #fff; background: var(--coral); }
-.capsule canvas { width: 180px; height: 24px; }
-.capsule.mini canvas { width: 110px; height: 22px; }
-.capsule .clock { font-family: "IBM Plex Mono", monospace; font-size: 12.5px; color: var(--second); min-width: 4ch; }
+/* 录音条 = 共享组件 MurmurCapsule(capsule.js / capsule.css,规格见 site-capsule/SPEC.md)。
+   组件自己按状态留高度(无字幕 42px × 尺寸,带字幕 136px × 尺寸),这里只管外框间距。 */
+.capsule-mount { margin-top: 22px; }
 .caption { margin-top: 16px; font-size: 14px; color: var(--second); min-height: 24px; text-align: center; }
 .caption .volatile { opacity: .45; }
 .stage-note { margin-top: 24px; font-size: 12.5px; color: var(--faint); text-align: center; }
@@ -324,7 +308,8 @@ kbd {
 .panel .timer.done { color: var(--coral); font-weight: 500; }
 .panel .fake-input { min-height: 66px; font-size: 14.5px; }
 .panel .caption { min-height: 22px; font-size: 13px; }
-.panel .capsule-row { margin-top: 16px; min-height: 38px; }
+.panel .capsule-row { margin-top: 16px; display: grid; justify-items: center; gap: 8px; }
+.panel .capsule-mount { margin-top: 0; }
 .done-chip {
   display: inline-flex; align-items: center; gap: 6px;
   font-size: 12.5px; font-weight: 500; color: var(--coral);
@@ -354,8 +339,7 @@ kbd {
 .fdemo .head .name { font-size: 13.5px; font-weight: 600; }
 .fdemo .head kbd { margin-right: 0; margin-left: auto; }
 .fdemo .fake-input { min-height: 62px; font-size: 13.5px; padding: 11px 14px; }
-.fdemo .caption { min-height: 22px; font-size: 12.5px; }
-.fdemo .capsule-row { margin-top: 14px; min-height: 34px; }
+.fdemo .capsule-mount { margin-top: 14px; }
 
 
 /* ── 数据旅程动画(与 privacy 页同一场戏) ── */
@@ -655,15 +639,7 @@ body.is-sandbox .sandbox { display: inline-block; }
 
   <div class="stage reveal" id="demo">
     <div class="fake-input"><span class="ph">your cursor is here</span><span class="out"></span><span class="cursor"></span></div>
-    <div class="capsule-row">
-      <div class="capsule hidden">
-        <div class="round">✕</div>
-        <canvas width="360" height="48"></canvas>
-        <div class="clock">0:00</div>
-        <div class="round go">✓</div>
-      </div>
-    </div>
-    <div class="caption"></div>
+    <div class="capsule-mount" data-caption="above"></div>
     <p class="stage-note">This capsule shows up while you speak. Press Esc to cancel the sentence.</p>
   </div>
 </header>
@@ -688,14 +664,9 @@ body.is-sandbox .sandbox { display: inline-block; }
       </div>
       <div class="fake-input"><span class="ph">your cursor is here</span><span class="out"></span><span class="cursor"></span></div>
       <div class="capsule-row">
-        <div class="capsule mini hidden">
-          <div class="round">✕</div>
-          <canvas width="220" height="44"></canvas>
-          <div class="round go">✓</div>
-        </div>
+        <div class="capsule-mount" data-size="mini" data-caption="none"></div>
         <span class="done-chip">✓ Inserted at the cursor</span>
       </div>
-      <div class="caption"></div>
     </div>
   </div>
   <p class="subtract-note reveal">If you answer a few dozen messages a day, each one skips the retyping.</p>
@@ -736,38 +707,17 @@ body.is-sandbox .sandbox { display: inline-block; }
     <div class="fdemo reveal" id="fdemoDictate">
       <div class="head"><span class="name">Dictate</span><kbd>Right ⌘</kbd></div>
       <div class="fake-input"><span class="ph">your cursor is here</span><span class="out"></span><span class="cursor"></span></div>
-      <div class="capsule-row">
-        <div class="capsule mini hidden">
-          <div class="round">✕</div>
-          <canvas width="220" height="44"></canvas>
-          <div class="round go">✓</div>
-        </div>
-      </div>
-      <div class="caption"></div>
+      <div class="capsule-mount" data-size="mini" data-caption="above"></div>
     </div>
     <div class="fdemo reveal" id="fdemoTranslate">
       <div class="head"><span class="name">Translate</span><kbd>Right ⌥</kbd></div>
       <div class="fake-input"><span class="ph">your cursor is here</span><span class="out"></span><span class="cursor"></span></div>
-      <div class="capsule-row">
-        <div class="capsule mini hidden">
-          <div class="round">✕</div>
-          <canvas width="220" height="44"></canvas>
-          <div class="round go">✓</div>
-        </div>
-      </div>
-      <div class="caption"></div>
+      <div class="capsule-mount" data-size="mini" data-caption="above"></div>
     </div>
     <div class="fdemo reveal" id="fdemoAsk">
       <div class="head"><span class="name">Ask</span><kbd>fn</kbd></div>
       <div class="fake-input"><span class="ph">your cursor is here</span><span class="out"></span><span class="cursor"></span></div>
-      <div class="capsule-row">
-        <div class="capsule mini hidden">
-          <div class="round">✕</div>
-          <canvas width="220" height="44"></canvas>
-          <div class="round go">✓</div>
-        </div>
-      </div>
-      <div class="caption"></div>
+      <div class="capsule-mount" data-size="mini" data-caption="above"></div>
     </div>
   </div>
 </section>
@@ -1137,6 +1087,7 @@ var MANAGE_LINK = "https://billing.stripe.com/p/login/test_dRm28rgoe44655lgXkcs8
   if (PAY_LINK.indexOf('/test_') !== -1) document.body.classList.add('is-sandbox');
 })();
 </script>
+<script src="../capsule.js"></script>
 <script>
 /* ── 入场:滚到哪节哪节醒。只动 transform/opacity ── */
 const io = new IntersectionObserver((entries) => {
@@ -1156,31 +1107,6 @@ document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const css = name => getComputedStyle(document.documentElement).getPropertyValue(name).trim();
 
-class Wave {
-  constructor(canvas, w) { this.c = canvas; this.w = w; this.amp = 0; }
-  draw(t, target) {
-    const dpr = devicePixelRatio || 1, W = this.w, H = 22;
-    if (this.c.width !== W * dpr) { this.c.width = W * dpr; this.c.height = H * dpr; }
-    const g = this.c.getContext('2d');
-    g.setTransform(dpr, 0, 0, dpr, 0, 0);
-    g.clearRect(0, 0, W, H);
-    this.amp += (target - this.amp) * 0.1;             // 指数平滑:呼吸,不抽搐
-    const a = this.amp;
-    g.beginPath();
-    for (let x = 0; x <= W; x += 2) {
-      const env = Math.sin((x / W) * Math.PI);
-      const y = H / 2 + Math.sin(x * 0.11 + t * 0.006) * (H * 0.38) * a * env
-                      + Math.sin(x * 0.23 - t * 0.004) * (H * 0.17) * a * env;
-      x === 0 ? g.moveTo(x, y) : g.lineTo(x, y);
-    }
-    g.strokeStyle = a > 0.1 ? css('--coral') : css('--ink');   // 珊瑚只在有声时出现
-    g.globalAlpha = 0.28 + a * 0.6;
-    g.lineWidth = 1.4;
-    g.stroke();
-    g.globalAlpha = 1;
-  }
-}
-
 const demos = [];
 function register(el, render) {
   const d = { el, render, visible: false, start: performance.now() };
@@ -1192,55 +1118,76 @@ function register(el, render) {
   demos.push(d);
 }
 
-/* 「说话」演示:待命 → 听(逐词字幕+波形) → 整理 → 落字 → 停留 */
-function speakDemo(root, { words, result, per = 420, hold = 2600, cycleOverride = 0, onPhase }) {
+/* 「说话」演示:待命 → 按右 ⌘ → 正在打开麦克风 → 听(逐词字幕 + 声线随音量起伏)
+   → 再按 → 整理中 · Ns · ESC 取消 → 已插入(绿点,字落下)→ 下沉淡出 → 停留 */
+function speakDemo(root, { words, result, per = 420, hold = 2600, cycleOverride = 0, onPhase,
+                           mode = 'dictation', scale = 0, kbd = null }) {
   const input = root.querySelector('.out'), ph = root.querySelector('.ph');
-  const capsule = root.querySelector('.capsule'), caption = root.querySelector('.caption');
-  const clock = root.querySelector('.clock');
-  const wave = new Wave(root.querySelector('canvas'), capsule.classList.contains('mini') ? 110 : 180);
-  const t0 = 800, listen = per * words.length + 500, proc = 900, typeMs = 34;
-  const typeDur = result.length * typeMs;
-  const doneAt = t0 + listen + proc + typeDur;
-  const cycle = cycleOverride || doneAt + hold;
+  const mount = root.querySelector('.capsule-mount');
+  const cap = MurmurCapsule.mount(mount, {
+    size: mount.dataset.size || 'full', caption: mount.dataset.caption || 'above', mode,
+    scale: scale || undefined
+  });
+  const D = MurmurCapsule.DWELL;
+  // 说完静 300ms:进整理中时离上一次计时翻页够远,不带半截数字退场;整理段 1700ms:「1s」停 0.7s
+  const tPress = 800, tListen = tPress + D.starting, listen = per * words.length + 300;
+  const tProc = tListen + listen, proc = 1700, tDone = tProc + proc, typeMs = 34;
+  const tHide = tDone + D.done;
+  const doneAt = tDone + result.length * typeMs;
+  const cycle = cycleOverride || Math.max(doneAt + hold, tHide + 800);
+
+  // 假电平:每 85ms 一个台阶(= Mac 的音频缓冲节拍),组件自己平滑(SPEC §6.4)
+  const hash = n => { const x = Math.sin(n * 127.1 + 311.7) * 43758.5453; return x - Math.floor(x); };
+  const levelAt = dt => {
+    const b = Math.floor(dt / 85), tb = b * 85, w = Math.floor(tb / per);
+    if (w >= words.length) return 0;
+    const p = (tb % per) / per;
+    const base = p < 0.82 ? 0.35 + 0.35 * Math.sin(Math.PI * p / 0.82) : 0.15;
+    return Math.max(0, Math.min(1, base + (hash(b) - 0.5) * 0.16));
+  };
+  const last = {};
+  const set = (k, v, fn) => { if (last[k] !== v) { last[k] = v; fn(v); } };
 
   register(root, (now, tRaw) => {
     const t = tRaw % cycle;
-    if (reduced) {                                      // 减弱动效:直接终态
-      if (ph) ph.style.display = 'none';
-      input.textContent = result; capsule.classList.add('hidden');
+    if (reduced) {                                      // 减弱动效:字照样落下,胶囊停在「说话时」那一帧
+      set('reduced', true, () => {
+        if (ph) ph.style.display = 'none';
+        input.textContent = result;
+        cap.setClock(Math.floor(listen / 1000));
+        cap.setCaption(words.join(''), '');
+        cap.setState('listening', { level: 0.55 });   // 静止波形 + 整句字幕;不再留一块空的 136px
+      });
       onPhase && onPhase('done', doneAt, t);
       return;
     }
-    if (t < t0) {                                       // 待命
-      if (ph) ph.style.display = '';
-      input.textContent = ''; caption.innerHTML = '';
-      capsule.classList.add('hidden');
-      wave.draw(now, 0);
-      onPhase && onPhase('idle', doneAt, t);
-    } else if (t < t0 + listen) {                       // 听
-      capsule.classList.remove('hidden');
-      const dt = t - t0;
-      if (clock) clock.textContent = `0:${String(Math.floor(dt / 1000)).padStart(2, '0')}`;
+    if (kbd) set('press', (t >= tPress && t < tPress + 160) || (t >= tProc && t < tProc + 160),
+                 v => kbd.classList.toggle('is-pressed', v));
+    const typed = t < tDone ? 0 : Math.min(result.length, Math.floor((t - tDone) / typeMs));
+    set('typed', typed, n => { input.textContent = result.slice(0, n); if (ph) ph.style.display = n ? 'none' : ''; });
+
+    const state = t < tPress ? 'hidden' : t < tListen ? 'starting' : t < tProc ? 'listening'
+                : t < tDone ? 'processing' : t < tHide ? 'done' : 'hidden';
+    set('state', state, s => {
+      if (s === 'done') cap.setState('done', { text: result });
+      else if (s === 'processing') { cap.setCaption(words.join(''), ''); cap.setState('processing', { seconds: 0 }); }
+      else if (s === 'listening') { cap.setClock(0); cap.setState('listening', { level: 0 }); }
+      else cap.setState(s);
+    });
+    if (state === 'listening') {
+      const dt = t - tListen;
+      set('level', Math.floor(dt / 85), () => cap.setLevel(levelAt(dt)));
+      set('clock', Math.floor(dt / 1000), s => cap.setClock(s));
       const shown = Math.min(Math.floor(dt / per) + 1, words.length);
-      const fin = words.slice(0, shown - 1).join('');
-      caption.innerHTML = fin + `<span class="volatile">${words[shown - 1]}</span>`;
-      wave.draw(now, 0.9);
-      onPhase && onPhase('listen', doneAt, t);
-    } else if (t < t0 + listen + proc) {                // 整理
-      caption.innerHTML = '<span class="volatile">Cleaning up…</span>';
-      wave.draw(now, 0);
-      onPhase && onPhase('process', doneAt, t);
-    } else {                                            // 落字 → 停留
-      capsule.classList.add('hidden');
-      caption.innerHTML = '';
-      if (ph) ph.style.display = 'none';
-      const n = Math.min(Math.floor((t - t0 - listen - proc) / typeMs), result.length);
-      input.textContent = result.slice(0, n);
-      wave.draw(now, 0);
-      onPhase && onPhase(t >= doneAt ? 'done' : 'typing', doneAt, t);
-    }
+      set('words', shown, n => cap.setCaption(words.slice(0, n - 1).join(''), words[n - 1]));
+    } else { last.level = last.clock = last.words = undefined; }
+    if (state === 'processing') set('proc', Math.floor((t - tProc) / 500) * 0.5, s => cap.setProcessingSeconds(s));
+    else last.proc = undefined;
+
+    onPhase && onPhase(t < tPress ? 'idle' : t < tProc ? 'listen' : t < tDone ? 'process'
+                       : t >= doneAt ? 'done' : 'typing', doneAt, t);
   });
-  return { doneAt };
+  return { doneAt, hideAt: tHide + MurmurCapsule.MOTION.hudHide };   // hideAt = 胶囊完全收起的时刻
 }
 
 /* 「打字」演示:type/pause/del 的脚本,编译成 (时刻 → 文本) */
@@ -1269,9 +1216,12 @@ function typeDemo(root, ops, { cycleOverride = 0, onPhase }) {
 }
 
 /* ── Hero:一场就够,讲清「说完,字落下」── */
+const heroMount = document.querySelector('#demo .capsule-mount');
+heroMount.dataset.size = matchMedia('(max-width: 420px)').matches ? 'mini' : 'full';   // 390 宽舞台放不下 full
 speakDemo(document.getElementById('demo'), {
   words: ['so ', "let's ship ", 'the fix ', 'behind a flag ', 'and roll it out ', 'Monday'],
   result: "Let's ship the fix behind a flag and roll it out Monday.",
+  scale: matchMedia('(max-width: 360px)').matches ? 0.75 : 0,
 });
 
 /* ── 少一道工序:同一句话,两边同一个循环、同时开跑 ── */
@@ -1288,13 +1238,13 @@ function timerPhase(panel) {
   };
 }
 const speakChip = speakPanel.querySelector('.done-chip');
-speakDemo(speakPanel, {
+const sp = speakDemo(speakPanel, {
   words: ['tomorrow ', 'at three, ', 'the usual ', 'place'],
   result: 'Tomorrow at three, the usual place.',
   cycleOverride: SAME_CYCLE,
   onPhase: (phase, doneAt, t) => {
     timerPhase(speakPanel)(phase, doneAt, t);
-    speakChip.classList.toggle('on', phase === 'done');
+    speakChip.classList.toggle('on', phase === 'done' && t >= sp.hideAt);   // 胶囊自己演过「已插入」,收起后 chip 才亮
   },
 });
 typeDemo(typePanel, [
@@ -1306,14 +1256,17 @@ typeDemo(typePanel, [
 
 /* ── 三个核心功能的展示区 ── */
 speakDemo(document.getElementById('fdemoDictate'), {
+  scale: 0.8,
   words: ['um… ', 'remind me ', 'to call Mum ', 'at ten ', 'tomorrow'],
   result: 'Remind me to call Mum at ten tomorrow.',   // 口水词在字幕里,不在成品里
 });
 speakDemo(document.getElementById('fdemoTranslate'), {
+  mode: 'translate', scale: 0.8,
   words: ['how about ', 'we grab ', 'coffee ', 'on Friday'],
   result: '周五一起喝杯咖啡怎么样?',            // 说英文,落下的是中文
 });
 speakDemo(document.getElementById('fdemoAsk'), {
+  mode: 'ask', scale: 0.8,
   words: ['what undoes ', 'the last ', 'commit'],
   result: 'git reset --soft HEAD~1',                 // 落下的是答案,不是问题
 });
