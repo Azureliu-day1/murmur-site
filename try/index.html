@@ -138,7 +138,7 @@
     <p class="stage-note">这里写的<b>文字</b>会发到 Murmur 的云端整理,整理完不保存。网页版不录音,也不用麦克风。整理规则和 Mac 版相同。</p>
   </div>
 
-  <p class="after" id="noseatNote" hidden>名额一个一个开。开了会发信到你这个邮箱。</p>
+  <p class="after" id="noseatNote" hidden>名额有上限,满了要排队。开了会发信到你这个邮箱。</p>
 
   <p class="after">想在 Mac 上用?<a href="../index.html#download">下载 Mac 版</a>,按右 ⌘ 说一句,字就落在光标处。</p>
 </main>
@@ -203,7 +203,7 @@ const L = {
   quotaNoSeatOut: (head) => `${head} · 今天的次数用完了,明天再来`,
   // 下面那一行(#noseatNote)。none 是三段:前半 / 链接上的字 / 后半。
   noSeatNote: {
-    default:  "名额一个一个开。开了会发信到你这个邮箱。",
+    default:  "名额有上限,满了要排队。开了会发信到你这个邮箱。",
     none:     ["还没申请名额。", "去登录页申请一个", "。"],
     new:      (d) => d ? `申请已收到(${d}),名额开了会发信到这个邮箱。` : "申请已收到,名额开了会发信到这个邮箱。",
     declined: "这次没开名额。",
