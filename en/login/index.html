@@ -167,7 +167,7 @@ textarea.field { min-height: 84px; line-height: 1.6; }
     <details id="req">
       <summary id="reqSummary">No seat yet? Ask for one</summary>
       <div class="body">
-        <p class="note" style="margin-top:0">Seats are limited. You get a 6-digit code <b>right away</b>. The first time you sign in with it, a seat opens on the spot if one is free; if they are full you join the waitlist, and we email this address when your seat opens. Either way you can sign in and try the tidying in the browser.</p>
+        <p class="note" style="margin-top:0">Seats are limited. You get a 6-digit code <b>right away</b>. The first time you sign in with it, a seat opens on the spot if one is free and nobody is already on the waitlist; otherwise you join the waitlist, and we email this address when your seat opens. Either way you can sign in and try the tidying in the browser.</p>
         <p class="label" style="margin-top:18px"><label for="reqEmail">Email</label></p>
         <input class="field" type="email" id="reqEmail" inputmode="email" autocomplete="email"
                placeholder="you@example.com" spellcheck="false" autocapitalize="none">
@@ -203,7 +203,7 @@ textarea.field { min-height: 84px; line-height: 1.6; }
 // 一张卡三态:①填邮箱 → ②填 6 位码 → ③已经登录了。
 //
 // 四条纪律:
-//  ① 页面上零处「注册」。这站是邀请制的;对没名额的人,正确的下一步是
+//  ① 页面上零处「注册」。这站是申请制的;对没名额的人,正确的下一步是
 //     「申请一个」,而服务端会在那一步给他建身份 —— 用户看到的始终是
 //     「申请 → 收码 → 进来」,不是「注册」。
 //  ② 一个失败对应一句人话,⛔ 不把状态码或者英文错误串摆给用户看。
