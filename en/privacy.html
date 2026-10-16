@@ -255,7 +255,8 @@ footer a { color: var(--faint); }
   <div class="eyebrow">Where your data lives</div>
   <h1>A privacy page you can check yourself,<br>not terms you have to sign.</h1>
   <p class="lede">Your recordings, history and dictionary stay on your Mac.
-  For cloud recognition, <b>the audio goes straight to the recognition provider behind the tier you picked, not through our servers.</b>
+  On your Mac, for cloud recognition, <b>the audio goes straight to the recognition provider behind the tier you picked, not through our servers.</b>
+  Long phone and Watch recordings sent for whole-file transcription are the exception: the recording is uploaded for a short time, and it is deleted as soon as transcription finishes, and no later than 3 hours after transcription starts.
   When you are signed in and have not entered your own key, the text for cleanup, translation, Ask and voice editing passes through our servers on its way to the language model; our servers do not store it.
   Below, for every kind of data: where it goes, where it sits, how to delete it — and for each one, how to verify it with your own hands.</p>
 
@@ -353,7 +354,7 @@ footer a { color: var(--faint); }
   <div class="eyebrow">Never · What we don’t do</div>
   <h2>In writing, so you can hold us to it.</h2>
   <div class="nots reveal">
-    <div class="not"><span class="x">✕</span><p><b>We never handle your audio.</b> Cloud recognition audio goes from your Mac straight to the recognition provider, through none of our servers. Text for cleanup is the exception; see “Once you sign in” below.</p></div>
+    <div class="not"><span class="x">✕</span><p><b>We don’t handle your dictation audio.</b> Cloud recognition audio goes from your Mac straight to the recognition provider, through none of our servers. There are two exceptions, both under “Once you sign in” below: text for cleanup, and whole-file transcription of long phone and Watch recordings, where the recording is held briefly on our side.</p></div>
     <div class="not"><span class="x">✕</span><p><b>No behavioural tracking.</b> There is no analytics SDK in the app, and which app you were speaking into is never reported back to us. Once you sign in, each sentence that used a cloud service reports its character count (long recordings report their length) to count your allowance, with no text attached; see “Once you sign in” below.</p></div>
     <div class="not"><span class="x">✕</span><p><b>No selling your data, no sharing it.</b> There are no advertisers and no “partners”. Your data is not the product.</p></div>
     <div class="not"><span class="x">✕</span><p><b>No analytics on this website.</b> No tracking, no ads. The sign-in and try-it pages load third-party scripts for sign-in and abuse protection, listed under “Website” below; open your browser’s network panel and check.</p></div>
@@ -386,7 +387,10 @@ footer a { color: var(--faint); }
     <p>If you are not signed in, the app does not connect to our servers.</p>
     <p>Once you sign in, our servers do these things:</p>
     <p>① Sign-in, allowance and subscription status. ② After each sentence that used a cloud service, one report of its character count and type (dictation or Ask; long recordings report their length), with no text attached. ③ On the free allowance, each recording starts by fetching a one-time pass for recognition, so our servers know you are recording at that moment; the audio still goes straight to the recognition provider. ④ On the free allowance (no key of your own), the text for cleanup, translation, Ask and voice editing passes through our servers on its way to the language model. The same request carries your dictionary and the screen excerpt, and with personal style on, up to 3 past example sentences. Our servers only forward it and count the cost; they do not store the text, and no text goes into the logs.</p>
-    <p>Recordings are never uploaded. History is never uploaded as a whole; with personal style on, a cleanup request carries up to 3 entries. Every change to this page leaves its date at the bottom.</p>
+    <p>⑤ When you send a long phone or Watch recording for whole-file transcription, the recording is uploaded to our private storage at Supabase (Singapore) and held there briefly, and the recognition service fetches it from there. The recording is deleted as soon as transcription finishes, and no later than 3 hours after transcription starts. The finished text passes through our servers once on its way to your phone; our servers do not store it. Once your phone confirms it has saved the text, we immediately ask the recognition service to delete it; the recognition service keeps it for at most 30 days under its own policy.</p>
+    <p>What we keep: a record of each whole-file transcription (length, size in bytes, status, and the recognition service’s transcription ID) for 30 days. The record of allowance used stays with your account.</p>
+    <p>Who processes it, and where: your account, allowance and usage records are stored at Supabase (Singapore), and recordings sent for whole-file transcription are held there briefly. Our server code runs on Supabase, in Singapore or Sydney; text it forwards passes through there and is not stored. Recognition and cleanup go to recognition and language-model providers; which provider sits behind which tier is stated in the app’s own “Privacy” panel. Payment is handled by Stripe.</p>
+    <p>Recordings on your Mac are never uploaded; long phone and Watch recordings are uploaded only for whole-file transcription, as in ⑤ above. History is never uploaded as a whole; with personal style on, a cleanup request carries up to 3 entries. Every change to this page leaves its date at the bottom.</p>
   </div>
 </section>
 
@@ -508,7 +512,7 @@ if (reduced) {
 </script>
 
 <footer class="wrap">
-  <span>This page last updated: 2026-10-02</span>
+  <span>This page last updated: 2026-10-18</span>
   <span>Questions? Write to us: Others Studio</span>
   <a href="tos.html">Terms of Use</a>
   <a style="margin-left:auto" href="index.html">murmur home</a>
