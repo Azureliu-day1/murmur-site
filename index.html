@@ -775,7 +775,7 @@ body.is-sandbox .sandbox { display: inline-block; }
     <article class="tier reveal">
       <div class="tier-top"><h3>中文优先</h3><span class="tier-cost">额度 ×1</span></div>
       <div class="tier-for">中文为主、带方言口音</div>
-      <div class="tier-soon">内测中 · 逐步开放</div>
+      <div class="tier-soon">即将开放</div>
       <div class="stars">
         <div><span>日常使用</span><i><b>●●●●</b><s>●</s></i></div>
         <div><span>中文为主</span><i><b>●●●●●</b></i></div>
@@ -794,7 +794,7 @@ body.is-sandbox .sandbox { display: inline-block; }
     <article class="tier reveal">
       <div class="tier-top"><h3>精准</h3><span class="tier-cost">额度 ×2</span></div>
       <div class="tier-for">英文为主、专有名词多</div>
-      <div class="tier-soon">内测中 · 逐步开放</div>
+      <div class="tier-soon">即将开放</div>
       <div class="stars">
         <div><span>日常使用</span><i><b>●●●</b><s>●●</s></i></div>
         <div><span>中文为主</span><i><b>●●●</b><s>●●</s></i></div>
@@ -813,7 +813,7 @@ body.is-sandbox .sandbox { display: inline-block; }
   </div>
 
   <p class="tier-note reveal">
-    <strong>现在能用的只有「标准」档</strong>,另外两档在内测,会逐步开放。
+    <strong>现在能用的只有「标准」档</strong>,另外两档还没开放,会逐步开放。
     「额度 ×2」指这一档按两倍扣:长录音录 1 分钟,从时长池里扣 2 分钟。
     断网或额度用完时,自动换成本机识别。
     本机识别比云端慢,中英混说也没那么准,但录下的话不会丢。
@@ -827,7 +827,8 @@ body.is-sandbox .sandbox { display: inline-block; }
   <p class="sub reveal">录音、转写、历史和词典都存在你的 Mac 上。
   用云端识别时,音频直接发给你选的那家识别服务,不经过我们。
   用本机识别时,音频不出这台电脑。
-  登录后用免费额度整理时,文字先经过我们的服务器,再转给大模型。</p>
+  登录后用免费额度整理时,文字先经过我们的服务器,再转给大模型。
+  手机和手表的长录音选整段转写时,录音会临时上传,转完立即删除;最晚 3 小时(从开始转写算)。</p>
   <div class="flowstage reveal">
     <svg viewBox="0 0 760 250" aria-label="音频从你的 Mac 直接发给你选的模型商,不经过我们的服务器">
       <!-- 航线(常显,极淡) -->
@@ -932,8 +933,8 @@ body.is-sandbox .sandbox { display: inline-block; }
   <h2 class="reveal">额度用完之前,不用付钱。<span class="sandbox">沙盒测试中</span></h2>
   <p class="sub reveal">
     免费额度是我们替你付的云端账单 —— 用完了自动切回本机识别,不会停在那里问你要钱。
-    云端额度现阶段是<strong>内测邀请制</strong>:下载免费、本机识别不用登录,
-    要云端名额,<a href="https://othersstudio.tech" rel="noopener">来找我们</a>要一个。
+    云端额度要<strong>申请名额</strong>,名额有上限:下载免费、本机识别不用登录,
+    要云端名额,<a href="login/index.html">在登录页申请</a>。
   </p>
 
   <div class="plans reveal">
@@ -1000,7 +1001,7 @@ body.is-sandbox .sandbox { display: inline-block; }
   <div class="faq reveal">
     <details>
       <summary>我的录音会被传到哪里?</summary>
-      <p class="a">录音、转写、历史和词典都存在你的 Mac 上。用云端识别时,音频直接发给那一家识别服务,不经过我们的服务器。用我们代付的免费额度时也是这样。有一个例外:用免费额度时,整理、翻译、随心问和口述编辑的<strong>文字</strong>会先经过我们的服务器,再转给模型厂商。服务器不存原文。本机识别时音频不出电脑;开着整理时,文字仍会发给大模型。词典里的专有名词会随请求发给识别服务,帮它听对这些词。这些在设置里都写着。</p>
+      <p class="a">Mac 上的录音、转写、历史和词典都存在本机。在 Mac 上用云端识别时,音频直接发给那一家识别服务,不经过我们的服务器。用我们代付的免费额度时也是这样。例外有两个。一是用免费额度时,整理、翻译、随心问和口述编辑的<strong>文字</strong>会先经过我们的服务器,再转给模型厂商。服务器不存原文。二是手机和手表的长录音选整段转写时,录音会临时上传到我们的存储,转完立即删除;最晚 3 小时(从开始转写算)。细节见<a href="privacy.html">「你的数据在哪」</a>。本机识别时音频不出电脑;开着整理时,文字仍会发给大模型。词典里的专有名词会随请求发给识别服务,帮它听对这些词。这些在设置里都写着。</p>
     </details>
     <details>
       <summary>断网了怎么办?</summary>
@@ -1008,11 +1009,11 @@ body.is-sandbox .sandbox { display: inline-block; }
     </details>
     <details>
       <summary>支持哪些语言?</summary>
-      <p class="a">中文、英文,以及一句话里中英夹着说。带粤语、川渝、吴语口音的中文有专门的档位,目前在内测。</p>
+      <p class="a">中文、英文,以及一句话里中英夹着说。带粤语、川渝、吴语口音的中文有专门的档位,即将开放。</p>
     </details>
     <details>
       <summary>需要自己配 API Key 吗?</summary>
-      <p class="a">不需要。云端额度现在是邀请制,拿到名额并登录后就有免费额度。免费额度的云端费用由我们付。用完后自动换成本机识别,不会停下来让你付费。</p>
+      <p class="a">不需要。在登录页申请名额,用收到的 6 位码登录。有空位、前面也没人在候补时当场开通,开通后就有免费额度。免费额度的云端费用由我们付。用完后自动换成本机识别,不会停下来让你付费。</p>
     </details>
   </div>
 </section>
@@ -1026,11 +1027,11 @@ body.is-sandbox .sandbox { display: inline-block; }
   </div>
   <!-- ⭐ 和 hero 里那一行同一句:滚到底才看见「下载」的手机用户,在这里也不该是死路。 -->
   <p class="mobile-path reveal">手机上装不了。可以先<a href="login/index.html">申请名额</a>,或者<a href="try/index.html">在网页上试整理 →</a></p>
-  <p class="stage-note reveal"><b>需要 macOS 26 以上、M 系列芯片的 Mac</b> · 下载免费 · 云端额度要邀请</p>
+  <p class="stage-note reveal"><b>需要 macOS 26 以上、M 系列芯片的 Mac</b> · 1.0 预览 · 下载免费 · 云端额度要申请名额</p>
   <p class="stage-note reveal">Intel Mac 和 macOS 15 及更早的系统现在装不上。发封邮件到 <a href="mailto:support@day1aifitness.com">support@day1aifitness.com</a>,支持以后我们回信告诉你。</p>
   <!-- ⭐ 申请名额只有一条路:登录页的表单(和 hero、手机提示同一个入口)。
        以前这里另写了一个邮箱,两条路收进两个地方,申请的人不知道该走哪条。 -->
-  <p class="stage-note reveal">下载免费,<b>本机识别不用登录就能用</b>。云端额度现在要邀请,<a href="login/index.html">在这里申请名额</a>,写一句你想用它做什么。</p>
+  <p class="stage-note reveal">下载免费,<b>本机识别不用登录就能用</b>。云端额度要申请名额,名额有上限,满了要排队。<a href="login/index.html">在这里申请名额</a>,写一句你想用它做什么。</p>
   <p class="stage-note reveal">解压后把 Murmur 拖进「应用程序」。第一次打开时,它会请求麦克风和辅助功能权限。
   辅助功能权限用来把字放进光标处。</p>
   <!-- ⭐ Windows 版(Wei 10-12):只说在测试、预计两个月内。不写日期、不列功能、不收申请。 -->

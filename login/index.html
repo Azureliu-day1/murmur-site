@@ -165,7 +165,7 @@ textarea.field { min-height: 84px; line-height: 1.6; }
     <details id="req">
       <summary id="reqSummary">还没有名额?申请一个</summary>
       <div class="body">
-        <p class="note" style="margin-top:0">名额一个一个开,每条申请我都会看。提交后你<b>马上</b>会收到一个 6 位码,可以先登录,在网页上试整理。名额开了,会发信到这个邮箱。</p>
+        <p class="note" style="margin-top:0">名额有上限。提交后你<b>马上</b>会收到一个 6 位码,第一次用它登录时,有空位、前面也没人在候补,就当场开通;否则进候补,名额开了发信到这个邮箱。没开通也能先登录,在网页上试整理。</p>
         <p class="label" style="margin-top:18px"><label for="reqEmail">邮箱</label></p>
         <input class="field" type="email" id="reqEmail" inputmode="email" autocomplete="email"
                placeholder="you@example.com" spellcheck="false" autocapitalize="none">
@@ -199,7 +199,7 @@ textarea.field { min-height: 84px; line-height: 1.6; }
 // 一张卡三态:①填邮箱 → ②填 6 位码 → ③已经登录了。
 //
 // 四条纪律:
-//  ① 页面上零处「注册」。这站是邀请制的;对没名额的人,正确的下一步是
+//  ① 页面上零处「注册」。这站是申请制的;对没名额的人,正确的下一步是
 //     「申请一个」,而服务端会在那一步给他建身份 —— 用户看到的始终是
 //     「申请 → 收码 → 进来」,不是「注册」。
 //  ② 一个失败对应一句人话,⛔ 不把状态码或者英文错误串摆给用户看。

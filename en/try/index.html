@@ -139,7 +139,7 @@
     <p class="stage-note">The <b>text</b> you type here is sent to Murmur's cloud to be tidied and is not kept afterwards. This web version does not record audio or use your microphone. The tidying uses the same rules as the Mac app.</p>
   </div>
 
-  <p class="after" id="noseatNote" hidden>Seats open one at a time. We email this address when yours opens.</p>
+  <p class="after" id="noseatNote" hidden>Seats are limited, and there is a waitlist when they are full. We email this address when yours opens.</p>
 
   <p class="after">Want it on your Mac? <a href="../index.html#download">Download the Mac app</a>, press right ⌘, say a sentence, and the text lands at your cursor.</p>
 </main>
@@ -198,7 +198,7 @@ const L = {
   quotaNoSeatOut: (head) => `${head} · today's tidy-ups are used up`,
   // 下面那一行(#noseatNote)。none 是三段:前半 / 链接上的字 / 后半。
   noSeatNote: {
-    default:  "Seats open one at a time. We email this address when yours opens.",
+    default:  "Seats are limited, and there is a waitlist when they are full. We email this address when yours opens.",
     none:     ["You have not asked for a seat yet. ", "Ask on the sign-in page", "."],
     new:      (d) => d ? `Request received (${d}). We will email this address when your seat opens.` : "Request received. We will email this address when your seat opens.",
     declined: "No seat this time.",
