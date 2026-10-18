@@ -213,10 +213,10 @@ footer .grow { margin-left: auto; }
 <p>With on-device recognition, transcription happens on your Mac and the audio is not sent to us or to any recognition provider. There is one exception: if your macOS version can&rsquo;t recognise the current language offline, the system may send the audio to the operating system provider, under its privacy policy.</p>
 <h3><span class="num">3.2</span>Cloud recognition</h3>
 <ul>
-<li>On the free allowance, audio goes from your Mac to the speech recognition provider (United States). Each time you start recording, our server issues a single-use temporary credential, so we know when you start recording, but the audio does not pass through our servers.</li>
+<li>On the free allowance, audio goes from your Mac to the speech recognition provider (United States). Each time you start recording, our server issues a single-use temporary credential, so we know when you start recording; for dictation and live captions on the Mac, the audio does not pass through our servers.</li>
 <li>With your own service key, audio goes directly to that provider.</li>
 <li>Sent along with each recognition request: words from your dictionary, words learned by the input method, and, if screen context is on, up to 40 proper nouns taken from the text on screen. These help the recogniser get names and terms right.</li>
-<li>Long recordings are transcribed with speakers identified. On the free allowance, they stream to the speech recognition provider in real time, like dictation. With your own key, the whole recording is uploaded to that provider as a file, and the app asks the provider to delete it once transcription is done. If the app quits during transcription, the file may be kept for the provider&rsquo;s own retention period.</li>
+<li>Long recordings are transcribed with speakers identified. On the free allowance, long recordings on the Mac stream to the speech recognition provider in real time, like dictation; for whole-file transcription of long recordings from your phone or Watch, the recording is held briefly in our cloud storage (Singapore), fetched by the speech recognition provider, and deleted as soon as transcription finishes, and no later than 3 hours after transcription starts. With your own key, the whole recording is uploaded to that provider as a file, and the app asks the provider to delete it once transcription is done. If the app quits during transcription, the file may be kept for the provider&rsquo;s own retention period.</li>
 </ul>
 <h3><span class="num">3.3</span>Cleanup, translation, and voice commands</h3>
 <p>These features send the transcript to a language model once:</p>
@@ -294,7 +294,7 @@ footer .grow { margin-left: auto; }
 <tr>
 <td data-label="Provider type">Cloud hosting and database provider</td>
 <td data-label="Country">Singapore (database)</td>
-<td data-label="What it processes">Accounts, usage records, server functions</td>
+<td data-label="What it processes">Accounts, usage records, server functions; the temporary recording file during whole-file transcription of long phone or Watch recordings (deleted once transcribed)</td>
 <td data-label="When">Once signed in; when reading public configuration</td>
 </tr>
 <tr>
@@ -336,7 +336,7 @@ footer .grow { margin-left: auto; }
 </tbody>
 </table></div>
 <ul>
-<li><strong>Where requests are handled.</strong> The database is in Singapore. Requests from the app and the website may also pass through the country of the server nearest you.</li>
+<li><strong>Where requests are handled.</strong> The database and the temporary recording files for whole-file transcription are in Singapore. Requests from the app and the website may also pass through the country of the server nearest you.</li>
 <li><strong>International transfers.</strong> Your data may be transferred to the United States, China, Singapore, and the countries of the servers mentioned above. Data protection laws there may differ from those where you live. China does not have an adequacy decision from the European Union. We give each provider only the data it needs for the feature you use. If you are in the European Economic Area or the UK, we make these transfers because they are necessary to provide the features you use under our contract with you.</li>
 <li><strong>Model training.</strong> We don&rsquo;t train models on your content. The speech recognition provider states that it does not train on customer content and does not store real-time audio by default. The text processing provider&rsquo;s API terms do not rule out training on submitted content, and we have not found a published retention period. If you don&rsquo;t want your content to reach the text processing provider, use Murmur signed out; or, once signed in, set cleanup to Off, don&rsquo;t use translation, Ask, voice editing or the website trial, and skip the three career questions. To find out exactly which providers we use, write to us and we will tell you.</li>
 <li><strong>No selling.</strong> We don&rsquo;t sell your personal information or share it for advertising. Data goes only to the providers above, as needed to run the service, and to any provider you have added your own key for.</li>
