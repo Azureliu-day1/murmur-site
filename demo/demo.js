@@ -25,6 +25,15 @@
     var wordList = (words.words || []).map(function (w, i) {
       return { code: w[0], text: w[1], weight: +w[2] || 0, order: i };
     });
+    // 整句拼词(compose)用:每个全拼只留权重最高的那个词
+    var bestByCode = {};
+    var maxCodeLen = 0;
+    wordList.forEach(function (w) {
+      if (!/^[a-z]+$/.test(w.code)) return;
+      var b = bestByCode[w.code];
+      if (!b || byWeight(w, b) < 0) bestByCode[w.code] = w;
+      if (w.code.length > maxCodeLen) maxCodeLen = w.code.length;
+    });
     var nextTable = words.next || {};
     var mixedTable = words.mixed || {};
 
@@ -66,7 +75,33 @@
 
     function byWeight(a, b) { return b.weight - a.weight || a.order - b.order; }
 
-    // 规则 2:mixed > 整段 > 前缀 > 只覆盖前几个音节(长的在前)
+    // 规则 17:整句。把 buffer 用词表里的词从头拼起来(动态规划):词数最少优先,
+    // 词数相同取权重和大的。整段拼得完 → 整句吃完整段;拼不完 → 取能拼的最长一段,
+    // 剩下的拼音留在 buffer(选它之后照规则 8 继续)。
+    // 只有一个词的「最长一段」不算整句(那就是规则 2 的「前几个音节」,别抢前缀词的位置)。
+    function compose(buf) {
+      var n = buf.length;
+      var best = [{ count: 0, score: 0, prev: -1, word: null }];
+      for (var i = 0; i < n; i++) {
+        var from = best[i];
+        if (!from) continue;
+        for (var len = 1; len <= maxCodeLen && i + len <= n; len++) {
+          var w = bestByCode[buf.substr(i, len)];
+          if (!w) continue;
+          var c = { count: from.count + 1, score: from.score + w.weight, prev: i, word: w };
+          var cur = best[i + len];
+          if (!cur || c.count < cur.count || (c.count === cur.count && c.score > cur.score)) best[i + len] = c;
+        }
+      }
+      var end = n;
+      while (end > 0 && !best[end]) end--;
+      if (!end || (end < n && best[end].count < 2)) return null;
+      var parts = [];
+      for (var at = end; at > 0; at = best[at].prev) parts.unshift(best[at].word.text);
+      return { text: parts.join(""), code: buf.slice(0, end), consume: end };
+    }
+
+    // 规则 2:mixed > 整句(规则 17)> 整段 > 前缀 > 只覆盖前几个音节(长的在前)
     function computeCandidates(buf, segs) {
       if (!buf) return [];
       var out = [];
@@ -77,6 +112,8 @@
         out.push({ text: text, code: code, consume: consume });
       }
       if (Object.prototype.hasOwnProperty.call(mixedTable, buf)) add(mixedTable[buf], buf, buf.length);
+      var sentence = compose(buf);
+      if (sentence) add(sentence.text, sentence.code, sentence.consume);
       wordList.filter(function (w) { return w.code === buf; }).sort(byWeight)
         .forEach(function (w) { add(w.text, w.code, buf.length); });
       wordList.filter(function (w) { return w.code !== buf && w.code.indexOf(buf) === 0; }).sort(byWeight)

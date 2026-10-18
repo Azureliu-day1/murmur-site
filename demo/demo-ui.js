@@ -24,13 +24,13 @@
 
   var T = {
     zh: {
-      ph: "点这里,敲 nihao 试试",
-      phTouch: "点下面的「自动演示」",
-      hint: "敲拼音,1–5 选字,空格上屏,退格 1.5 秒内退回",
-      hintTouch: "手机上点「自动演示」看",
-      cap: function (n, c) { return "第 " + n + " 句 · " + c; },
-      done: function (n) { return n + " 句演示完了。点输入框,自己敲一句试试。"; },
-      doneTouch: function (n) { return n + " 句演示完了。"; },
+      ph: "点这里打拼音,比如 jintianxiawukaihui",
+      phTouch: "点下面的场景,看它怎么打",
+      hint: "打拼音,1 到 5 选字,空格确认。选错了 1.5 秒内按退格,退回重选",
+      hintTouch: "在电脑上打开这一页,可以用键盘自己打",
+      cap: function (n, c) { return "场景 " + n + " · " + c; },
+      done: function (n) { return n + " 个场景演示完了。点输入框,自己打一句试试。"; },
+      doneTouch: function (n) { return n + " 个场景演示完了。"; },
       lab: "接写",
       tail: "空格接1 · Esc收起",
       modeZh: "中文",
@@ -38,13 +38,13 @@
       missing: "演示没有加载出来,刷新页面再试。",
     },
     en: {
-      ph: "Click here and type nihao",
-      phTouch: "Tap “Play demo” below",
-      hint: "Type Pinyin. 1–5 picks, Space commits, Delete within 1.5 s puts it back.",
-      hintTouch: "On a phone, tap “Play demo” to watch.",
-      cap: function (n, c) { return "Line " + n + " · " + c; },
-      done: function (n) { return "All " + n + " lines done. Click the text field and type your own."; },
-      doneTouch: function (n) { return "All " + n + " lines done."; },
+      ph: "Click here and type Pinyin, for example jintianxiawukaihui",
+      phTouch: "Tap a scene below to watch it type",
+      hint: "Type Pinyin. 1 to 5 picks, Space confirms. Picked the wrong one? Press Delete within 1.5 s to choose again.",
+      hintTouch: "Open this page on a computer to type with your own keyboard.",
+      cap: function (n, c) { return "Scene " + n + " · " + c; },
+      done: function (n) { return "All " + n + " scenes played. Click the text field and type your own."; },
+      doneTouch: function (n) { return "All " + n + " scenes played."; },
       lab: "Next",
       tail: "Space takes 1 · Esc closes",
       modeZh: "Chinese",
@@ -59,8 +59,10 @@
   var box = $("box"), elPh = $("ph"), elOut = $("out"), elComp = $("comp"), elCaret = $("caret");
   var slot = $("slot"), panel = $("panel"), cap = $("cap"), elMode = $("mode");
   var btnAuto = $("auto"), btnStop = $("stop"), btnReset = $("reset"), lines = $("lines");
+  var stage = box.closest ? box.closest(".stage") : null;
 
-  var mqNarrow = window.matchMedia ? window.matchMedia("(max-width: 820px)") : null;
+  // 「没有实体键盘」:窄屏(≤ 600 px)或纯触屏(不能悬停、指针粗)。这时提示改成看场景演示。
+  var mqNarrow = window.matchMedia ? window.matchMedia("(max-width: 600px), (hover: none) and (pointer: coarse)") : null;
   var mqCalm = window.matchMedia ? window.matchMedia("(prefers-reduced-motion: reduce)") : null;
   function narrow() { return !!(mqNarrow && mqNarrow.matches); }
   // 减弱动效时字母间隔改 40 ms,但仍逐键:演示的是按键过程,这是内容不是装饰
@@ -157,6 +159,8 @@
   }
   function setRunning(on) {
     btnStop.disabled = !on;
+    // 手机上候选窗格只在演示进行时预留高度(demo.css 的 .stage.running),平时不留空白
+    if (stage) stage.classList.toggle("running", !!on);
   }
 
   function stopAuto() {

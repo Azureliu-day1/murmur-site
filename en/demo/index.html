@@ -9,14 +9,14 @@
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Pinyin demo · Murmur</title>
-<meta name="description" content="Try the Murmur Pinyin candidate window in your browser. This is a demo with a small word list.">
+<meta name="description" content="Get a feel for Murmur Pinyin typing in your browser: whole sentences, mixed Chinese and English, and undoing a wrong pick. The full word list is in the app.">
 <link rel="canonical" href="https://maobenbeginner.com/en/demo/">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Murmur">
 <meta property="og:locale" content="en_US">
 <meta property="og:url" content="https://maobenbeginner.com/en/demo/">
 <meta property="og:title" content="Pinyin demo · Murmur">
-<meta property="og:description" content="Try the Murmur Pinyin candidate window in your browser. This is a demo with a small word list.">
+<meta property="og:description" content="Get a feel for Murmur Pinyin typing in your browser: whole sentences, mixed Chinese and English, and undoing a wrong pick. The full word list is in the app.">
 <meta property="og:image" content="https://maobenbeginner.com/og-en.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -55,7 +55,7 @@
   <div class="t">
     <p class="eyebrow">Demo</p>
     <h1>Type Pinyin in your browser</h1>
-    <p class="sub">This is a demo, not the real input method. The word list was written by hand for this page and has only a few hundred words. The real input method installs with Murmur. See the <a href="../index.html#pinyin">Pinyin section</a> on the home page.</p>
+    <p class="sub">Get a feel for Murmur Pinyin typing right in your browser. The full word list is in the app. See the <a href="../index.html#pinyin">Pinyin section</a> on the home page for how to install it.</p>
   </div>
 </header>
 
@@ -82,18 +82,18 @@
     <noscript><p class="state">This page needs JavaScript.</p></noscript>
 
     <div class="stage-note">
-      <p>The candidate window is drawn like the real one: 5 per page, with the current number in coral.</p>
+      <p>The candidate window matches the app: 5 per page, with the current number in coral.</p>
       <ul class="keys">
         <li><kbd>1</kbd>to<kbd>5</kbd>pick a candidate</li>
-        <li><kbd>Space</kbd>commit the highlighted one (the first by default)</li>
-        <li><kbd>Delete</kbd>once within 1.5 s of a commit puts the word back as Pinyin</li>
-        <li><kbd>Shift</kbd>tap alone to switch Chinese and English; half-typed Pinyin is kept as letters</li>
+        <li><kbd>Space</kbd>confirm the highlighted one (the first by default)</li>
+        <li><kbd>Delete</kbd>once within 1.5 s of confirming puts the word back as Pinyin to choose again</li>
+        <li><kbd>Shift</kbd>tap alone to switch Chinese and English; half-typed Pinyin stays as letters</li>
         <li><kbd>-</kbd><kbd>=</kbd>previous page, next page</li>
-        <li><kbd>,</kbd><kbd>.</kbd>commit the highlighted one with the punctuation</li>
-        <li><kbd>Return</kbd>commit the Pinyin letters as typed</li>
+        <li><kbd>,</kbd><kbd>.</kbd>enter the highlighted one with the punctuation</li>
+        <li><kbd>Return</kbd>enter the Pinyin letters as typed</li>
         <li><kbd>Esc</kbd>clear the Pinyin; closes next-word suggestions first</li>
       </ul>
-      <p>Delete does not put back a next-word pick, punctuation, or letters committed with Return.</p>
+      <p>Delete does not put back a next-word pick, punctuation, or letters entered with Return.</p>
     </div>
   </div>
 
