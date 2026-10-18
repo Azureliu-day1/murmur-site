@@ -1,4 +1,5 @@
-/* node demo/demo-selftest.js —— 契约 B 规则 1–16 逐条断言。零浏览器,零 demo-words.js。 */
+/* node demo/demo-selftest.js —— 契约 B 规则 1–17 逐条断言(零浏览器,用下面的小 FIXTURE),
+ * 最后一段「真词表」载入 demo-words.js:验收句第一候选整句命中、10 个场景脚本演完的结果不变。 */
 "use strict";
 var path = require("path");
 var Engine = require(path.join(__dirname, "demo.js"));
@@ -75,8 +76,10 @@ function texts(st) { return st.candidates.map(function (c) { return c.text; }); 
   check(2, "候选带 code", st.candidates[0].code === "ni", e);
   e = mk(); type(e, "jin");
   check(2, "整段 > 前缀", eq(texts(e.state()), ["今", "今天"]), e);
+  // 2026-10-18 契约变更(规则 17 整句):旧断言「前两个 = 你好、你」失效,因为 nihaoma 现在能拼成整句
+  // 「你好吗」,整句排在最前;「前几个音节,长的在前」这条本身不变,往后挪一位照样核。
   e = mk(); type(e, "nihaoma");
-  check(2, "首几个音节匹配:长的在前", eq(texts(e.state()).slice(0, 2), ["你好", "你"]), e);
+  check(2, "首几个音节匹配:长的在前(排在整句之后)", eq(texts(e.state()).slice(0, 3), ["你好吗", "你好", "你"]), e);
   e = mk(); type(e, "nihao");
   var t = texts(e.state());
   check(2, "去重(你好 只出现一次)", t.filter(function (x) { return x === "你好"; }).length === 1, e);
@@ -148,8 +151,10 @@ function texts(st) { return st.candidates.map(function (c) { return c.text; }); 
 })();
 
 // ── 规则 8:只覆盖前几个音节
+// 2026-10-18 契约变更:nihaoma 的第 1 个候选现在是整句「你好吗」(规则 17),
+// 只覆盖前几个音节的「你好」挪到第 2 个,所以这里按 2 选;后面的断言一条没动。
 (function () {
-  var e = mk(); type(e, "nihaoma"); e.press("1");
+  var e = mk(); type(e, "nihaoma"); e.press("2");
   var st = e.state();
   check(8, "选你好后 ma 留在 buffer", st.committed === "你好" && st.buffer === "ma" && eq(st.segments, ["ma"]), e);
   check(8, "未上屏完成不设 undoUntil", st.undoUntil === 0 && st.lastAction !== "commit", e);
@@ -277,6 +282,40 @@ function texts(st) { return st.candidates.map(function (c) { return c.text; }); 
   check(16, "reset 回到初始态", st.committed === "" && st.buffer === "" && st.mode === "zh" && st.lastAction === "" && st.undoUntil === 0, e);
 })();
 
+// ── 规则 17:整句
+(function () {
+  var e = mk(); type(e, "jintiantianqi");
+  check(17, "整段拼得完:第一候选是整句", texts(e.state())[0] === "今天天气" && e.state().pages >= 1, e);
+  e.press("Space");
+  check(17, "整句一次上屏完成、可退回", e.state().committed === "今天天气" && e.state().buffer === "" && e.state().undoUntil === T + 1500, e);
+  T += 10; e.press("Backspace");
+  check(17, "整句退回为整段拼音", e.state().buffer === "jintiantianqi" && e.state().committed === "", e);
+
+  e = mk(); type(e, "nihaomaw");
+  var st = e.state();
+  check(17, "拼不完:取能拼的最长一段,剩下的留拼音", st.candidates[0].text === "你好吗" && st.candidates[0].code === "nihaoma", e);
+  e.press("Space");
+  check(17, "选了之后剩下的 w 留在 buffer", e.state().committed === "你好吗" && e.state().buffer === "w", e);
+
+  e = mk(); type(e, "jint");
+  check(17, "只有一个词的最长一段不抢前缀词的位置", texts(e.state())[0] === "今天", e);
+
+  e = mk(); type(e, "nihaox");
+  check(17, "一个词 + 拼不了的尾巴:不出整句,照规则 2", texts(e.state())[0] === "你好" && e.state().candidates[0].code === "nihao", e);
+
+  e = mk(); type(e, "wonihao");
+  check(17, "词数少的拼法优先(我 + 你好)", texts(e.state())[0] === "我你好", e);
+
+  e = mk(); type(e, "okl");
+  check(17, "mixed 仍排在整句前面", texts(e.state())[0] === "OK了", e);
+
+  // 词数相同时取权重和大的:fang+an(方安,1000)对 fan+gan(反感,1800)
+  var e2 = Engine({ syllables: ["fan", "fang", "gan", "an"],
+                    words: [["fang", "方", 500], ["an", "安", 500], ["fan", "反", 900], ["gan", "感", 900]] }, { now: clock });
+  type(e2, "fangan");
+  check(17, "词数相同取权重和大的拼法", texts(e2.state())[0] === "反感", e2);
+})();
+
 // ── runScript
 (function () {
   var e = mk();
@@ -284,6 +323,43 @@ function texts(st) { return st.candidates.map(function (c) { return c.text; }); 
   var n = e.runScript("n i h a o {space} {wait:800} 1 {shift} o k {shift} {bs} , {enter} {esc}", function (tok, st) { steps.push(tok); });
   check("S", "runScript 返回按键数(跳过 wait)", n === 15 && steps.length === 15 && steps.indexOf("{wait:800}") < 0, e);
   check("S", "runScript 结果", e.state().committed === "你好吗o，\n", e);
+})();
+
+// ── 真词表:验收句 + 10 个场景(载入 demo-words.js)
+(function () {
+  var W = require(path.join(__dirname, "demo-words.js"));
+  var ACCEPT = [
+    ["womenmingtianjianmian", "我们明天见面"],
+    ["jintianxiawukaihui", "今天下午开会"],
+    ["xiexienidebangzhu", "谢谢你的帮助"],
+    ["wozhengzaixiebaogao", "我正在写报告"],
+    ["zhegewentiwomenzaitaolun", "这个问题我们再讨论"],
+    ["qingnibangwokanyixia", "请你帮我看一下"],
+    ["zhegefanganhenhao", "这个方案很好"],
+    ["wanshangyiqichifan", "晚上一起吃饭"],
+    ["wojintianhenmang", "我今天很忙"],
+    ["xuyaoshijianzhunbei", "需要时间准备"]
+  ];
+  ACCEPT.forEach(function (a) {
+    var e = Engine(W, { now: clock });
+    type(e, a[0]);
+    var c = e.state().candidates[0];
+    check("W", a[0] + " 第一候选 = " + a[1], c && c.text === a[1] && c.code === a[0], e);
+    e.press("Space");
+    check("W", a[0] + " 空格整句上屏", e.state().committed === a[1] && e.state().buffer === "", e);
+  });
+  // 10 个场景演完的结果:2026-10-18 改动前在基线 e1c3f61 上实跑抄下(场景 7 的脚本从 1 1 1 改为 2 2 1,结果不变)
+  var SCENES = ["你好吗", "今天天气", "OK了", "感觉怪怪的", "你好", "ok 好的", "明天下午三点", "这个app好用", "世", "好的，"];
+  check("W", "恰 10 个场景", W.sentences.length === 10);
+  W.sentences.forEach(function (sen, i) {
+    var e = Engine(W, { now: clock });
+    e.runScript(sen.script);
+    check("W", "场景 " + (i + 1) + " 演完 = " + SCENES[i], e.state().committed === SCENES[i] && e.state().buffer === "", e);
+  });
+  // 场景 7 的意思是「分段挑」:第一下选的必须只是前一段
+  var e7 = Engine(W, { now: clock });
+  type(e7, "mingtianxiawusandian"); e7.press("2");
+  check("W", "场景 7 第一下只选了「明天」", e7.state().committed === "明天" && e7.state().buffer === "xiawusandian", e7);
 })();
 
 if (failures) {
