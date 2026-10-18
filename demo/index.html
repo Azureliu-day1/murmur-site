@@ -9,14 +9,14 @@
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>输入法演示 · Murmur</title>
-<meta name="description" content="在浏览器里试打 Murmur 拼音输入法的候选窗。这是演示,词表很小。">
+<meta name="description" content="在网页里体验 Murmur 拼音输入的手感:整句打出、中英混打、选错退回重选。完整词库在 App 里。">
 <link rel="canonical" href="https://maobenbeginner.com/demo/">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Murmur">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:url" content="https://maobenbeginner.com/demo/">
 <meta property="og:title" content="输入法演示 · Murmur">
-<meta property="og:description" content="在浏览器里试打 Murmur 拼音输入法的候选窗。这是演示,词表很小。">
+<meta property="og:description" content="在网页里体验 Murmur 拼音输入的手感:整句打出、中英混打、选错退回重选。完整词库在 App 里。">
 <meta property="og:image" content="https://maobenbeginner.com/og.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -54,8 +54,8 @@
 <header class="head wrap">
   <div class="t">
     <p class="eyebrow">演示</p>
-    <h1>在浏览器里试打</h1>
-    <p class="sub">这是演示,不是真输入法。词表是为演示手写的,只有几百个词。真输入法随 Murmur 一起装,见首页的<a href="../index.html#pinyin">拼音输入法</a>一节。</p>
+    <h1>在网页里试打</h1>
+    <p class="sub">在网页里体验 Murmur 拼音输入的手感。完整词库在 App 里,装法见首页的<a href="../index.html#pinyin">拼音输入法</a>一节。</p>
   </div>
 </header>
 
@@ -82,18 +82,18 @@
     <noscript><p class="state">这一页要开 JavaScript 才能用。</p></noscript>
 
     <div class="stage-note">
-      <p>候选窗照真输入法画:一页 5 个,当前候选的编号是珊瑚色。</p>
+      <p>候选窗和 App 里的一样:一页 5 个,当前候选的编号是珊瑚色。</p>
       <ul class="keys">
         <li><kbd>1</kbd>到<kbd>5</kbd>选字</li>
-        <li><kbd>空格</kbd>上屏高亮的候选,默认第一个</li>
-        <li><kbd>退格</kbd>上屏后 1.5 秒内按一下,整词退回拼音</li>
-        <li><kbd>Shift</kbd>单按一下切中英,拼了一半的拼音原样落下</li>
+        <li><kbd>空格</kbd>确认高亮的候选,默认第一个</li>
+        <li><kbd>退格</kbd>确认后 1.5 秒内按一下,整词退回拼音重选</li>
+        <li><kbd>Shift</kbd>单按一下切中英,拼了一半的拼音按字母留下</li>
         <li><kbd>-</kbd><kbd>=</kbd>上一页、下一页</li>
-        <li><kbd>,</kbd><kbd>.</kbd>高亮候选和标点一起上屏</li>
-        <li><kbd>回车</kbd>拼音原样落下</li>
+        <li><kbd>,</kbd><kbd>.</kbd>高亮候选和标点一起输入</li>
+        <li><kbd>回车</kbd>按字母原样输入拼音</li>
         <li><kbd>Esc</kbd>清空拼音;有联想时先收起联想</li>
       </ul>
-      <p>联想接的词、标点、回车落下的拼音,退格不退回。</p>
+      <p>联想接的词、标点、回车输入的字母,退格不退回。</p>
     </div>
   </div>
 

@@ -465,27 +465,27 @@
     },
     // 中英混打:只收产品里真有的两条(F10)
     mixed: { "okl": "OK了", "zhegeapphaoyong": "这个app好用" },
-    // 恰 10 句预设
+    // 恰 10 个场景:按钮上写「能做到什么」(2026-10-18 改口径)
     sentences: [
-      { zh: "空格上屏你好,数字 1 接联想", en: "Space commits the word; 1 takes the first suggestion",
+      { zh: "打完一个词,接着给下一个词", en: "Suggests the next word as you go",
         script: "n i h a o {wait:600} {space} {wait:600} 1" },
-      { zh: "一长串拼音,整句出候选", en: "A long run of pinyin gives a whole-phrase candidate",
+      { zh: "一句话整句打出来", en: "Type a whole phrase in one go",
         script: "j i n t i a n t i a n q i {wait:600} {space}" },
-      { zh: "中英混打:okl 出 OK了", en: "Mixed input: okl gives OK了",
+      { zh: "几个字母打出「OK了」", en: "A few letters for “OK了”",
         script: "o k l {wait:600} {space}" },
-      { zh: "整句口语直接出", en: "A casual phrase comes out in one go",
+      { zh: "口语也能整句打", en: "Casual speech, one phrase at a time",
         script: "g a n j u e g u a i g u a i d e {wait:600} {space}" },
-      { zh: "选错了,马上退格退回拼音", en: "Picked the wrong one? Backspace right away brings the pinyin back",
+      { zh: "选错了退回去重选", en: "Undo a wrong pick and choose again",
         script: "n i h a o {wait:500} 2 {wait:400} {bs} {wait:500} 1" },
-      { zh: "Shift 切英文打 ok,再切回中文", en: "Shift switches to English for ok, then back to Chinese",
+      { zh: "随时切到英文再切回来", en: "Switch to English and back",
         script: "{shift} o k {space} {shift} {wait:300} h a o d e {space}" },
-      { zh: "长句分三次选,剩下的拼音留着", en: "Pick a long phrase in three parts; the rest of the pinyin stays",
+      { zh: "长句也能分段挑", en: "Pick a long sentence piece by piece",
         script: "m i n g t i a n x i a w u s a n d i a n {wait:600} 2 {wait:600} 2 {wait:600} 1" },
-      { zh: "中英混打:这个app好用", en: "Mixed input: 这个app好用",
+      { zh: "中英混着打", en: "Mix Chinese and English",
         script: "z h e g e a p p h a o y o n g {wait:600} {space}" },
-      { zh: "等号翻到第二页再选", en: "The = key turns to the next page of candidates",
+      { zh: "候选多了往后翻", en: "Page through more choices",
         script: "s h i {wait:500} = {wait:500} 2" },
-      { zh: "打逗号,候选连标点一起上屏", en: "Typing a comma commits the candidate with the comma",
+      { zh: "打逗号,字和标点一起出来", en: "A comma goes in with the word",
         script: "h a o d e {wait:500} ," }
     ]
   };
