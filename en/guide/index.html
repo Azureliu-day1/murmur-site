@@ -38,7 +38,7 @@
       <a href="../skills/index.html">Skills</a>
       <a class="nav-keep" href="../try/index.html">Try it</a>
       <a href="../pricing/index.html">Pricing</a>
-      <a href="../index.html#pinyin">Pinyin</a>
+      <a href="../index.html#pinyin">Input method</a>
       <a href="../demo/index.html">Pinyin demo</a>
       <a class="nav-keep" href="../../guide/index.html" hreflang="zh-CN" lang="zh-CN">中文</a>
       <!-- ⚠️ class="nav-signin" is what v2-nav.js looks for (swapped for "Account" when this machine has a session) -->
@@ -53,11 +53,11 @@
 <header class="head wrap">
   <p class="eyebrow">Guide</p>
   <h1>How to use Murmur</h1>
-  <p class="sub">Each feature gets three lines: what it is, how to use it, where to turn it on.</p>
+  <p class="sub">Each feature has three parts: what it is, how to use it, and where to turn it on.</p>
   <p class="g-toc"><b>Start</b><a href="#first">Your first sentence</a></p>
   <p class="g-toc"><b>Speaking</b><a href="#prompt-skills">Prompt skills</a><span class="sep">·</span><a href="#scene">Cleanup by scene</a></p>
   <p class="g-toc"><b>Typing</b><a href="#install">Install the input method</a><span class="sep">·</span><a href="#typing">Typing Pinyin</a><span class="sep">·</span><a href="#fuzzy">Double and fuzzy pinyin</a><span class="sep">·</span><a href="#smart">Smart punctuation</a><span class="sep">·</span><a href="#look">Candidate window</a><span class="sep">·</span><a href="#cloud">Cloud candidates</a><span class="sep">·</span><a href="#phrases">Shortcut phrases</a><span class="sep">·</span><a href="#words">Words you type</a></p>
-  <p class="g-toc"><b>0.53</b><a href="#changes">Change log</a></p>
+  <p class="g-toc"><b>0.53</b><a href="#changes">Changelog</a></p>
 </header>
 
 <main class="wrap">
@@ -74,9 +74,9 @@
           <div class="py-step"><b>02</b><div>Drag Murmur into Applications and open it.</div></div>
           <div class="py-step"><b>03</b><div>On first launch, allow Microphone and Accessibility. Accessibility is what lets it put text at your cursor.</div></div>
           <div class="py-step"><b>04</b><div>Put the cursor in any text field, tap right ⌘ and say a sentence.</div></div>
-          <div class="py-step"><b>05</b><div>Tap right ⌘ again and the text lands at the cursor. Holding it while you talk works too.</div></div>
+          <div class="py-step"><b>05</b><div>Tap right ⌘ again and the text appears at the cursor. You can also hold it while you talk and let go when you finish.</div></div>
         </div></div>
-        <div class="g-row"><span class="k">You need</span><div>macOS 26 or later on Apple Silicon. You can dictate without signing in, one language at a time.</div></div>
+        <div class="g-row"><span class="k">You need</span><div>macOS 26 or later on Apple silicon. You can dictate without signing in, one language at a time.</div></div>
       </div>
     </div>
   </section>
@@ -88,25 +88,25 @@
     <h2>Prompt skills</h2>
     <div class="g-body">
       <div>
-        <div class="g-row"><span class="k">What it is</span><div>When you say a request in AI coding and AI chat tools, the cleaned-up text lands first. If the app can tell what kind of request it is, up to three steps are added after it.</div></div>
+        <div class="g-row"><span class="k">What it is</span><div>When you dictate a request in AI coding and AI chat tools, the cleaned-up text goes in first. If Murmur can tell what kind of request it is, up to three steps are added after it.</div></div>
         <div class="g-row"><span class="k">What lands</span><div>
           <p>The plain cleanup always lands. Up to three steps are added after a blank line only when all of these hold:</p>
           <ul>
             <li>The sentence is at least 40 characters long.</li>
             <li>It reads as one single kind of request (nothing is added when it reads as two or more, or as none).</li>
-            <li>You did not already say how to go about it, for example “don’t change anything yet”, “just explain” or “fix it while you’re there”.</li>
+            <li>You have not already said how to approach it, for example “don’t change anything yet”, “just explain” or “fix it while you’re there”.</li>
           </ul>
           <p>Otherwise only the cleanup lands. Sentences under 15 characters or words skip the skill. Nothing is added when cleanup fails or when translating.</p>
         </div></div>
         <div class="g-row"><span class="k">Twelve skills</span><div>
           <p>Seven coding skills: Fix a bug, Build a feature, Change or refactor code, Explain code, Review code, Plan the work, Write tests.</p>
           <p>Five chat skills: Research, Write, Decide, Summarize, Reply.</p>
-          <p>AI coding tools get the seven coding skills. AI chat tools can use all twelve. Other apps recognised as an AI assistant get the five chat skills. Not in terminals.</p>
+          <p>AI coding tools get the seven coding skills. AI chat tools can use all twelve. Other apps recognised as an AI assistant get the five chat skills. Prompt skills do not run in terminals.</p>
           <p>The <a href="../skills/index.html">skills page</a> shows what the skills do and lists all twelve by name. You can also paste a sentence there to try it.</p>
         </div></div>
         <div class="g-row"><span class="k">How to use</span><div>In those apps and web pages, press the dictation key as usual and say the request. Web pages need “Cleanup by scene” on. The result lands at your cursor. There is no extra key.</div></div>
         <div class="g-row"><span class="k">Where</span><div><b>Off by default.</b> Turn it on in Settings → Cleanup → Prompt skills. A confirmation page comes first. Each of the twelve skills has its own switch on the same card. While it is off, the recording bar tells you once where to turn it on, the first time you say a long enough sentence in one of these apps.</div></div>
-        <p class="g-note">Once it is on, the transcript of a long enough sentence is sent one extra time to the same model vendor that cleanup uses. No new recipient, no audio, and which window you are in is not sent. When cleanup is set to leave text alone, the skill sends nothing either.</p>
+        <p class="g-note">Once it is on, the transcript of a long enough sentence is sent one more time to the same model vendor that cleanup uses. No new recipient is added, no audio is sent, and the window you are in is not sent. When cleanup is set to leave text alone, the skill sends nothing either.</p>
       </div>
       <figure class="py-shot"><p><kbd>Settings</kbd> → <kbd>Cleanup</kbd> → <kbd>Prompt skills</kbd></p><figcaption>Off by default. A confirmation page comes first.</figcaption></figure>
     </div>
@@ -157,7 +157,7 @@
       <div>
         <div class="g-row"><span class="k">What it is</span><div>The basic keys of Murmur Pinyin.</div></div>
         <div class="g-row"><span class="k">How to use</span><div>
-          <div class="py-step"><b>01</b><div>Type Pinyin. One row of 5 candidates. Press 1–5 to pick one. Space takes the first.</div></div>
+          <div class="py-step"><b>01</b><div>Type Pinyin and a row of five candidates appears. Press 1–5 to pick one, or Space for the first.</div></div>
           <div class="py-step"><b>02</b><div><b>Wrong word?</b> Within 1.5 seconds, press Delete once. The whole word turns back into Pinyin. A second Delete deletes Pinyin as usual.</div></div>
           <div class="py-step"><b>03</b><div>Tap Shift once for English, again for Chinese. Caps Lock on also means English.</div></div>
           <div class="py-step"><b>04</b><div>Mix languages: <span class="mono">okl</span> gives OK了. <span class="mono">zhegeapphaoyong</span> gives 这个app好用.</div></div>
@@ -248,7 +248,7 @@
         <div class="g-row"><span class="k">What it is</span><div>The input method and dictation each keep their own list. The two lists are separate and never mix.</div></div>
         <div class="g-row"><span class="k">How to use</span><div>
           <p><b>When typing.</b> Write your own “code → phrase”, e.g. dz → your address. Type the code in Murmur Pinyin and the phrase is the first candidate.</p>
-          <p><b>When speaking.</b> In dictation, say the trigger phrase on its own and the whole template goes in. One extra word and it does not count as a match.</p>
+          <p><b>When speaking.</b> In dictation, say the trigger phrase on its own and the whole template goes in. If you say even one extra word, it does not count as a match.</p>
         </div></div>
         <div class="g-row"><span class="k">Where</span><div>
           <p>Input method: Settings → Input Method → Dictionary · Words I've typed (learned by the input method) → Manage shortcut phrases.</p>
@@ -267,7 +267,7 @@
       <div>
         <div class="g-row"><span class="k">What it is</span><div>Words the input method learns. They are stored on this Mac. On by default. Nothing typed in a password field is recorded.</div></div>
         <div class="g-row"><span class="k">How to use</span><div>
-          <p>When you dictate, these words go with the recognition request as hints, same as the dictionary. With offline recognition, they are not sent for dictation.</p>
+          <p>When you dictate, these words go with the recognition request as hints, same as the dictionary. If you choose offline recognition, they stay on your Mac.</p>
           <p>When you press ⌥⇧Space for the AI cleanup card, the words the sentence touches go with that request, at most 500. This happens with offline recognition too.</p>
           <p>Words do not sync between devices in this version.</p>
         </div></div>
@@ -283,7 +283,7 @@
   <!-- Change log: facts only. Sources: murmur-ime docs/RELEASE-0.53.0.md (new / fixed) + FEATURE-FACTS-0.53.md §3
        (features added after 09-29). ⛔ Nothing that is not in 0.53 (lexicon sync is not exposed, so it is not listed). -->
   <section class="g-sec" id="changes">
-    <h2>Change log</h2>
+    <h2>Changelog</h2>
     <h3>0.53 · New</h3>
     <ul class="g-log">
       <li>The Murmur Pinyin input method ships with the app. Install, update and uninstall it in Settings → Input Method.</li>
@@ -297,7 +297,7 @@
       <li>Cleanup by scene: the cleanup tone follows the app you dictate into. On by default.</li>
       <li>Settings has a new Input Method tab with all the input method settings.</li>
       <li>Every history entry has a Fix button. Fix it and press ⌘↩ to save.</li>
-      <li>You can ask for a seat directly on the sign-in page.</li>
+      <li>You can request a seat directly on the sign-in page.</li>
       <li>About in the menu bar shows the version. Murmur checks the website once a day and shows a note in the menu bar when there is a new version. It does not download by itself.</li>
       <li>After a force quit or crash, the unfinished sentence is kept in history.</li>
     </ul>
@@ -307,7 +307,7 @@
       <li>Switch to another window and back to the original field, and the text goes in within 60 seconds.</li>
       <li>"Inserted" shows only after it is checked. Otherwise it says "Inserted (not checked)".</li>
       <li>If the microphone picks up no sound while recording, the capsule says so.</li>
-      <li>While processing, the capsule says either recognising or cleaning up. Cleanup waits at most 45 seconds.</li>
+      <li>While processing, the capsule shows either &ldquo;Recognising&rdquo; or &ldquo;Cleaning up&rdquo;. Cleanup waits at most 45 seconds.</li>
       <li>The English interface no longer shows Chinese error messages.</li>
       <li>Four clear buttons are now one: Settings → System → Clear data.</li>
     </ul>
