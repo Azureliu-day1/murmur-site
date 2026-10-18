@@ -1,0 +1,284 @@
+/* ══════════════════════════════════════════════════════════════════════════
+   skills.css:提示词技能页(中英两页共用)。SITE-SKILLS,2026-10-18。
+   ──────────────────────────────────────────────────────────────────────────
+   · 演示动画的长相逐字取自首页「对着 AI 说话」一节(index.html 里的 vibe.css 段,
+     .vb-* 类名照旧):同一个深色窗口、同一个录音条组件(capsule.css / capsule.js)、
+     同一枚右 ⌘ 键帽。新加的只有:场景切换的小按钮、「做法」一行先露后折叠、
+     小标签晚一拍出现、没有动效时四段前后对照平铺。
+   · 默认样式 = 最终一帧。没有 JS、或 prefers-reduced-motion: reduce 时,
+     四段平铺成「原话 → 整理后」的静态对照;skills.js 给根节点加 .vb-live 后才进入动画。
+   · ⛔ 本页任何地方不放技能附带做法的全文(页面、脚本、属性、注释都不放)。
+     演示里那一行是概括,不是原文。
+   ══════════════════════════════════════════════════════════════════════════ */
+
+/* ── 头部(配方同 try 页;⛔ .head 不写 padding 简写,会把 .wrap 的左右留白清零) ── */
+.head { padding-block: 64px 0; display: flex; align-items: flex-start; gap: 24px; }
+.head .t { flex: 1; min-width: 0; }
+.head h1 { font-size: clamp(26px, 3.4vw, 34px); font-weight: 600; line-height: 1.35; letter-spacing: .01em; max-width: 16em; }
+.head .sub { color: var(--second); font-size: 15.5px; max-width: 40em; margin-top: 14px; }
+.head .quota { flex: none; margin-top: 6px; }
+
+.sec-title { font-size: 19px; font-weight: 600; margin: 56px auto 0; max-width: 1040px; }
+.sec-note { color: var(--second); font-size: 14px; margin: 8px auto 0; max-width: 1040px; }
+
+/* ══════════ 演示:取自首页 vibe 段 ══════════ */
+.vb {
+  --vb-term:      #1B1B1F;
+  --vb-term-bar:  #232326;
+  --vb-term-edge: #2C2C31;
+  --vb-term-box:  #3A3A41;
+  --vb-term-ink:  #F2F2F4;
+  --vb-term-dim:  #A0A0A8;
+  --vb-term-faint:#6E6E76;
+  --vb-ease: cubic-bezier(.2, .7, .2, 1);
+}
+@media (prefers-color-scheme: dark) {
+  .vb {
+    --vb-term:      #1E1E21;
+    --vb-term-bar:  #232326;
+    --vb-term-edge: #3A3A41;
+  }
+}
+
+.vb-stage {
+  position: relative;
+  margin: 26px auto 0; max-width: 820px;
+  background: linear-gradient(180deg, var(--stage-a), var(--stage-b));
+  border: 1px solid var(--line); border-radius: 20px;
+  padding: 26px 40px 30px;
+}
+
+.vb-win {
+  position: relative;
+  background: var(--vb-term); color: var(--vb-term-ink);
+  border: 1px solid var(--vb-term-edge); border-radius: 14px;
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  font-family: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, "PingFang SC", monospace;
+  font-size: 14px; line-height: 1.75;
+}
+.vb-bar {
+  display: flex; align-items: center; height: 34px; padding: 0 14px;
+  background: var(--vb-term-bar); border-bottom: 1px solid var(--vb-term-edge);
+}
+.vb-bar i { width: 10px; height: 10px; border-radius: 50%; background: var(--vb-term-box); margin-right: 7px; transition: opacity .5s ease; }
+.vb-title {
+  position: absolute; left: 0; right: 0; top: 0; height: 34px; line-height: 34px;
+  text-align: center; font-size: 12px; color: var(--vb-term-dim); pointer-events: none;
+  transition: opacity .5s ease;
+}
+.vb-body { padding: 18px 20px 20px; }
+
+.vb-win.is-chat { font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", sans-serif; }
+.vb-win.is-chat .vb-bar { border-bottom-color: transparent; }
+.vb-win.is-chat .vb-bar i { opacity: 0; }
+.vb-win.is-chat .vb-title { font-size: 13px; font-weight: 500; color: var(--vb-term-ink); }
+
+/* 四段叠在同一个格子里:窗口高度取最高的那一段,换段不跳版 */
+.vb-rounds { display: grid; }
+.vb-round { grid-area: 1 / 1; transition: opacity .5s ease; display: flex; flex-direction: column; }
+.vb-round:not(.is-on) { visibility: hidden; opacity: 0; }
+
+.vb-ctx { font-size: 12.5px; color: var(--vb-term-faint); margin-bottom: 12px; }
+.vb-ctx b { color: var(--vb-term-dim); font-weight: 400; }
+
+.vb-input {
+  position: relative;
+  border: 1px solid var(--vb-term-box); border-radius: 10px;
+  padding: 12px 16px 36px calc(16px + 1.6em); min-height: 172px;
+  flex: 1;
+}
+.vb-round[data-kind="chat"] { font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", sans-serif; }
+.vb-round[data-kind="chat"] .vb-ctx { font-size: 13px; }
+.vb-round[data-kind="chat"] .vb-input { border-radius: 22px; padding-left: 20px; background: var(--vb-term-bar); font-size: 14.5px; }
+.vb-round[data-kind="chat"] .vb-ps { display: none; }
+.vb-ps { position: absolute; left: 16px; top: calc(12px + .425em); color: var(--vb-term-faint); user-select: none; }
+
+.vb-cur {
+  display: inline-block; width: 2px; height: 1.15em; background: var(--coral);
+  vertical-align: text-bottom; margin-left: 1px;
+  animation: vb-blink 1.06s steps(1) infinite;
+}
+@keyframes vb-blink { 50% { opacity: 0; } }
+.vb-empty { display: none; position: absolute; top: calc(12px + .425em); left: calc(16px + 1.6em); }
+.vb-round[data-kind="chat"] .vb-empty { left: 18px; }
+.vb-round:not(.landed) .vb-empty { display: block; }
+.vb-round:not(.landed) .vb-lines .vb-cur { display: none; }
+
+.vb-lines { list-style: none; padding: 0; }
+.vb-ln { display: flex; align-items: center; gap: 14px; min-height: 2.2em; }
+.vb-ln .t { min-width: 0; }
+.vb-ln .t:has(.n) { padding-left: 1.8em; text-indent: -1.8em; }
+.vb-round[data-kind="chat"] .vb-ln .t:has(.n) { padding-left: 1.1em; text-indent: -1.1em; }
+.vb-ln .n { color: var(--vb-term-dim); }
+.vb-live .vb-ln { opacity: 0; transform: translateY(6px); transition: opacity .32s var(--vb-ease), transform .32s var(--vb-ease); }
+.vb-live .vb-ln.on { opacity: 1; transform: none; }
+
+/* ── 「做法」那一行:先露一行概括,两秒多后折叠成「做法 · 3 条」。
+   两个状态叠在同一格里,换的时候行高不变。默认(静态)= 折叠后的样子。 ── */
+.sk-ap { margin-top: 6px; }
+.sk-ap .t { display: grid; padding-left: 0; text-indent: 0; }
+.sk-ap .t:has(.n) { padding-left: 0; text-indent: 0; }
+.sk-ap .peek, .sk-ap .fold { grid-area: 1 / 1; transition: opacity .45s ease; }
+.sk-ap .n { color: var(--vb-term-dim); margin-right: .6em; }
+.sk-ap .peek { color: var(--vb-term-dim); opacity: 0; }
+.sk-ap .fold { color: var(--vb-term-faint); opacity: 1; }
+.sk-ap .fold::before { content: "▸"; color: var(--vb-term-faint); margin-right: .5em; }
+.vb-live .sk-ap .peek { opacity: 1; }
+.vb-live .sk-ap .fold { opacity: 0; }
+.vb-live .sk-ap.folded .peek { opacity: 0; }
+.vb-live .sk-ap.folded .fold { opacity: 1; }
+
+/* ── 小标签:落字之后晚一拍出现,说明附了哪一类做法 ── */
+.vb-skill {
+  position: absolute; right: 14px; bottom: 8px;
+  display: flex; align-items: center; gap: 6px;
+  font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", sans-serif;
+  font-size: 11.5px; color: var(--vb-term-dim);
+}
+.vb-skill::before { content: ""; width: 5px; height: 5px; border-radius: 50%; background: var(--coral); }
+.vb-live .vb-skill { opacity: 0; transform: translateY(4px); transition: opacity .4s ease, transform .4s var(--vb-ease); }
+.vb-live .vb-round.tagged .vb-skill { opacity: 1; transform: none; }
+
+.vb-hud {
+  position: absolute; left: 50%; bottom: 22px; z-index: 2;
+  width: min(440px, calc(100% - 32px));
+  transform: translateX(-50%);
+  pointer-events: none;
+  visibility: hidden;
+}
+.vb-live .vb-hud { visibility: visible; }
+
+.vb-keyrow { display: flex; justify-content: center; margin-top: 22px; }
+.vb-key {
+  font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", sans-serif;
+  font-size: 13px; color: var(--second); letter-spacing: .02em;
+  background: var(--card); border: 1px solid var(--line2); border-radius: 9px;
+  padding: 7px 16px 6px;
+  box-shadow: 0 2px 0 var(--line2);
+  transition: transform .09s ease, box-shadow .09s ease, border-color .09s ease, color .09s ease;
+}
+.vb-key b { font-weight: 500; color: var(--ink); margin-left: 4px; }
+.vb-key.down {
+  transform: translateY(2px); box-shadow: 0 0 0 var(--line2);
+  border-color: var(--coral); color: var(--coral);
+}
+.vb-key.down b { color: var(--coral); }
+
+.vb-live .vb-round.fade { opacity: 0; }
+.vb-live .vb-title.fade { opacity: 0; }
+
+/* ── 场景按钮:当前这一段高亮;点一下跳到那一段 ── */
+.sk-scenes { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-bottom: 18px; }
+.sk-scenes button {
+  font: inherit; font-size: 12.5px; line-height: 1.5; color: var(--second); cursor: pointer;
+  background: transparent; border: 1px solid var(--line2); border-radius: 999px; padding: 3px 12px;
+  transition: color .2s ease, border-color .2s ease, background-color .2s ease;
+}
+.sk-scenes button:hover { color: var(--ink); }
+.sk-scenes button.on { color: var(--coral-ink); border-color: var(--coral); background: var(--coral-tint); }
+.sk-scenes button:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+
+/* ── 原话:只在静态对照里出现(动画里原话在录音条的字幕卡上) ── */
+.sk-raw { display: none; }
+
+/* ── 静态对照:没有 JS / 减弱动效时四段平铺 ── */
+.sk-demo:not(.vb-live) .vb-rounds { gap: 0; }
+.sk-demo:not(.vb-live) .vb-round { grid-area: auto; visibility: visible; opacity: 1; }
+.sk-demo:not(.vb-live) .vb-round + .vb-round { border-top: 1px solid var(--vb-term-edge); margin-top: 20px; padding-top: 20px; }
+.sk-demo:not(.vb-live) .vb-input { min-height: 0; }
+.sk-demo:not(.vb-live) .vb-cur { display: none; }
+.sk-demo:not(.vb-live) .vb-title,
+.sk-demo:not(.vb-live) .vb-keyrow,
+.sk-demo:not(.vb-live) .sk-scenes { display: none; }
+.sk-demo:not(.vb-live) .sk-raw {
+  display: block; margin-bottom: 10px;
+  font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", sans-serif;
+  font-size: 13px; line-height: 1.7; color: var(--vb-term-dim);
+}
+.sk-raw .k { display: inline-block; margin-right: .7em; font-size: 11.5px; color: var(--vb-term-faint); }
+.sk-raw .k::after { content: " →"; }
+
+/* 截帧用:冻结时不要过渡,画面就是那一刻的样子 */
+.vb-freeze, .vb-freeze * { transition: none !important; animation: none !important; }
+
+@media (prefers-reduced-motion: reduce) {
+  .vb-cur { animation: none; }
+}
+
+/* ══════════ 十二个技能:只列名字 ══════════ */
+.sk-groups { display: grid; grid-template-columns: 7fr 5fr; gap: 16px; margin: 22px auto 0; max-width: 1040px; }
+.sk-group { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 18px 20px 20px; }
+.sk-group h3 { font-size: 14px; font-weight: 600; color: var(--second); display: flex; align-items: baseline; gap: 8px; }
+.sk-group h3 .c { font-family: "IBM Plex Mono", monospace; font-size: 12px; font-weight: 400; color: var(--faint); }
+.sk-tags { list-style: none; padding: 0; margin: 14px 0 0; display: flex; flex-wrap: wrap; gap: 8px; }
+.sk-tags li {
+  font-size: 14px; line-height: 1.5; padding: 5px 13px;
+  border: 1px solid var(--line2); border-radius: 999px; background: var(--paper); color: var(--ink);
+}
+.sk-foot { color: var(--second); font-size: 13.5px; margin: 14px auto 0; max-width: 1040px; }
+
+/* ══════════ 试一句(配方同 try 页) ══════════ */
+.stage {
+  margin: 22px auto 0; max-width: 760px;
+  background: linear-gradient(180deg, var(--stage-a), var(--stage-b));
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  padding: 30px 32px 30px;
+}
+.examples { margin-top: 14px; display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+.examples .lab { font-size: 13px; color: var(--second); margin-right: 2px; }
+.actions { margin-top: 20px; display: flex; gap: 16px; align-items: center; flex-wrap: wrap; }
+.actions .count { margin-left: auto; font-family: "IBM Plex Mono", monospace; font-size: 11.5px; color: var(--faint); }
+.actions .count.over { color: var(--danger); }
+#state { flex-basis: 100%; }
+#turnstile { margin-top: 16px; }
+
+.panel {
+  background: var(--card); border: 1px solid var(--line); border-radius: 18px;
+  padding: 22px 24px 24px; margin-top: 26px;
+}
+.panel .head-row { display: flex; align-items: baseline; gap: 12px; margin-bottom: 14px; }
+.panel .tag { font-size: 12px; letter-spacing: .16em; text-transform: uppercase; color: var(--coral); font-weight: 600; }
+.panel .meta { margin-left: auto; font-family: "IBM Plex Mono", monospace; font-size: 11.5px; color: var(--faint); }
+.panel p.txt { font-size: 15px; line-height: 1.8; white-space: pre-wrap; overflow-wrap: anywhere; min-height: 3.6em; color: var(--ink); }
+.panel p.txt.placeholder { color: var(--faint); }
+/* 判断结果:技能小标签 + 做法的一行概括(只取第一条的开头,其余不显示) */
+.sk-result { margin-top: 14px; display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 10px; font-size: 13.5px; color: var(--second); }
+.sk-result[hidden] { display: none; }
+.sk-chip {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 12.5px; color: var(--coral-ink); background: var(--coral-tint);
+  border-radius: 999px; padding: 2px 10px;
+}
+.sk-chip::before { content: ""; width: 5px; height: 5px; border-radius: 50%; background: var(--coral); }
+.sk-ap-line { min-width: 0; overflow-wrap: anywhere; }
+.verdict { margin-top: 10px; font-size: 13px; color: var(--second); }
+.verdict:empty { display: none; }
+
+.stage-note { margin-top: 24px; font-size: 12.5px; color: var(--second); line-height: 1.8; }
+.after { max-width: 760px; margin: 24px auto 0; text-align: center; font-size: 14px; color: var(--second); }
+
+/* ══════════ 窄屏 ══════════ */
+@media (max-width: 820px) {
+  .head { padding-top: 44px; flex-direction: column; gap: 14px; }
+  .head .quota { margin-top: 0; order: -1; }
+  .sec-title { margin-top: 40px; }
+  .stage { padding: 22px 18px 24px; border-radius: 18px; }
+  .sk-groups { grid-template-columns: 1fr; }
+
+  /* 演示:同首页 vibe 段的窄屏规则(字号收一档) */
+  .vb-stage { padding: 18px 12px 20px; border-radius: 16px; margin-top: 22px; }
+  .vb-win { font-size: 12.5px; line-height: 1.7; border-radius: 12px; }
+  .vb-body { padding: 14px 12px 14px; }
+  .vb-input { padding: 10px 12px 32px calc(12px + 1.6em); min-height: 0; }
+  .vb-ps { left: 12px; top: 10px; }
+  .vb-empty { top: 10px; left: calc(12px + 1.6em); }
+  .vb-round[data-kind="chat"] .vb-empty { left: 14px; }
+  .vb-round[data-kind="chat"] .vb-input { font-size: 13px; padding-left: 14px; }
+  .vb-ln { min-height: 0; padding: 1px 0; }
+  .vb-hud { bottom: 14px; width: calc(100% - 20px); }
+  .sk-scenes { gap: 6px; margin-bottom: 14px; }
+  .sk-scenes button { font-size: 12px; padding: 2px 10px; }
+}
+.sk-chip[hidden] { display: none; }
