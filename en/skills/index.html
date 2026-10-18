@@ -6,14 +6,14 @@
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'unsafe-inline' https://challenges.cloudflare.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src https://syebvkwemxwxkonvsyjd.supabase.co https://challenges.cloudflare.com; frame-src https://challenges.cloudflare.com; object-src 'none'; base-uri 'none'; form-action 'none'">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Prompt skills · Murmur</title>
-<meta name="description" content="What you say to an AI is first cleaned up into one clear request. If the kind of task is clear, a few steps on how to approach it are added at the end. Watch four short demos, or paste a sentence to try it.">
+<meta name="description" content="What you say to an AI is first turned into one clear request. When Murmur can tell what kind of task it is, it adds a few steps on how to approach it at the end. Watch four short demos, or paste a sentence to try it.">
 <link rel="canonical" href="https://maobenbeginner.com/en/skills/">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Murmur">
 <meta property="og:locale" content="en_US">
 <meta property="og:url" content="https://maobenbeginner.com/en/skills/">
 <meta property="og:title" content="Prompt skills · Murmur">
-<meta property="og:description" content="What you say to an AI is first cleaned up into one clear request. If the kind of task is clear, a few steps on how to approach it are added at the end. Watch four short demos, or paste a sentence to try it.">
+<meta property="og:description" content="What you say to an AI is first turned into one clear request. When Murmur can tell what kind of task it is, it adds a few steps on how to approach it at the end. Watch four short demos, or paste a sentence to try it.">
 <meta property="og:image" content="https://maobenbeginner.com/og-en.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -45,7 +45,7 @@
       <a href="index.html" aria-current="page">Skills</a>
       <a class="nav-keep" href="../try/index.html">Try it</a>
       <a href="../pricing/index.html">Pricing</a>
-      <a href="../index.html#pinyin">Pinyin</a>
+      <a href="../index.html#pinyin">Input method</a>
       <a href="../demo/index.html">Pinyin demo</a>
       <a class="nav-keep" href="../../skills/index.html" hreflang="zh-CN" lang="zh-CN">中文</a>
       <!-- ⚠️ class="nav-signin" 是给 v2-nav.js 认的(本机有会话时换成「账户」) -->
@@ -58,15 +58,15 @@
 <header class="head wrap">
   <div class="t">
     <p class="eyebrow">Prompt skills</p>
-    <h1>Say it roughly. The AI gets a request that is spelled out.</h1>
-    <p class="sub">In the AI coding and chat tools you already use, what you say is first cleaned up into one clear passage. If the kind of task is clear, a few steps on how to approach it are added at the end, so the AI takes fewer detours and you explain less.</p>
+    <h1>You give the gist. The AI gets a complete request.</h1>
+    <p class="sub">In the AI coding and chat tools you already use, what you say is first turned into one clear passage. When Murmur can tell what kind of task it is, it adds a few steps on how to approach it at the end, so the AI takes fewer wrong turns and you spend less time explaining.</p>
   </div>
   <span class="quota" id="quota">Checking your quota…</span>
 </header>
 
 <main class="wrap">
   <h2 class="sec-title">What you say, and what gets sent</h2>
-  <p class="sec-note">The recording bar shows what you actually said. The input box shows the cleaned-up request sent to the AI, with the approach added at the end and folded by default.</p>
+  <p class="sec-note">The recording bar shows what you actually said. The input box shows the cleaned-up request sent to the AI, with the approach added at the end, collapsed by default.</p>
 
   <!-- 演示:长相取自首页「对着 AI 说话」一节(.vb-*),导演是 skills/skills.js。
        默认标记 = 静态对照(四段平铺);没有 JS / 减弱动效时就停在这里。
@@ -95,9 +95,9 @@
                 <span class="vb-ps" aria-hidden="true">&gt;</span>
                 <div class="vb-empty"><span class="vb-cur"></span></div>
                 <ol class="vb-lines">
-                  <li class="vb-ln on"><span class="t">On the login page, checking Remember me does not keep me signed in after I close and reopen the browser.</span></li>
+                  <li class="vb-ln on"><span class="t">On the login page, checking &ldquo;Remember me&rdquo; does not keep me signed in after I close and reopen the browser.</span></li>
                   <li class="vb-ln on"><span class="t">Find the cause and fix it.</span></li>
-                  <li class="vb-ln sk-ap on folded"><span class="t"><span class="peek"><span class="n">Approach</span>1. Make the failure show up every time …<span class="vb-cur"></span></span><span class="fold"><span class="n">Approach</span>3 steps, added at the end<span class="vb-cur"></span></span></span></li>
+                  <li class="vb-ln sk-ap on folded"><span class="t"><span class="peek"><span class="n">Approach</span>1. Reproduce the problem reliably first …<span class="vb-cur"></span></span><span class="fold"><span class="n">Approach</span>3 steps, added at the end<span class="vb-cur"></span></span></span></li>
                 </ol>
                 <div class="vb-skill">Approach added · Fix a bug</div>
               </div>
@@ -114,7 +114,7 @@
                   <li class="vb-ln on"><span class="t">Add an export button to the settings page:</span></li>
                   <li class="vb-ln on"><span class="t"><span class="n">1.</span> Export the user's history as CSV</span></li>
                   <li class="vb-ln on"><span class="t"><span class="n">2.</span> Put the date in the file name</span></li>
-                  <li class="vb-ln sk-ap on folded"><span class="t"><span class="peek"><span class="n">Approach</span>1. Agree on the request and its limits …<span class="vb-cur"></span></span><span class="fold"><span class="n">Approach</span>3 steps, added at the end<span class="vb-cur"></span></span></span></li>
+                  <li class="vb-ln sk-ap on folded"><span class="t"><span class="peek"><span class="n">Approach</span>1. Confirm the requirements and scope first …<span class="vb-cur"></span></span><span class="fold"><span class="n">Approach</span>3 steps, added at the end<span class="vb-cur"></span></span></span></li>
                 </ol>
                 <div class="vb-skill">Approach added · Build a feature</div>
               </div>
@@ -166,7 +166,7 @@
   </div>
 
   <h2 class="sec-title">Twelve skills</h2>
-  <p class="sec-note">It works out on its own which kind of request you are making.</p>
+  <p class="sec-note">Murmur works out which kind of request you are making.</p>
   <div class="sk-groups">
     <section class="sk-group">
       <h3>Coding <span class="c">7</span></h3>
@@ -191,21 +191,21 @@
       </ul>
     </section>
   </div>
-  <p class="sk-foot">Off by default. Turn it on in the app's settings, where each of the twelve skills has its own switch. See <a href="../guide/index.html#prompt-skills">Guide · Prompt skills</a>.</p>
+  <p class="sk-foot">Off by default. Turn it on in the app&rsquo;s Settings, where each of the twelve skills can be switched on or off separately. See <a href="../guide/index.html#prompt-skills">Guide · Prompt skills</a>.</p>
 
   <h2 class="sec-title" id="try">Try one</h2>
-  <p class="sec-note">Paste something you would normally say to an AI to see the cleaned-up request and the skill it picks. <span id="trialLine"></span></p>
+  <p class="sec-note">Paste something you would normally say to an AI and see the cleaned-up request and the skill Murmur picks. <span id="trialLine"></span></p>
   <div class="stage">
     <!-- 标签不用 hidden(读屏会念「编辑框,空白」),直接给 textarea 挂 aria-label。同 try 页。 -->
     <textarea class="field" id="src" rows="4" maxlength="600" aria-label="Text to clean up"
       placeholder="so the remember me box on the login page doesn't stick, after I close the browser and open it again I have to log in again, can you find out why and fix it"></textarea>
 
     <div class="examples">
-      <span class="lab">Try one</span>
+      <span class="lab">Examples</span>
       <button class="chip" type="button" data-ex="so the remember me box on the login page doesn't stick, after I close the browser and open it again I have to log in again, can you find out why and fix it">Fix a bug</button>
       <button class="chip" type="button" data-ex="before we touch anything I want a plan for moving the users table from the old database to the new one, steps I can check one at a time, and tell me which step you are least sure about">Plan</button>
       <button class="chip" type="button" data-ex="help me reply to my landlord, he says the rent goes up by two hundred next month, I want to ask whether signing a one year lease could keep the current price, keep it polite">Reply</button>
-      <button class="chip" type="button" data-ex="fix this bug">Too short</button>
+      <button class="chip" type="button" data-ex="fix this bug">Short sentence</button>
     </div>
 
     <div class="actions">
@@ -223,7 +223,7 @@
       <p class="verdict" id="verdict"></p>
     </div>
 
-    <p class="stage-note">Same as the Try it page: the <b>text</b> you type here goes to the Murmur server and on to the language model, and is not kept afterwards. The web page does not record audio.</p>
+    <p class="stage-note">As on the Try it page, the <b>text</b> you type here is sent to the Murmur server and then to a language model, and is not kept afterwards. This page does not record audio.</p>
   </div>
 
   <p class="after" id="noseatNote" hidden>Seats open one at a time. We email this address when yours opens.</p>
@@ -272,41 +272,41 @@ const L = {
     declined: "Signed in · no seat this time",
   },
   quotaNoSeat:  (head, n) => `${head} · ${n} cleanups left today`,
-  quotaNoSeatOut: (head) => `${head} · today's cleanups are used up`,
+  quotaNoSeatOut: (head) => `${head} · today's cleanups are used up; more tomorrow`,
   noSeatNote: {
     default:  "Seats open one at a time. We email this address when yours opens.",
-    none:     ["You have not asked for a seat yet. ", "Ask on the sign-in page", "."],
+    none:     ["You haven't requested a seat yet. ", "Request one on the sign-in page", "."],
     new:      (d) => d ? `Request received (${d}). We will email this address when your seat opens.` : "Request received. We will email this address when your seat opens.",
     declined: "No seat this time.",
   },
   quotaBlocked: "This account is on hold · reply to any of our emails",
-  quotaUnknown: "Cannot read your quota right now · cleanup still works",
+  quotaUnknown: "Can't check your quota right now · cleanup still works",
   // SITE-SKILLS:/trial/state 的 enabled 是开关(不是按天),登录后没名额也有每天几次,所以不写「今天没开」「登录后不限」。
   quotaTrial:   (n) => `Anonymous trial · ${n} left today`,
   quotaTrialOut:"Today's anonymous trial is used up · sign in to keep going",
   quotaTrialOff:"Anonymous trial is off · available once you sign in",
   // SITEFIX-1:匿名试用关着时,页头那句「不用下载,也不用注册」换成这句 + 申请入口(三段:前半 / 链接上的字 / 后半)。
-  trialLineOff: ["Sign in to try it. No account yet? ", "Ask for a seat", "."],
+  trialLineOff: ["Sign in to try it. No account yet? ", "Request a seat", "."],
   busy:         "Cleaning up, and working out what kind of request it is…",
   outBusy:      "Cleaning up…",
   outEmpty:     "The cleaned-up request will show up here.",
   needText:     "Type a sentence first.",
   tooLong:      (n) => `That is ${n} characters. The limit is ${MAXLEN} at a time, so try a shorter passage.`,
-  needCaptcha:  "Clear the human check first.",
+  needCaptcha:  "Complete the verification check first.",
   trialOff:     ["The anonymous trial is off right now. ", "Sign in", " to use it."],
   offline:      "The network seems to be down. Reconnect and try again.",
   byStatus: {
     401: "Your sign-in has expired. Refresh the page and try again.",
-    402: "This month's free quota is used up. It resets next month, or you can write to us.",
-    500: "Our server hit an error. Nothing was charged; try again shortly.",
-    502: "The model did not return a result. Nothing was charged; try again shortly.",
+    402: "This month's free quota is used up. It resets next month, or you can email us.",
+    500: "Our server hit an error. This didn't count against your quota. Try again shortly.",
+    502: "The model did not return a result. This didn't count against your quota. Try again shortly.",
     503: "Too many requests right now. Try again in a moment.",
-    504: "The model timed out. Nothing was charged; try again shortly.",
+    504: "The model timed out. This didn't count against your quota. Try again shortly.",
   },
   apLine:       (n, gist) => (n > 0 && gist) ? `${n} ${n === 1 ? "step" : "steps"} added. The first starts: ${gist}` : "Approach added",
   apNote:       "In the app, the full approach is added at the end of this passage.",
-  notAttached:  "Too short, or you already said how to do it. The app drops in the cleaned-up request only.",
-  judgeMissed:  "The skill check did not come back this time. The app drops in the cleaned-up request only.",
+  notAttached:  "This is too short, or you already said how to approach it. The app inserts only the cleaned-up request.",
+  judgeMissed:  "Murmur couldn't tell which skill fits this time. The app inserts only the cleaned-up request.",
   done: (sec) => `${sec}s`,
 };
 
