@@ -210,7 +210,7 @@ nav {
 .brand:hover { text-decoration: none; }
 .dot { width: 9px; height: 9px; border-radius: 50%; background: var(--coral); }
 .navlinks { display: flex; gap: 24px; margin-left: auto; align-items: center; }
-.navlinks a { color: var(--second); font-size: 13.5px; }
+.navlinks a { color: var(--second); font-size: 13.5px; white-space: nowrap; }
 .navlinks a:hover { color: var(--ink); text-decoration: none; }
 .nav-cta {
   font-size: 13px; font-weight: 500; color: var(--card) !important;
@@ -790,6 +790,14 @@ body.is-sandbox .sandbox { display: inline-block; }
   .navlinks { gap: 13px; }
   .navlinks a { font-size: 13px; }
   .nav-cta { padding: 6px 13px; }
+}
+
+/* 375 以下(360 宽的安卓机)再收一档:en 首页「中文 · Try it · Sign in · Download」在 360 宽会顶出 8px */
+@media (max-width: 374px) {
+  .wrap.navrow { padding-left: 16px; padding-right: 16px; }
+  .navrow { gap: 10px; }
+  .navlinks { gap: 10px; }
+  .nav-cta { padding: 6px 11px; }
 }
 
 /* ── SITE-V3 首页文案(COPY.md + round2 FINAL,2026-10-13) ── */
