@@ -286,7 +286,9 @@
           else { flushRaw(); s.lastAction = "commit"; }
           return;
         }
-        if (s.predictions.length) { acceptPrediction(0); return; }
+        // App 方案 A(2026-09-26,murmur-ime CandidateStrip.swift 194–197):空格从不接联想。
+        // 联想行在台上时空格 = 收起联想行 + 照常打出一个空格;接词只用数字 1–5。
+        s.predictions = [];
         appendCommitted(" ");
         s.lastAction = "type";
         return;

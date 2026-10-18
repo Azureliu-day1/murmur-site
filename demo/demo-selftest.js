@@ -102,7 +102,9 @@ function texts(st) { return st.candidates.map(function (c) { return c.text; }); 
   var e = mk(); type(e, "nihao"); e.press("Space");
   check(4, "空格上屏高亮第一个", e.state().committed === "你好", e);
   e.press("Space");
-  check(4, "无 buffer 有联想时空格接第一个", e.state().committed === "你好吗" && e.state().lastAction === "predict", e);
+  // 改口(2026-10-18):旧断言「无 buffer 有联想时空格接第一个」对应的是 App 旧行为。App 方案 A
+  // (murmur-ime CandidateStrip.swift 194–197)之后空格从不接联想,演示照 App 改;接词只用数字(见规则 14)。
+  check(4, "无 buffer 有联想时空格不接联想:收起联想、照常落空格", e.state().committed === "你好 " && eq(e.state().predictions, []) && e.state().lastAction === "type", e);
   e = mk(); e.press("Space");
   check(4, "否则落空格", e.state().committed === " ", e);
   e = mk(); type(e, "ni"); e.press("="); e.press("Space");

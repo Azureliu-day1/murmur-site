@@ -32,7 +32,7 @@
       done: function (n) { return n + " 个场景演示完了。点输入框,自己打一句试试。"; },
       doneTouch: function (n) { return n + " 个场景演示完了。"; },
       lab: "接写",
-      tail: "空格接1 · Esc收起",
+      tail: "数字接写 · Esc收起",
       modeZh: "中文",
       modeEn: "英文",
       missing: "演示没有加载出来,刷新页面再试。",
@@ -46,7 +46,7 @@
       done: function (n) { return "All " + n + " scenes played. Click the text field and type a sentence yourself."; },
       doneTouch: function (n) { return "All " + n + " scenes played."; },
       lab: "Next",
-      tail: "Space picks 1 · Esc hides",
+      tail: "Digits pick · Esc hides",
       modeZh: "Chinese",
       modeEn: "English",
       missing: "The demo did not load. Refresh the page and try again.",
@@ -116,7 +116,8 @@
     } else if (preds.length) {
       var nx = el("div", "py-next");
       nx.appendChild(el("span", "py-lab", L.lab));
-      preds.slice(0, 5).forEach(function (w, i) { nx.appendChild(numbered("py-nx", i, w, i === 0)); });
+      // 联想行一个选中块都不画(App 方案 A):珊瑚底的意思是「空格会上这一条」,而空格不接联想。
+      preds.slice(0, 5).forEach(function (w, i) { nx.appendChild(numbered("py-nx", i, w, false)); });
       nx.appendChild(el("span", "py-tail", L.tail));
       panel.appendChild(nx);
       panel.hidden = false;
