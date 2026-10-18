@@ -240,7 +240,9 @@ h2 { font-size: clamp(26px, 3.4vw, 34px); font-weight: 600; line-height: 1.35; l
 }
 /* SITE-V3(Wei 10-13「字体统一」):首屏标题一种字体、一种字重 —— 站点正文的无衬线;不再给某几个字换衬线斜体。
    标题和副标题的字只在 tools/hero-title.json 里写,tools/set-hero-title.py 铺到页面。 */
-.hero h1 { font-family: inherit; }
+.hero h1 { font-family: inherit; text-wrap: balance; }
+/* 375 宽时「AI 智能语音输入体。」一行放不下,末一个字掉到第三行;窄屏把标题收到 30px,两行排得下 */
+@media (max-width: 400px) { .hero h1 { font-size: 30px; } }
 .hero .lede, .hero .mobile-path { text-wrap: balance; }
 @media (max-width: 600px) { .hero .lede br { display: none; } }
 .req { margin-top: 18px; font-size: 13.5px; color: var(--faint); letter-spacing: .02em; }

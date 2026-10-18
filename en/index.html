@@ -238,7 +238,7 @@ h2 { font-size: clamp(26px, 3.4vw, 34px); font-weight: 600; line-height: 1.35; l
 }
 /* SITE-V3(Wei 10-13「字体统一」):首屏标题一种字体、一种字重 —— 站点正文的无衬线;不再给某几个字换衬线斜体。
    标题和副标题的字只在 tools/hero-title.json 里写,tools/set-hero-title.py 铺到页面。 */
-.hero h1 { font-family: inherit; }
+.hero h1 { font-family: inherit; text-wrap: balance; }
 .hero .lede, .hero .mobile-path { text-wrap: balance; }
 @media (max-width: 600px) { .hero .lede br, .hero h1 br { display: none; } }   /* 英文标题在手机上按词自然折行 */
 .hero h1 { text-wrap: balance; }
