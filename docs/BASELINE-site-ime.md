@@ -57,7 +57,7 @@
 | F8 | 退格退回不管:联想接的词、标点、回车原样落的拼音、英文直通、含标点或空格的上屏、密码框 | `IMEShellCore.swift:1287-1298,1327-1330` |
 | F9 | 单按 Shift 切中英;切的那一刻拼了一半的拼音原样落下;英文态字母标点半角直通;Caps Lock 亮 = 英文 | `IME/ShiftTapDetector.swift:5`;`IME/MurmurInputController.swift:284`;`default.yaml:17,24-27,44` |
 | F10 | 中英混打:`okl` 出「OK了」,`zhegeapphaoyong` 出「这个app好用」(词典整词 + 合成规则 10) | `Resources/rime/murmur.dict.yaml:15335`;`Tools/build-dict/build.py:25-37`;`IMEAcceptanceSelfCheck.swift:673` |
-| F11 | 联想(下一词)最多 5 个;你打过的「前词 → 后词」一律露;通用层只在这个前词你打过、且分数够高时露;空格只接第一条(且只在它来自你打过的词时),数字接第 N 个;Esc 收起 | `IME/NextWordPredictor.swift:21-60,65,100-111`;`IME/CandidateStrip.swift:189-193` |
+| F11 | 联想(下一词)最多 5 个;你打过的「前词 → 后词」一律露;通用层只在这个前词你打过、且分数够高时露;空格不接联想(App 方案 A,2026-09-26:联想行在台上时空格收起联想行并照常放行成空格;联想行不画选中块;尾注「数字接写 · Esc收起 / Digits pick · Esc hides」),数字接第 N 个;Esc 收起 | `IME/NextWordPredictor.swift:21-60,65,100-111`;`IME/CandidateStrip.swift:185-197`;`IME/IMENextWordSelfCheck.swift:530-603` |
 | F12 | 联想开关「联想(根据你打过的词)」在设置 → 整理 → 个人词库 | `UI/PersonalLexiconSection.swift:74` |
 | F13 | 打过的词存在这台 Mac 上 `~/Library/Application Support/Murmur/lexicon.sqlite`;默认开;密码框与拒绝名单里的 App 一律不记;第一版不跨设备 | `IME/PersonalLexicon.swift:65-66,73,118-121` |
 | F14 | 开关「学我平时打的字」(默认开);一键清:设置 → 系统 → 「清除数据…」 | `PersonalLexiconSection.swift:54`;`PersonalLexicon.swift:92-96`;`SettingsView.swift:1370-1388,1425` |
