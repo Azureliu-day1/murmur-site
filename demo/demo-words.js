@@ -473,7 +473,7 @@
         script: "j i n t i a n t i a n q i {wait:600} {space}" },
       { zh: "几个字母打出「OK了」", en: "A few letters for “OK了”",
         script: "o k l {wait:600} {space}" },
-      { zh: "口语也能整句打", en: "Casual speech, one phrase at a time",
+      { zh: "口语也能整句打", en: "Type conversational phrases whole",
         script: "g a n j u e g u a i g u a i d e {wait:600} {space}" },
       { zh: "选错了退回去重选", en: "Undo a wrong pick and choose again",
         script: "n i h a o {wait:500} 2 {wait:400} {bs} {wait:500} 1" },

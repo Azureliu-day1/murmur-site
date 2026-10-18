@@ -41,7 +41,7 @@
       <a href="../skills/index.html">Skills</a>
       <a class="nav-keep" href="../try/index.html">Try it</a>
       <a href="../pricing/index.html">Pricing</a>
-      <a href="../index.html#pinyin">Pinyin</a>
+      <a href="../index.html#pinyin">Input method</a>
       <a href="index.html" aria-current="page">Pinyin demo</a>
       <a class="nav-keep" href="../../demo/index.html" hreflang="zh-CN" lang="zh-CN">中文</a>
       <!-- class="nav-signin" is what v2-nav.js looks for (swapped for "Account" when signed in) -->
@@ -55,7 +55,7 @@
   <div class="t">
     <p class="eyebrow">Demo</p>
     <h1>Type Pinyin in your browser</h1>
-    <p class="sub">Get a feel for Murmur Pinyin typing right in your browser. The full word list is in the app. See the <a href="../index.html#pinyin">Pinyin section</a> on the home page for how to install it.</p>
+    <p class="sub">Try Murmur&rsquo;s Pinyin input method right in your browser. The full dictionary is in the app; see the <a href="../index.html#pinyin">input method section</a> on the home page for how to install it.</p>
   </div>
 </header>
 
@@ -73,7 +73,7 @@
       <button class="btn btn-primary" id="auto" type="button">Play demo</button>
       <button class="btn btn-quiet" id="stop" type="button" disabled>Stop</button>
       <button class="chip" id="reset" type="button">Clear</button>
-      <span class="quota mode" id="mode" title="Tap Shift alone to switch">Chinese</span>
+      <span class="quota mode" id="mode" title="Tap Shift on its own to switch">Chinese</span>
     </div>
 
     <div class="lines" id="lines"></div>
@@ -82,18 +82,18 @@
     <noscript><p class="state">This page needs JavaScript.</p></noscript>
 
     <div class="stage-note">
-      <p>The candidate window matches the app: 5 per page, with the current number in coral.</p>
+      <p>The candidate window matches the app: five candidates per page, with the current one&rsquo;s number in coral.</p>
       <ul class="keys">
         <li><kbd>1</kbd>to<kbd>5</kbd>pick a candidate</li>
         <li><kbd>Space</kbd>confirm the highlighted one (the first by default)</li>
-        <li><kbd>Delete</kbd>once within 1.5 s of confirming puts the word back as Pinyin to choose again</li>
-        <li><kbd>Shift</kbd>tap alone to switch Chinese and English; half-typed Pinyin stays as letters</li>
+        <li><kbd>Delete</kbd>press once within 1.5 s of confirming to turn the word back into Pinyin and choose again</li>
+        <li><kbd>Shift</kbd>tap on its own to switch between Chinese and English; any half-typed Pinyin is kept as letters</li>
         <li><kbd>-</kbd><kbd>=</kbd>previous page, next page</li>
-        <li><kbd>,</kbd><kbd>.</kbd>enter the highlighted one with the punctuation</li>
+        <li><kbd>,</kbd><kbd>.</kbd>enter the highlighted candidate followed by the punctuation mark</li>
         <li><kbd>Return</kbd>enter the Pinyin letters as typed</li>
-        <li><kbd>Esc</kbd>clear the Pinyin; closes next-word suggestions first</li>
+        <li><kbd>Esc</kbd>clear the Pinyin (if next-word suggestions are showing, close them first)</li>
       </ul>
-      <p>Delete does not put back a next-word pick, punctuation, or letters entered with Return.</p>
+      <p>Delete does not undo a next-word suggestion, punctuation, or letters entered with Return.</p>
     </div>
   </div>
 
