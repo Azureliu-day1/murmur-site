@@ -142,9 +142,9 @@ footer .grow { margin-left: auto; }
     <ul>
 <li>Your recordings, history and dictionary are kept on your own device, for as long as you choose in Settings.</li>
 <li>When you&rsquo;re signed out, your speech is turned into text by the recognition built into your device&rsquo;s system, not sent to us.</li>
-<li>When you&rsquo;re signed in, turning your speech into text, tidying it up and translating means that sentence goes to the speech recognition and text processing services we use. Those services are in the United States and China; our account database is in Singapore. Section 5 lists what each kind of service handles.</li>
+<li>When you&rsquo;re signed in, each sentence you say is sent to the speech recognition and text processing services we use to turn it into text, tidy it up and translate it. Those services are in the United States and China; our account database is in Singapore. Section 5 lists what each kind of service handles.</li>
 <li>We don&rsquo;t store what you said. When you&rsquo;re signed in, we record your email, sign-in details and usage (word count, duration and time), never the content.</li>
-<li>With screen context on, the app reads the text in the front window once when you start speaking, to get names and terms right, including other people&rsquo;s messages in that window. It is off on new installs, and an upgrade keeps your earlier choice; switch it in Settings › Recognition.</li>
+<li>When screen context (&ldquo;Use the text on screen to get proper nouns right&rdquo;) is on, the app reads the text in the front window once when you start speaking, to get names and terms right. This includes other people&rsquo;s messages in that window. It is off by default on new installs, and an upgrade keeps your earlier choice; turn it on or off in Settings › Recognition.</li>
 <li>We don&rsquo;t sell your data, and there are no ads or third-party analytics in the app.</li>
 <li>To see, export, correct or delete your data, or to ask anything, write to <a href="mailto:support@day1aifitness.com">support@day1aifitness.com</a>.</li>
 </ul>
@@ -173,33 +173,33 @@ footer .grow { margin-left: auto; }
 </tr>
 <tr>
 <td data-label="Data">Transcripts and cleaned-up text (history)</td>
-<td data-label="Kept by default">Kept until you set a retention period</td>
-<td data-label="How to delete">Delete items one by one, or set Keep text to Don&rsquo;t keep in Settings › System and run the cleanup</td>
+<td data-label="Kept by default">Kept indefinitely; you can set a retention period</td>
+<td data-label="How to delete">Delete items one by one, or in Settings › System set &ldquo;Keep text&rdquo; to &ldquo;Don&rsquo;t keep&rdquo; and click &ldquo;Apply the retention rules now&rdquo;</td>
 </tr>
 <tr>
 <td data-label="Data">Dictionary (names and terms you add)</td>
-<td data-label="Kept by default">Kept</td>
+<td data-label="Kept by default">Kept indefinitely</td>
 <td data-label="How to delete">Delete entries at any time; deleted entries are no longer sent</td>
 </tr>
 <tr>
 <td data-label="Data">Words learned by the input method</td>
-<td data-label="Kept by default">Kept. Learning is on by default and skips password fields and apps on your exclusion list</td>
-<td data-label="How to delete">Turn learning off in Settings › Input Method; clear learned words under Settings › System › Clear Data</td>
+<td data-label="Kept by default">Kept indefinitely. Learning is on by default and skips password fields and apps on your deny list</td>
+<td data-label="How to delete">Turn learning off in Settings › Input Method; clear learned words under Settings › System › Clear data</td>
 </tr>
 <tr>
-<td data-label="Data">Candidate choice log</td>
+<td data-label="Data">Candidate-choice log</td>
 <td data-label="Kept by default">Off by default. When on, it records the times you skip the first candidate and may contain private text; deleted after 1 or 7 days, and switches itself off at 23:59 on the day you turn it on</td>
-<td data-label="How to delete">Clear it under Settings › System › Clear Data</td>
+<td data-label="How to delete">Clear it under Settings › System › Clear data</td>
 </tr>
 <tr>
 <td data-label="Data">Input method usage statistics</td>
 <td data-label="Kept by default">Counts and durations only, none of what you type</td>
-<td data-label="How to delete">Clear it under Settings › System › Clear Data</td>
+<td data-label="How to delete">Clear it under Settings › System › Clear data</td>
 </tr>
 <tr>
 <td data-label="Data">Sign-in credentials and service keys</td>
 <td data-label="Kept by default">macOS Keychain</td>
-<td data-label="How to delete">Deleting the app does not clear the Keychain. Clear service keys in Settings, or remove items in Keychain Access</td>
+<td data-label="How to delete">Deleting the app does not clear the Keychain. Clear service keys in Settings; remove other items in Keychain Access</td>
 </tr>
 <tr>
 <td data-label="Data">Settings</td>
@@ -224,7 +224,7 @@ footer .grow { margin-left: auto; }
 <li>Cleanup, which turns spoken text into written text;</li>
 <li>Translation;</li>
 <li>Ask, which treats what you say as an instruction and inserts the AI&rsquo;s answer. Any text you have selected is sent too;</li>
-<li>Voice editing, which changes the text you have selected according to what you say, and sends that selection.</li>
+<li>Voice edit, which changes the text you have selected according to what you say, and sends that selection.</li>
 </ul>
 <p>Where the text goes:</p>
 <ul>
@@ -239,7 +239,7 @@ footer .grow { margin-left: auto; }
 <li>if Personal style is on (it is off by default), up to 3 examples of what you said and how it was cleaned up, taken from your recent history.</li>
 </ul>
 <p>Prompt skills tidies up prompts you dictate into AI tools. When it is on, a longer sentence is sent once more to the same provider to work out what kind of request it is. Only the text is sent, with no audio and no window details.</p>
-<p>Even with offline recognition (done on your Mac), cleanup still sends text to a language model. To keep everything you say on your Mac, choose offline recognition, set cleanup to Off, and don&rsquo;t use translation, Ask, or voice editing.</p>
+<p>Even with offline recognition (done on your Mac), cleanup still sends text to a language model. To keep everything you say on your Mac, choose offline recognition, set cleanup to Off, and don&rsquo;t use translation, Ask, or Voice edit.</p>
 <h3><span class="num">3.4</span>Input method</h3>
 <ul>
 <li>Words the input method learns are stored on this Mac only.</li>
@@ -249,7 +249,7 @@ footer .grow { margin-left: auto; }
 <h3><span class="num">3.5</span>Screen context</h3>
 <ul>
 <li>Off by default on new installs. If you upgraded from an earlier version, your previous choice is kept. Turn it on or off in Settings › Recognition.</li>
-<li>When on, Murmur reads the visible text of the front window once, at the moment you start recording. It uses macOS accessibility features and takes no screenshot. If the front app is on your exclusion list, macOS secure input is active, or the cursor is in a password field, nothing in the window is read.</li>
+<li>When on, Murmur reads the visible text of the front window once, at the moment you start recording. It uses macOS accessibility features and takes no screenshot. If the front app is on your deny list, macOS secure input is active, or the cursor is in a password field, nothing in the window is read.</li>
 <li>With cloud recognition, proper nouns taken from that text go to the recognition provider with the audio.</li>
 <li>With cleanup on, or when you use translation or Ask, up to 1,500 characters of it go to the language model provider with the transcript. On the free allowance it goes through our server; with your own key it goes to the provider for that key.</li>
 <li>The text is not stored or logged on your Mac, and words from the screen are never added to your dictionary. With offline recognition (done on your Mac) and cleanup off, nothing is read.</li>
@@ -261,9 +261,9 @@ footer .grow { margin-left: auto; }
 <li><strong>Sign-in sessions.</strong> Network address and device or browser information, used to keep your account secure.</li>
 <li><strong>Usage records.</strong> For each sentence you dictate (including offline recognition done on your Mac, which doesn&rsquo;t use allowance), the character count, how long you spoke, the feature, the path it took (offline recognition, your own key, or the free allowance), and the time. We use these to calculate allowance and prevent abuse. They don&rsquo;t include anything you said.</li>
 <li><strong>Language model forwarding records.</strong> For each request we forward, the tier, model, provider, estimated usage, and cost. No text.</li>
-<li><strong>Beta place applications.</strong> See section 6.</li>
+<li><strong>Seat requests.</strong> See section 6.</li>
 <li><strong>Invite code attempts.</strong> Network address, email address, the first characters of the code, and the result, used to prevent invite code abuse. Kept for 30 days.</li>
-<li><strong>Email delivery records.</strong> The delivery status of the email that tells you your beta place is ready.</li>
+<li><strong>Email delivery records.</strong> The delivery status of the email that tells you your seat is open.</li>
 <li><strong>Request logs.</strong> Time, route, status, duration, and account ID. No email address, content, or keys.</li>
 </ul>
 <p>Even when you are not signed in, the app reads public configuration from time to time and checks for a new version once a day. These requests carry no identity and none of your content.</p>
@@ -282,13 +282,13 @@ footer .grow { margin-left: auto; }
 <tr>
 <td data-label="Provider type">Speech recognition provider</td>
 <td data-label="Country">United States<!-- to be checked (round2 G10): processing region of the recognition project --></td>
-<td data-label="What it processes">The sound of your voice; words from your dictionary; with on-screen text on, up to 40 names and terms taken from it</td>
+<td data-label="What it processes">The sound of your voice; words from your dictionary; with screen context on, up to 40 names and terms taken from the on-screen text</td>
 <td data-label="When">Recognition on the free allowance once signed in</td>
 </tr>
 <tr>
 <td data-label="Provider type">Text processing (language model) provider</td>
 <td data-label="Country">China</td>
-<td data-label="What it processes">Text to tidy up, translate, ask about or edit by voice; your dictionary; with on-screen text on, up to 1,500 characters of it; with Personal style on, up to 3 of your earlier examples; your answers to the three career questions; text you paste into the website trial</td>
+<td data-label="What it processes">Text to tidy up, translate, ask about or edit by voice; your dictionary; with screen context on, up to 1,500 characters of on-screen text; with Personal style on, up to 3 of your earlier examples; your answers to the three career questions; text you paste into the website trial</td>
 <td data-label="When">On the free allowance once signed in; in the website trial</td>
 </tr>
 <tr>
@@ -300,8 +300,8 @@ footer .grow { margin-left: auto; }
 <tr>
 <td data-label="Provider type">Email provider</td>
 <td data-label="Country">United States<!-- to be checked: sending region --></td>
-<td data-label="What it processes">Your email address; sign-in emails; forwarding applications</td>
-<td data-label="When">Signing in, applying</td>
+<td data-label="What it processes">Your email address; sign-in emails; forwarding seat requests</td>
+<td data-label="When">Signing in, requesting a seat</td>
 </tr>
 <tr>
 <td data-label="Provider type">Website hosting and download provider</td>
@@ -338,12 +338,12 @@ footer .grow { margin-left: auto; }
 <ul>
 <li><strong>Where requests are handled.</strong> The database is in Singapore. Requests from the app and the website may also pass through the country of the server nearest you.</li>
 <li><strong>International transfers.</strong> Your data may be transferred to the United States, China, Singapore, and the countries of the servers mentioned above. Data protection laws there may differ from those where you live. China does not have an adequacy decision from the European Union. We give each provider only the data it needs for the feature you use. If you are in the European Economic Area or the UK, we make these transfers because they are necessary to provide the features you use under our contract with you.</li>
-<li><strong>Model training.</strong> We don&rsquo;t train models on your content. The speech recognition provider states that it does not train on customer content and does not store real-time audio by default. The text processing provider&rsquo;s API terms do not rule out training on submitted content, and we have not found a published retention period. If you don&rsquo;t want your content to reach the text processing provider, use Murmur signed out; or, once signed in, set cleanup to Off, don&rsquo;t use translation, Ask, voice editing or the website trial, and skip the three career questions. To find out exactly which providers we use, write to us and we will tell you.</li>
+<li><strong>Model training.</strong> We don&rsquo;t train models on your content. The speech recognition provider states that it does not train on customer content and does not store real-time audio by default. The text processing provider&rsquo;s API terms do not rule out training on submitted content, and we have not found a published retention period. If you don&rsquo;t want your content to reach the text processing provider, use Murmur signed out; or, once signed in, set cleanup to Off, don&rsquo;t use translation, Ask, Voice edit or the website trial, and skip the three career questions. To find out exactly which providers we use, write to us and we will tell you.</li>
 <li><strong>No selling.</strong> We don&rsquo;t sell your personal information or share it for advertising. Data goes only to the providers above, as needed to run the service, and to any provider you have added your own key for.</li>
 </ul>
 <h2><span class="num">6</span>Information the website collects</h2>
 <ul>
-<li><strong>Beta place applications.</strong> Your email address, the message you write, the interface language, and your browser type, plus a one-way hash of your network address used only to limit repeat submissions. Submitting sets up an account for that email in advance, and the form is forwarded to our inbox through our email provider.</li>
+<li><strong>Seat requests.</strong> Your email address, the message you write, the interface language, and your browser type, plus a one-way hash of your network address used only to limit repeat submissions. Submitting sets up an account for that email in advance, and the form is forwarded to our inbox through our email provider.</li>
 <li><strong>Trying cleanup on the website.</strong> The text you paste goes through our server to the text processing provider (China). Our server does not keep it. We also keep a daily one-way hash of your network address to limit the number of tries.</li>
 <li><strong>Scripts.</strong> Scripts on the sign-in, try, and skills pages are hosted on this site. When bot protection is on, those three pages also load a script from our bot protection provider.</li>
 <li><strong>Cookies and local storage.</strong> The website uses no advertising or analytics cookies. Once you sign in, your sign-in state is stored in your browser. The bot protection provider may set the cookies it needs to work.</li>
@@ -355,7 +355,7 @@ footer .grow { margin-left: auto; }
 <ul>
 <li>Providing the features you use (recognition, cleanup, your account, allowance): performance of our contract with you.</li>
 <li>Usage metering, abuse prevention, sign-in sessions, and request logs: our legitimate interest in keeping the service secure and fair.</li>
-<li>Beta place applications: steps taken at your request, when you apply, before entering into a contract.</li>
+<li>Seat requests: steps taken at your request, when you submit one, before entering into a contract.</li>
 <li>Responding to legal requirements: compliance with a legal obligation.</li>
 </ul>
 <h2><span class="num">8</span>Your rights</h2>
@@ -377,7 +377,7 @@ footer .grow { margin-left: auto; }
 <ul>
 <li><strong>Files on your Mac.</strong> Everything stored locally is in <code>~/Library/Application Support/Murmur/</code>, and you can open it at any time. Deleting that folder deletes the copy on your Mac; records on our servers and with providers are handled as described in sections 4 and 5.</li>
 <li><strong>Network connections.</strong> A network monitor such as LuLu shows the addresses Murmur connects to. To check which kind of provider each address belongs to, email us.</li>
-<li><strong>Where your data went.</strong> In the app&rsquo;s History, &ldquo;Where did my data go&rdquo; uses your current settings to show what a dictation sends and where.</li>
+<li><strong>Where your data went.</strong> In the app&rsquo;s History, &ldquo;Where your data goes&rdquo; uses your current settings to show what a dictation sends and where.</li>
 </ul>
 <h2><span class="num">12</span>Contact</h2>
 <p>For questions about this policy or your data, email <a href="mailto:support@day1aifitness.com">support@day1aifitness.com</a>.</p>
