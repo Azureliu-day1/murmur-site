@@ -869,7 +869,7 @@ body.is-sandbox .sandbox { display: inline-block; }
       <!-- ⭐ class="nav-keep" = stays visible on a phone (see the @media note) -->
       <a class="nav-keep" href="try/index.html">Try it</a>
       <a href="pricing/index.html">Pricing</a>
-      <a href="#pinyin">Pinyin</a>
+      <a href="#pinyin">Input method</a>
       <a href="demo/index.html">Pinyin demo</a>
       <a class="nav-keep" href="../index.html" hreflang="zh-CN" lang="zh-CN">中文</a>
       <!-- ⚠️ class="nav-signin" is what v2-nav.js looks for: when this machine has a
@@ -894,7 +894,7 @@ body.is-sandbox .sandbox { display: inline-block; }
   </div>
   <p class="req reveal">Free · macOS 26 or later · Apple silicon</p>
   <!-- ⭐ The path for someone on a phone: the Mac app does not install there. Shown at phone widths only. -->
-  <p class="mobile-path only-phone reveal">The download is for Mac for now. On your phone, paste something you would say and <a href="try/index.html">see what it turns into →</a></p>
+  <p class="mobile-path only-phone reveal">For now, Murmur runs on the Mac only. On your phone, paste a sentence the way you would say it and <a href="try/index.html">see how it comes out →</a></p>
 
   <div class="stage reveal" id="demo">
     <div class="fake-input"><span class="ph">your cursor is here</span><span class="out"></span><span class="cursor"></span></div>
@@ -927,15 +927,15 @@ body.is-sandbox .sandbox { display: inline-block; }
       </div>
     </div>
   </div>
-  <p class="subtract-note reveal">On the left, typing: half a line, deleted, typed again. On the right, speaking: one tap at the end and the whole sentence is at the cursor.</p>
+  <p class="subtract-note reveal">On the left, typing: half a line, deleted, typed again. On the right, speaking: one more tap at the end and the whole sentence is at the cursor.</p>
 </section>
 
 <!-- ── Talking to AI tools: ramble, and a relayed prompt lands (SITE-VIBE 2026-10-13).
      Default markup = the final frame; with no JS or reduced motion it stays here. Animation in vibe.js.
      The spoken original lives in data-ex (copy-lint skips data-ex: it is the "before" half). ── -->
 <section class="wrap vb" id="vibe">
-  <h2 class="reveal">Say it messy.<br>It lands clear.</h2>
-  <p class="sub reveal">Turn on Prompt skills and ramble at your AI tool: what lands drops the filler, puts each request on its own line, and keeps your limits as you said them.</p>
+  <h2 class="reveal">Think out loud.<br>The prompt comes out structured.</h2>
+  <p class="sub reveal">With Prompt skills on, tell your AI tool what you want in the order it occurs to you. The prompt it receives has the filler removed, one request per line, and your constraints kept exactly as you said them.</p>
 
   <div class="vb-stage reveal" data-vibe data-busy="Prompt skills: tidying">
     <div class="vb-win">
@@ -955,7 +955,7 @@ body.is-sandbox .sandbox { display: inline-block; }
                 <li class="vb-ln"><span class="t"><span class="n">1.</span> Add a retry, three tries max</span>
                   <span class="vb-note"><span class="lab"><span class="from">You said “and then, like, add a retry”</span><span class="to">One line per request</span></span></span></li>
                 <li class="vb-ln"><span class="t"><span class="n">2.</span> Don't touch the cache logic<span class="vb-cur"></span></span>
-                  <span class="vb-note"><span class="lab"><span class="from">You said “don't touch the cache logic”</span><span class="to">Limit kept as said</span></span></span></li>
+                  <span class="vb-note"><span class="lab"><span class="from">You said “don't touch the cache logic”</span><span class="to">Constraint kept as said</span></span></span></li>
               </ol>
               <div class="vb-skill">Tidied by Prompt skills</div>
             </div>
@@ -973,7 +973,7 @@ body.is-sandbox .sandbox { display: inline-block; }
                 <li class="vb-ln"><span class="t"><span class="n">2.</span> Ask if he wants me to bring last week's report</span>
                   <span class="vb-note"><span class="lab"><span class="from">You said “and, uh, ask if”</span><span class="to">Filler dropped</span></span></span></li>
                 <li class="vb-ln"><span class="t"><span class="n">3.</span> Keep it friendly but not too formal<span class="vb-cur"></span></span>
-                  <span class="vb-note"><span class="lab"><span class="from">You said “but not too formal”</span><span class="to">Limit kept as said</span></span></span></li>
+                  <span class="vb-note"><span class="lab"><span class="from">You said “but not too formal”</span><span class="to">Constraint kept as said</span></span></span></li>
               </ol>
               <div class="vb-skill">Tidied by Prompt skills</div>
             </div>
@@ -990,40 +990,40 @@ body.is-sandbox .sandbox { display: inline-block; }
   </div>
 
   <ul class="vb-tags reveal">
-    <li>Identifiers and error messages stay exactly as you say them.</li>
-    <li>Fix a misheard library name once and it is easier to hear next time.</li>
-    <li>Save a prompt you repeat as a phrase, then say its trigger word.</li>
-    <li>Select some code, press <kbd>right ⌃</kbd> and say how to change it.</li>
+    <li>Mix Chinese and English freely. Variable names and error messages stay in English.</li>
+    <li>Correct a misheard library name once, and it is more likely to be right next time.</li>
+    <li>Save a prompt you use often as a phrase. Say its trigger word and the whole prompt is typed.</li>
+    <li>Select some code, press <kbd>right ⌃</kbd>, and say how to change it.</li>
   </ul>
 </section>
 
 <!-- ── 四个键:先记住一个 ── -->
 <section class="wrap" id="features">
   <h2 class="reveal">Learn one key first.</h2>
-  <p class="sub reveal">Right ⌘ is dictation, and it will carry you a long way. Pick up the other three when you need them.</p>
+  <p class="sub reveal">Right ⌘ is dictation, and on its own it covers most of what you will need. Learn the other three when you need them.</p>
   <div class="features keys4">
     <div class="feature reveal">
       <div class="name">Say it, see it written.</div>
-      <p>Tap to start, tap to stop. Or hold while you speak and let go.</p>
+      <p>Tap to start, tap to stop. Or hold it while you speak and let go when you finish.</p>
       <kbd>right ⌘</kbd>
     </div>
     <div class="feature reveal">
       <div class="name">Say it in Chinese, get English.</div>
-      <p>Or the other way round. It works out the direction.</p>
+      <p>It works the other way too, and detects the direction on its own.</p>
       <kbd>right ⌥</kbd>
     </div>
     <div class="feature reveal">
       <div class="name">Select text, say what to change.</div>
-      <p>The new version replaces the old one. Code too.</p>
+      <p>The revised text replaces the original. This works on code too.</p>
       <kbd>right ⌃</kbd>
     </div>
     <div class="feature reveal">
       <div class="name">Ask, and get the answer typed.</div>
-      <p>Ask "what undoes the last commit" and the answer appears, not the question. Turn this key on in Settings first.</p>
+      <p>Ask &ldquo;what undoes the last commit&rdquo; and the answer appears at your cursor, not the question. Turn this key on in Settings first.</p>
       <kbd>fn</kbd>
     </div>
   </div>
-  <p class="keys-foot reveal">Changed your mind? Press Esc. Any of the four can be moved to another key in Settings.</p>
+  <p class="keys-foot reveal">Changed your mind? Press Esc. Each of the four can be reassigned to another key in Settings.</p>
 
   <div class="feature-demos">
     <div class="fdemo reveal" id="fdemoDictate">
@@ -1048,11 +1048,11 @@ body.is-sandbox .sandbox { display: inline-block; }
 <section class="wrap" id="local">
   <h2 class="reveal">Your recordings and history <br>are kept on your own device.</h2>
   <div class="local-body reveal">
-    <p>Recordings are kept for 30 days and history until you clear it. You can change both in Settings, or delete them any time.</p>
-    <p>Once you sign in, turning your speech into text and tidying it up means that sentence goes to the services that do speech recognition and text processing for us, and the result comes back to you. We don't keep a copy of what you said, and we don't sell your data.</p>
-    <p>With &ldquo;Use the text on screen to get proper nouns right&rdquo; on, Murmur looks once at the text in the front window when you start speaking, so it can get names and terms right. It doesn't take screenshots, and what it reads isn't stored on your device. Once you're signed in, that text goes to those services along with your sentence. It is off on new installs; turn it on in Settings if you want it.</p>
+    <p>By default, recordings are kept for 30 days and history until you clear it. You can change both in Settings or delete them at any time.</p>
+    <p>Once you sign in, each sentence you say is sent to the service providers that handle speech recognition and text processing for us, and the result comes back to you. We don't keep a copy of what you said, and we don't sell your data.</p>
+    <p>When &ldquo;Use the text on screen to get proper nouns right&rdquo; is on, Murmur reads the text in the front window once as you start speaking, so it can spell names and terms correctly. It doesn't take screenshots, and what it reads isn't stored on your device. When you're signed in, that text is sent to the same providers along with your sentence. The setting is off by default; you can turn it on in Settings.</p>
   </div>
-  <p class="local-link reveal"><a href="privacy.html">Which kinds of services are involved, which countries they are in, and how long things are kept: see the privacy page →</a></p>
+  <p class="local-link reveal"><a href="privacy.html">The privacy page lists the kinds of providers involved, the countries they are in, and how long data is kept →</a></p>
 </section>
 
 <!-- ── 出了错:三条故障时的行为(原「四条承诺」) ── -->
@@ -1061,15 +1061,15 @@ body.is-sandbox .sandbox { display: inline-block; }
   <div class="promises">
     <div class="promise reveal">
       <h3>Offline, or out of allowance</h3>
-      <p>The signal drops on the train. Murmur keeps listening another way and keeps the recording. It is slower then, and less sure with mixed languages. Back online, run it again from your history.</p>
+      <p>The signal drops on the train. Murmur switches to a fallback way of recognizing speech and keeps the recording. It is slower then, and less accurate when you mix languages. Once you are back online, you can run it again from your history.</p>
     </div>
     <div class="promise reveal">
       <h3>It misheard you</h3>
-      <p>Every sentence has its recording. Run it again from your history or fix the words yourself. Your fixes are used next time.</p>
+      <p>Every sentence keeps its recording. Run it again from your history, or correct the text yourself. Murmur takes your corrections into account next time.</p>
     </div>
     <div class="promise reveal">
       <h3>No sound</h3>
-      <p>If the microphone hears nothing or a translation fails, you see it on screen right away, and nothing is typed into your window.</p>
+      <p>If the microphone picks up nothing or a translation fails, you are told on screen right away, and nothing is typed into your window.</p>
     </div>
   </div>
 </section>
@@ -1079,37 +1079,37 @@ body.is-sandbox .sandbox { display: inline-block; }
      own-key sessions; the sponsored session (free trial once, up to 3 minutes / Pro without a key) shows live text inside the
      recording page instead (LectureView.swift:169, 229). Speaker labels are in the finished transcript only. Free policy B, Wei 10-18. ── -->
 <section class="wrap" id="lecture">
-  <h2 class="reveal">Lectures, meetings, calls in another language.<br>The words appear as you record.</h2>
-  <p class="sub reveal">Start a long recording and the words appear in the recording page as people speak, whether it is a lecture, an online meeting or a meeting in another language. When you stop, the full transcript goes into your history, split by speaker so you can tell who said what. With your own recognition service key, the captions can also float above every other window, over a full-screen lecture, and a second column shows the translation in a meeting held in another language. The captions are a preview. The recording runs underneath the whole time.</p>
+  <h2 class="reveal">Lectures, meetings, calls in another language.<br>Text appears as you record.</h2>
+  <p class="sub reveal">Start a long recording and the text appears on the recording page as people speak, whether it is an online lecture, a video meeting or a meeting in another language. When you stop, the full transcript goes into your history, split by speaker so you can tell who said what. If you use your own recognition service key, the captions can also float above all other windows, even over a full-screen lecture, and for a meeting in another language you can open a second column with the translation. The captions are only a preview; the recording keeps running underneath.</p>
   <div class="cap-demo reveal" id="capDemo" role="img" aria-label="Live caption demo (the floating caption window with your own recognition service key): Chinese original on the left, English translation on the right">
     <div class="cap-head"><span class="cap-dot"></span>Live captions<span class="cap-tag">floating captions with your own key · translation in the second column</span></div>
     <div class="cap-lines"><div class="cap-cols" aria-hidden="true"><span>Original</span><span>Translation</span></div><div id="capLines" style="display:contents"></div></div>
   </div>
-  <p class="stage-note reveal lec-note">Once your request is approved and you sign in, you can try one long recording free, up to 3 minutes. It stops at 3 minutes and keeps what was recorded. To record more, <a href="pricing/index.html">see pricing →</a></p>
+  <p class="stage-note reveal lec-note">Once your request is approved and you sign in, you get one free long recording of up to 3 minutes. It stops on its own at 3 minutes and keeps what was recorded. To record more, <a href="pricing/index.html">see pricing →</a></p>
 </section>
 
 <!-- ── 识别(round2 定稿,版本 A):照平时的样子说。不报档位、不讲本机 / 云端 ── -->
 <section class="wrap" id="models">
-  <h2 class="reveal">Talk the way you normally talk.</h2>
+  <h2 class="reveal">Speak the way you normally do.</h2>
   <div class="plain-list reveal">
-    <p>Words appear while you are still speaking.</p>
+    <p>Text appears while you are still speaking.</p>
     <p>Mix Chinese and English in one sentence. No switching.</p>
-    <p>Once you sign in, add the names and terms you use often to your dictionary, and Murmur takes them into account when it listens and when it tidies up.</p>
-    <p>If the connection drops or this week's allowance runs out, Murmur keeps listening another way, and nothing you said is lost.</p>
+    <p>Once you sign in, add the names and terms you use often to your dictionary, and Murmur takes them into account when it recognizes and tidies up your speech.</p>
+    <p>If the connection drops or this week's allowance runs out, Murmur switches to a fallback and keeps going, and nothing you said is lost.</p>
   </div>
-  <p class="fine reveal">Works without an account, with no limit, one language at a time. Mixing languages and tidying up need an account; when the allowance runs out, you get exactly what you said. Accounts are by request for now.</p>
+  <p class="fine reveal">Without an account it works with no limit, one language at a time. Mixing languages and tidying up need an account; when your allowance runs out, you get exactly what you said. Accounts are by request for now.</p>
 </section>
 
 
 <!-- ── 拼音输入法(只随 0.53 上线):不方便出声的时候。打字演示的样式在 pinyin.css ── -->
 <section class="wrap" id="pinyin">
   <h2 class="reveal">When you can't speak out loud.</h2>
-  <p class="sub reveal">In a meeting room or a library, you still type. Murmur comes with a Pinyin input method that shares one dictionary with dictation. Names you taught it to hear show up as candidates when you type, and words you type help it hear you.</p>
+  <p class="sub reveal">In a meeting room or a library, you still need to type. Murmur includes a Pinyin input method that shares one dictionary with dictation: names you have taught it to hear show up as candidates when you type, and words you type help it recognize you when you speak.</p>
   <div class="py-grid reveal">
     <div>
-      <div class="py-step"><b>01</b><div>Picked the wrong word? Press Delete within 1.5 seconds and the whole word goes back to Pinyin.</div></div>
-      <div class="py-step"><b>02</b><div>On 125 conversational sentences we prepared ourselves, the first candidate was right 80.0% of the time.</div></div>
-      <div class="py-step"><b>03</b><div>Install it in Settings, Input Method. How to switch to it and how each feature works are in the <a href="guide/index.html">guide</a>.</div></div>
+      <div class="py-step"><b>01</b><div>Picked the wrong word? Press Delete within 1.5 seconds and the whole word turns back into Pinyin so you can choose again.</div></div>
+      <div class="py-step"><b>02</b><div>On a set of 125 conversational sentences we wrote ourselves, the first candidate was correct 80.0% of the time.</div></div>
+      <div class="py-step"><b>03</b><div>Install it from Settings &gt; Input Method. The <a href="guide/index.html">guide</a> covers how to switch to it and how each feature works.</div></div>
     </div>
     <figure class="py-shot py-demo" id="pyDemo" role="img" aria-label="Demo: type shu ru fa and press 1 to commit 输入法. After a wrong pick (书如法), Delete within 1.5 s turns the whole word back into Pinyin to pick again."><div class="py-doc"><span class="py-doc-text">输入法<span class="py-timer"></span></span><span class="py-caret"></span></div><div class="py-stage"><div class="py-panel off"><span class="py-pinyin">shu ru fa</span><span class="py-cands"><span class="py-cand on"><i>1</i>输入法</span><span class="py-cand"><i>2</i>输入</span><span class="py-cand"><i>3</i>书</span><span class="py-cand"><i>4</i>书如法</span><span class="py-cand"><i>5</i>数</span></span></div></div><figcaption class="py-demo-cap">Pick 1 again: 输入法</figcaption></figure>
   </div>
@@ -1125,11 +1125,11 @@ body.is-sandbox .sandbox { display: inline-block; }
   <div class="faq reveal">
     <details>
       <summary>How is it different from built-in dictation?</summary>
-      <p class="a">Built-in dictation writes down what you said, word for word. Murmur turns it into clean written text: filler words removed, word order straightened out, punctuation added, and Chinese and English mixed in one sentence written correctly. Cleanup needs you to sign in.</p>
+      <p class="a">Built-in dictation writes down what you said, word for word. Murmur turns it into clean written text: filler words removed, word order straightened out, punctuation added, and sentences that mix Chinese and English written correctly. Tidying up requires you to sign in.</p>
     </details>
     <details>
-      <summary>How large is the free allowance?</summary>
-      <p class="a">2,000 words a week (each Chinese character counts as one) once you sign in, shared between dictation and tidying up. When this week&rsquo;s allowance is used up, you can keep dictating, and Murmur writes down exactly what you said without tidying it. Accounts are by request for now.</p>
+      <summary>How big is the free allowance?</summary>
+      <p class="a">Once you sign in, 2,000 words a week (each Chinese character counts as one), shared between dictation and tidying up. When this week&rsquo;s allowance is used up, you can keep dictating, and Murmur writes down exactly what you said without tidying it. Accounts are by request for now.</p>
     </details>
     <details>
       <summary>What does signing in add?</summary>
@@ -1137,15 +1137,15 @@ body.is-sandbox .sandbox { display: inline-block; }
     </details>
     <details>
       <summary>Which apps does it work in?</summary>
-      <p class="a">Text goes wherever your cursor is, with no plugin to install for each app. It works in mail, chat apps, the terminal and code editors. Murmur types at the cursor through macOS Accessibility permission, which it asks for the first time you open it.</p>
+      <p class="a">Text goes wherever your cursor is, with no plugin to install for each app. It works in mail, chat apps, the terminal and code editors. It types at the cursor using the macOS Accessibility permission, which it asks for the first time you open it.</p>
     </details>
     <details>
       <summary>Which languages does it support?</summary>
-      <p class="a">English and Chinese. Once you sign in, you can move between them in the middle of a sentence without changing any setting, and English words inside Chinese stay in English. Signed out, it recognizes one language at a time.</p>
+      <p class="a">English and Chinese. Once you sign in, you can switch between them mid-sentence without changing any setting, and English words inside Chinese stay in English. Signed out, it recognizes one language at a time.</p>
     </details>
     <details>
       <summary>Where are my recordings and text stored?</summary>
-      <p class="a">Recordings and history stay on your own device. Recordings are kept for 30 days and history until you clear it; you can change both in Settings or delete them at any time. Once you sign in, each sentence goes to the services that turn speech into text and tidy it up. We don&rsquo;t keep what you said, and we don&rsquo;t sell your data. How Murmur reads the front window, where those services are based and how long things are kept are set out on the <a href="privacy.html">privacy page</a>.</p>
+      <p class="a">Recordings and history stay on your own device. By default, recordings are kept for 30 days and history until you clear it; you can change both in Settings or delete them at any time. Once you sign in, each sentence is sent to the providers that turn speech into text and tidy it up. We don&rsquo;t keep what you said, and we don&rsquo;t sell your data. The <a href="privacy.html">privacy page</a> explains how Murmur reads the front window, where those providers are based and how long data is kept.</p>
     </details>
     <details>
       <summary>What do I need to run it?</summary>
@@ -1161,8 +1161,8 @@ body.is-sandbox .sandbox { display: inline-block; }
     <a class="btn btn-primary" href="https://github.com/Azureliu-day1/murmur-site/releases/latest/download/Murmur.zip">Download for Mac</a>
   </div>
   <p class="req reveal">Free · macOS 26 or later · Apple silicon · About 45 MB</p>
-  <p class="stage-note reveal">Accounts are by request for now. <a href="login/index.html#apply">Ask with one line on what you would use it for →</a></p>
-  <p class="stage-note reveal">On an Intel Mac or an older macOS? Email <a href="mailto:support@day1aifitness.com?subject=Murmur%20waitlist">support@day1aifitness.com</a> and we will write back once it is supported.</p>
+  <p class="stage-note reveal">Accounts are by request for now. <a href="login/index.html#apply">Request one with a line about what you would use it for →</a></p>
+  <p class="stage-note reveal">On an Intel Mac or an older version of macOS? Email <a href="mailto:support@day1aifitness.com?subject=Murmur%20waitlist">support@day1aifitness.com</a> and we will let you know when it is supported.</p>
   <details class="install-more reveal">
     <summary>Install notes</summary>
     <p>Unzip and drag Murmur into Applications. On first launch it asks for microphone and Accessibility access. Accessibility is what lets it type at your cursor.</p>
@@ -1171,7 +1171,7 @@ body.is-sandbox .sandbox { display: inline-block; }
   <!-- ⭐ Windows 版(Wei 10-12):只说在测试、预计两个月内。不写日期、不列功能、不收申请。首屏「关于 Windows 版」跳到这里。 -->
   <div class="win-note reveal" id="windows">
     <h3>Windows</h3>
-    <p>A Windows version is in testing. We expect it within two months.</p>
+    <p>A Windows version is in testing. We expect to release it within two months.</p>
   </div>
 </section>
 
@@ -1196,8 +1196,8 @@ body.is-sandbox .sandbox { display: inline-block; }
   if (!box) return;
   // 左原文、右译文:和 App 字幕窗打开第二栏时一样(译文只出定稿,所以整行一起出现)
   var lines = [
-    ["我们先过一下这周的进度,设计稿周三定下来。", "Let's go over this week's progress first. The designs are final on Wednesday."],
-    ["测试那边还有两个问题,周五之前能修完。", "Testing still has two open issues. They will be fixed before Friday."],
+    ["我们先过一下这周的进度,设计稿周三定下来。", "Let's go over this week's progress first. The designs will be finalized on Wednesday."],
+    ["测试那边还有两个问题,周五之前能修完。", "QA still has two open issues, and both will be fixed by Friday."],
     ["上线时间不变,还是下周一。", "The launch date stays the same: next Monday."],
     ["还有问题的话,会后在群里说。", "If anything else comes up, post it in the group chat after the meeting."]
   ];
