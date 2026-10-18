@@ -731,11 +731,22 @@ body.is-sandbox .sandbox { display: inline-block; }
 }
 .cap-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--coral); }
 .cap-tag { color: var(--faint); font-weight: 400; font-size: 10.5px; }
-.cap-lines { padding: 16px 18px 18px; min-height: 148px; display: grid; gap: 9px; align-content: start; }
-.cap-lines p { font-size: 13.5px; line-height: 1.65; color: var(--ink); opacity: 0; transform: translateY(4px); transition: opacity .4s ease, transform .4s ease; }
-.cap-lines p.on { opacity: 1; transform: none; }
-.cap-lines .spk { font-family: "IBM Plex Mono", monospace; font-size: 10px; color: var(--faint); margin-right: 8px; }
-@media (prefers-reduced-motion: reduce) { .cap-lines p { opacity: 1; transform: none; transition: none; } }
+.cap-lines { padding: 16px 18px 18px; min-height: 148px; display: grid; gap: 10px; align-content: start; }
+/* 一行 = 左原文 + 右译文(App 里第二栏的样子);窄屏改成译文排在原文下面 */
+.cap-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0 18px; opacity: 0; transform: translateY(4px); transition: opacity .4s ease, transform .4s ease; }
+.cap-row.on { opacity: 1; transform: none; }
+.cap-row p { font-size: 13.5px; line-height: 1.65; color: var(--ink); }
+.cap-row p.tr { padding-left: 18px; border-left: 1px solid var(--line); }
+.cap-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 0 18px; font-family: "IBM Plex Mono", monospace; font-size: 10px; color: var(--faint); }
+.cap-cols span + span { padding-left: 18px; }
+@media (max-width: 600px) {
+  .cap-row { grid-template-columns: 1fr; }
+  .cap-cols { display: none; }
+  .cap-head { flex-wrap: wrap; row-gap: 2px; }
+  .cap-tag { flex-basis: 100%; padding-left: 15px; }
+  .cap-row p.tr { padding-left: 0; border-left: 0; font-size: 12.5px; color: var(--second); }
+}
+@media (prefers-reduced-motion: reduce) { .cap-row { opacity: 1; transform: none; transition: none; } }
 
 /* ─────────────  细节合集  ───────────── */
 .detail-list { display: grid; grid-template-columns: 1fr 1fr; gap: 22px 48px; margin-top: 44px; }
@@ -1071,13 +1082,15 @@ body.is-sandbox .sandbox { display: inline-block; }
   </div>
 </section>
 
-<!-- ── 长录音:实时字幕(预览)+ 整段转写(说话人分离) ── -->
+<!-- ── 长录音:实时字幕(网课 / 线上会议 / 外语会议)+ 整段转写(说话人分离)。
+     能力对过 murmur-ime 0.52.3 与 ime-mac:字幕浮窗跨全屏(LectureCaptionPanel fullScreenAuxiliary)、第二栏译文(translateOn)、
+     说话人分段只在录完的整段转写里(diarize),实时字幕里没有,所以演示卡不标说话人。 ── -->
 <section class="wrap" id="lecture">
-  <h2 class="reveal">网课全屏,<br>字幕浮在上面。</h2>
-  <p class="sub reveal">开长录音,全屏放网课,字幕窗盖在画面上,老师说一句,出一句。要看译文,开第二栏。录完,完整转写进历史,分得出谁在说话。字幕只是预览,底下的录音一直在录。</p>
-  <div class="cap-demo reveal" id="capDemo" aria-label="实时字幕演示">
-    <div class="cap-head"><span class="cap-dot"></span>实时字幕<span class="cap-tag">预览 · 录完存进历史</span></div>
-    <div class="cap-lines" id="capLines"></div>
+  <h2 class="reveal">网课、会议、外语会议,<br>都能边听边看字幕。</h2>
+  <p class="sub reveal">开长录音,字幕窗浮在所有窗口上面,说一句出一句。全屏上网课,字幕盖在画面上;线上开会,录完的转写按说话人分段,谁说的分得清;外语会议,打开第二栏看译文。录完,完整转写进历史。字幕只是预览,底下的录音一直在录。</p>
+  <div class="cap-demo reveal" id="capDemo" role="img" aria-label="实时字幕演示:左栏中文原文,右栏英文译文">
+    <div class="cap-head"><span class="cap-dot"></span>实时字幕<span class="cap-tag">预览 · 第二栏是译文</span></div>
+    <div class="cap-lines"><div class="cap-cols" aria-hidden="true"><span>原文</span><span>译文</span></div><div id="capLines" style="display:contents"></div></div>
   </div>
   <p class="stage-note reveal lec-note">登录后,免费每月可录 30 分钟。</p>
 </section>
@@ -1171,35 +1184,37 @@ body.is-sandbox .sandbox { display: inline-block; }
 (function () {
   var box = document.getElementById('capLines');
   if (!box) return;
+  // 左原文、右译文:和 App 字幕窗打开第二栏时一样(译文只出定稿,所以整行一起出现)
   var lines = [
-    ['说话人 1', '今天我们讲 attention 机制,先回顾上节课的 embedding。'],
-    ['说话人 1', '这里 query 和 key 做点积,除以 √d 防止数值跑飞。'],
-    ['说话人 2', '老师,这个 scaling 是必须的吗?'],
-    ['说话人 1', '好问题。维度一高,点积方差就大,softmax 会饱和。']
+    ["我们先过一下这周的进度,设计稿周三定下来。", "Let's go over this week's progress first. The designs are final on Wednesday."],
+    ["测试那边还有两个问题,周五之前能修完。", "Testing still has two open issues. They will be fixed before Friday."],
+    ["上线时间不变,还是下周一。", "The launch date stays the same: next Monday."],
+    ["还有问题的话,会后在群里说。", "If anything else comes up, post it in the group chat after the meeting."]
   ];
   var reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function row(l) {
+    var r = document.createElement('div');
+    r.className = 'cap-row';
+    var a = document.createElement('p'); a.textContent = l[0]; a.lang = 'zh-Hans';
+    var b = document.createElement('p'); b.textContent = l[1]; b.className = 'tr'; b.lang = 'en';
+    r.appendChild(a); r.appendChild(b);
+    return r;
+  }
   function render(n) {
     box.innerHTML = '';
-    for (var i = 0; i < n; i++) {
-      var p = document.createElement('p');
-      p.innerHTML = '<span class="spk">' + lines[i][0] + '</span>' + lines[i][1];
-      p.className = 'on';
-      box.appendChild(p);
-    }
+    for (var i = 0; i < n; i++) { var r = row(lines[i]); r.classList.add('on'); box.appendChild(r); }
   }
   if (reduced) { render(lines.length); return; }
   var shown = 0;
   function tick() {
     if (shown >= lines.length) { shown = 0; box.innerHTML = ''; }
-    var p = document.createElement('p');
-    var l = lines[shown];
-    p.innerHTML = '<span class="spk">' + l[0] + '</span>' + l[1];
-    box.appendChild(p);
-    requestAnimationFrame(function () { requestAnimationFrame(function () { p.classList.add('on'); }); });
+    var r = row(lines[shown]);
+    box.appendChild(r);
+    requestAnimationFrame(function () { requestAnimationFrame(function () { r.classList.add('on'); }); });
     shown++;
   }
   tick();
-  setInterval(tick, 2300);
+  setInterval(tick, 2600);
 })();
 </script>
 
