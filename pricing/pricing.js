@@ -18,8 +18,8 @@ const L = EN ? {
   soon: "Coming soon",
   per: { month: "/ month", year: "/ year" },
   buy: (name) => `Get ${name}`,
-  noteOut: "Pay with the email you use to sign in to the app.",
-  noteIn: "You are signed in. The payment goes to this account.",
+  noteOut: "Pay with the same email address you use to sign in to the app.",
+  noteIn: "You are signed in, so the payment will be linked to this account.",
 } : {
   soon: "即将推出",
   per: { month: "/ 月", year: "/ 年" },
