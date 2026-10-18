@@ -529,7 +529,7 @@ footer a:hover { color: var(--ink); text-decoration: none; }
 }
 .vb-body { padding: 18px 20px 20px; }
 
-/* ── ChatGPT 那一轮:聊天输入框的样子 —— 系统字体,没有终端的三颗圆点和等宽标题。
+/* ── AI 对话那一轮:聊天输入框的样子 —— 系统字体,没有终端的三颗圆点和等宽标题。
    vibe.js 按当前一轮的 data-kind 给 .vb-win 加 .is-chat;标题栏的高度留着,换轮不跳版。 ── */
 .vb-win.is-chat { font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", sans-serif; }
 .vb-win.is-chat .vb-bar { border-bottom-color: transparent; }
@@ -942,11 +942,11 @@ body.is-sandbox .sandbox { display: inline-block; }
   <div class="vb-stage reveal" data-vibe data-busy="提示词技能整理中">
     <div class="vb-win">
       <div class="vb-bar" aria-hidden="true"><i></i><i></i><i></i></div>
-      <div class="vb-title" aria-hidden="true">Claude Code</div>
+      <div class="vb-title" aria-hidden="true">终端</div>
       <div class="vb-body">
         <div class="vb-rounds">
 
-          <div class="vb-round is-on landed" data-tool="Claude Code" data-kind="code"
+          <div class="vb-round is-on landed" data-tool="终端" data-kind="code"
                data-ex="嗯那个,|把这个 |fetchUser |改成 |async 的,|然后,|呃,|加个 |retry,|最多三次,|对,|还有|别动|那个 |cache 的逻辑">
             <div class="vb-ctx">~/app <b>main</b></div>
             <div class="vb-input">
@@ -963,7 +963,7 @@ body.is-sandbox .sandbox { display: inline-block; }
             </div>
           </div>
 
-          <div class="vb-round" data-tool="ChatGPT" data-kind="chat"
+          <div class="vb-round" data-tool="AI 对话" data-kind="chat"
                data-ex="呃,|帮我回一下|这封邮件,|就说|周四可以,|下午两点以后|都行,|然后那个,|问他|要不要|我把|上周的报表|带过去,|嗯,|语气客气点,|但别太正式">
             <div class="vb-ctx">Alex 的来信:<b>周四能约半小时,对一下排期吗?</b></div>
             <div class="vb-input">

@@ -526,7 +526,7 @@ footer a:hover { color: var(--ink); text-decoration: none; }
 }
 .vb-body { padding: 18px 20px 20px; }
 
-/* ── ChatGPT 那一轮:聊天输入框的样子 —— 系统字体,没有终端的三颗圆点和等宽标题。
+/* ── AI 对话那一轮:聊天输入框的样子 —— 系统字体,没有终端的三颗圆点和等宽标题。
    vibe.js 按当前一轮的 data-kind 给 .vb-win 加 .is-chat;标题栏的高度留着,换轮不跳版。 ── */
 .vb-win.is-chat { font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", sans-serif; }
 .vb-win.is-chat .vb-bar { border-bottom-color: transparent; }
@@ -940,11 +940,11 @@ body.is-sandbox .sandbox { display: inline-block; }
   <div class="vb-stage reveal" data-vibe data-busy="Prompt skills: tidying">
     <div class="vb-win">
       <div class="vb-bar" aria-hidden="true"><i></i><i></i><i></i></div>
-      <div class="vb-title" aria-hidden="true">Claude Code</div>
+      <div class="vb-title" aria-hidden="true">Terminal</div>
       <div class="vb-body">
         <div class="vb-rounds">
 
-          <div class="vb-round is-on landed" data-tool="Claude Code" data-kind="code"
+          <div class="vb-round is-on landed" data-tool="Terminal" data-kind="code"
                data-ex="Uh, so |make |fetchUser |async, |and then, |like, |add a retry, |three tries max, |yeah, |and don't touch |the cache logic">
             <div class="vb-ctx">~/app <b>main</b></div>
             <div class="vb-input">
@@ -961,7 +961,7 @@ body.is-sandbox .sandbox { display: inline-block; }
             </div>
           </div>
 
-          <div class="vb-round" data-tool="ChatGPT" data-kind="chat"
+          <div class="vb-round" data-tool="AI chat" data-kind="chat"
                data-ex="Um, |help me reply |to this email, |say |Thursday works, |anytime |after two, |and, uh, |ask if |he wants me |to bring |last week's report, |oh and |keep it friendly |but not too formal">
             <div class="vb-ctx">From Alex: <b>Got half an hour on Thursday to go over the schedule?</b></div>
             <div class="vb-input">

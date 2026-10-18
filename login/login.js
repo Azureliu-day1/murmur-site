@@ -15,7 +15,7 @@ const SUPA_KEY = "sb_publishable_bBmuodbgO72q8CK_kacrSw_0o3cCsOd";  // 公开 ke
 const FN       = SUPA_URL + "/functions/v1/murmur-web";
 const SDK      = "../vendor/supabase-js-2.116.0.mjs"; // SEC-L5:自托管,版本写死(来源与 sha256 见 vendor/SOURCES.txt);相对本文件解析
 const LANG     = "zh";
-// 登录后默认去首页的「下载」:Mac App 才是产品,下载免费、本机识别不用名额。
+// 登录后默认去首页的「下载」:Mac App 才是产品,下载免费、不登录也能听写。
 // 网页试整理仍在顶栏「试一试」和登录态卡片里。
 // 例外:刚在这一页提交申请的人还没有名额,申请说明答应过他「可以先登录,在网页上
 // 试整理」—— 他验完码去 APPLY_NEXT(见 afterLogin())。
