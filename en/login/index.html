@@ -41,7 +41,7 @@
       <a href="../skills/index.html">Skills</a>
       <a class="nav-keep" href="../try/index.html">Try it</a>
       <a href="../pricing/index.html">Pricing</a>
-      <a href="../index.html#pinyin">Pinyin</a>
+      <a href="../index.html#pinyin">Input method</a>
       <a href="../demo/index.html">Pinyin demo</a>
       <a class="nav-keep" href="../../login/index.html" hreflang="zh-CN" lang="zh-CN">中文</a>
       <!-- S3 is not wired up yet, so it does not render — a grey word you cannot
@@ -58,7 +58,7 @@
 <header class="head wrap">
   <p class="eyebrow">Sign in</p>
   <h1>Sign in with your email</h1>
-  <p class="sub">Type your email and we send you a 6-digit code. There is no password to set.</p>
+  <p class="sub">Enter your email and we will send you a 6-digit code. There is no password to set.</p>
 </header>
 
 <main class="wrap">
@@ -70,7 +70,7 @@
            placeholder="you@example.com" spellcheck="false" autocapitalize="none">
     <button class="btn btn-primary btn-block" id="send" type="button">Send the 6-digit code</button>
     <p class="state" id="state"></p>
-    <p class="note">We use this address to send the code. When your quota is nearly gone, we send one reminder.</p>
+    <p class="note">We use this address only to send the code, plus one reminder when your quota is nearly used up.</p>
   </section>
 
   <!-- ② 填码 -->
@@ -79,14 +79,14 @@
     <p class="label"><label for="code">6-digit code</label></p>
     <input class="field code" type="text" id="code" inputmode="numeric" autocomplete="one-time-code"
            maxlength="6" placeholder="••••••" aria-describedby="state2" spellcheck="false">
-    <button class="btn btn-primary btn-block" id="verify" type="button">Enter</button>
+    <button class="btn btn-primary btn-block" id="verify" type="button">Sign in</button>
     <p class="state" id="state2"></p>
     <div class="row">
       <button class="resend" type="button" id="resend">Send it again</button>
       <!-- ⚠️ 15 minutes = Supabase's mailer_otp_exp (900 s), the same number the
            email itself prints. Check the dashboard before changing it —
            ⛔ the page and the email must never quote two different numbers. -->
-      <span class="note u-mt0">The code works for 15 minutes. If it is not there, check spam.</span>
+      <span class="note u-mt0">The code is valid for 15 minutes. If you don&rsquo;t see it, check your spam folder.</span>
     </div>
   </section>
 
@@ -104,9 +104,9 @@
   <section class="request" id="reqSection">
     <p class="req-status" id="reqStatus" role="status" hidden></p>
     <details id="req">
-      <summary id="reqSummary">No seat yet? Ask for one</summary>
+      <summary id="reqSummary">No seat yet? Request one</summary>
       <div class="body">
-        <p class="note u-mt0">Seats open one at a time and I read every request myself. You get a 6-digit code <b>right away</b>, so you can sign in and try the cleanup in the browser. We email this address when your seat opens.</p>
+        <p class="note u-mt0">Seats are opened one at a time, and I read every request myself. You get a 6-digit code <b>right away</b>, so you can sign in and try the cleanup in the browser. We will email this address when your seat opens.</p>
         <p class="label u-mt18"><label for="reqEmail">Email</label></p>
         <input class="field" type="email" id="reqEmail" inputmode="email" autocomplete="email"
                placeholder="you@example.com" spellcheck="false" autocapitalize="none">
