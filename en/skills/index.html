@@ -251,7 +251,7 @@
 // 纪律同 try 页:① 模型输出一律 textContent,⛔ 不碰 innerHTML;② 页面上只有公开 key;
 //              ③ 一个失败一句人话,⛔ 不把状态码摆给用户。
 // SITE-SKILLS(10-18):页面只渲染「整理后的需求 + 技能标签 + 做法的一行概括」。
-//   回包的 text(整理稿 + 做法全文)⛔ 不上屏;approach 只取第一条的开头一小段。
+//   回包的 text ⛔ 不上屏;approach 只用条数 + 一行开头(新服务端回 { skill, steps, lead },旧服务端回数组,两种都认)。
 // ⚠️ 这一整段和 skills/index.html 里那段逐行相同,只有 L 与 LANG 不一样。改逻辑两边一起改。本文件是 en 版。
 const SUPA_URL = "https://syebvkwemxwxkonvsyjd.supabase.co";
 const SUPA_KEY = "sb_publishable_bBmuodbgO72q8CK_kacrSw_0o3cCsOd";  // 公开 key,不是密钥
@@ -500,11 +500,23 @@ async function run() {
   }
   // 只上屏整理稿;做法只给技能名 + 条数 + 第一条的开头(回包的 text 含做法全文,⛔ 不用它)
   setText(elOut, j.polished, false);
-  const steps = Array.isArray(j.approach) ? j.approach : [];
+  // approach 两种形状都认(10-18):新服务端回摘要对象 { skill, steps, lead },lead 已截好、截断时自带「…」,
+  // 原样用、⛔ 不再补省略号;旧服务端回做法数组(网站可能比服务端先上线),照旧取条数 + 第一条开头。
+  const ap = j.approach;
+  let apCount = 0, apLead = "", apSkill = "";
+  if (Array.isArray(ap)) {
+    apCount = ap.length;
+    apLead = gistOf(ap[0]);
+  } else if (ap && typeof ap === "object") {
+    apCount = Array.isArray(ap.steps) ? ap.steps.length : (Number(ap.steps) || 0);
+    apLead = typeof ap.lead === "string" ? ap.lead.trim() : "";
+    apSkill = typeof ap.skill === "string" ? ap.skill : "";
+  }
   if (j.attached) {
-    elChip.textContent = skillName(j.skill) || String(j.skill || "");
+    const sk = j.skill || apSkill;
+    elChip.textContent = skillName(sk) || String(sk || "");
     elChip.hidden = !elChip.textContent;
-    elApLine.textContent = L.apLine(steps.length, gistOf(steps[0]));
+    elApLine.textContent = L.apLine(apCount, apLead);
     elResult.hidden = false;
     elVerdict.textContent = L.apNote;
   } else {
