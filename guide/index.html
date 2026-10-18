@@ -55,8 +55,8 @@
   <h1>使用指南</h1>
   <p class="sub">每个功能写三行:是什么,怎么用,在哪打开。按 Murmur 0.53 写。</p>
   <p class="g-toc"><b>开始</b><a href="#first">装好后第一句</a></p>
-  <p class="g-toc"><b>打字</b><a href="#install">装拼音输入法</a><span class="sep">·</span><a href="#typing">拼音怎么打</a><span class="sep">·</span><a href="#fuzzy">双拼与模糊音</a><span class="sep">·</span><a href="#smart">智能标点</a><span class="sep">·</span><a href="#look">候选窗外观</a><span class="sep">·</span><a href="#cloud">云候选</a><span class="sep">·</span><a href="#phrases">快捷短语</a><span class="sep">·</span><a href="#words">你打过的词</a></p>
   <p class="g-toc"><b>说话</b><a href="#prompt-skills">提示词技能</a><span class="sep">·</span><a href="#scene">按场景整理</a></p>
+  <p class="g-toc"><b>打字</b><a href="#install">装拼音输入法</a><span class="sep">·</span><a href="#typing">拼音怎么打</a><span class="sep">·</span><a href="#fuzzy">双拼与模糊音</a><span class="sep">·</span><a href="#smart">智能标点</a><span class="sep">·</span><a href="#look">候选窗外观</a><span class="sep">·</span><a href="#cloud">云候选</a><span class="sep">·</span><a href="#phrases">快捷短语</a><span class="sep">·</span><a href="#words">你打过的词</a></p>
   <p class="g-toc"><b>0.53</b><a href="#changes">更新记录</a></p>
 </header>
 
@@ -77,6 +77,55 @@
         </div></div>
         <div class="g-row"><span class="k">要什么</span><div>macOS 26 以上,M 系列芯片。本机识别不用登录。</div></div>
       </div>
+    </div>
+  </section>
+
+    <!-- 事实(方案 C,murmur-ime skills5 4745d296):PromptSkillSettings.swift PromptSkillAuto.minUnits = 15(短于它不发技能那一发)、maxWait 4 s ·
+       PromptSkills.swift PromptSkillApproach.minScalars = 40(附做法的门)· codeIDs / chatIDs(编程 7 / 聊天 5)· 冲突表 method-conflicts.json v4 ·
+       技能名取 Resources/prompt-skills/*.json 的 name。落进去的 = 普通整理稿 + 可选「做法」第 3–5 条,不再切格子。 -->
+  <section class="g-sec" id="prompt-skills">
+    <h2>提示词技能</h2>
+    <div class="g-body">
+      <div>
+        <div class="g-row"><span class="k">是什么</span><div>在 AI 编程和 AI 聊天工具里说需求时,先落通顺的整理稿,判得出是哪种需求就在后面附最多三条做法。</div></div>
+        <div class="g-row"><span class="k">落什么</span><div>
+          <p>落进输入框的是普通整理稿。下面三条同时满足时,空一行再附最多三条「做法」:</p>
+          <ul>
+            <li>这一句不少于 40 个字。</li>
+            <li>判得出是单一一种需求(判成两种以上或判不出时不附)。</li>
+            <li>你没在话里说明做法,比如「先别改」「只解释」「顺手改」。</li>
+          </ul>
+          <p>不满足就只落整理稿。少于 15 个字的句子不走技能。整理失败或翻译时也不附。</p>
+        </div></div>
+        <div class="g-row"><span class="k">十二个技能</span><div>
+          <p>编程七个:修 bug、写新功能、改 / 重构代码、解释代码、代码审查、写计划、写测试。</p>
+          <p>聊天五个:调研、帮我写、帮我做决定、总结提炼、回复消息。</p>
+          <p>Cursor 里只用编程七个。Claude 桌面版、ChatGPT / Codex 里十二个都可选。其它被认成 AI 助手的 App 里是聊天五个。终端里不开。</p>
+          <p>每个技能附哪些做法,见<a href="../skills/index.html">技能页</a>,那里也能粘一句试。</p>
+        </div></div>
+        <div class="g-row"><span class="k">怎么用</span><div>在这些 App 和网页里照常按听写键说需求,网页要开着「按场景整理」。结果直接落在光标处,不用多按键。</div></div>
+        <div class="g-row"><span class="k">在哪打开</span><div><b>默认关。</b>在 设置 → 整理 →「提示词技能」卡打开,打开前有一页确认。十二个技能在同一张卡上单独开关。关着时,你第一次在这些 App 里说够长的一句,录音条会提示一次在哪打开。</div></div>
+        <p class="g-note">开启后,够长的那一句的转写文字会多发一次给整理用的同一家模型厂商。不新增接收方,不发录音,不发你在哪个窗口。「整理」设成「不动」时技能也不发。</p>
+      </div>
+      <figure class="py-shot"><p><kbd>设置</kbd> → <kbd>整理</kbd> → <kbd>提示词技能</kbd></p><figcaption>默认关。打开前有一页确认。</figcaption></figure>
+    </div>
+  </section>
+
+  <!-- 事实:SceneSettingsSection.swift:47-76 · AppSettings.swift:484-488(默认开) -->
+  <section class="g-sec" id="scene">
+    <h2>按场景整理</h2>
+    <div class="g-body">
+      <div>
+        <div class="g-row"><span class="k">是什么</span><div>按落进的 App 和输入框调整理口吻。邮件像邮件,聊天像平常话,终端和编辑器里术语原样。</div></div>
+        <div class="g-row"><span class="k">怎么用</span><div>
+          <p>照常听写,不用多按键。卡上显示当前前台 App 被识别成哪个场景,也可以给某个 App 指定场景。</p>
+          <p>整理设成「不动」时这一项不起作用。</p>
+        </div></div>
+        <div class="g-row"><span class="k">在哪打开</span><div><b>默认开。</b>设置 → 整理 →「按场景整理」卡。</div></div>
+        <p class="g-note">它读应用标识和输入框类型,在支持的浏览器里还读页面的主机名。主机名不发送。场景名随整理请求发给整理模型。</p>
+      </div>
+      <!-- 真截图 settings-scene-on(INT 出图 2026-10-01),前台 App 是出图样例 Mail -->
+      <figure class="py-shot"><picture><source srcset="../shots/zh/settings-scene-on-dark.png" media="(prefers-color-scheme: dark)"><img src="../shots/zh/settings-scene-on-light.png" width="900" height="410" loading="lazy" alt="设置里的「按场景整理」卡:开关已勾。当前前台 App:Mail,识别为「邮件」。下面按 App 指定场景,Mail、Safari、终端都是「自动」。"></picture><figcaption>「按场景整理」卡上显示当前前台 App 被识别成哪个场景。</figcaption></figure>
     </div>
   </section>
 
@@ -228,55 +277,6 @@
         </div></div>
       </div>
       <figure class="py-shot"><p class="mono">~/Library/Application Support/Murmur/lexicon.sqlite</p><figcaption>打过的词存在这里。<a href="../privacy.html">隐私页</a>有写。</figcaption></figure>
-    </div>
-  </section>
-
-    <!-- 事实(方案 C,murmur-ime skills5 4745d296):PromptSkillSettings.swift PromptSkillAuto.minUnits = 15(短于它不发技能那一发)、maxWait 4 s ·
-       PromptSkills.swift PromptSkillApproach.minScalars = 40(附做法的门)· codeIDs / chatIDs(编程 7 / 聊天 5)· 冲突表 method-conflicts.json v4 ·
-       技能名取 Resources/prompt-skills/*.json 的 name。落进去的 = 普通整理稿 + 可选「做法」第 3–5 条,不再切格子。 -->
-  <section class="g-sec" id="prompt-skills">
-    <h2>提示词技能</h2>
-    <div class="g-body">
-      <div>
-        <div class="g-row"><span class="k">是什么</span><div>在 AI 编程和 AI 聊天工具里说需求时,先落通顺的整理稿,判得出是哪种需求就在后面附最多三条做法。</div></div>
-        <div class="g-row"><span class="k">落什么</span><div>
-          <p>落进输入框的是普通整理稿。下面三条同时满足时,空一行再附最多三条「做法」:</p>
-          <ul>
-            <li>这一句不少于 40 个字。</li>
-            <li>判得出是单一一种需求(判成两种以上或判不出时不附)。</li>
-            <li>你没在话里说明做法,比如「先别改」「只解释」「顺手改」。</li>
-          </ul>
-          <p>不满足就只落整理稿。少于 15 个字的句子不走技能。整理失败或翻译时也不附。</p>
-        </div></div>
-        <div class="g-row"><span class="k">十二个技能</span><div>
-          <p>编程七个:修 bug、写新功能、改 / 重构代码、解释代码、代码审查、写计划、写测试。</p>
-          <p>聊天五个:调研、帮我写、帮我做决定、总结提炼、回复消息。</p>
-          <p>Cursor 里只用编程七个。Claude 桌面版、ChatGPT / Codex 里十二个都可选。其它被认成 AI 助手的 App 里是聊天五个。终端里不开。</p>
-          <p>每个技能附哪些做法,见<a href="../skills/index.html">技能页</a>,那里也能粘一句试。</p>
-        </div></div>
-        <div class="g-row"><span class="k">怎么用</span><div>在这些 App 和网页里照常按听写键说需求,网页要开着「按场景整理」。结果直接落在光标处,不用多按键。</div></div>
-        <div class="g-row"><span class="k">在哪打开</span><div><b>默认关。</b>在 设置 → 整理 →「提示词技能」卡打开,打开前有一页确认。十二个技能在同一张卡上单独开关。关着时,你第一次在这些 App 里说够长的一句,录音条会提示一次在哪打开。</div></div>
-        <p class="g-note">开启后,够长的那一句的转写文字会多发一次给整理用的同一家模型厂商。不新增接收方,不发录音,不发你在哪个窗口。「整理」设成「不动」时技能也不发。</p>
-      </div>
-      <figure class="py-shot"><p><kbd>设置</kbd> → <kbd>整理</kbd> → <kbd>提示词技能</kbd></p><figcaption>默认关。打开前有一页确认。</figcaption></figure>
-    </div>
-  </section>
-
-  <!-- 事实:SceneSettingsSection.swift:47-76 · AppSettings.swift:484-488(默认开) -->
-  <section class="g-sec" id="scene">
-    <h2>按场景整理</h2>
-    <div class="g-body">
-      <div>
-        <div class="g-row"><span class="k">是什么</span><div>按落进的 App 和输入框调整理口吻。邮件像邮件,聊天像平常话,终端和编辑器里术语原样。</div></div>
-        <div class="g-row"><span class="k">怎么用</span><div>
-          <p>照常听写,不用多按键。卡上显示当前前台 App 被识别成哪个场景,也可以给某个 App 指定场景。</p>
-          <p>整理设成「不动」时这一项不起作用。</p>
-        </div></div>
-        <div class="g-row"><span class="k">在哪打开</span><div><b>默认开。</b>设置 → 整理 →「按场景整理」卡。</div></div>
-        <p class="g-note">它读应用标识和输入框类型,在支持的浏览器里还读页面的主机名。主机名不发送。场景名随整理请求发给整理模型。</p>
-      </div>
-      <!-- 真截图 settings-scene-on(INT 出图 2026-10-01),前台 App 是出图样例 Mail -->
-      <figure class="py-shot"><picture><source srcset="../shots/zh/settings-scene-on-dark.png" media="(prefers-color-scheme: dark)"><img src="../shots/zh/settings-scene-on-light.png" width="900" height="410" loading="lazy" alt="设置里的「按场景整理」卡:开关已勾。当前前台 App:Mail,识别为「邮件」。下面按 App 指定场景,Mail、Safari、终端都是「自动」。"></picture><figcaption>「按场景整理」卡上显示当前前台 App 被识别成哪个场景。</figcaption></figure>
     </div>
   </section>
 

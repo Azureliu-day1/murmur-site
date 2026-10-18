@@ -55,8 +55,8 @@
   <h1>How to use Murmur</h1>
   <p class="sub">Each feature gets three lines: what it is, how to use it, where to turn it on. Written for Murmur 0.53.</p>
   <p class="g-toc"><b>Start</b><a href="#first">Your first sentence</a></p>
-  <p class="g-toc"><b>Typing</b><a href="#install">Install the input method</a><span class="sep">·</span><a href="#typing">Typing Pinyin</a><span class="sep">·</span><a href="#fuzzy">Double and fuzzy pinyin</a><span class="sep">·</span><a href="#smart">Smart punctuation</a><span class="sep">·</span><a href="#look">Candidate window</a><span class="sep">·</span><a href="#cloud">Cloud candidates</a><span class="sep">·</span><a href="#phrases">Shortcut phrases</a><span class="sep">·</span><a href="#words">Words you type</a></p>
   <p class="g-toc"><b>Speaking</b><a href="#prompt-skills">Prompt skills</a><span class="sep">·</span><a href="#scene">Cleanup by scene</a></p>
+  <p class="g-toc"><b>Typing</b><a href="#install">Install the input method</a><span class="sep">·</span><a href="#typing">Typing Pinyin</a><span class="sep">·</span><a href="#fuzzy">Double and fuzzy pinyin</a><span class="sep">·</span><a href="#smart">Smart punctuation</a><span class="sep">·</span><a href="#look">Candidate window</a><span class="sep">·</span><a href="#cloud">Cloud candidates</a><span class="sep">·</span><a href="#phrases">Shortcut phrases</a><span class="sep">·</span><a href="#words">Words you type</a></p>
   <p class="g-toc"><b>0.53</b><a href="#changes">Change log</a></p>
 </header>
 
@@ -78,6 +78,55 @@
         </div></div>
         <div class="g-row"><span class="k">You need</span><div>macOS 26 or later on Apple Silicon. On-device recognition needs no account.</div></div>
       </div>
+    </div>
+  </section>
+
+    <!-- Facts (plan C, murmur-ime skills5 4745d296): PromptSkillSettings.swift PromptSkillAuto.minUnits = 15 (no skill call below it), maxWait 4 s ·
+       PromptSkills.swift PromptSkillApproach.minScalars = 40 (threshold for adding steps) · codeIDs / chatIDs (7 coding / 5 chat) · method-conflicts.json v4 ·
+       skill names from the name field of Resources/prompt-skills/*.json. What lands = the plain cleanup plus, optionally, steps 3 to 5 of the skill. No more slots. -->
+  <section class="g-sec" id="prompt-skills">
+    <h2>Prompt skills</h2>
+    <div class="g-body">
+      <div>
+        <div class="g-row"><span class="k">What it is</span><div>When you say a request in AI coding and AI chat tools, the cleaned-up text lands first. If the app can tell what kind of request it is, up to three steps are added after it.</div></div>
+        <div class="g-row"><span class="k">What lands</span><div>
+          <p>The plain cleanup always lands. Up to three steps are added after a blank line only when all of these hold:</p>
+          <ul>
+            <li>The sentence is at least 40 characters long.</li>
+            <li>It reads as one single kind of request (nothing is added when it reads as two or more, or as none).</li>
+            <li>You did not already say how to go about it, for example “don’t change anything yet”, “just explain” or “fix it while you’re there”.</li>
+          </ul>
+          <p>Otherwise only the cleanup lands. Sentences under 15 characters or words skip the skill. Nothing is added when cleanup fails or when translating.</p>
+        </div></div>
+        <div class="g-row"><span class="k">Twelve skills</span><div>
+          <p>Seven coding skills: Fix a bug, Build a feature, Change or refactor code, Explain code, Review code, Plan the work, Write tests.</p>
+          <p>Five chat skills: Research, Write, Decide, Summarize, Reply.</p>
+          <p>Cursor gets the seven coding skills. Claude desktop and ChatGPT / Codex can use all twelve. Other apps recognised as an AI assistant get the five chat skills. Not in terminals.</p>
+          <p>The steps each skill can add are on the <a href="../skills/index.html">skills page</a>, where you can also paste a sentence to try it.</p>
+        </div></div>
+        <div class="g-row"><span class="k">How to use</span><div>In those apps and web pages, press the dictation key as usual and say the request. Web pages need “Cleanup by scene” on. The result lands at your cursor. There is no extra key.</div></div>
+        <div class="g-row"><span class="k">Where</span><div><b>Off by default.</b> Turn it on in Settings → Cleanup → Prompt skills. A confirmation page comes first. Each of the twelve skills has its own switch on the same card. While it is off, the recording bar tells you once where to turn it on, the first time you say a long enough sentence in one of these apps.</div></div>
+        <p class="g-note">Once it is on, the transcript of a long enough sentence is sent one extra time to the same model vendor that cleanup uses. No new recipient, no audio, and which window you are in is not sent. When cleanup is set to leave text alone, the skill sends nothing either.</p>
+      </div>
+      <figure class="py-shot"><p><kbd>Settings</kbd> → <kbd>Cleanup</kbd> → <kbd>Prompt skills</kbd></p><figcaption>Off by default. A confirmation page comes first.</figcaption></figure>
+    </div>
+  </section>
+
+  <!-- Facts: SceneSettingsSection.swift:47-76 · AppSettings.swift:484-488 (on by default) -->
+  <section class="g-sec" id="scene">
+    <h2>Cleanup by scene</h2>
+    <div class="g-body">
+      <div>
+        <div class="g-row"><span class="k">What it is</span><div>The cleanup tone follows the app and field you dictate into. Email reads like email, chat stays casual, and the terminal and code editors keep their terms.</div></div>
+        <div class="g-row"><span class="k">How to use</span><div>
+          <p>Dictate as usual, with no extra key. The card shows which scene the front app is recognised as, and you can set a scene for one app.</p>
+          <p>When cleanup is set to leave text alone, this does nothing.</p>
+        </div></div>
+        <div class="g-row"><span class="k">Where</span><div><b>On by default.</b> Settings → Cleanup → Cleanup by scene.</div></div>
+        <p class="g-note">It reads the app identifier and the field type, plus the page host name in supported browsers. The host name is not sent. The scene name goes with the cleanup request to the cleanup model.</p>
+      </div>
+      <!-- Real screenshot settings-scene-on (INT render 2026-10-01); the front app is the render sample, Mail -->
+      <figure class="py-shot"><picture><img src="../../shots/en/settings-scene-on-light.png" width="900" height="457" loading="lazy" alt="The Cleanup by scene card in Settings, switched on. Front app: Mail, recognised as Email. Below, a scene per app: Mail, Safari and Terminal are all set to Auto."></picture><figcaption>The card shows which scene the front app is recognised as.</figcaption></figure>
     </div>
   </section>
 
@@ -228,55 +277,6 @@
         </div></div>
       </div>
       <figure class="py-shot"><p class="mono">~/Library/Application Support/Murmur/lexicon.sqlite</p><figcaption>Words you type are stored here. See the <a href="../privacy.html">privacy page</a>.</figcaption></figure>
-    </div>
-  </section>
-
-    <!-- Facts (plan C, murmur-ime skills5 4745d296): PromptSkillSettings.swift PromptSkillAuto.minUnits = 15 (no skill call below it), maxWait 4 s ·
-       PromptSkills.swift PromptSkillApproach.minScalars = 40 (threshold for adding steps) · codeIDs / chatIDs (7 coding / 5 chat) · method-conflicts.json v4 ·
-       skill names from the name field of Resources/prompt-skills/*.json. What lands = the plain cleanup plus, optionally, steps 3 to 5 of the skill. No more slots. -->
-  <section class="g-sec" id="prompt-skills">
-    <h2>Prompt skills</h2>
-    <div class="g-body">
-      <div>
-        <div class="g-row"><span class="k">What it is</span><div>When you say a request in AI coding and AI chat tools, the cleaned-up text lands first. If the app can tell what kind of request it is, up to three steps are added after it.</div></div>
-        <div class="g-row"><span class="k">What lands</span><div>
-          <p>The plain cleanup always lands. Up to three steps are added after a blank line only when all of these hold:</p>
-          <ul>
-            <li>The sentence is at least 40 characters long.</li>
-            <li>It reads as one single kind of request (nothing is added when it reads as two or more, or as none).</li>
-            <li>You did not already say how to go about it, for example “don’t change anything yet”, “just explain” or “fix it while you’re there”.</li>
-          </ul>
-          <p>Otherwise only the cleanup lands. Sentences under 15 characters or words skip the skill. Nothing is added when cleanup fails or when translating.</p>
-        </div></div>
-        <div class="g-row"><span class="k">Twelve skills</span><div>
-          <p>Seven coding skills: Fix a bug, Build a feature, Change or refactor code, Explain code, Review code, Plan the work, Write tests.</p>
-          <p>Five chat skills: Research, Write, Decide, Summarize, Reply.</p>
-          <p>Cursor gets the seven coding skills. Claude desktop and ChatGPT / Codex can use all twelve. Other apps recognised as an AI assistant get the five chat skills. Not in terminals.</p>
-          <p>The steps each skill can add are on the <a href="../skills/index.html">skills page</a>, where you can also paste a sentence to try it.</p>
-        </div></div>
-        <div class="g-row"><span class="k">How to use</span><div>In those apps and web pages, press the dictation key as usual and say the request. Web pages need “Cleanup by scene” on. The result lands at your cursor. There is no extra key.</div></div>
-        <div class="g-row"><span class="k">Where</span><div><b>Off by default.</b> Turn it on in Settings → Cleanup → Prompt skills. A confirmation page comes first. Each of the twelve skills has its own switch on the same card. While it is off, the recording bar tells you once where to turn it on, the first time you say a long enough sentence in one of these apps.</div></div>
-        <p class="g-note">Once it is on, the transcript of a long enough sentence is sent one extra time to the same model vendor that cleanup uses. No new recipient, no audio, and which window you are in is not sent. When cleanup is set to leave text alone, the skill sends nothing either.</p>
-      </div>
-      <figure class="py-shot"><p><kbd>Settings</kbd> → <kbd>Cleanup</kbd> → <kbd>Prompt skills</kbd></p><figcaption>Off by default. A confirmation page comes first.</figcaption></figure>
-    </div>
-  </section>
-
-  <!-- Facts: SceneSettingsSection.swift:47-76 · AppSettings.swift:484-488 (on by default) -->
-  <section class="g-sec" id="scene">
-    <h2>Cleanup by scene</h2>
-    <div class="g-body">
-      <div>
-        <div class="g-row"><span class="k">What it is</span><div>The cleanup tone follows the app and field you dictate into. Email reads like email, chat stays casual, and the terminal and code editors keep their terms.</div></div>
-        <div class="g-row"><span class="k">How to use</span><div>
-          <p>Dictate as usual, with no extra key. The card shows which scene the front app is recognised as, and you can set a scene for one app.</p>
-          <p>When cleanup is set to leave text alone, this does nothing.</p>
-        </div></div>
-        <div class="g-row"><span class="k">Where</span><div><b>On by default.</b> Settings → Cleanup → Cleanup by scene.</div></div>
-        <p class="g-note">It reads the app identifier and the field type, plus the page host name in supported browsers. The host name is not sent. The scene name goes with the cleanup request to the cleanup model.</p>
-      </div>
-      <!-- Real screenshot settings-scene-on (INT render 2026-10-01); the front app is the render sample, Mail -->
-      <figure class="py-shot"><picture><img src="../../shots/en/settings-scene-on-light.png" width="900" height="457" loading="lazy" alt="The Cleanup by scene card in Settings, switched on. Front app: Mail, recognised as Email. Below, a scene per app: Mail, Safari and Terminal are all set to Auto."></picture><figcaption>The card shows which scene the front app is recognised as.</figcaption></figure>
     </div>
   </section>
 
