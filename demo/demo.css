@@ -84,3 +84,13 @@ kbd {
   /* 顶栏收起的那条,同 try 页:只留 nav-keep 与「下载」 */
   .navlinks a:not(.nav-cta):not(.nav-keep), .navlinks .soon { display: none; }
 }
+
+/* ── 手机(≤ 600 px):输入框下不留大片空白 ──
+   候选窗改回文档流,出现才占位;只在自动演示进行时(demo-ui.js 给 .stage 加 .running)
+   给格子预留高度,演示中候选窗一开一合下面的按钮不跳。 */
+@media (max-width: 600px) {
+  .fake-input { min-height: 54px; }
+  .slot { min-height: 0; }
+  .slot .py-panel { position: relative; top: auto; margin-top: 10px; }
+  .stage.running .slot { min-height: 118px; }
+}

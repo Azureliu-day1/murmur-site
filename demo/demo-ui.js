@@ -59,8 +59,10 @@
   var box = $("box"), elPh = $("ph"), elOut = $("out"), elComp = $("comp"), elCaret = $("caret");
   var slot = $("slot"), panel = $("panel"), cap = $("cap"), elMode = $("mode");
   var btnAuto = $("auto"), btnStop = $("stop"), btnReset = $("reset"), lines = $("lines");
+  var stage = box.closest ? box.closest(".stage") : null;
 
-  var mqNarrow = window.matchMedia ? window.matchMedia("(max-width: 820px)") : null;
+  // 「没有实体键盘」:窄屏(≤ 600 px)或纯触屏(不能悬停、指针粗)。这时提示改成看场景演示。
+  var mqNarrow = window.matchMedia ? window.matchMedia("(max-width: 600px), (hover: none) and (pointer: coarse)") : null;
   var mqCalm = window.matchMedia ? window.matchMedia("(prefers-reduced-motion: reduce)") : null;
   function narrow() { return !!(mqNarrow && mqNarrow.matches); }
   // 减弱动效时字母间隔改 40 ms,但仍逐键:演示的是按键过程,这是内容不是装饰
@@ -157,6 +159,8 @@
   }
   function setRunning(on) {
     btnStop.disabled = !on;
+    // 手机上候选窗格只在演示进行时预留高度(demo.css 的 .stage.running),平时不留空白
+    if (stage) stage.classList.toggle("running", !!on);
   }
 
   function stopAuto() {
