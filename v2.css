@@ -121,6 +121,10 @@ nav {
   .navlinks { gap: 10px; }
   .nav-cta { padding: 6px 11px; }
 }
+/* 340 以下(320 宽的老机型):顶栏放不下语言切换,收起来;页脚有同一个切换 */
+@media (max-width: 340px) {
+  .navlinks a[hreflang] { display: none; }
+}
 
 .eyebrow {
   font-size: 12px; font-weight: 600; letter-spacing: .18em;

@@ -800,6 +800,11 @@ body.is-sandbox .sandbox { display: inline-block; }
   .nav-cta { padding: 6px 11px; }
 }
 
+/* 340 以下(320 宽的老机型):顶栏放不下语言切换,收起来;页脚有同一个切换 */
+@media (max-width: 340px) {
+  .navlinks a[hreflang] { display: none; }
+}
+
 /* ── SITE-V3 首页文案(COPY.md + round2 FINAL,2026-10-13) ── */
 .keys4 .feature { grid-template-columns: 240px 1fr auto; }
 .keys-foot { margin-top: 22px; color: var(--faint); font-size: 13.5px; }

@@ -55,7 +55,9 @@ html[lang="en"] .g-row { grid-template-columns: 104px 1fr; }
 @media (max-width: 820px) {
   /* 顶栏收起的那条,同 demo / try 页:只留 nav-keep 与「下载」 */
   .navlinks a:not(.nav-cta):not(.nav-keep), .navlinks .soon { display: none; }
-  .g-body { grid-template-columns: 1fr; }
+  /* minmax(0, …):不让一条长路径(lexicon.sqlite 那张卡)把单栏撑出屏幕,320 宽原来顶出 28px */
+  .g-body { grid-template-columns: minmax(0, 1fr); }
+  .g-body .py-shot .mono { overflow-wrap: anywhere; }
   .g-sec { padding-top: 56px; }
   .g-row, html[lang="en"] .g-row { grid-template-columns: 1fr; gap: 2px; }
 }
