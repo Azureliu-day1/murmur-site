@@ -209,8 +209,8 @@ footer .grow { margin-left: auto; }
 </tbody>
 </table></div>
 <h2><span class="num">3</span>What each feature sends</h2>
-<h3><span class="num">3.1</span>On-device recognition</h3>
-<p>With on-device recognition, transcription happens on your Mac and the audio is not sent to us or to any recognition provider. There is one exception: if your macOS version can&rsquo;t recognise the current language offline, the system may send the audio to the operating system provider, under its privacy policy.</p>
+<h3><span class="num">3.1</span>Offline recognition (done on your Mac)</h3>
+<p>With offline recognition, transcription happens on your Mac and the audio is not sent to us or to any recognition provider. There is one exception: if your macOS version can&rsquo;t recognise the current language offline, the system may send the audio to the operating system provider, under its privacy policy.</p>
 <h3><span class="num">3.2</span>Cloud recognition</h3>
 <ul>
 <li>On the free allowance, audio goes from your Mac to the speech recognition provider (United States). Each time you start recording, our server issues a single-use temporary credential, so we know when you start recording, but the audio does not pass through our servers.</li>
@@ -239,11 +239,11 @@ footer .grow { margin-left: auto; }
 <li>if Personal style is on (it is off by default), up to 3 examples of what you said and how it was cleaned up, taken from your recent history.</li>
 </ul>
 <p>Prompt skills tidies up prompts you dictate into AI tools. When it is on, a longer sentence is sent once more to the same provider to work out what kind of request it is. Only the text is sent, with no audio and no window details.</p>
-<p>Even with on-device recognition, cleanup still sends text to a language model. To keep everything you say on your Mac, choose on-device recognition, set cleanup to Off, and don&rsquo;t use translation, Ask, or voice editing.</p>
+<p>Even with offline recognition (done on your Mac), cleanup still sends text to a language model. To keep everything you say on your Mac, choose offline recognition, set cleanup to Off, and don&rsquo;t use translation, Ask, or voice editing.</p>
 <h3><span class="num">3.4</span>Input method</h3>
 <ul>
 <li>Words the input method learns are stored on this Mac only.</li>
-<li>When you press the shortcut to have AI clean up the current sentence, the related words from your dictionary and learned words (up to 500) go with the request, including when you use on-device recognition. Turning off &ldquo;Let AI use my own words&rdquo; in Settings › Input Method stops this entirely.</li>
+<li>When you press the shortcut to have AI clean up the current sentence, the related words from your dictionary and learned words (up to 500) go with the request, including when you use offline recognition (done on your Mac). Turning off &ldquo;Let AI use my own words&rdquo; in Settings › Input Method stops this entirely.</li>
 <li>Cloud candidates are off by default. When on, pinyin you have not yet confirmed goes through our server to the text processing provider (China). Only the pinyin is sent.</li>
 </ul>
 <h3><span class="num">3.5</span>Screen context</h3>
@@ -252,14 +252,14 @@ footer .grow { margin-left: auto; }
 <li>When on, Murmur reads the visible text of the front window once, at the moment you start recording. It uses macOS accessibility features and takes no screenshot. If the front app is on your exclusion list, macOS secure input is active, or the cursor is in a password field, nothing in the window is read.</li>
 <li>With cloud recognition, proper nouns taken from that text go to the recognition provider with the audio.</li>
 <li>With cleanup on, or when you use translation or Ask, up to 1,500 characters of it go to the language model provider with the transcript. On the free allowance it goes through our server; with your own key it goes to the provider for that key.</li>
-<li>The text is not stored or logged on your Mac, and words from the screen are never added to your dictionary. With on-device recognition and cleanup off, nothing is read.</li>
+<li>The text is not stored or logged on your Mac, and words from the screen are never added to your dictionary. With offline recognition (done on your Mac) and cleanup off, nothing is read.</li>
 </ul>
 <h2><span class="num">4</span>Records on our servers</h2>
 <p>Our servers keep:</p>
 <ul>
 <li><strong>Account.</strong> Your email address, account status, and allowance.</li>
 <li><strong>Sign-in sessions.</strong> Network address and device or browser information, used to keep your account secure.</li>
-<li><strong>Usage records.</strong> For each sentence you dictate (including on-device ones, which don&rsquo;t use allowance), the character count, how long you spoke, the feature, the path it took (on-device, your own key, or the free allowance), and the time. We use these to calculate allowance and prevent abuse. They don&rsquo;t include anything you said.</li>
+<li><strong>Usage records.</strong> For each sentence you dictate (including offline recognition done on your Mac, which doesn&rsquo;t use allowance), the character count, how long you spoke, the feature, the path it took (offline recognition, your own key, or the free allowance), and the time. We use these to calculate allowance and prevent abuse. They don&rsquo;t include anything you said.</li>
 <li><strong>Language model forwarding records.</strong> For each request we forward, the tier, model, provider, estimated usage, and cost. No text.</li>
 <li><strong>Beta place applications.</strong> See section 6.</li>
 <li><strong>Invite code attempts.</strong> Network address, email address, the first characters of the code, and the result, used to prevent invite code abuse. Kept for 30 days.</li>
