@@ -1079,16 +1079,17 @@ body.is-sandbox .sandbox { display: inline-block; }
 </section>
 
 <!-- ── 长录音:实时字幕(网课 / 线上会议 / 外语会议)+ 整段转写(说话人分离)。
-     能力对过 murmur-ime 0.52.3 与 ime-mac:字幕浮窗跨全屏(LectureCaptionPanel fullScreenAuxiliary)、第二栏译文(translateOn)、
-     说话人分段只在录完的整段转写里(diarize),实时字幕里没有,所以演示卡不标说话人。 ── -->
+     能力对过 murmur-ime ime-mac HEAD bbdf8251:字幕浮窗跨全屏(LectureCaptionPanel fullScreenAuxiliary)、第二栏译文(translateOn)
+     只在自带密钥的场次有 —— 代付那场(免费试用一次 · 最长 3 分钟 / Pro 无 Key)不给浮窗,实时字写在录音页里(LectureView.swift:169、229)。
+     说话人分段在录完的整段转写里(代付场次也开 diarize),实时字幕里没有,所以演示卡不标说话人。Wei 10-18 定免费长录音政策 B。 ── -->
 <section class="wrap" id="lecture">
   <h2 class="reveal">网课、会议、外语会议,<br>都能边听边看字幕。</h2>
-  <p class="sub reveal">开长录音,字幕窗浮在所有窗口上面,说一句出一句。全屏上网课,字幕盖在画面上;线上开会,录完的转写按说话人分段,谁说的分得清;外语会议,打开第二栏看译文。录完,完整转写进历史。字幕只是预览,底下的录音一直在录。</p>
+  <p class="sub reveal">开长录音,边录边出字。线上开会,录完的转写按说话人分段,谁说的分得清。用你自己的识别服务密钥时,字幕还能浮在所有窗口上面:全屏上网课,字幕盖在画面上;外语会议,打开第二栏看译文。录完,完整转写进历史。字幕只是预览,底下的录音一直在录。</p>
   <div class="cap-demo reveal" id="capDemo" role="img" aria-label="实时字幕演示:左栏中文原文,右栏英文译文">
-    <div class="cap-head"><span class="cap-dot"></span>实时字幕<span class="cap-tag">预览 · 第二栏是译文</span></div>
+    <div class="cap-head"><span class="cap-dot"></span>实时字幕<span class="cap-tag">自带密钥时 · 第二栏是译文</span></div>
     <div class="cap-lines"><div class="cap-cols" aria-hidden="true"><span>原文</span><span>译文</span></div><div id="capLines" style="display:contents"></div></div>
   </div>
-  <p class="stage-note reveal lec-note">申请通过、登录后,免费每月可录 30 分钟。</p>
+  <p class="stage-note reveal lec-note">申请通过、登录后,可以免费试录一次,最长 3 分钟;到时自动停,录下的部分照常保存。想多录,<a href="pricing/index.html">看价格 →</a></p>
 </section>
 
 <!-- ── 识别(round2 定稿,版本 A):照平时的样子说。不报档位、不讲本机 / 云端 ── -->

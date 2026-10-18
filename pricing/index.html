@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 <head>
 <meta charset="utf-8">
-<!-- 免费档写的是**线上现行规则**(0.53 发布时):云端听写每周 2000 字、长录音每月 30 分钟(需要名额)、本机识别不限。
+<!-- 免费档写的是**线上现行规则**(0.53 发布时):云端听写每周 2000 字、长录音免费试一次最长 3 分钟(Wei 10-18 政策 B)、本机识别不限。
      订阅 v2 上线时改成「一次性约 20 分钟、按录音时长、听写和长录音共用」,与 murmur-all-sec/docs/DESIGN-subs-v2.md 一致
      (free_lifetime_seconds = 1200);meta description、免费卡、页头副标题、FAQ「额度怎么算」四处一起改,英文页同。 -->
 <!-- CSP 与登录页同一套(SEC-L5,无 unsafe-inline):脚本在 pricing.js、样式在 pricing.css,
@@ -11,7 +11,7 @@
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self' https://syebvkwemxwxkonvsyjd.supabase.co; object-src 'none'; base-uri 'none'; form-action 'none'">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>价格 · Murmur</title>
-<meta name="description" content="Murmur 的价格:免费档云端听写每周 2000 字、长录音每月 30 分钟,Pro 和 Max 按月或按年订阅。">
+<meta name="description" content="Murmur 的价格:免费档云端听写每周 2000 字、长录音可免费试一次,Pro 和 Max 按月或按年订阅。">
 <link rel="alternate" hreflang="zh-Hans" href="../pricing/index.html">
 <link rel="alternate" hreflang="en" href="../en/pricing/index.html">
 <link rel="icon" href="../favicon.svg" type="image/svg+xml">
@@ -60,7 +60,7 @@
       <p class="price"><span class="amount">免费</span></p>
       <ul>
         <li>云端听写每周 2000 字</li>
-        <li>长录音每月 30 分钟(申请通过后)</li>
+        <li>长录音免费试一次,最长 3 分钟(申请通过后)</li>
         <li>本机识别不限</li>
       </ul>
       <a class="btn btn-quiet btn-block" href="../index.html#download">免费下载</a>
@@ -97,11 +97,11 @@
     <h2>常见问题</h2>
     <div class="qa">
       <h3>额度怎么算</h3>
-      <p>免费档的云端听写按字数算,每周 2000 字。长录音按录音时长算,每月 30 分钟,申请通过后可用。本机识别不计。</p>
+      <p>免费档的云端听写按字数算,每周 2000 字。长录音可以免费试录一次,最长 3 分钟,申请通过后可用。本机识别不计。</p>
     </div>
     <div class="qa">
       <h3>录到一半用完会断吗</h3>
-      <p>不会。正在录的这一段照常录完、照常保存,App 会告诉你额度用完了。从下一段开始才用不了云端额度。</p>
+      <p>听写不会:正在说的这一句照常写完、照常保存,App 会告诉你额度用完了,从下一句开始才用不了云端额度。长录音的免费试用到 3 分钟会自动停,停之前录下的部分照常保存。</p>
     </div>
     <div class="qa">
       <h3>怎么取消</h3>
