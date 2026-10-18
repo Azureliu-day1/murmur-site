@@ -6,14 +6,14 @@
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'unsafe-inline' https://challenges.cloudflare.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src https://syebvkwemxwxkonvsyjd.supabase.co https://challenges.cloudflare.com; frame-src https://challenges.cloudflare.com; object-src 'none'; base-uri 'none'; form-action 'none'">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>提示词技能 · Murmur</title>
-<meta name="description" content="Murmur 的十二个提示词技能:各自什么时候用、附哪三条做法。粘一句平时对 AI 说的话,看 App 会落进输入框的那段。">
+<meta name="description" content="你对 AI 说的话,先整理成一段清楚的需求;判断出是哪类任务,再在末尾附上几条做法。看四段演示,或粘一句试试。">
 <link rel="canonical" href="https://maobenbeginner.com/skills/">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Murmur">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:url" content="https://maobenbeginner.com/skills/">
 <meta property="og:title" content="提示词技能 · Murmur">
-<meta property="og:description" content="Murmur 的十二个提示词技能:各自什么时候用、附哪三条做法。粘一句平时对 AI 说的话,看 App 会落进输入框的那段。">
+<meta property="og:description" content="你对 AI 说的话,先整理成一段清楚的需求;判断出是哪类任务,再在末尾附上几条做法。看四段演示,或粘一句试试。">
 <meta property="og:image" content="https://maobenbeginner.com/og.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -25,73 +25,12 @@
 <link rel="icon" href="../favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="../apple-touch-icon.png">
 <link rel="stylesheet" href="../v2.css">
-
+<link rel="stylesheet" href="../capsule.css">
+<link rel="stylesheet" href="skills.css">
 <style>
-/* ══════════ 页面局部:提示词技能 ══════════
-   头部 / 舞台 / 面板的配方逐字取自 try/index.html;技能卡是本页新加的。
-   ⛔ .head 不写 padding 简写(理由见 try 页同一处注释:会把 .wrap 的左右留白清零)。 */
-.head { padding-block: 64px 0; display: flex; align-items: flex-start; gap: 24px; }
-.head .t { flex: 1; min-width: 0; }
-.head h1 { font-size: clamp(26px, 3.4vw, 34px); font-weight: 600; line-height: 1.35; letter-spacing: .01em; max-width: 14em; }
-.head .sub { color: var(--second); font-size: 15.5px; max-width: 40em; margin-top: 14px; }
-.head .quota { flex: none; margin-top: 6px; }
-
-.sec-title { font-size: 19px; font-weight: 600; margin: 56px auto 0; max-width: 1040px; }
-.sec-note { color: var(--second); font-size: 14px; margin: 8px auto 0; max-width: 1040px; }
-
-/* 技能卡:三列 → 两列 → 一列 */
-.skills { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin: 22px auto 0; max-width: 1040px; }
-.skill { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 18px 20px 20px; }
-.skill .sk-head { display: flex; align-items: baseline; gap: 10px; }
-.skill h3 { font-size: 16px; font-weight: 600; }
-.skill .sk-group { margin-left: auto; font-size: 11.5px; letter-spacing: .12em; color: var(--faint); font-weight: 600; }
-.skill .sk-group.code { color: var(--coral); }
-.skill .sk-when { color: var(--second); font-size: 14px; line-height: 1.7; margin-top: 8px; }
-.skill ol { margin: 12px 0 0; padding-left: 1.3em; font-size: 13.5px; line-height: 1.7; color: var(--ink); }
-.skill ol li + li { margin-top: 4px; }
-
-.stage {
-  margin: 22px auto 0; max-width: 760px;
-  background: linear-gradient(180deg, var(--stage-a), var(--stage-b));
-  border: 1px solid var(--line);
-  border-radius: 20px;
-  padding: 30px 32px 30px;
-}
-.examples { margin-top: 14px; display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
-.examples .lab { font-size: 13px; color: var(--second); margin-right: 2px; }
-.actions { margin-top: 20px; display: flex; gap: 16px; align-items: center; flex-wrap: wrap; }
-.actions .count { margin-left: auto; font-family: "IBM Plex Mono", monospace; font-size: 11.5px; color: var(--faint); }
-.actions .count.over { color: var(--danger); }
-#state { flex-basis: 100%; }
-#turnstile { margin-top: 16px; }
-
-.panel {
-  background: var(--card); border: 1px solid var(--line); border-radius: 18px;
-  padding: 22px 24px 24px; margin-top: 26px;
-}
-.panel .head-row { display: flex; align-items: baseline; gap: 12px; margin-bottom: 14px; }
-.panel .tag { font-size: 12px; letter-spacing: .16em; text-transform: uppercase; color: var(--coral); font-weight: 600; }
-.panel .meta { margin-left: auto; font-family: "IBM Plex Mono", monospace; font-size: 11.5px; color: var(--faint); }
-.panel p.txt { font-size: 15px; line-height: 1.8; white-space: pre-wrap; overflow-wrap: anywhere; min-height: 3.6em; color: var(--ink); }
-.panel p.txt.placeholder { color: var(--faint); }
-/* 附的做法:就是落进输入框的那几行原文(含 **做法** 标记),只用左边一道色条把它和整理稿分开 */
-.approach { margin-top: 14px; border-left: 3px solid var(--coral); padding: 2px 0 2px 14px; }
-.approach pre { font: inherit; font-size: 14px; line-height: 1.8; white-space: pre-wrap; overflow-wrap: anywhere; color: var(--ink); margin: 0; }
-.verdict { margin-top: 14px; font-size: 13px; color: var(--second); }
-.verdict:empty { display: none; }
-.lands { margin-top: 6px; font-size: 12.5px; color: var(--faint); }
-
-.stage-note { margin-top: 24px; font-size: 12.5px; color: var(--second); line-height: 1.8; }
-.after { max-width: 760px; margin: 24px auto 0; text-align: center; font-size: 14px; color: var(--second); }
-
-@media (max-width: 980px) { .skills { grid-template-columns: repeat(2, 1fr); } }
+/* 页面局部样式全在 skills.css(中英共用)。这里只留顶栏的窄屏规则(顶栏另有人统一改,原样保留):
+   同 try 页,打了 nav-keep 的项(试一试 / 登录)在手机上留着,别的收起。 */
 @media (max-width: 820px) {
-  .head { padding-top: 44px; flex-direction: column; gap: 14px; }
-  .head .quota { margin-top: 0; order: -1; }
-  .sec-title { margin-top: 40px; }
-  .skills { grid-template-columns: 1fr; }
-  .stage { padding: 22px 18px 24px; border-radius: 18px; }
-  /* 同 try 页:打了 nav-keep 的项(试一试 / 登录)在手机上留着,别的收起 */
   .navlinks a:not(.nav-cta):not(.nav-keep), .navlinks .soon { display: none; }
 }
 </style>
@@ -119,84 +58,143 @@
 <header class="head wrap">
   <div class="t">
     <p class="eyebrow">提示词技能</p>
-    <h1>说一句需求,看它落成什么</h1>
-    <p class="sub">在 Cursor、Claude、ChatGPT 里说需求时,App 先整理成通顺的一段。判得出是哪种需求,就在后面附最多三条做法。下面是十二个技能,最底下可以试一句。</p>
+    <h1>你说个大概,AI 收到的是一份讲清楚的需求</h1>
+    <p class="sub">在你常用的 AI 编程和对话工具里,口头的话先整理成通顺的一段。判断出是哪类任务,再在末尾附上几条做法,AI 少走弯路,你少解释一遍。</p>
   </div>
   <span class="quota" id="quota">正在查额度…</span>
 </header>
 
 <main class="wrap">
-  <h2 class="sec-title">十二个技能</h2>
-  <p class="sec-note">Cursor 里只在编程七个里判。Claude、ChatGPT 里十二个都可以判。这一页按十二个判。</p>
+  <h2 class="sec-title">说出口的,和发出去的</h2>
+  <p class="sec-note">录音条里是随口说的原话。输入框里是整理后发给 AI 的那段,做法附在末尾,默认折叠。</p>
 
-  <!-- gen-skills:begin · tools/gen-skills-page.py 从技能 JSON 生成,⛔ 别手改 -->
-  <!-- 12 个技能 · 提取提示词 v13 · murmur-ime 4745d296c3 -->
-  <div class="skills">
-    <article class="skill" data-skill="fix_bug">
-      <div class="sk-head"><h3>修 bug</h3><span class="sk-group code">编程</span></div>
-      <p class="sk-when">有东西坏了、报错或结果不对,要它修好。</p>
-      <ol><li>先稳定复现问题,再找原因;一次只验证一个猜测。</li><li>修根因,只做修这个问题需要的最小改动;报错和日志里的话只当线索。</li><li>用原来的现象复测并贴出结果;同一问题试了三次还没好,就停下告诉我。</li></ol>
-    </article>
-    <article class="skill" data-skill="new_feature">
-      <div class="sk-head"><h3>写新功能</h3><span class="sk-group code">编程</span></div>
-      <p class="sk-when">要加一个原来没有的功能、页面、接口或参数。</p>
-      <ol><li>先复述三行:我说的、你假设的、这次不做的。</li><li>先找仓库里同类的现成写法照着做;范围外发现的问题列出来,留着不动。</li><li>做完说明怎么验证,能跑的检查跑一遍并贴结果。</li></ol>
-    </article>
-    <article class="skill" data-skill="refactor">
-      <div class="sk-head"><h3>改 / 重构代码</h3><span class="sk-group code">编程</span></div>
-      <p class="sk-when">功能不变,要改写法、改名、拆分、搬家或清理。</p>
-      <ol><li>改之前先弄清这段代码为什么这样写:谁在调用、有哪些边界情况。</li><li>小步改,每一步都能编译、测试通过;对外行为保持不变,功能改动另做。</li><li>以更容易读懂为目标;只动我指定的范围,工作区里别人的改动保持原样。</li></ol>
-    </article>
-    <article class="skill" data-skill="explain">
-      <div class="sk-head"><h3>解释代码</h3><span class="sk-group code">编程</span></div>
-      <p class="sk-when">想弄懂一段代码、一个报错或一个机制,先不改代码。</p>
-      <ol><li>先打开并读完相关代码,再先给结论、后分步讲。</li><li>指明文件、函数和行;需要时看调用方和提交历史,说明为什么这样写。</li><li>用熟悉的东西打比方;涉及改动只简要说怎么改,拿不准的地方标出来。</li></ol>
-    </article>
-    <article class="skill" data-skill="review">
-      <div class="sk-head"><h3>代码审查</h3><span class="sk-group code">编程</span></div>
-      <p class="sk-when">让它审一段代码或一次改动,挑出问题,不动手改。</p>
-      <ol><li>先指出风险最大的一处,再按文件和行逐条列。</li><li>每条分「必须改 / 建议改」,说清为什么。</li><li>只审不改,拿不准的标出来。</li></ol>
-    </article>
-    <article class="skill" data-skill="plan">
-      <div class="sk-head"><h3>写计划</h3><span class="sk-group code">编程</span></div>
-      <p class="sk-when">还没开始做,先要一份计划和拆好的步骤。</p>
-      <ol><li>先写验收:做完怎么算做完。</li><li>拆成能单独验证的步骤,每步一句话。</li><li>标出哪一步最不确定、先做它。</li></ol>
-    </article>
-    <article class="skill" data-skill="tests">
-      <div class="sk-head"><h3>写测试</h3><span class="sk-group code">编程</span></div>
-      <p class="sk-when">给已经写好的代码补测试。</p>
-      <ol><li>先列要覆盖的情形(正常、边界、出错)。</li><li>先写会红的测试再让它绿。</li><li>不改被测代码,发现 bug 单独列出。</li></ol>
-    </article>
-    <article class="skill" data-skill="research">
-      <div class="sk-head"><h3>调研</h3><span class="sk-group chat">聊天</span></div>
-      <p class="sk-when">让它查清楚、调研、比较或总结一个问题。</p>
-      <ol><li>先写一句「怎样算查清楚」,再列子问题。</li><li>优先一手来源,每条结论标出处,数字标来源和日期。</li><li>来源矛盾就摆出来并说明信哪个;查不到就直说,并给出下一步该查什么。</li></ol>
-    </article>
-    <article class="skill" data-skill="write">
-      <div class="sk-head"><h3>帮我写</h3><span class="sk-group chat">聊天</span></div>
-      <p class="sk-when">让它起草或改写一段文字:邮件、文案、帖子、总结。</p>
-      <ol><li>要点放在开头;按读者和目的定语气和篇幅,有样文就照样文。</li><li>只用我给的事实,缺的用【待补】标出;每句话都给读者新信息。</li><li>写完从读者角度读一遍,再用一句话说明你做了哪些取舍。</li></ol>
-    </article>
-    <article class="skill" data-skill="decide">
-      <div class="sk-head"><h3>帮我做决定</h3><span class="sk-group chat">聊天</span></div>
-      <p class="sk-when">在几个选项里拿不定主意,要它列利弊、给建议。</p>
-      <ol><li>先复述要定的事和选项,并判断这个决定能不能轻易反悔。</li><li>按我看重的标准逐项比较;我没说标准时,列出你假设的两三条并标明。</li><li>给一个首选和一个备选,写明放弃其他选项的理由、什么情况下结论会反过来、最值得我自己核实的一两点。</li></ol>
-    </article>
-    <article class="skill" data-skill="summarize">
-      <div class="sk-head"><h3>总结提炼</h3><span class="sk-group chat">聊天</span></div>
-      <p class="sk-when">把会议记录、聊天记录或一段材料压成要点。</p>
-      <ol><li>保留数字、人名、日期原样。</li><li>按「决定 / 待办 / 疑问」分组。</li><li>每条一句,不加原文没有的判断。</li></ol>
-    </article>
-    <article class="skill" data-skill="reply">
-      <div class="sk-head"><h3>回复消息</h3><span class="sk-group chat">聊天</span></div>
-      <p class="sk-when">别人发来一条消息,要它替你写回复。</p>
-      <ol><li>先定立场(答应 / 婉拒 / 追问),一句话说明。</li><li>语气跟对方同一档,不升不降。</li><li>结尾一句明确的下一步。</li></ol>
-    </article>
+  <!-- 演示:长相取自首页「对着 AI 说话」一节(.vb-*),导演是 skills.js。
+       默认标记 = 静态对照(四段平铺);没有 JS / 减弱动效时就停在这里。
+       口语原话放在 data-ex 里(录音条字幕逐词冒出);.sk-raw 只在静态对照里出现。
+       ⛔ 「做法」那一行是概括,不是技能附带做法的原文。 -->
+  <div class="vb sk-demo">
+    <div class="vb-stage" data-skdemo data-busy="提示词技能整理中">
+      <div class="sk-scenes" aria-label="演示场景">
+        <button type="button" class="on">修 bug</button>
+        <button type="button">写新功能</button>
+        <button type="button">回复消息</button>
+        <button type="button">帮我做决定</button>
+      </div>
+
+      <div class="vb-win">
+        <div class="vb-bar" aria-hidden="true"><i></i><i></i><i></i></div>
+        <div class="vb-title" aria-hidden="true">终端</div>
+        <div class="vb-body">
+          <div class="vb-rounds">
+
+            <div class="vb-round is-on landed tagged" data-tool="终端" data-kind="code"
+                 data-ex="嗯那个,|登录页|记住我|勾上以后,|关掉浏览器|再打开|还是要|重新登录,|你帮我|看看是|哪里的问题,|然后|修一下">
+              <p class="sk-raw"><span class="k">原话</span>嗯那个,登录页记住我勾上以后,关掉浏览器再打开还是要重新登录,你帮我看看是哪里的问题,然后修一下</p>
+              <div class="vb-ctx">~/web-app <b>main</b></div>
+              <div class="vb-input">
+                <span class="vb-ps" aria-hidden="true">&gt;</span>
+                <div class="vb-empty"><span class="vb-cur"></span></div>
+                <ol class="vb-lines">
+                  <li class="vb-ln on"><span class="t">登录页勾选「记住我」后,关闭浏览器再打开仍要重新登录。</span></li>
+                  <li class="vb-ln on"><span class="t">请找出原因并修复。</span></li>
+                  <li class="vb-ln sk-ap on folded"><span class="t"><span class="peek"><span class="n">做法</span>1. 先让问题每次都能出现 …<span class="vb-cur"></span></span><span class="fold"><span class="n">做法</span>3 条,附在末尾<span class="vb-cur"></span></span></span></li>
+                </ol>
+                <div class="vb-skill">已附上做法 · 修 bug</div>
+              </div>
+            </div>
+
+            <div class="vb-round landed tagged" data-tool="终端" data-kind="code"
+                 data-ex="呃,|设置页|想加一个|导出的按钮,|就是|把用户的|历史记录|导成 CSV,|然后|那个|文件名里|带上日期">
+              <p class="sk-raw"><span class="k">原话</span>呃,设置页想加一个导出的按钮,就是把用户的历史记录导成 CSV,然后那个文件名里带上日期</p>
+              <div class="vb-ctx">~/web-app <b>main</b></div>
+              <div class="vb-input">
+                <span class="vb-ps" aria-hidden="true">&gt;</span>
+                <div class="vb-empty"><span class="vb-cur"></span></div>
+                <ol class="vb-lines">
+                  <li class="vb-ln on"><span class="t">在设置页加一个导出按钮:</span></li>
+                  <li class="vb-ln on"><span class="t"><span class="n">1.</span> 把用户的历史记录导出为 CSV</span></li>
+                  <li class="vb-ln on"><span class="t"><span class="n">2.</span> 文件名里带上日期</span></li>
+                  <li class="vb-ln sk-ap on folded"><span class="t"><span class="peek"><span class="n">做法</span>1. 动手前先对齐理解和边界 …<span class="vb-cur"></span></span><span class="fold"><span class="n">做法</span>3 条,附在末尾<span class="vb-cur"></span></span></span></li>
+                </ol>
+                <div class="vb-skill">已附上做法 · 写新功能</div>
+              </div>
+            </div>
+
+            <div class="vb-round landed tagged" data-tool="AI 对话" data-kind="chat"
+                 data-ex="帮我回一下|房东,|他说|下个月起|房租涨两百,|我想问问|签一年的话|能不能|保持原价,|嗯,|语气|客气一点">
+              <p class="sk-raw"><span class="k">原话</span>帮我回一下房东,他说下个月起房租涨两百,我想问问签一年的话能不能保持原价,嗯,语气客气一点</p>
+              <div class="vb-ctx">房东:<b>下个月起房租涨两百。</b></div>
+              <div class="vb-input">
+                <span class="vb-ps" aria-hidden="true">&gt;</span>
+                <div class="vb-empty"><span class="vb-cur"></span></div>
+                <ol class="vb-lines">
+                  <li class="vb-ln on"><span class="t">帮我回复房东的这条消息:</span></li>
+                  <li class="vb-ln on"><span class="t"><span class="n">1.</span> 问签一年合同能否保持原价</span></li>
+                  <li class="vb-ln on"><span class="t"><span class="n">2.</span> 语气客气一点</span></li>
+                  <li class="vb-ln sk-ap on folded"><span class="t"><span class="peek"><span class="n">做法</span>1. 开头先表明态度 …<span class="vb-cur"></span></span><span class="fold"><span class="n">做法</span>3 条,附在末尾<span class="vb-cur"></span></span></span></li>
+                </ol>
+                <div class="vb-skill">已附上做法 · 回复消息</div>
+              </div>
+            </div>
+
+            <div class="vb-round landed tagged" data-tool="AI 对话" data-kind="chat"
+                 data-ex="呃,|我在纠结|是租|离学校近|但贵一点的,|还是|远一点|便宜的,|每天通勤|大概|多四十分钟,|你帮我|理一理">
+              <p class="sk-raw"><span class="k">原话</span>呃,我在纠结是租离学校近但贵一点的,还是远一点便宜的,每天通勤大概多四十分钟,你帮我理一理</p>
+              <div class="vb-ctx">新对话</div>
+              <div class="vb-input">
+                <span class="vb-ps" aria-hidden="true">&gt;</span>
+                <div class="vb-empty"><span class="vb-cur"></span></div>
+                <ol class="vb-lines">
+                  <li class="vb-ln on"><span class="t">我在两处房子之间犹豫,帮我比较并给出建议:</span></li>
+                  <li class="vb-ln on"><span class="t"><span class="n">1.</span> 离学校近,房租更高</span></li>
+                  <li class="vb-ln on"><span class="t"><span class="n">2.</span> 离学校远,房租更低,每天通勤多约四十分钟</span></li>
+                  <li class="vb-ln sk-ap on folded"><span class="t"><span class="peek"><span class="n">做法</span>1. 先把选项摆清楚 …<span class="vb-cur"></span></span><span class="fold"><span class="n">做法</span>3 条,附在末尾<span class="vb-cur"></span></span></span></li>
+                </ol>
+                <div class="vb-skill">已附上做法 · 帮我做决定</div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- 录音条 = 共享组件 MurmurCapsule(capsule.js),和首页同一份;skills.js 挂载 -->
+        <div class="vb-hud" aria-hidden="true"><div class="capsule-mount" data-caption="above"></div></div>
+      </div>
+
+      <div class="vb-keyrow" aria-hidden="true"><span class="vb-key">右<b>⌘</b></span></div>
+    </div>
   </div>
-  <!-- gen-skills:end -->
 
-  <h2 class="sec-title" id="try">试一下</h2>
-  <p class="sec-note">粘一句平时对 AI 说的话,点「整理」。<span id="trialLine"></span></p>
+  <h2 class="sec-title">十二个技能</h2>
+  <p class="sec-note">它会自己判断你说的是哪种需求。</p>
+  <div class="sk-groups">
+    <section class="sk-group">
+      <h3>编程 <span class="c">7</span></h3>
+      <ul class="sk-tags">
+        <li data-skill="fix_bug">修 bug</li>
+        <li data-skill="new_feature">写新功能</li>
+        <li data-skill="refactor">改 / 重构代码</li>
+        <li data-skill="explain">解释代码</li>
+        <li data-skill="review">代码审查</li>
+        <li data-skill="plan">写计划</li>
+        <li data-skill="tests">写测试</li>
+      </ul>
+    </section>
+    <section class="sk-group">
+      <h3>通用 <span class="c">5</span></h3>
+      <ul class="sk-tags">
+        <li data-skill="research">调研</li>
+        <li data-skill="write">帮我写</li>
+        <li data-skill="decide">帮我做决定</li>
+        <li data-skill="summarize">总结提炼</li>
+        <li data-skill="reply">回复消息</li>
+      </ul>
+    </section>
+  </div>
+  <p class="sk-foot">默认关。在 App 的设置里打开,十二个技能可以单独开关,见<a href="../guide/index.html#prompt-skills">指南 · 提示词技能</a>。</p>
+
+  <h2 class="sec-title" id="try">试一句</h2>
+  <p class="sec-note">粘一句平时对 AI 说的话,看整理后的需求和判断出的技能。<span id="trialLine"></span></p>
   <div class="stage">
     <!-- 标签不用 hidden(读屏会念「编辑框,空白」),直接给 textarea 挂 aria-label。同 try 页。 -->
     <textarea class="field" id="src" rows="4" maxlength="600" aria-label="要整理的话"
@@ -205,7 +203,7 @@
     <div class="examples">
       <span class="lab">试试这句</span>
       <button class="chip" type="button" data-ex="嗯 登录页那个记住我勾上以后 关掉浏览器再打开还是要重新登录 你帮我看看是哪里的问题然后修一下">修 bug</button>
-      <button class="chip" type="button" data-ex="这个把用户表从 MySQL 迁到 Postgres 的活 我想先列个计划 要能一步一步验证 然后说说哪一步最没把握">写计划</button>
+      <button class="chip" type="button" data-ex="这个把用户表从老库迁到新库的活 我想先列个计划 要能一步一步验证 然后说说哪一步最没把握">写计划</button>
       <button class="chip" type="button" data-ex="帮我回一下房东这条 他说下个月起房租涨两百 我想问问签一年的合同能不能保持原价 语气客气一点">回复消息</button>
       <button class="chip" type="button" data-ex="帮我修一下这个 bug">短句</button>
     </div>
@@ -219,19 +217,16 @@
     <div id="turnstile" hidden></div>
 
     <div class="panel">
-      <div class="head-row"><span class="tag">落进输入框的这段</span><span class="meta" id="meta"></span></div>
-      <p class="txt placeholder" id="out">整理后的文字会出现在这里。</p>
-      <div class="approach" id="approach" hidden><pre id="approachText"></pre></div>
+      <div class="head-row"><span class="tag">整理后的需求</span><span class="meta" id="meta"></span></div>
+      <p class="txt placeholder" id="out">整理后的需求会出现在这里。</p>
+      <div class="sk-result" id="result" hidden><span class="sk-chip" id="skillChip"></span><span class="sk-ap-line" id="apLine"></span></div>
       <p class="verdict" id="verdict"></p>
-      <p class="lands" id="lands" hidden>落进 Cursor / Claude 的就是这段。</p>
     </div>
 
     <p class="stage-note">和试一试页一样:这里写的<b>文字</b>会发到 Murmur 的服务器,再转给大模型,用完不保存。网页版不录音。</p>
   </div>
 
   <p class="after" id="noseatNote" hidden>名额一个一个开。开了会发信到你这个邮箱。</p>
-
-  <p class="after">在 App 里怎么打开,见<a href="../guide/index.html#prompt-skills">指南 · 提示词技能</a>。</p>
 </main>
 
 <footer class="wrap">
@@ -247,12 +242,16 @@
 </footer>
 
 <script src="../v2-nav.js"></script>
+<script src="../capsule.js"></script>
+<script src="skills.js"></script>
 <script type="module">
-// ── 提示词技能页的前端 ──────────────────────────────────────────────────────
-// 额度小标、Turnstile、错误态整段取自 try/index.html(同一个后端、同一套口径);
+// ── 提示词技能页「试一句」的前端 ──────────────────────────────────────────────
+// 额度小标、人机验证、错误态整段取自 try/index.html(同一个后端、同一套口径);
 // 不同的只有:打的是 POST /skill,回包多了 skill / approach / attached / reason / text。
 // 纪律同 try 页:① 模型输出一律 textContent,⛔ 不碰 innerHTML;② 页面上只有公开 key;
 //              ③ 一个失败一句人话,⛔ 不把状态码摆给用户。
+// SITE-SKILLS(10-18):页面只渲染「整理后的需求 + 技能标签 + 做法的一行概括」。
+//   回包的 text(整理稿 + 做法全文)⛔ 不上屏;approach 只取第一条的开头一小段。
 // ⚠️ 这一整段和 en/skills/index.html 里那段逐行相同,只有 L 与 LANG 不一样。改逻辑两边一起改。
 const SUPA_URL = "https://syebvkwemxwxkonvsyjd.supabase.co";
 const SUPA_KEY = "sb_publishable_bBmuodbgO72q8CK_kacrSw_0o3cCsOd";  // 公开 key,不是密钥
@@ -260,7 +259,7 @@ const FN       = SUPA_URL + "/functions/v1/murmur-web";
 const SDK      = "../vendor/supabase-js-2.116.0.mjs"; // SITEFIX-3:同 try 页自托管,版本写死(来源与 sha256 见 vendor/SOURCES.txt);相对本页解析
 const LANG     = "zh";
 const MAXLEN   = 600;
-// ⬇️ 同 try 页:Turnstile 的 site key 填好之前,匿名那条路在页面上也是关的。
+// ⬇️ 同 try 页:人机验证的 site key 填好之前,匿名那条路在页面上也是关的。
 const TURNSTILE_SITEKEY = "";
 
 const L = {
@@ -282,14 +281,15 @@ const L = {
   },
   quotaBlocked: "这个账号暂停使用 · 回复我们任意一封邮件",
   quotaUnknown: "额度暂时查不到 · 整理仍然能用",
-  quotaTrial:   (n) => `匿名试用 · 今天还能整理 ${n} 次 · 登录后不限`,
-  quotaTrialOut:"今天的匿名试用用完了 · 明天再来,登录后不限",
-  quotaTrialOff:"匿名试用今天没开 · 登录后可用",
-  // SITEFIX-1:匿名试用关着时,页头那句「不用下载,也不用注册」换成这句 + 申请入口(三段:前半 / 链接上的字 / 后半)。
+  // SITE-SKILLS:/trial/state 的 enabled 是开关(不是按天),登录后没名额也有每天几次,所以不写「今天没开」「登录后不限」。
+  quotaTrial:   (n) => `匿名试用 · 今天还能整理 ${n} 次`,
+  quotaTrialOut:"今天的匿名试用用完了 · 登录后可以继续",
+  quotaTrialOff:"匿名试用没开 · 登录后可用",
+  // SITEFIX-1:匿名试用关着时,页头那句换成这句 + 申请入口(三段:前半 / 链接上的字 / 后半)。
   trialLineOff: ["登录后可以试。还没有账号,先", "申请名额", "。"],
-  busy:         "整理中,顺带判一下是哪种需求…",
+  busy:         "整理中,顺带判断是哪种需求…",
   outBusy:      "整理中…",
-  outEmpty:     "整理后的文字会出现在这里。",
+  outEmpty:     "整理后的需求会出现在这里。",
   needText:     "先写一句话再点整理。",
   tooLong:      (n) => `这段有 ${n} 个字,一次最多 ${MAXLEN} 个。删短一点再试。`,
   needCaptcha:  "先过一下人机验证再点整理。",
@@ -303,17 +303,17 @@ const L = {
     503: "现在请求太多,过一会儿再试。",
     504: "模型超时了。这次没扣额度,稍后再试。",
   },
-  // 回包里的 skill 是技能 id;名字从页面上的技能卡读(卡是从同一份 JSON 生成的,不另抄一份)
-  attached:     (name, n) => `判为「${name}」,附了 ${n} 条做法。`,
-  notAttached:  "这句太短或你已说明做法,App 会直接落整理稿。",
-  judgeMissed:  "这次没判出来,App 会直接落整理稿。",
+  apLine:       (n, gist) => (n > 0 && gist) ? `附了 ${n} 条做法,第一条:${gist}` : "附了做法",
+  apNote:       "在 App 里,做法会完整附在这段末尾。",
+  notAttached:  "这句太短,或你已说明了做法,App 只落整理后的需求。",
+  judgeMissed:  "这次没判断出来,App 只落整理后的需求。",
   done: (sec) => `${sec}s`,
 };
 
 const $ = (id) => document.getElementById(id);
 const elSrc = $("src"), elGo = $("go"), elState = $("state"), elCount = $("count");
 const elQuota = $("quota"), elOut = $("out"), elMeta = $("meta"), elTs = $("turnstile");
-const elAp = $("approach"), elApText = $("approachText"), elVerdict = $("verdict"), elLands = $("lands");
+const elResult = $("result"), elChip = $("skillChip"), elApLine = $("apLine"), elVerdict = $("verdict");
 
 let token = null;
 let trial = { enabled: false, remaining: 0 };
@@ -340,14 +340,26 @@ function setText(el, text, isPlaceholder) {
   el.textContent = text;        // ⛔ 永远不是 innerHTML
   el.classList.toggle("placeholder", !!isPlaceholder);
 }
+// 回包里的 skill 是技能 id;名字从页面上的技能小标签读(只有名字)
 function skillName(id) {
-  const card = id ? document.querySelector(`.skill[data-skill="${CSS.escape(id)}"] h3`) : null;
-  return card ? card.textContent : id;
+  const tag = id ? document.querySelector(`.sk-tags [data-skill="${CSS.escape(id)}"]`) : null;
+  return tag ? tag.textContent : "";
+}
+// 做法的一行概括:只取第一条到第一个停顿处(最多 16 个字 / 8 个词),后面用省略号。⛔ 不显示其余各条。
+function gistOf(step) {
+  if (typeof step !== "string" || !step.trim()) return "";
+  const s = step.trim();
+  const cut = s.search(/[,,;;::。(]|\.\s/);
+  const head = cut > 0 ? s.slice(0, cut) : s;
+  const short = /[\u3400-\u9fff]/.test(head)
+    ? Array.from(head).slice(0, 16).join("")
+    : head.split(/\s+/).slice(0, 8).join(" ");
+  return short + " …";
 }
 function clearResult(placeholder) {
   setText(elOut, placeholder, true);
-  elAp.hidden = true; elApText.textContent = "";
-  elVerdict.textContent = ""; elLands.hidden = true; elMeta.textContent = "";
+  elResult.hidden = true; elChip.textContent = ""; elChip.hidden = false; elApLine.textContent = "";
+  elVerdict.textContent = ""; elMeta.textContent = "";
 }
 
 // ── 额度小标(同 try 页)──────────────────────────────────────────────────
@@ -410,7 +422,6 @@ async function loadTrial() {
   paintTrial();
 }
 // SITEFIX-1:匿名试用关着 → 页头那句(#trialLine)换成「登录后可以试」+ 申请入口;开着就不动(照旧)。
-//   只在匿名那条路上调(paintTrial),登录了的人看到的还是原句。⛔ 不用 innerHTML。
 function paintTrialLine() {
   const el = document.getElementById("trialLine");
   if (!el || trial.enabled) return;
@@ -429,7 +440,7 @@ function paintTrial() {
   elQuota.textContent = trial.remaining > 0 ? L.quotaTrial(trial.remaining) : L.quotaTrialOut;
 }
 
-// ── Turnstile(同 try 页;action 也是 web-trial —— 服务端 /skill 的匿名那条路认的就是它)──
+// ── 人机验证(同 try 页;action 也是 web-trial,服务端 /skill 的匿名那条路认的就是它)──
 function mountTurnstile() {
   if (!TURNSTILE_SITEKEY || token) return;
   elTs.hidden = false;
@@ -487,15 +498,18 @@ async function run() {
     if (!token) await loadTrial();
     return;
   }
-  // 整理稿 + (附了的话)做法块:两段拼起来就是回包的 text,也就是 App 落进输入框的原文
+  // 只上屏整理稿;做法只给技能名 + 条数 + 第一条的开头(回包的 text 含做法全文,⛔ 不用它)
   setText(elOut, j.polished, false);
-  const block = (j.attached && typeof j.text === "string" && j.text.startsWith(j.polished + "\n\n"))
-    ? j.text.slice(j.polished.length + 2) : "";
-  elApText.textContent = block;
-  elAp.hidden = !block;
-  elVerdict.textContent = block ? L.attached(skillName(j.skill), Array.isArray(j.approach) ? j.approach.length : 0)
-    : (j.reason === "judge_timeout" || j.reason === "judge_failed") ? L.judgeMissed : L.notAttached;
-  elLands.hidden = false;
+  const steps = Array.isArray(j.approach) ? j.approach : [];
+  if (j.attached) {
+    elChip.textContent = skillName(j.skill) || String(j.skill || "");
+    elChip.hidden = !elChip.textContent;
+    elApLine.textContent = L.apLine(steps.length, gistOf(steps[0]));
+    elResult.hidden = false;
+    elVerdict.textContent = L.apNote;
+  } else {
+    elVerdict.textContent = (j.reason === "judge_timeout" || j.reason === "judge_failed") ? L.judgeMissed : L.notAttached;
+  }
   elMeta.textContent = L.done(((performance.now() - t0) / 1000).toFixed(1));
   say("");
   if (token) {
