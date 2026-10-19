@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<!-- MEMBER-BUILD(2026-10-19):会员订阅专区,取代原 /pricing/(那一页现在是跳转页)。
+     CSP 与原价格页同一套(SEC-L5,无 unsafe-inline):脚本在 /member/member.js、样式在 /member/member.css,
+     supabase-js 自托管在 /vendor/。connect-src:'self' 读本站 pricing.json + 后端问 /me。⛔ 别加通配符、别加 unsafe-*。
+     ⛔ 页面上不写任何价格数字:价格、付款链接都从 /pricing.json 读。 -->
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self' https://syebvkwemxwxkonvsyjd.supabase.co; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Membership · Murmur</title>
+<meta name="description" content="Murmur membership: Pro and Max, billed monthly or yearly. Sign in to see your plan, renewal date and usage for this period.">
+<link rel="canonical" href="https://maobenbeginner.com/en/member/">
+<link rel="alternate" hreflang="zh-Hans" href="https://maobenbeginner.com/member/">
+<link rel="alternate" hreflang="en" href="https://maobenbeginner.com/en/member/">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../../v2.css">
+<link rel="stylesheet" href="../../member/member.css">
+</head>
+<body>
+
+<nav>
+  <div class="wrap navrow">
+    <a class="brand" href="../index.html"><svg width="30" height="15" viewBox="0 0 200 100" aria-hidden="true"><path d="M12.0 50.0 L14.0 40.1 L16.0 31.7 L18.0 25.2 L20.0 21.0 L22.0 19.0 L24.0 19.2 L26.0 21.3 L28.0 25.2 L30.0 30.3 L32.0 36.2 L34.0 42.4 L36.0 48.5 L38.0 54.2 L40.0 59.0 L42.0 62.7 L44.0 65.2 L46.0 66.5 L48.0 66.5 L50.0 65.5 L52.0 63.5 L54.0 60.9 L56.0 57.8 L58.0 54.6 L60.0 51.5 L62.0 48.6 L64.0 46.2 L66.0 44.4 L68.0 43.2 L70.0 42.7 L72.0 42.7 L74.0 43.2 L76.0 44.1 L78.0 45.3 L80.0 46.7 L82.0 48.0 L84.0 49.2 L86.0 50.2 L88.0 51.0 L90.0 51.5 L92.0 51.8 L94.0 51.8 L96.0 51.6 L98.0 51.3 L100.0 50.9 L102.0 50.5 L104.0 50.2 L106.0 50.0 L190 50" fill="none" stroke="var(--coral)" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/></svg>Murmur</a>
+    <div class="navlinks">
+      <a href="../guide/index.html">Guide</a>
+      <a href="../skills/index.html">Skills</a>
+      <a class="nav-keep" href="../try/index.html">Try it</a>
+      <a href="../index.html#pinyin">Input method</a>
+      <a href="../demo/index.html">Pinyin demo</a>
+      <a class="nav-keep" href="../../member/index.html" hreflang="zh-CN" lang="zh-CN">中文</a>
+      <!-- ⚠️ class="nav-signin" 是给 v2-nav.js 认的(本机有会话时换成会员状态胶囊) -->
+      <a class="nav-signin nav-keep" href="../login/index.html">Sign in</a>
+      <a class="nav-member nav-keep" href="index.html" aria-current="page">Membership</a>
+      <a class="nav-cta" href="../index.html#download">Download</a>
+    </div>
+  </div>
+</nav>
+
+<header class="m-head wrap">
+  <p class="eyebrow">Membership</p>
+  <h1 id="title">Pro and Max, billed monthly or yearly</h1>
+  <p class="sub" id="lede">Start on the free plan. When you dictate more, pick the plan that matches your usage.</p>
+</header>
+
+<main class="wrap">
+
+  <!-- 上半:没登录 = 「登录后开通」卡(静态,没 JS 也在);登录后 member.js 换成状态卡 -->
+  <section class="m-top" id="top" aria-live="polite">
+    <div class="m-out">
+      <p>Sign in to see your plan, renewal date and usage for this period.</p>
+      <div class="m-out-acts">
+        <a class="btn btn-primary" href="../login/index.html?next=%2Fen%2Fmember%2F">Sign in to subscribe</a>
+        <p class="m-note">No account yet? <a href="../login/index.html#apply">Request one</a></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 下半:两档卡片。没 JS / 读不到 pricing.json 时显示「即将推出」、按钮点不了。 -->
+  <section class="m-plans-wrap" id="plans">
+    <div class="m-plans-head">
+      <h2 id="plansTitle">Choose a plan</h2>
+      <div class="cycle" id="cycle" role="group" aria-label="Billing period" hidden>
+        <button type="button" data-cycle="month" aria-pressed="true">Monthly</button>
+        <button type="button" data-cycle="year" aria-pressed="false">Yearly</button>
+      </div>
+    </div>
+    <div class="m-plans">
+      <article class="m-plan" data-plan="pro">
+        <div class="m-plan-top">
+          <h3>Pro</h3>
+          <span class="m-mine" hidden>Your plan</span>
+        </div>
+        <p class="for">You dictate every day</p>
+        <p class="price"><span class="amount soon">Coming soon</span><small class="per"></small></p>
+        <p class="alt"></p>
+        <ul>
+          <li>No word limit on cloud dictation</li>
+          <li>20 hours of long recording each period</li>
+          <li>Unlimited offline recognition</li>
+          <li>Resets on your billing date, not the calendar month</li>
+        </ul>
+        <a class="btn btn-primary btn-block buy" aria-disabled="true">Coming soon</a>
+      </article>
+      <article class="m-plan" data-plan="max">
+        <div class="m-plan-top">
+          <h3>Max</h3>
+          <span class="m-mine" hidden>Your plan</span>
+        </div>
+        <p class="for">You record lectures or meetings</p>
+        <p class="price"><span class="amount soon">Coming soon</span><small class="per"></small></p>
+        <p class="alt"></p>
+        <ul>
+          <li>No word limit on cloud dictation</li>
+          <li>60 hours of long recording each period, 3 times Pro</li>
+          <li>Unlimited offline recognition</li>
+          <li>Everything in Pro</li>
+        </ul>
+        <a class="btn btn-primary btn-block buy" aria-disabled="true">Coming soon</a>
+      </article>
+    </div>
+    <p class="m-paynote" id="paynote">Pay with the same email address you use to sign in to the app. Payments are handled by Stripe.</p>
+  </section>
+
+  <section class="faq m-faq">
+    <h2>Questions</h2>
+    <div class="qa">
+      <h3>How is the allowance counted?</h3>
+      <p>On the free plan, cloud dictation is counted in words: 2,000 a week once your request is approved and you sign in. You can also try one free long recording of up to 3 minutes. Pro and Max have no word limit on cloud dictation, and long recording is counted in hours that reset each period. Offline recognition does not count toward any allowance.</p>
+    </div>
+    <div class="qa">
+      <h3>When am I charged?</h3>
+      <p>Your billing period starts on the day you subscribe and runs monthly or yearly. The plan renews automatically at the end of each period, on the renewal date shown on this page once you sign in.</p>
+    </div>
+    <div class="qa">
+      <h3>Does it cut off if I run out partway through?</h3>
+      <p>Dictation doesn&rsquo;t. The sentence you are saying is finished and saved as usual, and the app tells you the allowance is used up. From the next sentence on, the cloud allowance is no longer available. The free long recording trial stops on its own at 3 minutes, and everything recorded up to then is kept.</p>
+    </div>
+    <div class="qa">
+      <h3>How do I cancel?</h3>
+      <p id="cancelMail">Email us at <a href="mailto:support@day1aifitness.com">support@day1aifitness.com</a> and we will cancel it for you. After you cancel, the plan does not renew and stays active until the end of the current period.</p>
+      <p id="cancelPortal" hidden>Sign in, choose Manage subscription and cancel on your <a id="portalLink" rel="noopener">Stripe account page</a>, any time. After you cancel, the plan does not renew and stays active until the end of the current period.</p>
+    </div>
+    <div class="qa">
+      <h3>Can I get a refund?</h3>
+      <p>Refunds are handled under section 5 of the <a href="../tos.html">Terms</a>.</p>
+    </div>
+    <div class="qa">
+      <h3>Is payment safe?</h3>
+      <p>Payments are handled by Stripe. We never see or store your card number.</p>
+    </div>
+  </section>
+
+</main>
+
+<footer class="wrap">
+  <span class="brand"><svg width="30" height="15" viewBox="0 0 200 100" aria-hidden="true"><path d="M12.0 50.0 L14.0 40.1 L16.0 31.7 L18.0 25.2 L20.0 21.0 L22.0 19.0 L24.0 19.2 L26.0 21.3 L28.0 25.2 L30.0 30.3 L32.0 36.2 L34.0 42.4 L36.0 48.5 L38.0 54.2 L40.0 59.0 L42.0 62.7 L44.0 65.2 L46.0 66.5 L48.0 66.5 L50.0 65.5 L52.0 63.5 L54.0 60.9 L56.0 57.8 L58.0 54.6 L60.0 51.5 L62.0 48.6 L64.0 46.2 L66.0 44.4 L68.0 43.2 L70.0 42.7 L72.0 42.7 L74.0 43.2 L76.0 44.1 L78.0 45.3 L80.0 46.7 L82.0 48.0 L84.0 49.2 L86.0 50.2 L88.0 51.0 L90.0 51.5 L92.0 51.8 L94.0 51.8 L96.0 51.6 L98.0 51.3 L100.0 50.9 L102.0 50.5 L104.0 50.2 L106.0 50.0 L190 50" fill="none" stroke="var(--coral)" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/></svg>Murmur</span>
+  <span>Made by Others Studio</span>
+  <div class="links">
+    <a href="https://othersstudio.tech">othersstudio.tech</a>
+    <a href="../changelog/index.html">Changelog</a>
+    <a href="../privacy.html">Privacy</a>
+    <a href="../tos.html">Terms</a>
+    <!-- 顶栏的语言切换在手机上是收起来的,页脚这一份是它在手机上的落点 -->
+    <a href="../../member/index.html" hreflang="zh-Hans" lang="zh-Hans">中文</a>
+  </div>
+</footer>
+
+<script src="../../v2-nav.js"></script>
+<script type="module" src="../../member/member.js"></script>
+</body>
+</html>
