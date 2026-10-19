@@ -177,10 +177,11 @@ async function verify() {
   if (token.length < 6) { say(elState2, L.needCode, "err"); elCode.focus(); return; }
   busy = true; elVerify.disabled = true;
   say(elState2, L.verifying, "busy");
-  let error = null;
+  let error = null, session = null;
   try {
     const r = await sb.auth.verifyOtp({ email: pending, token, type: "email" });
     error = r.error;
+    session = (r.data && r.data.session) || null;
   } catch (e) {
     busy = false; elVerify.disabled = false;
     say(elState2, L.offline, "err");
@@ -191,6 +192,14 @@ async function verify() {
     say(elState2, error.status === 429 ? L.rate : L.badCode, "err");
     elCode.select();
     return;
+  }
+  // MEMBER-BUILD:跳走之前问一次 /me,把会员摘要写进顶栏胶囊的缓存,落地的首页就能显示档位。
+  //   最多等 1.5 秒,问不到照跳(胶囊退回「账户」,下次在会员页 / 试一试页补上)。
+  if (session && window.MurmurMember) {
+    await Promise.race([
+      window.MurmurMember.refresh(session.access_token, (session.user && session.user.email) || pending),
+      new Promise((r) => setTimeout(r, 1500)),
+    ]);
   }
   location.href = afterLogin();
 }
@@ -356,6 +365,7 @@ elBack.addEventListener("click", () => {
 elReqSend.addEventListener("click", submitRequest);
 elReqEmail.addEventListener("keydown", (e) => { if (e.key === "Enter") submitRequest(); });
 $("signout").addEventListener("click", async () => {
+  if (window.MurmurMember) window.MurmurMember.clear();
   if (sb) { try { await sb.auth.signOut(); } catch (e) { /* 本机清掉就行 */ } }
   location.href = "index.html";
 });
@@ -377,6 +387,7 @@ $("signout").addEventListener("click", async () => {
   }
   const wantsLogout = new URLSearchParams(location.search).get("logout") === "1";
   if (wantsLogout) {
+    if (window.MurmurMember) window.MurmurMember.clear();     // 会员摘要缓存跟着会话一起清
     try { await sb.auth.signOut(); } catch (e) { /* 本机清掉就行 */ }
     say(elState, L.loggedOut, "");
     show("email");
@@ -389,6 +400,7 @@ $("signout").addEventListener("click", async () => {
     $("goNext").setAttribute("href", safeNext());
     show("in");
     hideRequestIfSeated(data.session.access_token);            // 不 await:慢一拍也不挡这一页
+    if (window.MurmurMember) window.MurmurMember.refresh(data.session.access_token, data.session.user.email || "");   // 同上:会员摘要进顶栏缓存
     showRequestStatus(data.session.access_token);              // 同上;两个都只会往「藏」走
     openRequestIfAsked();
     return;

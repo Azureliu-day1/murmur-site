@@ -321,6 +321,8 @@ elGo.addEventListener("click", polish);
     });
     const { data } = await sb.auth.getSession();
     token = (data && data.session && data.session.access_token) || null;
+    // MEMBER-BUILD:顺手问一次 /me,把会员摘要写进顶栏胶囊的缓存(首页读不了网络,只能读它)。不 await。
+    if (token && window.MurmurMember) window.MurmurMember.refresh(token, (data.session.user && data.session.user.email) || "");
   } catch {
     token = null;   // CDN 拉不下来就当没登录:页面照样能用匿名那条路
   }
