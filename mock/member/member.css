@@ -1,0 +1,173 @@
+/* ══════════ 样稿:/member/ 页的排版(MEMBER-MOCK,上线前删)══════════
+   颜色、圆角、按钮、字体全在 v2.css;卡片的样子取自价格页(pricing.css 的 .plans / .plan)。⛔ 没有新 token。 */
+
+.m-head { padding-block: 64px 0; text-align: center; }
+.m-head h1 { font-size: clamp(26px, 3.4vw, 34px); font-weight: 600; line-height: 1.35; letter-spacing: .01em; }
+.m-head .sub { color: var(--second); font-size: 15.5px; max-width: 32em; margin: 12px auto 0; }
+
+.m-top { margin-top: 36px; }
+.mono { font-family: "IBM Plex Mono", ui-monospace, monospace; }
+.tbd {
+  display: inline-block; margin-left: 8px; vertical-align: 2px;
+  font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: 10.5px; color: var(--faint);
+  border: 1px dashed var(--line2); border-radius: 999px; padding: 0 7px; line-height: 1.7;
+}
+.m-note { font-size: 12.5px; color: var(--faint); margin-top: 6px; line-height: 1.6; }
+
+/* A · 未登录:三档对比 */
+.m-compare {
+  background: var(--card); border: 1px solid var(--line); border-radius: 14px; box-shadow: var(--shadow);
+  overflow: hidden; max-width: 860px; margin: 0 auto;
+}
+.m-crow { display: grid; grid-template-columns: 1.1fr 1.3fr 1.3fr 1.3fr; border-top: 1px solid var(--line); }
+.m-crow:first-child { border-top: 0; }
+.m-cell { padding: 14px 18px; font-size: 14px; color: var(--second); }
+.m-cell.k { color: var(--faint); font-size: 13px; }
+.m-cell.paid { color: var(--ink); }
+.m-crow.head .m-cell {
+  font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: 11.5px; font-weight: 500;
+  letter-spacing: .12em; text-transform: uppercase; color: var(--faint); padding-block: 16px 10px;
+}
+.m-crow.head .m-cell.paid { color: var(--ink); }
+.m-compare-foot {
+  display: flex; align-items: center; gap: 18px; flex-wrap: wrap;
+  padding: 18px; border-top: 1px solid var(--line); background: var(--stage-a);
+}
+.m-compare-foot .m-note { margin-top: 0; font-size: 13.5px; }
+
+/* A · 已登录:状态卡 */
+.m-status {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 0;
+  background: var(--card); border: 1px solid var(--line); border-radius: 14px; box-shadow: var(--shadow);
+  max-width: 860px; margin: 0 auto; overflow: hidden;
+}
+.m-status.on { border-color: color-mix(in srgb, var(--coral) 40%, var(--line)); }
+.m-status-main { padding: 28px 28px 26px; border-right: 1px solid var(--line); }
+.m-status-side { padding: 18px 28px 22px; }
+.m-status-head { display: flex; align-items: center; gap: 8px; }
+.m-status-big {
+  font-family: "Newsreader", Georgia, serif; font-size: 30px; font-weight: 500; line-height: 1.25;
+  margin-top: 14px; font-variant-numeric: tabular-nums;
+}
+:lang(zh) .m-status-big { font-family: inherit; font-size: 24px; font-weight: 600; }
+.m-status-mail { font-size: 12.5px; color: var(--faint); margin-top: 6px; }
+.m-acts { display: flex; gap: 10px; margin-top: 22px; flex-wrap: wrap; }
+.m-acts .btn { padding: 10px 22px; font-size: 14px; }
+
+.m-kv { display: flex; justify-content: space-between; gap: 16px; padding: 12px 0; border-top: 1px solid var(--line); font-size: 14px; }
+.m-status-side > :first-child { border-top: 0; }
+.m-kv .k { color: var(--second); }
+.m-kv .v { color: var(--ink); text-align: right; font-variant-numeric: tabular-nums; }
+.m-kv + .m-note { margin-top: -6px; margin-bottom: 6px; }
+.m-meter { border-top: 1px solid var(--line); padding: 12px 0; font-size: 14px; }
+.m-meter-top { display: flex; justify-content: space-between; gap: 16px; margin-bottom: 9px; }
+.m-meter .k { color: var(--second); }
+.m-meter .v { font-size: 13px; color: var(--ink); }
+.m-bar { height: 6px; border-radius: 999px; background: var(--stage-b); overflow: hidden; }
+.m-bar i { display: block; height: 100%; border-radius: 999px; background: var(--coral); }
+
+/* 两个面板共用的小标(和 member-nav.css 同一组值) */
+.mm-tag {
+  font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: 11px; font-weight: 500;
+  letter-spacing: .12em; text-transform: uppercase; color: var(--second);
+  border: 1px solid var(--line2); border-radius: 999px; padding: 2px 9px;
+}
+.mm-tag.on { color: var(--coral-ink); border-color: var(--coral); background: var(--coral-tint); }
+.mm-cycle { font-size: 12.5px; color: var(--faint); }
+
+/* B:一行状态条 */
+.m-strip {
+  display: flex; align-items: center; gap: 10px 18px; flex-wrap: wrap; justify-content: center;
+  max-width: 860px; margin: 0 auto; padding: 12px 20px;
+  background: var(--card); border: 1px solid var(--line); border-radius: 999px; font-size: 13.5px; color: var(--second);
+}
+.m-strip.on { border-color: color-mix(in srgb, var(--coral) 40%, var(--line)); }
+.m-strip.out { background: transparent; border-style: dashed; }
+.m-strip-item.strong { color: var(--ink); font-weight: 500; }
+.m-strip-item.mono { font-size: 12.5px; }
+.m-strip-go { font-weight: 500; }
+
+/* 下半:两档卡片 */
+.m-plans-wrap { max-width: 860px; margin: 56px auto 0; }
+.m-plans-head { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+.m-plans-head h2 { font-size: 20px; font-weight: 600; }
+.cycle {
+  display: flex; width: max-content; padding: 4px;
+  border: 1px solid var(--line2); border-radius: 999px; background: var(--capsule);
+}
+.cycle button {
+  font: inherit; font-size: 13.5px; color: var(--second); background: transparent;
+  border: 0; border-radius: 999px; padding: 6px 18px; cursor: pointer;
+}
+.cycle button[aria-pressed="true"] { background: var(--ink); color: var(--card); }
+.cycle button:focus-visible { outline: 2px solid var(--coral); outline-offset: 2px; }
+.m-plans {
+  display: grid; grid-template-columns: 1fr 1fr; margin-top: 18px;
+  border: 1px solid var(--line); border-radius: 14px; overflow: hidden; background: var(--card); box-shadow: var(--shadow);
+}
+.m-plan { display: flex; flex-direction: column; padding: 28px 28px 26px; border-right: 1px solid var(--line); }
+.m-plan:last-child { border-right: 0; }
+.m-plan.is-mine { background: color-mix(in srgb, var(--coral-tint) 45%, var(--card)); }
+.m-plan-top { display: flex; align-items: center; justify-content: space-between; }
+.m-plan h3 {
+  font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: 11.5px; font-weight: 500;
+  letter-spacing: .12em; text-transform: uppercase; color: var(--faint);
+}
+.m-mine { font-size: 12px; color: var(--coral-ink); border: 1px solid var(--coral); border-radius: 999px; padding: 1px 9px; }
+.m-mine[hidden] { display: none; }
+.m-plan .for { font-size: 13.5px; color: var(--second); margin-top: 4px; }
+.m-plan .price { margin-top: 16px; display: flex; align-items: baseline; gap: 6px; flex-wrap: wrap; }
+.m-plan .amount {
+  font-family: "Newsreader", Georgia, serif; font-size: 36px; font-weight: 500; line-height: 1.15;
+  font-variant-numeric: tabular-nums; color: var(--ink);
+}
+.m-plan .per { font-size: 13px; color: var(--second); }
+.m-plan .alt { font-size: 13px; color: var(--faint); margin-top: 2px; }
+.m-plan ul { list-style: none; padding: 0; margin-top: 16px; flex: 1; font-size: 14px; color: var(--second); }
+.m-plan li { position: relative; padding-left: 16px; margin-bottom: 8px; line-height: 1.65; }
+.m-plan li::before {
+  content: ""; position: absolute; left: 0; top: 9px;
+  width: 5px; height: 5px; border-radius: 50%; background: var(--coral); opacity: .55;
+}
+.m-plan .btn { margin-top: 20px; text-align: center; }
+.btn-block { display: block; width: 100%; }
+.m-paynote { text-align: center; font-size: 13px; color: var(--second); margin-top: 16px; }
+
+.faq { max-width: 640px; margin: 72px auto 0; }
+.faq > h2 { font-size: 20px; font-weight: 600; margin-bottom: 8px; }
+.qa { border-top: 1px solid var(--line); padding: 18px 0; }
+.qa h3 { font-size: 15px; font-weight: 600; color: var(--ink); }
+.qa p { font-size: 14.5px; color: var(--second); margin-top: 6px; }
+
+/* 样稿切换器 */
+.mock-switch {
+  position: fixed; left: 16px; bottom: 16px; z-index: 30; display: flex; flex-direction: column; gap: 6px;
+  background: var(--card); border: 1px solid var(--line2); border-radius: 12px; padding: 10px 12px; box-shadow: var(--shadow);
+  font-size: 12px;
+}
+.mock-switch[hidden] { display: none; }
+.mock-switch .grp { display: flex; gap: 6px; align-items: center; }
+.mock-switch .lab { color: var(--faint); min-width: 64px; }
+.mock-switch .opt { color: var(--second); border: 1px solid var(--line2); border-radius: 999px; padding: 1px 9px; }
+.mock-switch .opt.cur { color: var(--card); background: var(--ink); border-color: var(--ink); }
+
+@media (max-width: 820px) {
+  .m-head { padding-top: 40px; }
+  main.wrap, .m-head.wrap { padding-left: 16px; padding-right: 16px; }
+  .navlinks a:not(.nav-cta):not(.nav-keep) { display: none; }
+  .m-top { margin-top: 26px; }
+  .m-crow { grid-template-columns: .9fr 1fr 1fr 1fr; }
+  .m-cell { padding: 11px 8px; font-size: 12.5px; }
+  .m-cell.k { font-size: 12px; }
+  .m-crow.head .m-cell { font-size: 10.5px; letter-spacing: .08em; }
+  .m-cell .tbd { display: block; width: max-content; margin: 4px 0 0; }
+  .m-status { grid-template-columns: 1fr; }
+  .m-status-main { border-right: 0; border-bottom: 1px solid var(--line); padding: 22px 20px; }
+  .m-status-side { padding: 10px 20px 16px; }
+  .m-strip { border-radius: 14px; justify-content: flex-start; }
+  .m-plans { grid-template-columns: 1fr; }
+  .m-plan { border-right: 0; border-bottom: 1px solid var(--line); padding: 24px 20px 22px; }
+  .m-plan:last-child { border-bottom: 0; }
+  .faq { margin-top: 56px; }
+  .mock-switch { left: 8px; right: 8px; bottom: 8px; }
+}
