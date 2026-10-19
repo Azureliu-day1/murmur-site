@@ -324,10 +324,12 @@ main { padding-bottom: 88px; }
 @media (prefers-reduced-motion: reduce) {
   .navlinks a.nav-member { transition: none; }
 }
-/* 窄屏放不下「品牌字 + 试一试 + 会员订阅 + 登录 + 下载」:只留品牌圆点波形,字收起(仍在无障碍树里,读屏照读 Murmur)。
-   英文的项更长,600 以下就收;中文 374 以下才收。 */
-@media (max-width: 600px) { :lang(en) nav .brand { font-size: 0; gap: 0; } }
-@media (max-width: 374px) { nav .brand { font-size: 0; gap: 0; } }
+/* 窄屏放不下「品牌字 + 试一试 + 会员订阅 + 登录 + 下载」:只留品牌波形,字收起(仍在无障碍树里,读屏照读 Murmur),
+   项间距收到 10px。中英同一条(375 宽中文不收字会顶进右边留白)。 */
+@media (max-width: 600px) {
+  nav .brand { font-size: 0; gap: 0; }
+  .navlinks { gap: 10px; }
+}
 /* 320 宽(老机型)英文「Try it · Membership · Sign in · Download」还差一点:间距和按钮内距再收一档 */
 @media (max-width: 340px) {
   .navlinks { gap: 6px; }
