@@ -10,7 +10,8 @@
 //       服务端还没回 plan / usage / upgrade 时一律按免费档显示,⛔ 不报错。
 // 纪律:用户数据和配置里的字一律 textContent / setAttribute,⛔ 零 innerHTML;
 //       链接只接受 https:,别的协议(javascript: 之类)一律当没配。
-// 本地演示:在 127.0.0.1 上加 ?demo=free|pro|max|out(v2-nav.js 写缓存),这一页照缓存渲染、不问 /me。
+// 本地演示:在 127.0.0.1 上加 ?demo=free|pro|max|pro-year|out(v2-nav.js 写缓存),这一页照缓存渲染、不问 /me。
+// 两个日期别混:me.period_end = 到期 / 下次扣费日;me.lec_resets = 长录音额度下次重置日(年付也按月切片)。
 const SUPA_URL = "https://syebvkwemxwxkonvsyjd.supabase.co";
 const SUPA_KEY = "sb_publishable_bBmuodbgO72q8CK_kacrSw_0o3cCsOd";  // 公开 key,不是密钥
 const SDK = new URL("../vendor/supabase-js-2.116.0.mjs", import.meta.url).href;  // SEC-L5:自托管,相对本文件
@@ -279,7 +280,9 @@ function cardPaid() {
   r.appendChild(kv(L.cloud, L.noWordLimit));
   const lec = me.lec || {};
   const lim = finite(lec.limit_h) != null ? lec.limit_h : (lec.limit_h === null ? null : LEC_HOURS[me.plan]);
-  const note = dShort(me.period_end) ? L.resets(dShort(me.period_end)) : "";
+  // 旧缓存没有 lec_resets:月付时两个日期是同一天,照用到期日;年付不猜,不写重置日
+  const lecEnd = me.lec_resets || (me.interval === "year" ? null : me.period_end);
+  const note = dShort(lecEnd) ? L.resets(dShort(lecEnd)) : "";
   if (finite(lec.used_h) != null && lim) r.appendChild(meter(L.lecPeriod, lec.used_h, lim, L.hours, note));
   else r.appendChild(kv(L.lecPeriod, lim ? `${num(lim)} ${L.hours}` : L.unlimitedUse));
   r.appendChild(kv(L.offline, L.unlimitedUse));

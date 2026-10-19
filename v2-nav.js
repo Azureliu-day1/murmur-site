@@ -25,7 +25,7 @@
    和那枚 `<a class="nav-member" href="…会员页…">`(胶囊面板里的「开通 / 升级」走它的 href)。
    页面在两层深还是根目录,路径各不相同,让脚本去猜是错的,直接读它们。
 
-   本地演示(只在 127.0.0.1 生效,上线不影响):`?demo=free|pro|max|out`
+   本地演示(只在 127.0.0.1 生效,上线不影响):`?demo=free|pro|max|pro-year|out`
    把一份假的会员摘要写进缓存(邮箱 user@example.com),不发请求;`out` 清掉。
    ══════════════════════════════════════════════════════════════════════════ */
 (function () {
@@ -135,8 +135,9 @@
 
   // ── 会员摘要缓存 ───────────────────────────────────────────────────────
   // 形状:{ v:1, t, email, plan:"free"|"pro"|"max", interval:"month"|"year"|null,
-  //        period_end, cancel, dict:{used,limit,resets}, trial:{used,minutes},
+  //        period_end, lec_resets, cancel, dict:{used,limit,resets}, trial:{used,minutes},
   //        lec:{used_h,limit_h}, amount, portal, demo }
+  //   period_end = 订阅到期 / 下次扣费日;lec_resets = 长录音额度下次重置日(年付也按月切片,两者不是一天)
   function readCache() {
     var raw;
     try { raw = localStorage.getItem(CACHE_KEY); } catch (e) { return null; }
@@ -162,7 +163,10 @@
   /* /me → 摘要。⛔ 缺字段一律按免费档(订阅 v2 还没部署时 /me 只有 quota / lecture_trial)。
      读法(先契约 v2,再现行字段):
        plan       = me.plan(v2)|| me.quota.plan(现行);只有 pro / max 算付费,其余都是免费
-       period_end = me.usage.period_end(v2)|| me.quota.subscription.period_end(现行)
+       period_end = me.subscription.period_end || me.quota.subscription.period_end || me.usage.period_end
+                    (到期日 / 下次扣费日。⛔ 不先读 usage.period_end:年付用户那是本月额度切片的末尾,
+                     先读它会把「一年后到期」显示成「一个月后到期」)
+       lec_resets = me.usage.lecture.period_end || me.usage.period_end(只给「本月长录音 … 重置」那一行用)
        interval   = me.usage.interval || me.subscription.interval || me.quota.subscription.interval(契约里还没有)
        本周听写    = me.quota.chars_used / chars_quota(现行,周界 chars_resets_at)
        长录音试用  = me.lecture_trial.used / total_ms(现行)
@@ -173,14 +177,16 @@
     var raw = String(me.plan || q.plan || "").toLowerCase();
     var plan = raw === "pro" || raw === "max" ? raw : "free";
     var u = me.usage && typeof me.usage === "object" ? me.usage : null;
-    var sub = (me.subscription && typeof me.subscription === "object" && me.subscription)
-           || (q.subscription && typeof q.subscription === "object" && q.subscription) || null;
+    var s1 = me.subscription && typeof me.subscription === "object" ? me.subscription : null;
+    var s2 = q.subscription && typeof q.subscription === "object" ? q.subscription : null;
+    var sub = s1 || s2;
+    var ul = u && u.lecture && typeof u.lecture === "object" ? u.lecture : null;
     var iv = (u && u.interval) || (sub && sub.interval) || null;
     var c = {
       email: typeof me.email === "string" && me.email ? me.email : (email || ""),
       plan: plan,
       interval: iv === "month" || iv === "year" ? iv : null,
-      period_end: null, cancel: false,
+      period_end: null, lec_resets: null, cancel: false,
       dict: null, trial: null, lec: null,
     };
     if (plan === "free") {
@@ -190,7 +196,8 @@
       var mins = lt && finite(lt.total_ms) ? Math.round(lt.total_ms / 60000) : 0;
       c.trial = { used: lt && typeof lt.used === "boolean" ? lt.used : null, minutes: mins > 0 ? mins : 3 };
     } else {
-      c.period_end = (u && u.period_end) || (sub && sub.period_end) || null;
+      c.period_end = (s1 && s1.period_end) || (s2 && s2.period_end) || (u && u.period_end) || null;
+      c.lec_resets = (ul && ul.period_end) || (u && u.period_end) || null;
       c.cancel = !!(sub && (sub.cancel_at_period_end === true || sub.status === "canceled"));
       if (u && u.unit === "seconds" && finite(u.used) != null) {
         c.lec = { used_h: u.used / 3600, limit_h: u.limit == null ? null : (finite(u.limit) != null ? u.limit / 3600 : LECTURE_HOURS[plan]) };
@@ -242,16 +249,30 @@
       base.dict = { used: 1240, limit: 2000, resets: new Date(Date.now() + 4 * 86400000).toISOString() };
       base.trial = { used: false, minutes: 3 };
     } else {
-      base.plan = kind; base.interval = "month"; base.period_end = end; base.cancel = false;
+      base.plan = kind; base.interval = "month"; base.period_end = end; base.lec_resets = end; base.cancel = false;
       base.lec = kind === "max" ? { used_h: 18.5, limit_h: 60 } : { used_h: 6.5, limit_h: 20 };
     }
     return base;
+  }
+  // 年付 Pro:走一遍 fromMe,演示的就是真读法 —— 订阅一年后到期,长录音额度一个月后重置
+  //   (usage.period_end 故意也是一个月后:那是年付用户的本月切片末尾,读错了到期日就会显示成一个月后)
+  function demoYear() {
+    var day = 86400000, now = Date.now();
+    var yearEnd = new Date(now + 365 * day).toISOString(), monthEnd = new Date(now + 30 * day).toISOString();
+    var c = fromMe({
+      email: "user@example.com", plan: "pro",
+      subscription: { interval: "year", period_end: yearEnd, status: "active", cancel_at_period_end: false },
+      usage: { unit: "seconds", used: 6.5 * 3600, limit: 20 * 3600, period_end: monthEnd, lecture: { period_end: monthEnd } },
+    });
+    c.demo = true; c.t = now;
+    return c;
   }
   function applyDemo() {
     if (!LOCAL) return;
     var k = new URLSearchParams(location.search).get("demo");
     if (k === "out") { clearCache(); return; }
     if (k === "free" || k === "pro" || k === "max") writeCache(demoCache(k), true);
+    if (k === "pro-year") writeCache(demoYear(), true);
   }
 
   // 演示开关在脚本一执行就落缓存:会员页的模块脚本在 DOMContentLoaded 之前就跑,要先读到它。
