@@ -2,7 +2,7 @@
 // 三种状态,一份渲染:
 //   没登录     → 顶上一张「登录后开通」卡 + 两档卡片 + 常见问题
 //   已登录·免费 → 顶上状态卡「你现在用的是免费档」:本周听写、长录音试用、离线识别
-//   已登录·付费 → 顶上状态卡「你是 Pro / Max 会员」:到期日、下次扣费、本期长录音、管理 / 升级
+//   已登录·付费 → 顶上状态卡「你是 Pro / Max 会员」:到期日、下次扣费、本月长录音、管理 / 升级
 // 数据从哪来:
 //   · 价格与付款链接:本站 /pricing.json(结构 = 订阅契约里的 pricing 节)。⛔ 页面上不写价格数字。
 //       价格是 null → 「即将推出」;有价格、没付款链接 → 价格照常显示、按钮「即将开放」点不了。
@@ -28,7 +28,7 @@ const L = EN ? {
   ledeFree: "Upgrade to stop counting words.",
   titlePaid: (p) => `You are a ${p} member`,
   ledePaid: "Your plan renews automatically at the end of each period.",
-  outText: "Sign in to see your plan, renewal date and usage for this period.",
+  outText: "Sign in to see your plan, renewal date and usage.",
   outBtn: "Sign in to subscribe",
   outNoAcct: "No account yet?",
   outApply: "Request one",
@@ -53,7 +53,7 @@ const L = EN ? {
   noRenew: "Ends, no renewal",
   cloud: "Cloud dictation",
   noWordLimit: "No word limit",
-  lecPeriod: "Long recording this period",
+  lecPeriod: "Long recording this month",
   hours: "hours",
   manage: "Manage subscription",
   manageNote: "Opens your Stripe account page to change card, view invoices or cancel.",
@@ -80,7 +80,7 @@ const L = EN ? {
   ledeFree: "说得多了,开通一档就不用数字数。",
   titlePaid: (p) => `你是 ${p} 会员`,
   ledePaid: "每期到期时自动续费。",
-  outText: "登录后,这一页会显示你的档位、到期日和本期用量。",
+  outText: "登录后,这一页会显示你的档位、到期日和用量。",
   outBtn: "登录后开通",
   outNoAcct: "还没有账号?",
   outApply: "申请一个",
@@ -105,7 +105,7 @@ const L = EN ? {
   noRenew: "到期后不再续费",
   cloud: "云端听写",
   noWordLimit: "不限字数",
-  lecPeriod: "本期长录音",
+  lecPeriod: "本月长录音",
   hours: "小时",
   manage: "管理订阅",
   manageNote: "管理订阅会打开 Stripe 账户页,可以换卡、看账单、取消。",

@@ -6,7 +6,7 @@
      · 有会员摘要缓存(新鲜):「免费 · 开通会员」/「Pro · 到 11 月 18 日」
      · 缓存超过 24 小时:只显示档位(「Pro 会员」),不显示日期和用量
      · 没缓存:「账户」(和改版前一样)
-   点开是一块小面板:档位、到期 / 下次扣费、本期用量、升级 / 管理、邮箱、退出。
+   点开是一块小面板:档位、到期 / 下次扣费、本月用量、升级 / 管理、邮箱、退出。
    没有 JS、脚本没加载、解析失败 —— 页面仍然是一个能点进登录页的正常顶栏。
    ⛔ 不许把顶栏交给 JS 生成。
 
@@ -93,7 +93,7 @@
     untilBig: function (d) { return "到 " + d; },
     nextCharge: "下次扣费",
     noRenew: "到期后不再续费",
-    lecPeriod: "本期长录音",
+    lecPeriod: "本月长录音",
     hours: "小时",
     unlimited: "不限",
     upgrade: "开通会员",
@@ -170,7 +170,7 @@
        interval   = me.usage.interval || me.subscription.interval || me.quota.subscription.interval(契约里还没有)
        本周听写    = me.quota.chars_used / chars_quota(现行,周界 chars_resets_at)
        长录音试用  = me.lecture_trial.used / total_ms(现行)
-       本期长录音  = me.usage.used / limit 秒(v2)|| me.quota.lecture_minutes_used / _quota(现行) */
+       本月长录音  = me.usage.used / limit 秒(v2)|| me.quota.lecture_minutes_used / _quota(现行) */
   function fromMe(me, email) {
     me = me && typeof me === "object" ? me : {};
     var q = me.quota && typeof me.quota === "object" ? me.quota : {};
