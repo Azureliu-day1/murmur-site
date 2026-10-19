@@ -264,7 +264,10 @@ h2 { font-size: clamp(26px, 3.4vw, 34px); font-weight: 600; line-height: 1.35; l
    ⚠️ 选择器不带 .hero —— 页尾 #download 那枚「下载」下面用的是同一句。 */
 .mobile-path { margin-top: 18px; font-size: 13.5px; color: var(--second); line-height: 1.7; }
 kbd {
-  font-family: "IBM Plex Mono", monospace; font-size: 12px; color: var(--ink);
+  /* ⌘ ⌥ ⌃ 和汉字不在自托管的 Plex Mono 子集里(unicode-range 只到拉丁):让它们落到正文字体,
+     不落到系统 monospace(那里的 ⌘ 偏小)。拉丁字母照旧是 Plex Mono。 */
+  font-family: "IBM Plex Mono", -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", sans-serif;
+  font-size: 12px; color: var(--ink);
   background: var(--card); border: 1px solid var(--line2); border-radius: 7px;
   padding: 2px 9px; margin-right: 6px;
 }

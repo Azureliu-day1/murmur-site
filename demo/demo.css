@@ -68,7 +68,10 @@
 .keys li { min-width: 0; }
 .keys + p { margin-top: 8px; }
 kbd {
-  font-family: "IBM Plex Mono", monospace; font-size: 12px; color: var(--ink);
+  /* ⌘ ⌥ ⌃ 和汉字不在自托管的 Plex Mono 子集里(unicode-range 只到拉丁):让它们落到正文字体,
+     不落到系统 monospace(那里的 ⌘ 偏小)。拉丁字母照旧是 Plex Mono。 */
+  font-family: "IBM Plex Mono", -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", sans-serif;
+  font-size: 12px; color: var(--ink);
   background: var(--card); border: 1px solid var(--line2); border-radius: 7px;
   padding: 1px 8px; margin-right: 6px; white-space: nowrap;
 }
