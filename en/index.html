@@ -706,14 +706,6 @@ footer a:hover { color: var(--ink); text-decoration: none; }
 }
 .buy:hover { filter: brightness(1.06); }
 .buy:focus-visible { outline: 2px solid var(--coral); outline-offset: 3px; }
-.sandbox {
-  display: none;
-  font-family: "IBM Plex Mono", monospace; font-size: 11px;
-  letter-spacing: .08em; text-transform: uppercase;
-  color: var(--coral); background: var(--coral-tint);
-  padding: 4px 9px; border-radius: 4px; margin-left: 12px; vertical-align: middle;
-}
-body.is-sandbox .sandbox { display: inline-block; }
 .pricing-plain { margin-top: 26px; display: grid; gap: 12px; max-width: 46em; }
 .pricing-plain p { color: var(--second); font-size: 14px; line-height: 1.75; }
 .pricing-plain strong { color: var(--ink); font-weight: 500; }
@@ -1309,23 +1301,6 @@ body.is-sandbox .sandbox { display: inline-block; }
 })();
 </script>
 
-<script>
-// ── 收款链接:站点唯一一处 ─────────────────────────────────────────────
-// 换正式账号那天是**四个落点 + 一根钉**,别只改这里:
-//   ① 下面的 PAY_LINK  ② MANAGE_LINK
-//   ③ 服务端 murmur_config.stripe_payment_link  ④ …stripe_portal_link
-//   ⑤ 新 webhook endpoint 的 stripe_webhook_secret 必须同步换
-// 文案不用动 —— 沙盒徽章是从链接里的 /test_ 认出来的,不是手写开关。
-var PAY_LINK    = "https://buy.stripe.com/test_dRm28rgoe44655lgXkcs800";
-var MANAGE_LINK = "https://billing.stripe.com/p/login/test_dRm28rgoe44655lgXkcs800";
-(function () {
-  var buy = document.getElementById('buy');
-  if (buy) buy.href = PAY_LINK;
-  var manage = document.getElementById('manage');
-  if (manage) manage.href = MANAGE_LINK;
-  if (PAY_LINK.indexOf('/test_') !== -1) document.body.classList.add('is-sandbox');
-})();
-</script>
 <script src="../capsule.js"></script>
 <script>
 /* ── 入场:滚到哪节哪节醒。只动 transform/opacity ── */
