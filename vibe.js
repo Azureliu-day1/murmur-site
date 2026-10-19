@@ -32,20 +32,21 @@
   var title = root.querySelector(".vb-title");
   var mount = root.querySelector(".vb-hud .capsule-mount");
   var key = root.querySelector(".vb-key");
-  var busyText = root.getAttribute("data-busy") || "";
+  var busyText = root.getAttribute("data-busy") || "";   // 旧接口照传;App 整理中不写字,组件不画它
   if (!mount) return;
 
   /* ── 一轮的时间表(毫秒)。两轮交替,总循环 = ROUND × 轮数 ──
      0     待命:空提示符,光标闪
      600   第一次按右 ⌘;640 录音条出现
      700   实时字幕一个词一个词冒出来(最后一个词是灰的,还没定),到 5400 说完
-     5600  第二次按右 ⌘ → 录音条换成「提示词技能整理中 · Ns · ESC 取消」,停 1.3 s 让人读完
-     6900  录音条收起(组件自己的 0.18 s 下沉淡出)
+     5600  第二次按右 ⌘ → 录音条进整理中(照 App 录音条 v2:一个字都不写,控件淡出、液带收成细平线),停 1.1 s
+           (< 组件的亮点延迟 1.2 s:整理得快就什么都不多画,免得亮点刚冒头就收起)
+     6700  录音条收起(组件自己的 0.18 s 下沉淡出)
      7000  整理后的提示词逐行落下,每行间隔 180 ms,淡入上移
      8000  第一处对照标注;8600 第二处
      12400 整窗淡出;13000 下一轮 */
   var ROUND = 13000;
-  var KEY1 = 600, HUD_ON = 640, LISTEN = 700, KEY2 = 5600, HUD_OFF = 6900;
+  var KEY1 = 600, HUD_ON = 640, LISTEN = 700, KEY2 = 5600, HUD_OFF = 6700;
   var LAND = 7000, STEP = 180, NOTE1 = LAND + 1000, NOTE2 = LAND + 1600, FADE = 12400;
   var KEY_DOWN_MS = 170;
 
@@ -121,7 +122,7 @@
         cap.setClock(0); cap.setCaption("", "");
         cap.setState("listening", { level: 0 });
       } else if (state === "processing") {
-        cap.setCaption(words.join(""), "");             // 字幕卡原样留着最后那句话(和 App 一样)
+        cap.setCaption(words.join(""), "");             // 文字区原样留着最后那句话(和 App 一样)
         cap.setState("processing", { seconds: 0, label: busyText });
       } else {
         cap.setState("hidden");

@@ -292,7 +292,7 @@ kbd {
 @keyframes blink { 50% { opacity: 0; } }
 
 /* 录音条 = 共享组件 MurmurCapsule(capsule.js / capsule.css,规格见 site-capsule/SPEC.md)。
-   组件自己按状态留高度(无字幕 42px × 尺寸,带字幕 136px × 尺寸),这里只管外框间距。 */
+   组件自己按状态留高度(无字幕 42px × 尺寸,带字幕 123px × 尺寸 = 按钮行 42 + 文字区最高 81),这里只管外框间距。 */
 .capsule-mount { margin-top: 22px; }
 .caption { margin-top: 16px; font-size: 14px; color: var(--second); min-height: 24px; text-align: center; }
 .caption .volatile { opacity: .45; }
@@ -1338,7 +1338,8 @@ function register(el, render) {
 }
 
 /* 「说话」演示:待命 → 按右 ⌘ → 正在打开麦克风 → 听(逐词字幕 + 声线随音量起伏)
-   → 再按 → 整理中 · Ns · ESC 取消 → 已插入(绿点,字落下)→ 下沉淡出 → 停留 */
+   → 再按 → 整理中(一个字都不写,液带收成细平线,1.2s 后线上一颗慢亮点)
+   → 原话原位换成整理后的句子 + 右槽「✓ 已插入」(字落下)→ 下沉淡出 → 停留(App 录音条 v2) */
 function speakDemo(root, { words, result, per = 420, hold = 2600, cycleOverride = 0, onPhase,
                            mode = 'dictation', scale = 0, kbd = null }) {
   const input = root.querySelector('.out'), ph = root.querySelector('.ph');
@@ -1348,7 +1349,7 @@ function speakDemo(root, { words, result, per = 420, hold = 2600, cycleOverride 
     scale: scale || undefined
   });
   const D = MurmurCapsule.DWELL;
-  // 说完静 300ms:进整理中时离上一次计时翻页够远,不带半截数字退场;整理段 1700ms:「1s」停 0.7s
+  // 说完静 300ms:进整理中时离上一次计时翻页够远,不带半截数字退场;整理段 1700ms:过了 1.2s 亮点出来走半秒
   const tPress = 800, tListen = tPress + D.starting, listen = per * words.length + 300;
   const tProc = tListen + listen, proc = 1700, tDone = tProc + proc, typeMs = 34;
   const tHide = tDone + D.done;
@@ -1375,7 +1376,7 @@ function speakDemo(root, { words, result, per = 420, hold = 2600, cycleOverride 
         input.textContent = result;
         cap.setClock(Math.floor(listen / 1000));
         cap.setCaption(words.join(''), '');
-        cap.setState('listening', { level: 0.55 });   // 静止波形 + 整句字幕;不再留一块空的 136px
+        cap.setState('listening', { level: 0.55 });   // 静止波形 + 整句字幕;不留一块空的文字区
       });
       onPhase && onPhase('done', doneAt, t);
       return;

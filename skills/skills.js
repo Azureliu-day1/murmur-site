@@ -32,22 +32,23 @@
   var mount = root.querySelector(".vb-hud .capsule-mount");
   var key = root.querySelector(".vb-key");
   var pills = [].slice.call(root.querySelectorAll(".sk-scenes button"));
-  var busyText = root.getAttribute("data-busy") || "";
+  var busyText = root.getAttribute("data-busy") || "";   // 旧接口照传;App 整理中不写字,组件不画它
   if (!mount) return;
 
   /* ── 一段的时间表(毫秒)。四段轮流,总循环 = ROUND × 段数 ──
      0     待命:空提示符,光标闪
      500   第一次按右 ⌘;540 录音条出现
      600   实时字幕一个词一个词冒出来,到 4700 说完
-     4900  第二次按右 ⌘ → 录音条换成「提示词技能整理中」,停 1.2 s
-     6100  录音条收起
+     4900  第二次按右 ⌘ → 录音条进整理中(照 App 录音条 v2:一个字都不写,液带收成细平线),停 1.1 s
+           (< 组件的亮点延迟 1.2 s,免得亮点刚冒头就收起)
+     6000  录音条收起
      6200  整理后的需求逐行落下,每行间隔 180 ms
      落完 + 260   「做法」露出一行概括
      露出 + 500   小标签出现:已附上做法 · 某技能
      露出 + 2600  「做法」折叠成一行「做法 · 3 条」
      12000 整窗淡出;12600 下一段 */
   var ROUND = 12600;
-  var KEY1 = 500, HUD_ON = 540, LISTEN = 600, KEY2 = 4900, HUD_OFF = 6100;
+  var KEY1 = 500, HUD_ON = 540, LISTEN = 600, KEY2 = 4900, HUD_OFF = 6000;
   var LAND = 6200, STEP = 180, AP_GAP = 260, TAG_AFTER = 500, FOLD_AFTER = 2600, FADE = 12000;
   var KEY_DOWN_MS = 170;
 
