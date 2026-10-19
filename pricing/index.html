@@ -2,138 +2,21 @@
 <html lang="zh-CN">
 <head>
 <meta charset="utf-8">
-<!-- 免费档写的是**线上现行规则**(0.53 发布时):云端听写每周 2000 字、长录音免费试一次最长 3 分钟(Wei 10-18 政策 B)、离线识别不限量。
-     订阅 v2 上线时改成「一次性约 20 分钟、按录音时长、听写和长录音共用」,与 murmur-all-sec/docs/DESIGN-subs-v2.md 一致
-     (free_lifetime_seconds = 1200);meta description、免费卡、页头副标题、FAQ「额度怎么算」四处一起改,英文页同。 -->
-<!-- CSP 与登录页同一套(SEC-L5,无 unsafe-inline):脚本在 pricing.js、样式在 pricing.css,
-     supabase-js 自托管在 /vendor/。connect-src 比登录页多一个 'self'(读本站 pricing.json),
-     少了 Turnstile(这一页没有表单)。⛔ 别加通配符、别加 unsafe-*。 -->
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self' https://syebvkwemxwxkonvsyjd.supabase.co; object-src 'none'; base-uri 'none'; form-action 'none'">
+<!-- MEMBER-BUILD(2026-10-19):「价格」改名「会员订阅」,这一页搬到 /member/。
+     GitHub Pages 是静态站,发不了 301:用 meta refresh(0 秒)+ canonical 指向新地址,搜索引擎按永久搬家处理。
+     ⛔ 不放脚本、不连网络。 -->
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self'; img-src 'self' data:; font-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="refresh" content="0; url=../member/index.html">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>价格 · Murmur</title>
-<meta name="description" content="Murmur 的价格:免费档云端听写每周 2000 字、长录音可免费试一次,Pro 和 Max 按月或按年订阅。">
-<link rel="alternate" hreflang="zh-Hans" href="../pricing/index.html">
-<link rel="alternate" hreflang="en" href="../en/pricing/index.html">
+<meta name="robots" content="noindex">
+<title>会员订阅 · Murmur</title>
+<link rel="canonical" href="https://maobenbeginner.com/member/">
 <link rel="icon" href="../favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="../v2.css">
-<link rel="stylesheet" href="pricing.css">
 </head>
 <body>
-
-<nav>
-  <div class="wrap navrow">
-    <a class="brand" href="../index.html"><svg width="30" height="15" viewBox="0 0 200 100" aria-hidden="true"><path d="M12.0 50.0 L14.0 40.1 L16.0 31.7 L18.0 25.2 L20.0 21.0 L22.0 19.0 L24.0 19.2 L26.0 21.3 L28.0 25.2 L30.0 30.3 L32.0 36.2 L34.0 42.4 L36.0 48.5 L38.0 54.2 L40.0 59.0 L42.0 62.7 L44.0 65.2 L46.0 66.5 L48.0 66.5 L50.0 65.5 L52.0 63.5 L54.0 60.9 L56.0 57.8 L58.0 54.6 L60.0 51.5 L62.0 48.6 L64.0 46.2 L66.0 44.4 L68.0 43.2 L70.0 42.7 L72.0 42.7 L74.0 43.2 L76.0 44.1 L78.0 45.3 L80.0 46.7 L82.0 48.0 L84.0 49.2 L86.0 50.2 L88.0 51.0 L90.0 51.5 L92.0 51.8 L94.0 51.8 L96.0 51.6 L98.0 51.3 L100.0 50.9 L102.0 50.5 L104.0 50.2 L106.0 50.0 L190 50" fill="none" stroke="var(--coral)" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/></svg>Murmur</a>
-    <div class="navlinks">
-      <a href="../guide/index.html">指南</a>
-      <a href="../skills/index.html">技能</a>
-      <a class="nav-keep" href="../try/index.html">试一试</a>
-      <a href="index.html" aria-current="page">价格</a>
-      <a href="../index.html#pinyin">输入法</a>
-      <a href="../demo/index.html">拼音演示</a>
-      <a class="nav-keep" href="../en/pricing/index.html" hreflang="en" lang="en">English</a>
-      <a class="nav-signin nav-keep" href="../login/index.html">登录</a>
-      <a class="nav-cta" href="../index.html#download">下载</a>
-    </div>
-  </div>
-</nav>
-
-<header class="head wrap">
-  <p class="eyebrow">价格</p>
-  <h1>先免费用,够用再订阅</h1>
-  <p class="sub">下载免费,离线识别不限量。云端听写按字数算。</p>
-</header>
-
 <main class="wrap">
-
-  <!-- 月付 / 年付。没有 JS 时这一排不出现(hidden),价格位显示「即将推出」。 -->
-  <div class="cycle" id="cycle" role="group" aria-label="付款周期" hidden>
-    <button type="button" data-cycle="month" aria-pressed="true">月付</button>
-    <button type="button" data-cycle="year" aria-pressed="false">年付</button>
-  </div>
-
-  <!-- ⛔ 这一页不写任何价格数字。价格、付款链接都从 /pricing.json 读(结构 = 契约里的 pricing 节),
-       值为 null 的那一格显示「即将推出」、按钮点不了。 -->
-  <div class="plans">
-    <article class="plan" data-plan="free">
-      <h2>免费</h2>
-      <p class="for">先试一试</p>
-      <p class="price"><span class="amount">免费</span></p>
-      <ul>
-        <li>云端听写每周 2000 字(登录并通过申请后)</li>
-        <li>长录音免费试一次,最长 3 分钟(申请通过后)</li>
-        <li>离线识别不限量</li>
-      </ul>
-      <a class="btn btn-quiet btn-block" href="../index.html#download">免费下载</a>
-    </article>
-
-    <article class="plan" data-plan="pro">
-      <h2>Pro</h2>
-      <p class="for">每天都在说</p>
-      <p class="price"><span class="amount">即将推出</span><small class="per"></small></p>
-      <ul>
-        <li>每月一份云端额度</li>
-        <li>用量更多</li>
-        <li>按订阅日重置,不按自然月</li>
-      </ul>
-      <a class="btn btn-primary btn-block buy" aria-disabled="true">即将推出</a>
-    </article>
-
-    <article class="plan" data-plan="max">
-      <h2>Max</h2>
-      <p class="for">常录课、录会议</p>
-      <p class="price"><span class="amount">即将推出</span><small class="per"></small></p>
-      <ul>
-        <li>用量基本不限</li>
-        <li>长录音更多</li>
-        <li>Pro 有的都有</li>
-      </ul>
-      <a class="btn btn-primary btn-block buy" aria-disabled="true">即将推出</a>
-    </article>
-  </div>
-
-  <p class="paynote" id="paynote">付款邮箱请用你登录 App 的那个。</p>
-
-  <section class="faq">
-    <h2>常见问题</h2>
-    <div class="qa">
-      <h3>额度怎么算</h3>
-      <p>免费档的云端听写按字数算,每周 2000 字,登录并通过申请后可用。长录音可以免费试录一次,最长 3 分钟,申请通过后可用。离线识别不计额度。</p>
-    </div>
-    <div class="qa">
-      <h3>录到一半用完会断吗</h3>
-      <p>听写不会:正在说的这一句照常写完、照常保存,App 会告诉你额度用完了,从下一句开始才用不了云端额度。长录音的免费试用到 3 分钟会自动停,停之前录下的部分照常保存。</p>
-    </div>
-    <div class="qa">
-      <h3>怎么取消</h3>
-      <p id="cancelMail">写信给我们:<a href="mailto:support@day1aifitness.com">support@day1aifitness.com</a>。我们帮你取消。</p>
-      <p id="cancelPortal" hidden>在 <a id="portalLink" rel="noopener">Stripe 账户页</a>自己取消,随时都行。</p>
-    </div>
-    <div class="qa">
-      <h3>能退款吗</h3>
-      <p>按<a href="../tos.html">服务条款</a>第五节办。</p>
-    </div>
-    <div class="qa">
-      <h3>付款安全吗</h3>
-      <p>付款由 Stripe 处理。我们不经手、也不存你的卡号。</p>
-    </div>
-  </section>
-
+  <p class="nf-sub">价格页搬到了会员订阅。<a href="../member/index.html">去会员订阅</a></p>
 </main>
-
-<footer class="wrap">
-  <span class="brand"><svg width="30" height="15" viewBox="0 0 200 100" aria-hidden="true"><path d="M12.0 50.0 L14.0 40.1 L16.0 31.7 L18.0 25.2 L20.0 21.0 L22.0 19.0 L24.0 19.2 L26.0 21.3 L28.0 25.2 L30.0 30.3 L32.0 36.2 L34.0 42.4 L36.0 48.5 L38.0 54.2 L40.0 59.0 L42.0 62.7 L44.0 65.2 L46.0 66.5 L48.0 66.5 L50.0 65.5 L52.0 63.5 L54.0 60.9 L56.0 57.8 L58.0 54.6 L60.0 51.5 L62.0 48.6 L64.0 46.2 L66.0 44.4 L68.0 43.2 L70.0 42.7 L72.0 42.7 L74.0 43.2 L76.0 44.1 L78.0 45.3 L80.0 46.7 L82.0 48.0 L84.0 49.2 L86.0 50.2 L88.0 51.0 L90.0 51.5 L92.0 51.8 L94.0 51.8 L96.0 51.6 L98.0 51.3 L100.0 50.9 L102.0 50.5 L104.0 50.2 L106.0 50.0 L190 50" fill="none" stroke="var(--coral)" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/></svg>Murmur</span>
-  <span>Others Studio 出品</span>
-  <div class="links">
-    <a href="https://othersstudio.tech">othersstudio.tech</a>
-    <a href="../changelog/index.html">更新记录</a>
-    <a href="../privacy.html">隐私</a>
-    <a href="../tos.html">条款</a>
-    <!-- 顶栏的语言切换在手机上是收起来的,页脚这一份是它在手机上的落点 -->
-    <a href="../en/pricing/index.html" hreflang="en" lang="en">English</a>
-  </div>
-</footer>
-
-<script src="../v2-nav.js"></script>
-<script type="module" src="pricing.js"></script>
 </body>
 </html>
