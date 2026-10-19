@@ -1,11 +1,11 @@
 /* ─────────────────────────────────────────────────────────────────────────
-   Murmur 录音条 · 网页复刻(capsule.css)
-   依据:audits/2026-10-13/site-capsule/SPEC.md。数值全部来自 Mac 源码:
-     HUD.swift(几何 / 按钮 / 字幕卡)、GlassBackground.swift(玻璃)、
-     DesignSystem.swift(颜色 token)。⛔ 改数值先改 SPEC,再改这里。
+   Murmur 录音条 · 网页复刻(capsule.css)—— App 录音条 v2「一块到底」
+   数值全部来自 murmur-ime 源码:
+     HUDFaceV2.swift(块宽 372、按钮行 42、内距 12 / 16、文字区 11 / 2、圆角 18 / 21、收尾右槽)、
+     HUD.swift(字幕 13.5 / 行距 4.5、圆按钮 24)、GlassBackground.swift(玻璃)、
+     DesignSystem.swift(颜色 token、DS.text / DS.mono)。⛔ 改数值先对 App 源码。
    尺寸单位:--mc-u(full = 1px,mini = 36/42px);所有长度都是 Mac pt × u。
-   动效全在 capsule.js 里按时间算(便于减弱动效直接落终态、也便于逐帧截图),
-   这里不写 transition。
+   动效全在 capsule.js 里按时间算(便于减弱动效直接落终态、也便于逐帧截图),这里不写 transition。
    ───────────────────────────────────────────────────────────────────────── */
 
 .mc {
@@ -14,11 +14,11 @@
   --mc-second: #55555C;
   --mc-faint: #8E8E96;
   --mc-coral: #E2531F;
-  --mc-coral-tint: #FBEFE9;
-  --mc-green: #2E7D4F;
   --mc-warn: #96570A;
   --mc-danger: #B3402E;
-  /* 玻璃:SPEC §6.7(= MURMUR_SHOT 回落层:材质 + card × .66) */
+  --mc-procdot: #616161;   /* 整理中亮点:Color(white: 0.38) */
+  --mc-dark: 0;
+  /* 玻璃:GlassSurface 的离屏出图层(材质 + card × .66) */
   --mc-glass: rgba(255, 255, 255, .66);
   --mc-stroke-top: rgba(255, 255, 255, .85);
   --mc-stroke-bottom: rgba(0, 0, 0, .06);
@@ -28,7 +28,7 @@
   --mc-btn-hover: rgba(27, 27, 31, .16);
 
   --mc-u: 1px;
-  --mc-reserve: 42; /* JS 按字幕位置改写(42 / 136) */
+  --mc-reserve: 123; /* JS 按字幕位置改写:按钮行 42 + 文字区最高 11 + 68 + 2;无字幕 42 */
 
   position: relative;
   width: 100%;
@@ -51,10 +51,10 @@
     --mc-second: #A0A0A8;
     --mc-faint: #6E6E76;
     --mc-coral: #FF6B35;
-    --mc-coral-tint: #3A2118;
-    --mc-green: #5FBF87;
     --mc-warn: #D9A441;
     --mc-danger: #E8705C;
+    --mc-procdot: #DBDBDB; /* Color(white: 0.86) */
+    --mc-dark: 1;
     --mc-glass: rgba(30, 30, 33, .5);
     --mc-stroke-top: rgba(255, 255, 255, .18);
     --mc-stroke-bottom: rgba(255, 255, 255, .04);
@@ -68,10 +68,10 @@
   --mc-second: #A0A0A8;
   --mc-faint: #6E6E76;
   --mc-coral: #FF6B35;
-  --mc-coral-tint: #3A2118;
-  --mc-green: #5FBF87;
   --mc-warn: #D9A441;
   --mc-danger: #E8705C;
+  --mc-procdot: #DBDBDB;
+  --mc-dark: 1;
   --mc-glass: rgba(30, 30, 33, .5);
   --mc-stroke-top: rgba(255, 255, 255, .18);
   --mc-stroke-bottom: rgba(255, 255, 255, .04);
@@ -82,16 +82,23 @@
 
 .mc *, .mc *::before, .mc *::after { box-sizing: border-box; margin: 0; }
 
-/* 面板 = 字幕卡 + 胶囊(收起时整组下沉 6pt) */
-.mc-panel { position: absolute; inset: 0; }
+/* ── 一块玻璃:宽 372 定死(容器窄时跟容器),高 = 文字区 + 按钮行;JS 写宽 / 高 / 圆角 ── */
+.mc-panel {
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  height: calc(var(--mc-u) * 42);
+  border-radius: calc(var(--mc-u) * 21);
+  visibility: hidden;
+  opacity: 0;
+}
+.mc[data-caption="below"] .mc-panel { bottom: auto; top: 0; }
 
-/* ── 玻璃(胶囊与字幕卡同一块材质)── */
 .mc-glass {
   background: var(--mc-glass);
   -webkit-backdrop-filter: blur(20px) saturate(1.6);
   backdrop-filter: blur(20px) saturate(1.6);
-  /* SwiftUI .shadow(radius: 14, y: 5):radius 是高斯 σ 量级,CSS 的 blur 半径 ≈ 2σ → 28
-     (评审 2026-10-13 第 5 条;并排对比见 shots/shadow-vs-mac-light.png) */
+  /* SwiftUI .shadow(radius: 14, y: 5):radius 是高斯 σ 量级,CSS 的 blur 半径 ≈ 2σ → 28 */
   box-shadow: 0 calc(var(--mc-u) * 5) calc(var(--mc-u) * 28) var(--mc-shadow);
 }
 /* 1px 渐变描边,上亮下暗(strokeBorder = 画在形状里面) */
@@ -110,25 +117,85 @@
   z-index: 5;
 }
 
-/* ── 胶囊:高 42、全圆角;宽度由 JS 按内容量出来再走弹簧 ── */
-.mc-pill {
+/* ── 文字区:左右 16,上 11 下 2;字幕 13.5,行距 4.5 ── */
+.mc-text {
   position: absolute;
-  left: 50%;            /* JS 每帧写 width 与 margin-left = −width/2:比容器宽时也居中 */
-  bottom: 0;
-  height: calc(var(--mc-u) * 42);
-  border-radius: calc(var(--mc-u) * 21);
-  overflow: hidden;
-}
-.mc[data-caption="below"] .mc-pill { bottom: auto; top: 0; }
-
-/* 胶囊里的件:绝对定位,位置与透明度 / 缩放全由 JS 写 */
-.mc-it {
-  position: absolute;
+  left: calc(var(--mc-u) * 16);
+  top: calc(var(--mc-u) * 11);
   visibility: hidden;
   opacity: 0;
-  white-space: nowrap;
+  z-index: 1;
 }
-.mc-it.is-live { visibility: visible; }
+/* 刘海式(行在上、字在下):行 42 + 2 */
+.mc[data-caption="below"] .mc-text { top: calc(var(--mc-u) * 44); }
+
+/* 原话:定宽、底对齐裁切,旧行从顶上滚走 */
+.mc-raw {
+  position: relative;
+  overflow: hidden;
+}
+.mc-raw-in,
+.mc-main,
+.mc-m-cap {
+  font-size: calc(var(--mc-u) * 13.5);
+  line-height: calc(var(--mc-u) * 20.6);   /* 自然行高 16.1 + 行距 4.5 */
+  white-space: normal;
+  word-break: break-word;
+  line-break: auto;
+}
+.mc-raw-in {
+  position: absolute;
+  left: 0; right: 0;
+  bottom: calc(var(--mc-u) * -2.25);       /* 最后一行下面不算行距:半个行距落到框外 */
+}
+.mc-fin { color: var(--mc-ink); }
+.mc-vol { color: var(--mc-ink); }
+/* 暂定 = ink × .4,只在听写中 */
+.mc-raw-in.is-live .mc-vol { opacity: .4; }
+
+/* 整理后的句子:和原话叠在同一个位置(左上对齐) */
+.mc-res {
+  position: absolute;
+  left: 0; right: 0;
+  top: calc(var(--mc-u) * -2.25);
+}
+.mc-res > [hidden] { display: none; }
+/* 翻译完成:原文小一号压透明度在上(11.5、ink × .38、单行) */
+.mc-src {
+  font-size: calc(var(--mc-u) * 11.5);
+  line-height: calc(var(--mc-u) * 19.5);
+  color: var(--mc-ink);
+  opacity: .38;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-bottom: calc(var(--mc-u) * -0.5);
+}
+.mc-main {
+  color: var(--mc-ink);
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+}
+/* 解释句:12.5、second 色、行距 2 */
+.mc-detail {
+  font-size: calc(var(--mc-u) * 12.5);
+  line-height: calc(var(--mc-u) * 17);
+  color: var(--mc-second);
+  margin-top: calc(var(--mc-u) * 4);
+}
+
+/* ── 按钮行:高 42、左右内距 12;件的横向位置由 JS 写 ── */
+.mc-row {
+  position: absolute;
+  left: 0; right: 0;
+  bottom: 0;
+  height: calc(var(--mc-u) * 42);
+}
+.mc[data-caption="below"] .mc-row { bottom: auto; top: 0; }
+.mc-row > * { position: absolute; visibility: hidden; opacity: 0; white-space: nowrap; }
+.mc-row > canvas.mc-line { visibility: visible; opacity: 1; display: block; pointer-events: none; z-index: 1; }
 
 /* 圆按钮:24pt 实心圆;图标是内联 SVG 描边(不用字体字形) */
 .mc-btn {
@@ -139,75 +206,46 @@
   display: grid;
   place-items: center;
   z-index: 2;
-  pointer-events: auto;
 }
 .mc-btn svg { width: calc(var(--mc-u) * 24); height: calc(var(--mc-u) * 24); display: block; }
-.mc-btn path { fill: none; stroke: currentColor; stroke-linecap: round; stroke-linejoin: round; }
+.mc svg path { fill: none; stroke: currentColor; stroke-linecap: round; stroke-linejoin: round; }
 .mc-x { color: var(--mc-second); background: var(--mc-btn); }
 .mc-x:hover { background: var(--mc-btn-hover); }
 .mc-check { color: #fff; background: var(--mc-coral); }
 .mc-check:hover { filter: opacity(.86); }
 
-/* 完成 / 出错的小圆点:8pt */
-.mc-dot {
-  top: calc(var(--mc-u) * 17);
-  width: calc(var(--mc-u) * 8);
-  height: calc(var(--mc-u) * 8);
-  border-radius: 50%;
-  background: var(--mc-green);
-}
-.mc-dot[data-tone="warn"] { background: var(--mc-warn); }
-.mc-dot[data-tone="bad"] { background: var(--mc-danger); }
-
-/* 状态字:12.5pt medium,second 色,单行 */
-.mc-status {
+/* 行里的字:DS.text(12.5, .medium) */
+.mc-word,
+.mc-slot {
   top: 0;
   height: calc(var(--mc-u) * 42);
   line-height: calc(var(--mc-u) * 42);
   font-size: calc(var(--mc-u) * 12.5);
   font-weight: 500;
   color: var(--mc-second);
+  z-index: 2;
 }
+.mc-mode { color: var(--mc-faint); }          /* 模式词:faint */
 
-/* 模式 chip(非听写模式):11pt medium,珊瑚字 + 珊瑚浅底,圆角 8 */
-.mc-chip {
-  top: calc(var(--mc-u) * 11);
-  height: calc(var(--mc-u) * 20);
-  line-height: calc(var(--mc-u) * 20);
-  padding: 0 calc(var(--mc-u) * 8);
-  border-radius: calc(var(--mc-u) * 8);
-  font-size: calc(var(--mc-u) * 11);
-  font-weight: 500;
-  color: var(--mc-coral);
-  background: var(--mc-coral-tint);
-}
+/* 收尾右槽:成功 = ✓(10.5 semibold)+ 5 + 词,都是 second;要看一眼 = warn 字;失败 = danger 字;取消 = 灰字 */
+.mc-slot { display: flex; align-items: center; gap: calc(var(--mc-u) * 5); }
+.mc-tick { display: none; width: calc(var(--mc-u) * 11); height: calc(var(--mc-u) * 11); }
+.mc-tick svg { width: 100%; height: 100%; display: block; }
+.mc-slot[data-tone="done"] .mc-tick { display: block; }
+.mc-slot[data-tone="check"] { color: var(--mc-warn); }
+.mc-slot[data-tone="bad"] { color: var(--mc-danger); }
 
-/* 液态波形格:196×24(其它模式 156×24);画布四周多留出光晕的位置 */
-.mc-wave {
-  top: calc(var(--mc-u) * 9);
-  height: calc(var(--mc-u) * 24);
-  z-index: 1;
-}
-.mc-wave canvas {
-  position: absolute;
-  display: block;
-  pointer-events: none;
-}
-
-/* 计时:系统衬线体(Safari = New York)12pt semibold + 等宽数字,faint 色。
-   Chrome 不认 ui-serif:站点自托管的 Newsreader 600 接住(衬线 + 等宽数字)。 */
+/* 计时:DS.mono(12) = 系统无衬线 12 medium + 等宽数字,faint 色 */
 .mc-clock {
   top: 0;
   height: calc(var(--mc-u) * 42);
   line-height: calc(var(--mc-u) * 42);
-  font-family: "New York", ui-serif, "Newsreader", Georgia, serif;
   font-size: calc(var(--mc-u) * 12);
-  font-weight: 600;
-  font-variant-numeric: tabular-nums lining-nums;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
   color: var(--mc-faint);
   z-index: 2;
 }
-.mc-clock[data-tone="bad"] { color: var(--mc-danger); }
 .mc-cell {
   position: relative;
   display: inline-block;
@@ -216,62 +254,17 @@
   vertical-align: top;
   text-align: center;
 }
-.mc-cell.is-digit { width: 1ch; }
 .mc-cell > span { position: absolute; left: 0; right: 0; top: 0; }
 .mc-cell > .mc-ghost { position: static; visibility: hidden; }
-
-/* ── 字幕卡:同一块玻璃,圆角 18,内距 14 / 9 ── */
-.mc-card {
-  position: absolute;
-  left: 0; right: 0;
-  margin: 0 auto;
-  bottom: calc(var(--mc-u) * 50); /* 胶囊 42 + 间距 8 */
-  border-radius: calc(var(--mc-u) * 18);
-  overflow: hidden;
-  visibility: hidden;
-  opacity: 0;
-  max-width: 100%;
-}
-.mc[data-caption="below"] .mc-card { bottom: auto; top: calc(var(--mc-u) * 50); }
-.mc-card.is-live { visibility: visible; }
-.mc-card-in {
-  position: absolute;
-  left: calc(var(--mc-u) * 14);
-  bottom: calc(var(--mc-u) * 6.75); /* 9 − 半个行距 2.25:最后一行下面不算行距 */
-  white-space: normal;
-  word-break: break-word;
-  line-break: auto;
-}
-/* 实时字幕:13.5pt,行距 4.5;没定稿 = 同一个墨色 × 0.4 */
-.mc-live .mc-card-in {
-  font-size: calc(var(--mc-u) * 13.5);
-  line-height: calc(var(--mc-u) * 20.5);
-}
-.mc-fin { color: var(--mc-ink); }
-.mc-vol { color: var(--mc-ink); opacity: .4; }
-/* 落字后:最终插入的文字,14pt,最多 2 行,宽度占满到 360(frame(maxWidth: 360)) */
-.mc-done { width: calc(var(--mc-u) * 388); }
-.mc-done .mc-card-in {
-  position: relative;
-  left: auto; bottom: auto;
-  padding: calc(var(--mc-u) * 6.75) calc(var(--mc-u) * 14);
-  font-size: calc(var(--mc-u) * 14);
-  line-height: calc(var(--mc-u) * 20.5);
-  color: var(--mc-ink);
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
-  overflow: hidden;
-}
 
 /* 量字用(不可见、不占位) */
 .mc-measure {
   position: absolute;
   left: -99999px; top: 0;
   visibility: hidden;
-  white-space: nowrap;
+  pointer-events: none;
 }
-.mc-measure .mc-card-in { position: static; white-space: nowrap; }
+.mc-measure .mc-word { position: static; }
 
 /* 读屏:组件整体是装饰性演示,宿主给 aria-label */
 .mc [aria-hidden="true"] { speak: never; }
