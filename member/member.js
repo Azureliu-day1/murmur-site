@@ -13,7 +13,7 @@
 //   · 档位与用量:/me(经 v2-nav.js 的 MurmurMember.refresh,同一份口径写进顶栏胶囊的缓存)。
 //       服务端回了 /me 但没有 plan 字段时按免费档显示;⛔ /me 根本没问到时不按免费档(见上)。
 // 纪律:用户数据和配置里的字一律 textContent / setAttribute,⛔ 零 innerHTML;
-//       链接只接受 https:,别的协议(javascript: 之类)一律当没配。
+//       付款 / 管理链接只接受 Stripe 的三个前缀(STRIPE_PREFIXES),别的一律当没配(SEC-FIX-A L4)。
 // 本地演示:在 127.0.0.1 上加 ?demo=free|pro|max|pro-year|out(v2-nav.js 写缓存),这一页照缓存渲染、不问 /me。
 // 两个日期别混:me.period_end = 到期 / 下次扣费日;me.lec_resets = 长录音额度下次重置日(年付也按月切片)。
 // SEC-FIX-A L3:防嵌套(点击劫持)。meta CSP 里的 frame-ancestors 浏览器不认,GitHub Pages 又发不了响应头,只能在脚本里拦:
@@ -206,9 +206,13 @@ function dShort(iso) {
   if (EN) return new Intl.DateTimeFormat("en-US", { month: "long", day: "numeric" }).format(d);
   return `${d.getMonth() + 1} 月 ${d.getDate()} 日`;
 }
-function httpsUrl(v) {
+// SEC-FIX-A L4:付款链接与管理链接只认这三个前缀;只校验 https: 时任何域名都能过。
+//   比的是 URL 解析后的 href,URL 里带账号密码、换端口、
+//   buy.stripe.com.example.net 这类都不等于前缀,一律当没配。
+const STRIPE_PREFIXES = ["https://buy.stripe.com/", "https://checkout.stripe.com/", "https://billing.stripe.com/"];
+function stripeUrl(v) {
   if (typeof v !== "string" || !v) return null;
-  try { const u = new URL(v); return u.protocol === "https:" ? u : null; } catch { return null; }
+  try { const u = new URL(v); return STRIPE_PREFIXES.some((p) => u.href.startsWith(p)) ? u : null; } catch { return null; }
 }
 function slot(plan, c) {
   const e = pricing && pricing[plan] && pricing[plan][c];
@@ -234,7 +238,7 @@ function payHref(u) {
   }
   return url.href;
 }
-function portal() { return httpsUrl(pricing && pricing.portal_url); }
+function portal() { return stripeUrl(pricing && pricing.portal_url); }
 /// 登录页和本页同一层(/login/ ↔ /member/,/en/login/ ↔ /en/member/)。登录完回到这一页。
 function loginHref(hash) {
   return "../login/index.html" + (hash ? hash : "?next=" + encodeURIComponent(location.pathname));
@@ -397,7 +401,7 @@ function renderPlans() {
     const alt = card.querySelector(".alt"), btn = card.querySelector(".buy"), mine = card.querySelector(".m-mine");
     const e = slot(k, cycle);
     const price = priceOf(k, cycle);
-    const link = e ? httpsUrl(e.payment_link_url) : null;
+    const link = e ? stripeUrl(e.payment_link_url) : null;
     if (price) {
       amount.textContent = price;
       amount.classList.remove("soon");

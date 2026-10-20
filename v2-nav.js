@@ -359,9 +359,15 @@
     box.appendChild(top); box.appendChild(bar);
     return box;
   }
-  function httpsUrl(v) {
+  // SEC-FIX-A L4:管理链接(缓存里的 portal)只认 Stripe 的三个前缀,和 member.js 的 stripeUrl 同一份口径。
+  var STRIPE_PREFIXES = ["https://buy.stripe.com/", "https://checkout.stripe.com/", "https://billing.stripe.com/"];
+  function stripeUrl(v) {
     if (typeof v !== "string" || !v) return null;
-    try { var u = new URL(v); return u.protocol === "https:" ? u.href : null; } catch (e) { return null; }
+    try {
+      var u = new URL(v);
+      for (var i = 0; i < STRIPE_PREFIXES.length; i++) if (u.href.indexOf(STRIPE_PREFIXES[i]) === 0) return u.href;
+      return null;
+    } catch (e) { return null; }
   }
 
   function mount(signin, session) {
@@ -473,7 +479,7 @@
       pop.appendChild(head);
 
       var acts = el("div", "mm-acts");
-      var portal = httpsUrl(c.portal);
+      var portal = stripeUrl(c.portal);
       if (special) {
         pop.appendChild(el("p", "mm-big", name));
         acts.appendChild(link("mm-btn wide", T.details, memberHref));
