@@ -25,7 +25,7 @@
    和那枚 `<a class="nav-member" href="…会员页…">`(胶囊面板里的「开通 / 升级」走它的 href)。
    页面在两层深还是根目录,路径各不相同,让脚本去猜是错的,直接读它们。
 
-   本地演示(只在 127.0.0.1 生效,上线不影响):`?demo=free|pro|max|pro-year|out`
+   本地演示(只在 127.0.0.1 生效,上线不影响):`?demo=free|pro|max|pro-year|developer|out`
    把一份假的会员摘要写进缓存(邮箱 user@example.com),不发请求;`out` 清掉。
    ══════════════════════════════════════════════════════════════════════════ */
 (function () {
@@ -72,6 +72,9 @@
     viewPlans: "Membership",
     stale: "Open the membership page for dates and usage.",
     openPanel: "open membership panel",
+    dev: "Developer account",
+    otherPlan: "Active plan",
+    meFail: "We couldn't load your membership right now. Please refresh in a moment.",
   } : {
     account: "账户",
     signedIn: "已登录",
@@ -103,8 +106,16 @@
     viewPlans: "会员订阅",
     stale: "到期日和用量在会员页上看。",
     openPanel: "打开会员面板",
+    dev: "开发者账号",
+    otherPlan: "已有权益",
+    meFail: "暂时读不到你的会员状态,稍后刷新。",
   };
   var PLAN_NAME = { pro: "Pro", max: "Max" };
+  // SEC-FIX-A M1:档位只有这五种。developer = 服务端合法档位(已有权益);other = 服务端回了一个这里认不出的档位。
+  //   ⛔ 认不出的档位不归 free:归 free 就会对一个已经有权益的人亮出「开通」,开出第二个订阅、扣两份钱。
+  var PLANS = { free: 1, pro: 1, max: 1, developer: 1, other: 1 };
+  // 这一页问过 /me 但没问到(超时、断网、5xx、401):面板不再按缓存说「开通会员」,只说读不到。只活在这一次页面里。
+  var meFailed = false;
 
   // ── 日期与数字 ─────────────────────────────────────────────────────────
   function toDate(iso) {
@@ -137,6 +148,7 @@
   // 形状:{ v:1, t, email, plan:"free"|"pro"|"max", interval:"month"|"year"|null,
   //        period_end, lec_resets, cancel, dict:{used,limit,resets}, trial:{used,minutes},
   //        lec:{used_h,limit_h}, amount, portal, demo }
+  //   plan 还可以是 "developer" / "other"(SEC-FIX-A M1,见 PLANS)
   //   period_end = 订阅到期 / 下次扣费日;lec_resets = 长录音额度下次重置日(年付也按月切片,两者不是一天)
   function readCache() {
     var raw;
@@ -145,7 +157,7 @@
     try {
       var c = JSON.parse(raw);
       if (!c || c.v !== 1 || typeof c.t !== "number") return null;
-      if (c.plan !== "pro" && c.plan !== "max") c.plan = "free";
+      if (!PLANS[c.plan]) c.plan = "other";       // 认不出 → 当「已有权益」,⛔ 不当免费档(M1)
       if (c.demo && !LOCAL) return null;          // 演示数据只在本机预览里认
       return c;
     } catch (e) { return null; }
@@ -160,9 +172,10 @@
   }
   function isFresh(c) { return !!c && Date.now() - c.t < FRESH_MS && Date.now() - c.t >= -60000; }
 
-  /* /me → 摘要。⛔ 缺字段一律按免费档(订阅 v2 还没部署时 /me 只有 quota / lecture_trial)。
+  /* /me → 摘要。缺字段(plan 为空)按免费档(订阅 v2 还没部署时 /me 只有 quota / lecture_trial)。
+     ⛔ 但 plan 有值而认不出时不按免费档(SEC-FIX-A M1):developer 原样保留,其余记成 "other"。
      读法(先契约 v2,再现行字段):
-       plan       = me.plan(v2)|| me.quota.plan(现行);只有 pro / max 算付费,其余都是免费
+       plan       = me.plan(v2)|| me.quota.plan(现行);空或 free = 免费;pro / max / developer 原样;其余 = other
        period_end = me.subscription.period_end || me.quota.subscription.period_end || me.usage.period_end
                     (到期日 / 下次扣费日。⛔ 不先读 usage.period_end:年付用户那是本月额度切片的末尾,
                      先读它会把「一年后到期」显示成「一个月后到期」)
@@ -175,7 +188,7 @@
     me = me && typeof me === "object" ? me : {};
     var q = me.quota && typeof me.quota === "object" ? me.quota : {};
     var raw = String(me.plan || q.plan || "").toLowerCase();
-    var plan = raw === "pro" || raw === "max" ? raw : "free";
+    var plan = raw === "" || raw === "free" ? "free" : PLANS[raw] && raw !== "other" ? raw : "other";
     var u = me.usage && typeof me.usage === "object" ? me.usage : null;
     var s1 = me.subscription && typeof me.subscription === "object" ? me.subscription : null;
     var s2 = q.subscription && typeof q.subscription === "object" ? q.subscription : null;
@@ -197,8 +210,9 @@
       c.trial = { used: lt && typeof lt.used === "boolean" ? lt.used : null, minutes: mins > 0 ? mins : 3 };
     } else {
       c.period_end = (s1 && s1.period_end) || (s2 && s2.period_end) || (u && u.period_end) || null;
-      c.lec_resets = (ul && ul.period_end) || (u && u.period_end) || null;
       c.cancel = !!(sub && (sub.cancel_at_period_end === true || sub.status === "canceled"));
+      if (plan === "other") return c;             // 认不出的档位:不猜它有多少额度
+      c.lec_resets = (ul && ul.period_end) || (u && u.period_end) || null;
       if (u && u.unit === "seconds" && finite(u.used) != null) {
         c.lec = { used_h: u.used / 3600, limit_h: u.limit == null ? null : (finite(u.limit) != null ? u.limit / 3600 : LECTURE_HOURS[plan]) };
       } else if (finite(q.lecture_minutes_quota) != null) {
@@ -211,7 +225,8 @@
   }
 
   /// 问一次 /me,写缓存,返回摘要。只有会员页 / 试一试页 / 登录页调(它们的 CSP 放行了后端)。
-  /// 401 / 网络错 → null,缓存不动;403(还没有名额)→ 按免费档写。
+  /// 401 / 网络错 / 超时 / 5xx → null,缓存不动,并记下「这一页没问到」(面板改说读不到,不亮「开通会员」);
+  /// 403(还没有名额)→ 按免费档写。
   /// ⚠️ 只带 Authorization:murmur 函数的 CORS 放行头里没有 apikey,带了预检就过不去。
   function refresh(token, email) {
     if (!token || typeof fetch !== "function") return Promise.resolve(null);
@@ -225,7 +240,7 @@
       })
       .then(function (me) {
         clearTimeout(timer);
-        if (!me) return null;
+        if (!me) return failed();
         var c = fromMe(me, email);
         // 下次扣费的金额与管理链接来自 /pricing.json(会员页读得到,别的页读不到):档位与周期没变就沿用上一份
         var old = readCache();
@@ -234,10 +249,16 @@
           if (old.portal) c.portal = old.portal;
         }
         c.t = Date.now();
+        meFailed = false;
         writeCache(c);
         return c;
       })
-      .catch(function () { clearTimeout(timer); return null; });
+      .catch(function () { clearTimeout(timer); return failed(); });
+  }
+  function failed() {
+    meFailed = true;
+    try { window.dispatchEvent(new CustomEvent("murmur-member")); } catch (e) { /* 老浏览器 */ }
+    return null;
   }
 
   // ── 本地演示开关(只在 127.0.0.1)────────────────────────────────────
@@ -248,6 +269,9 @@
       base.plan = "free";
       base.dict = { used: 1240, limit: 2000, resets: new Date(Date.now() + 4 * 86400000).toISOString() };
       base.trial = { used: false, minutes: 3 };
+    } else if (kind === "developer") {
+      base.plan = "developer"; base.interval = null; base.cancel = false;
+      base.lec = { used_h: 3.2, limit_h: null };
     } else {
       base.plan = kind; base.interval = "month"; base.period_end = end; base.lec_resets = end; base.cancel = false;
       base.lec = kind === "max" ? { used_h: 18.5, limit_h: 60 } : { used_h: 6.5, limit_h: 20 };
@@ -271,7 +295,7 @@
     if (!LOCAL) return;
     var k = new URLSearchParams(location.search).get("demo");
     if (k === "out") { clearCache(); return; }
-    if (k === "free" || k === "pro" || k === "max") writeCache(demoCache(k), true);
+    if (k === "free" || k === "pro" || k === "max" || k === "developer") writeCache(demoCache(k), true);
     if (k === "pro-year") writeCache(demoYear(), true);
   }
 
@@ -280,7 +304,7 @@
 
   window.MurmurMember = {
     read: readCache, write: writeCache, clear: clearCache, fromMe: fromMe, refresh: refresh,
-    fresh: isFresh, local: LOCAL,
+    fresh: isFresh, local: LOCAL, failed: function () { return meFailed; },
   };
 
   // ── 会话 ───────────────────────────────────────────────────────────────
@@ -390,6 +414,20 @@
       pop.textContent = "";
       btn.className = "nav-account";
 
+      if (meFailed) {
+        // SEC-FIX-A M1:这一页问 /me 没问到。⛔ 不按缓存说「免费 · 开通会员」(他可能早就付过了),只说读不到
+        btn.textContent = T.account;
+        btn.removeAttribute("aria-label");
+        pop.className = "nav-pop";
+        pop.appendChild(el("p", "who", T.signedIn));
+        pop.appendChild(el("p", "mail", email || "—"));
+        pop.appendChild(el("p", "mm-note", T.meFail));
+        var actsF = el("div", "mm-acts");
+        actsF.appendChild(link("mm-btn wide", T.details, memberHref));
+        pop.appendChild(actsF);
+        pop.appendChild(foot(""));
+        return;
+      }
       if (!c) {
         // 没缓存:改版前那枚「账户」,面板多一条去会员页的路
         btn.textContent = T.account;
@@ -406,9 +444,13 @@
 
       var fresh = isFresh(c);
       var paid = c.plan === "pro" || c.plan === "max";
-      var name = paid ? PLAN_NAME[c.plan] : T.free;
+      var special = c.plan === "developer" || c.plan === "other";   // 已有权益,但不是可买的档:⛔ 不出「开通 / 升级」
+      var name = paid ? PLAN_NAME[c.plan] : special ? (c.plan === "developer" ? T.dev : T.otherPlan) : T.free;
       var wide, small;
-      if (paid) {
+      if (special) {
+        wide = name; small = name;
+        btn.classList.add("is-paid");
+      } else if (paid) {
         var hasEnd = fresh && dShort(c.period_end);
         wide = hasEnd ? T.until(name, dShort(c.period_end)) : T.member(name);
         small = hasEnd ? T.short(name, dTiny(c.period_end)) : name;
@@ -417,20 +459,23 @@
         wide = T.freeWide; small = T.free;
       }
       btn.classList.add("is-status");
-      btn.appendChild(el("span", "dot" + (paid ? "" : " off")));
+      btn.appendChild(el("span", "dot" + (paid || special ? "" : " off")));
       btn.appendChild(el("span", "lg", wide));
       btn.appendChild(el("span", "sm", small));
       btn.setAttribute("aria-label", wide + (EN ? ", " : ",") + T.openPanel);
 
       pop.className = "nav-pop mm-panel";
       var head = el("div", "mm-head");
-      head.appendChild(el("span", "mm-tag" + (paid ? " on" : ""), name));
+      head.appendChild(el("span", "mm-tag" + (paid || special ? " on" : ""), name));
       if (paid && c.interval) head.appendChild(el("span", "mm-cycle", c.interval === "year" ? T.year : T.month));
       pop.appendChild(head);
 
       var acts = el("div", "mm-acts");
       var portal = httpsUrl(c.portal);
-      if (!paid) {
+      if (special) {
+        pop.appendChild(el("p", "mm-big", name));
+        acts.appendChild(link("mm-btn wide", T.details, memberHref));
+      } else if (!paid) {
         var d = c.dict || {};
         var canLeft = fresh && finite(d.used) != null && finite(d.limit) != null;
         pop.appendChild(el("p", "mm-big", canLeft ? T.leftWeek(num(Math.max(0, d.limit - d.used))) : T.freeBig));

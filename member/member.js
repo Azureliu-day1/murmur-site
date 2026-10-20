@@ -3,11 +3,15 @@
 //   没登录     → 顶上一张「登录后开通」卡 + 两档卡片 + 常见问题
 //   已登录·免费 → 顶上状态卡「你现在用的是免费档」:本周听写、长录音试用、离线识别
 //   已登录·付费 → 顶上状态卡「你是 Pro / Max 会员」:到期日、下次扣费、本月长录音、管理 / 升级
+//   已登录·开发者 / 认不出的档位 → 「已有权益」卡,两档按钮都是「已含在账号里」(SEC-FIX-A M1)
+//   已登录·/me 还没问到 → 有缓存先画缓存;两档的「开通」按钮一律点不了(正在确认)
+//   已登录·/me 没问到(超时、断网、5xx、401)→ 「暂时读不到你的会员状态」卡,「开通」按钮点不了
+//     ⛔ 不当免费档:已付费的人在网络不稳时看到「开通 Pro」,点下去就是第二个订阅、扣两份钱。
 // 数据从哪来:
 //   · 价格与付款链接:本站 /pricing.json(结构 = 订阅契约里的 pricing 节)。⛔ 页面上不写价格数字。
 //       价格是 null → 「即将推出」;有价格、没付款链接 → 价格照常显示、按钮「即将开放」点不了。
 //   · 档位与用量:/me(经 v2-nav.js 的 MurmurMember.refresh,同一份口径写进顶栏胶囊的缓存)。
-//       服务端还没回 plan / usage / upgrade 时一律按免费档显示,⛔ 不报错。
+//       服务端回了 /me 但没有 plan 字段时按免费档显示;⛔ /me 根本没问到时不按免费档(见上)。
 // 纪律:用户数据和配置里的字一律 textContent / setAttribute,⛔ 零 innerHTML;
 //       链接只接受 https:,别的协议(javascript: 之类)一律当没配。
 // 本地演示:在 127.0.0.1 上加 ?demo=free|pro|max|pro-year|out(v2-nav.js 写缓存),这一页照缓存渲染、不问 /me。
@@ -73,6 +77,21 @@ const L = EN ? {
   noteOut: "Pay with the same email address you use to sign in to the app. Payments are handled by Stripe.",
   noteIn: "You are signed in, so the payment will be linked to this account. Payments are handled by Stripe.",
   changeMail: "Change plan",
+  dev: "Developer account",
+  otherPlan: "Active plan",
+  titleDev: "This is a developer account",
+  titleOther: "Your account already has a plan",
+  ledeSpecial: "No need to subscribe here. Email us if you want to change it.",
+  included: "Included",
+  titleChecking: "Checking your plan",
+  ledeChecking: "This takes a few seconds.",
+  checkingText: "Loading your membership…",
+  checking: "Checking your plan…",
+  titleErr: "We couldn't load your plan",
+  ledeErr: "Payment buttons stay off until we can confirm your plan.",
+  errText: "We couldn't load your membership right now. Please refresh in a moment.",
+  refresh: "Refresh",
+  retryLater: "Refresh to continue",
 } : {
   titleOut: "Pro 和 Max,按月或按年付",
   ledeOut: "免费档先用着。说得多了,再按用量选一档。",
@@ -125,13 +144,30 @@ const L = EN ? {
   noteOut: "付款邮箱请用你登录 App 的那个。付款由 Stripe 处理。",
   noteIn: "你已登录,付款会记到这个账号。付款由 Stripe 处理。",
   changeMail: "换档",
+  dev: "开发者账号",
+  otherPlan: "已有权益",
+  titleDev: "这是开发者账号",
+  titleOther: "你的账号已有权益",
+  ledeSpecial: "不需要在这里开通。要调整,写信给我们。",
+  included: "已含在账号里",
+  titleChecking: "正在确认你的档位",
+  ledeChecking: "几秒就好。",
+  checkingText: "正在读取你的会员状态…",
+  checking: "正在确认档位…",
+  titleErr: "暂时读不到你的档位",
+  ledeErr: "确认档位之前,付款按钮先不开放。",
+  errText: "暂时读不到你的会员状态,稍后刷新。",
+  refresh: "刷新",
+  retryLater: "稍后刷新再开通",
 };
 const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 const MM = window.MurmurMember || null;   // v2-nav.js 先于本模块执行(普通脚本在前,模块延后)
 
 let pricing = {};          // pricing 节;读不到就是空对象 → 全部「即将推出」
 let who = null;            // { id, email } 已登录才有(本地演示时 id 为空)
-let me = null;             // 会员摘要(v2-nav.js 的 fromMe 形状);null = 没登录
+let me = null;             // 会员摘要(v2-nav.js 的 fromMe 形状);null = 没登录,或登录了但还没问到 / 没问到
+// 这一次 /me 的状态:out(没登录)/ loading(问着)/ ok(问到了)/ error(没问到)/ demo(本机演示)
+let state = "out";
 let cycle = "month";
 
 // ── 小工具 ──────────────────────────────────────────────────────────────
@@ -142,6 +178,11 @@ function el(tag, cls, text) {
   return n;
 }
 function a(cls, text, href) { const n = el("a", cls, text); n.setAttribute("href", href); return n; }
+const isPaid = (p) => p === "pro" || p === "max";
+const isSpecial = (p) => p === "developer" || p === "other";      // 已有权益、但不是可买的档
+function planName(p) { return NAMES[p] || (p === "developer" ? L.dev : L.otherPlan); }
+/// 登录了、但这一次 /me 还没确认档位:⛔ 不放行付款链接
+function unconfirmed() { return !!who && state !== "ok" && state !== "demo"; }
 function finite(v) { return typeof v === "number" && Number.isFinite(v) ? v : null; }
 function num(n) {
   const r = Math.round(n * 10) / 10;
@@ -258,17 +299,17 @@ function nextAmount() {
 }
 
 function cardPaid() {
-  const name = NAMES[me.plan];
+  const name = planName(me.plan);
   const c = el("div", "m-status on");
   const l = el("div", "m-status-main");
   const h = el("div", "m-status-head");
   h.appendChild(el("span", "mm-tag on", name));
   if (me.interval) h.appendChild(el("span", "mm-cycle", me.interval === "year" ? L.year : L.month));
   l.appendChild(h);
-  l.appendChild(el("p", "m-status-big", dLong(me.period_end) ? L.untilBig(dLong(me.period_end)) : L.memberBig(name)));
+  l.appendChild(el("p", "m-status-big", dLong(me.period_end) ? L.untilBig(dLong(me.period_end)) : isSpecial(me.plan) ? name : L.memberBig(name)));
   l.appendChild(el("p", "m-status-mail mono", me.email || (who && who.email) || ""));
   const acts = el("div", "m-acts");
-  const pu = portal();
+  const pu = isPaid(me.plan) ? portal() : null;     // 开发者 / 认不出的档位没有 Stripe 订阅可管
   if (pu) { const m = a("btn btn-quiet", L.manage, pu.href); m.rel = "noopener"; acts.appendChild(m); }
   if (me.plan === "pro") acts.appendChild(a("btn btn-primary", L.toMax, "#plans"));
   if (acts.childNodes.length) l.appendChild(acts);
@@ -277,6 +318,11 @@ function cardPaid() {
   const r = el("div", "m-status-side");
   const amt = nextAmount();
   if (dShort(me.period_end)) r.appendChild(kv(L.nextCharge, me.cancel ? L.noRenew : dLong(me.period_end) + (amt ? " · " + amt : "")));
+  if (me.plan === "other") {          // 认不出的档位:不替它说额度
+    r.appendChild(kv(L.offline, L.unlimitedUse));
+    c.appendChild(l); c.appendChild(r);
+    return c;
+  }
   r.appendChild(kv(L.cloud, L.noWordLimit));
   const lec = me.lec || {};
   const lim = finite(lec.limit_h) != null ? lec.limit_h : (lec.limit_h === null ? null : LEC_HOURS[me.plan]);
@@ -290,15 +336,45 @@ function cardPaid() {
   return c;
 }
 
+function cardNote(text, withRefresh) {
+  const c = el("div", "m-out");
+  c.appendChild(el("p", "", text));
+  const acts = el("div", "m-out-acts");
+  if (withRefresh) {
+    const b = el("button", "btn btn-primary", L.refresh);
+    b.type = "button";
+    b.addEventListener("click", () => location.reload());
+    acts.appendChild(b);
+  }
+  if (who && who.email) acts.appendChild(el("p", "m-note mono", who.email));
+  if (acts.childNodes.length) c.appendChild(acts);
+  return c;
+}
+
 function renderTop() {
   const title = document.getElementById("title"), lede = document.getElementById("lede");
   const top = document.getElementById("top");
-  const paid = me && (me.plan === "pro" || me.plan === "max");
-  title.textContent = !me ? L.titleOut : paid ? L.titlePaid(NAMES[me.plan]) : L.titleFree;
-  lede.textContent = !me ? L.ledeOut : paid ? L.ledePaid : L.ledeFree;
   top.textContent = "";
-  top.appendChild(!me ? cardOut() : paid ? cardPaid() : cardFree());
-  document.getElementById("plansTitle").textContent = !me ? L.plansOut : paid ? L.plansPaid : L.plansFree;
+  const pt = document.getElementById("plansTitle");
+  if (!who || (!me && state !== "error" && state !== "loading")) {
+    title.textContent = L.titleOut; lede.textContent = L.ledeOut;
+    top.appendChild(cardOut()); pt.textContent = L.plansOut;
+    return;
+  }
+  if (state === "error" || !me) {
+    // 没问到 / 问着且没有缓存:⛔ 不画免费档
+    const err = state === "error";
+    title.textContent = err ? L.titleErr : L.titleChecking;
+    lede.textContent = err ? L.ledeErr : L.ledeChecking;
+    top.appendChild(cardNote(err ? L.errText : L.checkingText, err));
+    pt.textContent = L.plansOut;
+    return;
+  }
+  const paid = isPaid(me.plan), special = isSpecial(me.plan);
+  title.textContent = paid ? L.titlePaid(NAMES[me.plan]) : special ? (me.plan === "developer" ? L.titleDev : L.titleOther) : L.titleFree;
+  lede.textContent = paid ? L.ledePaid : special ? L.ledeSpecial : L.ledeFree;
+  top.appendChild(paid || special ? cardPaid() : cardFree());
+  pt.textContent = paid || special ? L.plansPaid : L.plansFree;
 }
 
 // ── 下半:两档卡片 ──────────────────────────────────────────────────────
@@ -339,6 +415,10 @@ function renderPlans() {
       mine.hidden = false; card.classList.add("is-mine");
       btn.className = "btn btn-quiet btn-block buy";
       disable(btn, L.current);
+    } else if (isSpecial(plan)) {
+      // 开发者 / 认不出的档位:已有权益,⛔ 不出付款链接(M1)
+      btn.className = "btn btn-quiet btn-block buy";
+      disable(btn, L.included);
     } else if (!price) {
       disable(btn, L.soon);
     } else if ((plan === "pro" || plan === "max") && (portal() || link)) {
@@ -348,6 +428,9 @@ function renderPlans() {
       btn.textContent = k === "max" ? L.toMax : L.toPro;
       if (pu) { btn.setAttribute("href", pu.href); btn.rel = "noopener"; }
       else btn.setAttribute("href", mailHref(`Murmur ${L.changeMail}: ${NAMES[plan]} → ${NAMES[k]}`));
+    } else if (link && unconfirmed()) {
+      // M1:登录了但档位还没确认(问着 / 没问到)→ ⛔ 不放行付款链接
+      disable(btn, state === "error" ? L.retryLater : L.checking);
     } else if (!link || plan === "pro" || plan === "max") {
       disable(btn, L.opening);
     } else {
@@ -427,7 +510,7 @@ async function init() {
   if (MM && MM.local && cached && cached.demo) {
     // 本地演示:照缓存渲染,不问 /me
     who = { id: "", email: cached.email || "" };
-    me = cached;
+    me = cached; state = "demo";
     await loadPricing();
     renderAll(); syncCache();
     return;
@@ -435,16 +518,18 @@ async function init() {
   const [, s] = await Promise.all([loadPricing(), loadSession()]);
   if (!s) {
     if (MM) MM.clear();
+    state = "out";
     renderAll();
     return;
   }
   who = { id: s.id, email: s.email };
-  // 先画上一次问到的(同一个邮箱),再问一次 /me 刷新;问不到就按免费档(缺字段时的口径)
-  me = cached && cached.email && cached.email.toLowerCase() === s.email.toLowerCase() ? cached
-     : (MM ? MM.fromMe({}, s.email) : { plan: "free", email: s.email, dict: { used: null, limit: 2000 }, trial: { used: null, minutes: 3 } });
+  // 先画上一次问到的(同一个邮箱;没有就画「正在确认」),再问一次 /me。
+  // ⛔ 问不到不按免费档(SEC-FIX-A M1):状态卡说「暂时读不到」,「开通」按钮点不了。
+  me = cached && cached.email && cached.email.toLowerCase() === s.email.toLowerCase() ? cached : null;
+  state = "loading";
   renderAll();
   const fresh = MM ? await MM.refresh(s.token, s.email) : null;
-  if (fresh) me = fresh;
+  if (fresh) { me = fresh; state = "ok"; } else { me = null; state = "error"; }
   renderAll(); syncCache();
 }
 
