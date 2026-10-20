@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<!-- CSP 与站内各页同一套(SEC-L5,无 unsafe-inline):样式在 thanks.css,脚本在 thanks.js;
+     字体走本站 /fonts/(v2.css 里的 @font-face),不再连 Google Fonts。这一页一个请求都不发(connect-src 'none')。 -->
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Payment status · Murmur</title>
+<link rel="canonical" href="https://maobenbeginner.com/en/thanks/">
+<link rel="alternate" hreflang="zh-Hans" href="https://maobenbeginner.com/thanks/">
+<link rel="alternate" hreflang="en" href="https://maobenbeginner.com/en/thanks/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Murmur">
+<meta property="og:locale" content="en_US">
+<meta property="og:url" content="https://maobenbeginner.com/en/thanks/">
+<meta property="og:title" content="Payment status · Murmur">
+<meta property="og:description" content="Payment status. Your membership page shows your current plan.">
+<meta property="og:image" content="https://maobenbeginner.com/og-en.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Murmur">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../../v2.css">
+<link rel="stylesheet" href="../../thanks/thanks.css">
+</head>
+<body>
+
+<div class="card">
+  <p class="eyebrow">Murmur</p>
+
+  <!-- SEC-FIX-A L6:静态内容 = 中性的「付款结果」(没带 session_id、没 JS 时都是它);
+       带 session_id 时 thanks.js 才换成「付款完成」并亮出对勾。⛔ 不写死「付款成功」/ 档位名。 -->
+  <div class="tick" id="tick" aria-hidden="true" hidden>
+    <svg width="17" height="17" viewBox="0 0 17 17" fill="none">
+      <path d="M3.5 9l3.2 3.2L13.5 5.4" stroke="#fff" stroke-width="2.1"
+            stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </div>
+
+  <h1 id="head">Payment status</h1>
+
+  <!-- 自定义 scheme 不能靠自动跳转:浏览器会拦、也可能弹一个吓人的确认框。
+       主路径是这个按钮(用户的点击就是那个必需的手势)。App 收到 murmur://upgraded 后刷新 /me。 -->
+  <a class="back" id="back" href="murmur://upgraded">Back to Murmur</a>
+
+  <p class="note" id="hint">Your membership page shows your current plan.</p>
+  <p class="note"><a class="plainlink" href="../member/index.html">Check your membership</a></p>
+
+  <hr>
+
+  <p class="note">
+    If your sign-in email and payment email are different, the subscription will not match. Email
+    <a class="plainlink" href="mailto:support@day1aifitness.com">support@day1aifitness.com</a> and we will fix it by hand.
+  </p>
+
+  <p class="note lang"><a id="langSwitch" href="../../thanks/index.html" hreflang="zh-Hans" lang="zh-Hans">中文</a></p>
+</div>
+
+<script src="../../thanks/thanks.js"></script>
+</body>
+</html>

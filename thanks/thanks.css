@@ -1,4 +1,4 @@
-/* 付款成功页:一张卡居中。颜色、字体 token 全在 v2.css(含本站 IBM Plex Mono),⛔ 不另起一套。 */
+/* 付款结果页(中英共用):一张卡居中。颜色、字体 token 全在 v2.css(含本站 IBM Plex Mono),⛔ 不另起一套。 */
 body {
   min-height: 100vh; display: flex; align-items: center; justify-content: center;
   padding: 2rem 1.25rem; font-size: 17px; line-height: 1.75;
@@ -16,6 +16,7 @@ body {
   width: 34px; height: 34px; border-radius: 50%; background: var(--green);
   display: flex; align-items: center; justify-content: center; margin-bottom: 1.25rem;
 }
+.tick[hidden] { display: none; }   /* .tick 自己写了 display:flex,会盖掉 hidden 属性 */
 .tick svg { display: block; }
 h1 { margin: 0 0 1.1rem; font-weight: 600; font-size: 1.65rem; line-height: 1.35; letter-spacing: .01em; }
 .back {
@@ -28,4 +29,6 @@ h1 { margin: 0 0 1.1rem; font-weight: 600; font-size: 1.65rem; line-height: 1.35
 .note { font-size: .9rem; color: var(--second); line-height: 1.7; margin: 0; }
 hr { border: none; border-top: 1px solid var(--line); margin: 1.6rem 0; }
 .plainlink { overflow-wrap: anywhere; }
+.note + .note { margin-top: .4rem; }
+.lang { margin-top: 1.2rem; font-size: .82rem; }
 @media (max-width: 480px) { .card { padding: 2rem 1.4rem; } }

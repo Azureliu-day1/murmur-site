@@ -7,14 +7,16 @@
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex">
-<title>付款成功 · Murmur</title>
+<title>付款结果 · Murmur</title>
 <link rel="canonical" href="https://maobenbeginner.com/thanks/">
+<link rel="alternate" hreflang="zh-Hans" href="https://maobenbeginner.com/thanks/">
+<link rel="alternate" hreflang="en" href="https://maobenbeginner.com/en/thanks/">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Murmur">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:url" content="https://maobenbeginner.com/thanks/">
-<meta property="og:title" content="付款成功 · Murmur">
-<meta property="og:description" content="付款成功。回到 Murmur,档位会自动更新。">
+<meta property="og:title" content="付款结果 · Murmur">
+<meta property="og:description" content="付款结果。你的档位以会员页为准。">
 <meta property="og:image" content="https://maobenbeginner.com/og.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -29,20 +31,23 @@
 <div class="card">
   <p class="eyebrow">Murmur</p>
 
-  <div class="tick" aria-hidden="true">
+  <!-- SEC-FIX-A L6:静态内容 = 中性的「付款结果」(没带 session_id、没 JS 时都是它);
+       带 session_id 时 thanks.js 才换成「付款完成」并亮出对勾。⛔ 不写死「付款成功」/ 档位名。 -->
+  <div class="tick" id="tick" aria-hidden="true" hidden>
     <svg width="17" height="17" viewBox="0 0 17 17" fill="none">
       <path d="M3.5 9l3.2 3.2L13.5 5.4" stroke="#fff" stroke-width="2.1"
             stroke-linecap="round" stroke-linejoin="round"/>
     </svg>
   </div>
 
-  <h1>付款成功</h1>
+  <h1 id="head">付款结果</h1>
 
   <!-- 自定义 scheme 不能靠自动跳转:浏览器会拦、也可能弹一个吓人的确认框。
        主路径是这个按钮(用户的点击就是那个必需的手势)。App 收到 murmur://upgraded 后刷新 /me。 -->
   <a class="back" id="back" href="murmur://upgraded">回到 Murmur</a>
 
-  <p class="note" id="hint">如果 App 里没变,用付款邮箱登录一次。</p>
+  <p class="note" id="hint">你的档位以会员页为准。</p>
+  <p class="note"><a class="plainlink" href="../member/index.html">去会员页查看</a></p>
 
   <hr>
 
@@ -50,6 +55,8 @@
     登录邮箱和付款邮箱不一样时,订阅对不上。这时写信到
     <a class="plainlink" href="mailto:support@day1aifitness.com">support@day1aifitness.com</a>,我们手动处理。
   </p>
+
+  <p class="note lang"><a id="langSwitch" href="../en/thanks/index.html" hreflang="en" lang="en">English</a></p>
 </div>
 
 <script src="thanks.js"></script>
