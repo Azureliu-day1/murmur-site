@@ -136,7 +136,7 @@ footer .grow { margin-left: auto; }
 
 <header class="page wrap">
   <h1>Privacy Policy</h1>
-  <p class="updated">Covers Murmur 0.53. Updated 13 October 2026.</p>
+  <p class="updated">Covers Murmur 0.53. Updated 20 October 2026.</p>
   <div class="summary">
     <p class="label">In short</p>
     <ul>
@@ -144,6 +144,7 @@ footer .grow { margin-left: auto; }
 <li>When you&rsquo;re signed out, your speech is turned into text by the recognition built into your device&rsquo;s system, not sent to us.</li>
 <li>When you&rsquo;re signed in, each sentence you say is sent to the speech recognition and text processing services we use to turn it into text, tidy it up and translate it. Those services are in the United States and China; our account database is in Singapore. Section 5 lists what each kind of service handles.</li>
 <li>We don&rsquo;t store what you said. When you&rsquo;re signed in, we record your email, sign-in details and usage (word count, duration and time), never the content.</li>
+<li>When you buy Pro or Max, the payment is handled by Link, which is part of Stripe. We never see your full card number. We keep your subscription records and the payment records Stripe sends us; see section 4.</li>
 <li>When screen context (&ldquo;Use the text on screen to get proper nouns right&rdquo;) is on, the app reads the text in the front window once when you start speaking, to get names and terms right. This includes other people&rsquo;s messages in that window. It is off by default on new installs, and an upgrade keeps your earlier choice; turn it on or off in Settings › Recognition.</li>
 <li>We don&rsquo;t sell your data, and there are no ads or third-party analytics in the app.</li>
 <li>To see, export, correct or delete your data, or to ask anything, write to <a href="mailto:support@day1aifitness.com">support@day1aifitness.com</a>.</li>
@@ -154,6 +155,7 @@ footer .grow { margin-left: auto; }
 <main class="wrap">
 <h2><span class="num">1</span>Scope and who is responsible</h2>
 <p>This policy applies to the Murmur apps on every platform and the Murmur website, provided by Others Studio (Victoria, Australia). Others Studio is responsible for the personal information described here.</p>
+<p>When you buy a subscription, Link, which is part of Stripe, is the legal seller of the purchase. The payment details you enter at checkout are handled by Link under its own privacy policy.</p>
 <p>Where your data goes depends on the feature, so each one is covered separately below. Some of it depends on your settings; section 11 explains how to check this in the app.</p>
 <h2><span class="num">2</span>Data stored on your device</h2>
 <p>On your Mac, the following is stored in <code>~/Library/Application Support/Murmur/</code>, in the macOS Keychain, or in macOS preferences. The sections below explain which features send part of it with a request.</p>
@@ -265,9 +267,12 @@ footer .grow { margin-left: auto; }
 <li><strong>Invite code attempts.</strong> Network address, email address, the first characters of the code, and the result, used to prevent invite code abuse. Kept for 30 days.</li>
 <li><strong>Email delivery records.</strong> The delivery status of the email that tells you your seat is open.</li>
 <li><strong>Request logs.</strong> Time, route, status, duration, and account ID. No email address, content, or keys.</li>
+<li><strong>Subscription records.</strong> Subscription ID, plan, the price you chose, status, the start and end of the current period, whether it is set to cancel at the end of the period, and the plan before and after a switch. We use these to work out your plan.</li>
+<li><strong>Payment event records.</strong> The notices Stripe sends us, as received, when you pay, renew, change your subscription, get a refund, or open a dispute. We use them to activate your plan, reconcile payments, and handle refunds and disputes. They may contain the email address, name, billing address, and tax ID you enter at checkout; the amount, tax, and currency; and Stripe&rsquo;s customer, subscription, and invoice IDs. Refund and dispute notices may also contain your card brand, last four digits, and expiry date. They never contain your full card number or security code.</li>
+<li><strong>Unclaimed orders.</strong> If you pay without signing in, we record the order under the email address you paid with (email address, order ID, plan, and period), so it can be matched to your account when you sign in with that address.</li>
 </ul>
 <p>Even when you are not signed in, the app reads public configuration from time to time and checks for a new version once a day. These requests carry no identity and none of your content.</p>
-<p><strong>How long we keep it.</strong> When you delete your account, we delete your account, sign-in sessions, usage records, email delivery records, application, and invite code attempts from our live systems within 30 days. Request logs are deleted automatically under our hosting provider&rsquo;s retention period. Copies in backups are overwritten when the backup cycle ends.</p>
+<p><strong>How long we keep it.</strong> When you delete your account, we delete your account, sign-in sessions, usage records, email delivery records, application, and invite code attempts from our live systems within 30 days. Request logs are deleted automatically under our hosting provider&rsquo;s retention period. Copies in backups are overwritten when the backup cycle ends. Subscription records are deleted with your account. Payment event records and unclaimed orders are not deleted with your account; we keep them to reconcile payments and handle refunds and disputes.</p>
 <h2><span class="num">5</span>Providers and locations</h2>
 <div class="tbl"><table>
 <thead>
@@ -328,6 +333,12 @@ footer .grow { margin-left: auto; }
 <td data-label="When">Signed out, when the current language is not supported offline</td>
 </tr>
 <tr>
+<td data-label="Provider type">Payment provider (Stripe and Link, part of Stripe)</td>
+<td data-label="Country">United States; some transactions are handled by its Australian company</td>
+<td data-label="What it processes">The email address, name, billing address, and payment method you enter at checkout; your account ID and sign-in email, passed on from the payment button; orders, invoices, tax, refunds, and disputes</td>
+<td data-label="When">Buying, renewing, managing your subscription, refunds, and disputes</td>
+</tr>
+<tr>
 <td data-label="Provider type">A provider you added your own key for</td>
 <td data-label="Country">Depends on the provider you chose</td>
 <td data-label="What it processes">Audio or text for that feature; some pass it on to the model provider you chose</td>
@@ -337,7 +348,7 @@ footer .grow { margin-left: auto; }
 </table></div>
 <ul>
 <li><strong>Where requests are handled.</strong> The database is in Singapore. Requests from the app and the website may also pass through the country of the server nearest you.</li>
-<li><strong>International transfers.</strong> Your data may be transferred to the United States, China, Singapore, and the countries of the servers mentioned above. Data protection laws there may differ from those where you live. China does not have an adequacy decision from the European Union. We give each provider only the data it needs for the feature you use. If you are in the European Economic Area or the UK, we make these transfers because they are necessary to provide the features you use under our contract with you.</li>
+<li><strong>International transfers.</strong> Your data may be transferred to the United States, China, Singapore, Australia, and the countries of the servers mentioned above. Data protection laws there may differ from those where you live. China does not have an adequacy decision from the European Union. We give each provider only the data it needs for the feature you use. If you are in the European Economic Area or the UK, we make these transfers because they are necessary to provide the features you use under our contract with you.</li>
 <li><strong>Model training.</strong> We don&rsquo;t train models on your content. The speech recognition provider states that it does not train on customer content and does not store real-time audio by default. The text processing provider&rsquo;s API terms do not rule out training on submitted content, and we have not found a published retention period. If you don&rsquo;t want your content to reach the text processing provider, use Murmur signed out; or, once signed in, set cleanup to Off, don&rsquo;t use translation, Ask, Voice edit or the website trial, and skip the three career questions. To find out exactly which providers we use, write to us and we will tell you.</li>
 <li><strong>No selling.</strong> We don&rsquo;t sell your personal information or share it for advertising. Data goes only to the providers above, as needed to run the service, and to any provider you have added your own key for.</li>
 </ul>
@@ -345,6 +356,7 @@ footer .grow { margin-left: auto; }
 <ul>
 <li><strong>Seat requests.</strong> Your email address, the message you write, the interface language, and your browser type, plus a one-way hash of your network address used only to limit repeat submissions. Submitting sets up an account for that email in advance, and the form is forwarded to our inbox through our email provider.</li>
 <li><strong>Trying cleanup on the website.</strong> The text you paste goes through our server to the text processing provider (China). Our server does not keep it. We also keep a daily one-way hash of your network address to limit the number of tries.</li>
+<li><strong>Membership page.</strong> When you are signed in and choose a payment button, we put your account ID and sign-in email in the address of Stripe&rsquo;s checkout page, so the payment can be matched to your account. The upgrade button in the app does the same. The checkout page is hosted by Stripe and is subject to Link&rsquo;s terms and privacy policy.</li>
 <li><strong>Scripts.</strong> Scripts on the sign-in, try, and skills pages are hosted on this site. When bot protection is on, those three pages also load a script from our bot protection provider.</li>
 <li><strong>Cookies and local storage.</strong> The website uses no advertising or analytics cookies. Once you sign in, your sign-in state is stored in your browser. The bot protection provider may set the cookies it needs to work.</li>
 <li><strong>Do Not Track.</strong> We don&rsquo;t track you across websites, so we don&rsquo;t respond differently to a browser&rsquo;s Do Not Track signal.</li>
@@ -356,12 +368,15 @@ footer .grow { margin-left: auto; }
 <li>Providing the features you use (recognition, cleanup, your account, allowance): performance of our contract with you.</li>
 <li>Usage metering, abuse prevention, sign-in sessions, and request logs: our legitimate interest in keeping the service secure and fair.</li>
 <li>Seat requests: steps taken at your request, when you submit one, before entering into a contract.</li>
+<li>Subscription records and payment event records: performance of our contract with you. Reconciling payments and handling refunds and disputes: our legitimate interest.</li>
 <li>Responding to legal requirements: compliance with a legal obligation.</li>
 </ul>
 <h2><span class="num">8</span>Your rights</h2>
 <ul>
 <li>Data on your device is yours to manage directly; see section 2.</li>
 <li>For data on our servers, you can ask for a copy, ask us to correct it, or ask us to delete your account. Email <a href="mailto:support@day1aifitness.com">support@day1aifitness.com</a> from your registered address so we can confirm it is you. We reply within 30 days.</li>
+<li>Section 4 explains what happens to payment event records and unclaimed orders when you delete your account.</li>
+<li>For purchase information that Link holds, ask Link to see or delete it under Link&rsquo;s privacy policy. When Link deletes your data, it also cancels any subscription bought through it.</li>
 <li>If you are in the European Economic Area or the UK, you can also object to certain processing or ask us to restrict it, and ask for your data in a commonly used format.</li>
 <li>If you have a complaint, please email us first. We will reply within 30 days. If you are not satisfied with our response, you can complain to the Office of the Australian Information Commissioner (<a href="https://www.oaic.gov.au/">oaic.gov.au</a>) or to the data protection authority where you live.</li>
 </ul>
