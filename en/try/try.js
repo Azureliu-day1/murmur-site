@@ -8,6 +8,12 @@
 //
 // ⚠️ 这一整段和 try/index.html 里那段**逐行相同**,只有 L 与 LANG 不一样。
 //    改逻辑时两边一起改(diff 一下就知道有没有漏)。本文件是 en 版。
+// SEC-FIX-A L3:防嵌套(点击劫持)。meta CSP 里的 frame-ancestors 浏览器不认,GitHub Pages 又发不了响应头,只能在脚本里拦:
+//   被嵌进 iframe 时先把整页藏起来(iframe 带 sandbox、不许跳顶层时也看不见、点不到),再试着把顶层换成本页。
+if (window.top !== window.self) {
+  document.documentElement.style.visibility = "hidden";
+  try { window.top.location = window.self.location.href; } catch (e) { /* sandbox 不许跳:整页保持隐藏 */ }
+}
 const SUPA_URL = "https://syebvkwemxwxkonvsyjd.supabase.co";
 const SUPA_KEY = "sb_publishable_bBmuodbgO72q8CK_kacrSw_0o3cCsOd";  // 公开 key,不是密钥
 const FN       = SUPA_URL + "/functions/v1/murmur-web";
@@ -17,6 +23,8 @@ const MAXLEN   = 600;
 // ⬇️ Wei 在 Cloudflare 后台建好 Turnstile widget 之后,把 site key 填这里。
 //    空着 = 匿名那条路在页面上也是关的(服务端另有一道开关,两道都要开)。
 const TURNSTILE_SITEKEY = "";
+// ⚠️ 填上 site key 时,同时把 https://challenges.cloudflare.com 加回本页 CSP 的 script-src / connect-src / frame-src
+//    (SEC-FIX-A L3 在 Turnstile 没启用时把它们拿掉了;不加回去,脚本会被 CSP 拦下)。
 
 const L = {
   quotaLoading: "Checking your quota…",

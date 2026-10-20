@@ -5,7 +5,7 @@
 <!-- CSP(SEC-L5,2026-10-08):不放 unsafe-inline —— 页面脚本在 login.js、页内样式在 login.css,
      supabase-js 自托管在 /vendor/(版本写死,来源与 sha256 见 vendor/SOURCES.txt),不再从 jsDelivr 拉。
      比首页多的只有 Turnstile(script / connect / frame)与本项目 Supabase(connect)。⛔ 别加通配符、别加 unsafe-*。 -->
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' https://challenges.cloudflare.com; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src https://syebvkwemxwxkonvsyjd.supabase.co https://challenges.cloudflare.com; frame-src https://challenges.cloudflare.com; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src https://syebvkwemxwxkonvsyjd.supabase.co; object-src 'none'; base-uri 'none'; form-action 'none'">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>登录 · Murmur</title>
 <meta name="description" content="用邮箱登录 Murmur。填邮箱,收一个 6 位码,不用设密码。">

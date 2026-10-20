@@ -16,6 +16,12 @@
 //       链接只接受 https:,别的协议(javascript: 之类)一律当没配。
 // 本地演示:在 127.0.0.1 上加 ?demo=free|pro|max|pro-year|out(v2-nav.js 写缓存),这一页照缓存渲染、不问 /me。
 // 两个日期别混:me.period_end = 到期 / 下次扣费日;me.lec_resets = 长录音额度下次重置日(年付也按月切片)。
+// SEC-FIX-A L3:防嵌套(点击劫持)。meta CSP 里的 frame-ancestors 浏览器不认,GitHub Pages 又发不了响应头,只能在脚本里拦:
+//   被嵌进 iframe 时先把整页藏起来(iframe 带 sandbox、不许跳顶层时也看不见、点不到),再试着把顶层换成本页。
+if (window.top !== window.self) {
+  document.documentElement.style.visibility = "hidden";
+  try { window.top.location = window.self.location.href; } catch (e) { /* sandbox 不许跳:整页保持隐藏 */ }
+}
 const SUPA_URL = "https://syebvkwemxwxkonvsyjd.supabase.co";
 const SUPA_KEY = "sb_publishable_bBmuodbgO72q8CK_kacrSw_0o3cCsOd";  // 公开 key,不是密钥
 const SDK = new URL("../vendor/supabase-js-2.116.0.mjs", import.meta.url).href;  // SEC-L5:自托管,相对本文件
