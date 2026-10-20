@@ -93,6 +93,7 @@
 .m-plan .btn { margin-top: 20px; text-align: center; }
 .btn-block { display: block; width: 100%; }
 .m-paynote { text-align: center; font-size: 13px; color: var(--second); margin-top: 16px; }
+.m-taxnote + .m-paynote { margin-top: 4px; }
 
 .faq { max-width: 640px; margin: 72px auto 0; }
 .faq > h2 { font-size: 20px; font-weight: 600; margin-bottom: 8px; }

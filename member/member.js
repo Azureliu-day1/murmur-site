@@ -171,12 +171,12 @@ function priceOf(plan, c) {
   const e = slot(plan, c);
   return e && typeof e.price_display === "string" && e.price_display.trim() ? e.price_display.trim() : null;
 }
-/// 「$120」→「$10」:年付折合每月。认不出数字就不写(⛔ 不猜)。
+/// 「$130」→「$10.8」、「$276」→「$23」:年付折合每月,四舍五入到一位小数。认不出数字就不写(⛔ 不猜)。
 function perMonth(yearPrice) {
   const m = /^(\D*)(\d+(?:\.\d+)?)(\D*)$/.exec(yearPrice || "");
   if (!m) return null;
   const v = Number(m[2]) / 12;
-  const s = Number.isInteger(v) ? String(v) : (Math.round(v * 100) / 100).toFixed(2).replace(/0$/, "");
+  const s = String(Math.round(v * 10) / 10);
   return m[1] + s + m[3];
 }
 function payHref(u) {
