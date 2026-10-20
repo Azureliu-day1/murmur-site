@@ -28,10 +28,11 @@ cd "$(dirname "$0")/.." || exit 2
 # 做法是逐行先删掉这一个地址再匹配,同一行里别的命中照样红。⛔ 不许再加白名单项。
 PII_ALLOW='support@day1aifitness.com'
 # 仓库里只放**通用**模式(SITEFIX-22):邮箱地址(example.com / .org / .net 占位放过)、国际电话号码、密钥形状。
-#   跟某个人有关的模式(名字、住址、本人号码段)⛔ 不进公开仓,放本机不入库的 ~/.config/murmur/pii-extra.txt:
+#   跟某个人有关的模式(名字、住址、本人号码段)⛔ 不进公开仓,放本机不入库的
+#   ~/Library/Application Support/Murmur/tools/pii-words.txt(权限 600,PII-SCRUB-SITE 2026-10-20 起;此前在 ~/.config/murmur/):
 #   一行一个 ERE,# 开头是注释;文件在就并进来一起扫,不在就跳过并打一行提示(CI / 别人的机器上只跑通用那一半)。
 PII_RE='[A-Za-z0-9._%+-]+@[A-Za-z][A-Za-z0-9-]*(\.[A-Za-z0-9-]+)*\.[A-Za-z]{2,}|\+[0-9]{2,3}[ -]?[0-9]{3}[ -]?[0-9]{3}[ -]?[0-9]{3}|sb_secret|service_role|sk_live_|sk_test_|rk_live_|whsec_'
-PII_EXTRA_FILE="$HOME/.config/murmur/pii-extra.txt"
+PII_EXTRA_FILE="$HOME/Library/Application Support/Murmur/tools/pii-words.txt"
 if [ -f "$PII_EXTRA_FILE" ]; then
   extra=$(grep -vE '^[[:space:]]*(#|$)' "$PII_EXTRA_FILE" | paste -sd'|' -)
   [ -n "$extra" ] && PII_RE="$PII_RE|$extra"
