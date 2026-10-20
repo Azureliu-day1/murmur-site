@@ -96,6 +96,14 @@
     <button class="btn btn-quiet btn-block u-mt10" id="signout" type="button">退出</button>
   </section>
 
+  <!-- ③′ 确认退出:?logout=1 只出这张卡,点了才退,而且只退这个浏览器(SEC-FIX-A L2) -->
+  <section class="card" id="card-out" hidden>
+    <p class="sent">要在这个浏览器上退出吗?当前账号 <b id="outMail"></b></p>
+    <button class="btn btn-primary btn-block" id="confirmOut" type="button">确认退出</button>
+    <button class="btn btn-quiet btn-block u-mt10" id="cancelOut" type="button">不退出</button>
+    <p class="note u-tc">只退这个浏览器。Mac App 和别的设备不受影响。</p>
+  </section>
+
   <!-- 申请名额:入口始终在,不只在登录失败时才出现。
        (唯一的例外:已经登录、而且服务端说这个人已经有名额 —— 见 hideRequestIfSeated;
        申请过的人看到的是状态而不是表单 —— 见 showRequestStatus) -->

@@ -61,7 +61,7 @@ const $ = (id) => document.getElementById(id);
 const elEmail = $("email"), elSend = $("send"), elState = $("state");
 const elCode = $("code"), elVerify = $("verify"), elState2 = $("state2");
 const elSentTo = $("sentTo"), elResend = $("resend"), elBack = $("back");
-const cardEmail = $("card-email"), cardCode = $("card-code"), cardIn = $("card-in");
+const cardEmail = $("card-email"), cardCode = $("card-code"), cardIn = $("card-in"), cardOut = $("card-out");
 const elReq = $("req"), elReqEmail = $("reqEmail"), elReqNote = $("reqNote");
 const elReqSend = $("reqSend"), elReqState = $("reqState"), elTs = $("turnstile");
 
@@ -107,6 +107,7 @@ function show(which) {
   cardEmail.hidden = which !== "email";
   cardCode.hidden  = which !== "code";
   cardIn.hidden    = which !== "in";
+  cardOut.hidden   = which !== "out";
 }
 
 // ── ① 发码 ────────────────────────────────────────────────────────────────
@@ -364,11 +365,39 @@ elBack.addEventListener("click", () => {
 });
 elReqSend.addEventListener("click", submitRequest);
 elReqEmail.addEventListener("keydown", (e) => { if (e.key === "Enter") submitRequest(); });
-$("signout").addEventListener("click", async () => {
+// SEC-FIX-A L2:退出一律只退这个浏览器(scope "local")。默认的 global 会把这个人所有设备的
+//   refresh token 一起作废,Mac App 也得重新收码。
+async function signOutHere() {
   if (window.MurmurMember) window.MurmurMember.clear();
-  if (sb) { try { await sb.auth.signOut(); } catch (e) { /* 本机清掉就行 */ } }
+  if (sb) { try { await sb.auth.signOut({ scope: "local" }); } catch (e) { /* 本机清掉就行 */ } }
+}
+$("signout").addEventListener("click", async () => {
+  await signOutHere();
   location.href = "index.html";
 });
+// ?logout=1 只出确认卡,点了「确认退出」才退:这个链接谁都能发给别人(登出型 CSRF)。
+$("confirmOut").addEventListener("click", async () => {
+  await signOutHere();
+  try { history.replaceState(null, "", location.pathname); } catch (e) { /* 老浏览器 */ }
+  say(elState, L.loggedOut, "");
+  show("email");
+  elEmail.focus();
+});
+$("cancelOut").addEventListener("click", async () => {
+  try { history.replaceState(null, "", location.pathname); } catch (e) { /* 老浏览器 */ }
+  const { data } = sb ? await sb.auth.getSession() : { data: null };
+  if (data && data.session) showSignedIn(data.session); else show("email");
+});
+
+function showSignedIn(session) {
+  $("meMail").textContent = session.user.email || "";   // ⛔ textContent
+  $("goNext").setAttribute("href", safeNext());
+  show("in");
+  hideRequestIfSeated(session.access_token);            // 不 await:慢一拍也不挡这一页
+  if (window.MurmurMember) window.MurmurMember.refresh(session.access_token, session.user.email || "");   // 同上:会员摘要进顶栏缓存
+  showRequestStatus(session.access_token);              // 同上;两个都只会往「藏」走
+  openRequestIfAsked();
+}
 
 (async function init() {
   mountTurnstile();
@@ -386,23 +415,23 @@ $("signout").addEventListener("click", async () => {
     return;
   }
   const wantsLogout = new URLSearchParams(location.search).get("logout") === "1";
+  const { data } = await sb.auth.getSession();
   if (wantsLogout) {
-    if (window.MurmurMember) window.MurmurMember.clear();     // 会员摘要缓存跟着会话一起清
-    try { await sb.auth.signOut(); } catch (e) { /* 本机清掉就行 */ }
+    // SEC-FIX-A L2:⛔ 不直接退。有会话 → 出确认卡;没会话 → 本来就是退出态,清掉摘要缓存就行
+    if (data && data.session) {
+      $("outMail").textContent = data.session.user.email || "";   // ⛔ textContent
+      show("out");
+      $("confirmOut").focus();
+      return;
+    }
+    if (window.MurmurMember) window.MurmurMember.clear();
     say(elState, L.loggedOut, "");
     show("email");
     elEmail.focus();
     return;
   }
-  const { data } = await sb.auth.getSession();
   if (data && data.session) {
-    $("meMail").textContent = data.session.user.email || "";   // ⛔ textContent
-    $("goNext").setAttribute("href", safeNext());
-    show("in");
-    hideRequestIfSeated(data.session.access_token);            // 不 await:慢一拍也不挡这一页
-    if (window.MurmurMember) window.MurmurMember.refresh(data.session.access_token, data.session.user.email || "");   // 同上:会员摘要进顶栏缓存
-    showRequestStatus(data.session.access_token);              // 同上;两个都只会往「藏」走
-    openRequestIfAsked();
+    showSignedIn(data.session);
     return;
   }
   show("email");

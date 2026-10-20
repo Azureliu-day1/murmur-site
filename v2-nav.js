@@ -387,12 +387,14 @@
       clearCache();
       var sb = window.__murmurSb;
       if (sb && sb.auth && typeof sb.auth.signOut === "function") {
-        // 页面上有 SDK:真退出(顺带把服务端那张 refresh token 作废),再刷新。
-        sb.auth.signOut().catch(function () {}).then(function () { location.reload(); });
+        // 页面上有 SDK:真退出(顺带把服务端这一张 refresh token 作废),再刷新。
+        // SEC-FIX-A L2:只退这个浏览器(scope "local");默认 global 会连 Mac App 和别的设备一起登出。
+        sb.auth.signOut({ scope: "local" }).catch(function () {}).then(function () { location.reload(); });
         return;
       }
       if (LOCAL && !readStoredSession()) { location.reload(); return; }   // 演示态:没有真会话,清缓存就够了
-      // 首页没有 SDK,也不该为了一个退出键去拉一个 SDK 回来。交给登录页做真退出。
+      // 首页没有 SDK,也不该为了一个退出键去拉一个 SDK 回来。交给登录页做真退出
+      // (登录页对 ?logout=1 只出「确认退出」,再点一下才退,见 login.js)。
       location.href = loginHref + (loginHref.indexOf("?") >= 0 ? "&" : "?") + "logout=1";
     }
 
