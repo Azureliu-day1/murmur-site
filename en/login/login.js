@@ -1,3 +1,4 @@
+import { TURNSTILE_SITEKEY } from "../../turnstile-key.js";
 // ── 登录页 ────────────────────────────────────────────────────────────────
 // 一张卡三态:①填邮箱 → ②填 6 位码 → ③已经登录了。
 //
@@ -32,12 +33,11 @@ const APPLY_NEXT   = "../try/index.html";
 //    对一个什么都没做错的人说「太频繁了」。Mac App 那边的冷却本来就是 60。
 //    ⛔ 改这个数之前先去后台核一眼 smtp_max_frequency,别让两边各写一个数。
 const RESEND_SECONDS = 60;
-// ⬇️ Wei 在 Cloudflare 后台给「申请名额」建好 widget 之后,把 site key 填这里,
+// ⬇️ Wei 在 Cloudflare 后台给「申请名额」建好 widget 之后,把 site key 填进 turnstile-key.js,
 //    并把服务端的 WEB_ACCESS_TURNSTILE 打开。两边都开才生效 ——
 //    ⛔ 只开服务端那一侧会让每一次申请都 403(页面根本没有回执可发)。
-const TURNSTILE_SITEKEY = "";
-// ⚠️ 填上 site key 时,同时把 https://challenges.cloudflare.com 加回本页 CSP 的 script-src / connect-src / frame-src
-//    (SEC-FIX-A L3 在 Turnstile 没启用时把它们拿掉了;不加回去,脚本会被 CSP 拦下)。
+// TURNSTILE(10-21):site key 收到全站一处 —— turnstile-key.js(import 在文件顶上)。
+// 本页 CSP 的 script-src / frame-src 已放行 https://challenges.cloudflare.com(Cloudflare 文档要求的就这两项;connect-src 只有 pre-clearance 才要)。
 const TURNSTILE_ACTION  = "web-access";
 
 const L = {
@@ -60,6 +60,9 @@ const L = {
   reqTooMany:  "Too many requests from this network today. Try again in an hour.",
   loggedOut:   "Signed out.",
   needCaptcha: "Complete the verification check first.",
+  captchaWait:    "You can send once the verification check passes.",
+  captchaExpired: "The check expired. Click the box again.",
+  captchaFailed:  "The verification check did not load. Refresh the page.",
   // 申请状态(/access/status):日期拿不到就不写括号,⛔ 不写「(Invalid Date)」
   reqStatusNew:      (d) => d ? `Request received (${d}). We will email this address when your seat opens.` : "Request received. We will email this address when your seat opens.",
   reqStatusDeclined: "No seat this time.",
@@ -77,6 +80,12 @@ let sb = null;          // supabase 客户端(SDK 拉下来之后才有)
 let pending = "";       // 正在等码的那个邮箱
 let busy = false;
 let tsToken = "";       // Turnstile 回执,一次一用
+let reqBusy = false;    // 申请那一发在飞(和登录那几步的 busy 分开:按钮可不可点只看这两样)
+
+// TURNSTILE(10-21):有 site key 时,没拿到票提交按钮就不可点 —— ⛔ 不靠「点了再说先过验证」兜,
+//   也 ⛔ 不在验证没加载出来时静默放行(服务端开关开着时,不带票的申请一律 400)。
+function syncReqSend() { elReqSend.disabled = reqBusy || (!!TURNSTILE_SITEKEY && !tsToken); }
+const TS_HINTS = () => [L.captchaWait, L.captchaExpired, L.captchaFailed];
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;   // 和服务端同一个口径
 
@@ -228,7 +237,7 @@ async function submitRequest() {
   if (!EMAIL_RE.test(email)) { say(elReqState, L.badEmail, "err"); elReqEmail.focus(); return; }
   if (TURNSTILE_SITEKEY && !tsToken) { say(elReqState, L.needCaptcha, "err"); return; }
 
-  busy = true; elReqSend.disabled = true;
+  busy = true; reqBusy = true; syncReqSend();
   say(elReqState, L.reqSending, "busy");
   let r, j;
   try {
@@ -241,12 +250,12 @@ async function submitRequest() {
     });
     j = await r.json().catch(() => null);
   } catch (e) {
-    busy = false; elReqSend.disabled = false;
+    busy = false; reqBusy = false; syncReqSend();
     say(elReqState, L.offline, "err");
     return;
   }
   if (window.turnstile) { try { window.turnstile.reset(); } catch (e) { /* 没渲染过 */ } tsToken = ""; }
-  busy = false; elReqSend.disabled = false;
+  busy = false; reqBusy = false; syncReqSend();   // 票一次一用:reset 之后等新票,按钮先灰着
 
   if (!r.ok || !j || !j.ok) {
     // 服务端的文案本来就是人话,优先用它
@@ -336,17 +345,30 @@ window.addEventListener("hashchange", openRequestIfAsked);
 function mountTurnstile() {
   if (!TURNSTILE_SITEKEY) return;
   elTs.hidden = false;
+  syncReqSend();
+  say(elReqState, L.captchaWait);
+  let rendered = false;
+  // 加载失败 / 渲染出错 / 15 秒还没渲染出来:说一句人话,按钮保持灰着(⛔ 不静默放行)
+  const failed = () => { tsToken = ""; syncReqSend(); say(elReqState, L.captchaFailed, "err"); };
+  const clearHint = () => { if (TS_HINTS().includes(elReqState.textContent)) say(elReqState, ""); };
   window.onMurmurTurnstile = () => {
-    window.turnstile.render(elTs, {
-      sitekey: TURNSTILE_SITEKEY, action: TURNSTILE_ACTION,
-      callback: (t) => { tsToken = t; },
-      "expired-callback": () => { tsToken = ""; },
-    });
+    rendered = true;
+    try {
+      window.turnstile.render(elTs, {
+        sitekey: TURNSTILE_SITEKEY, action: TURNSTILE_ACTION,
+        callback: (t) => { tsToken = t; syncReqSend(); clearHint(); },
+        "expired-callback": () => { tsToken = ""; syncReqSend(); say(elReqState, L.captchaExpired, "err"); },
+        "timeout-callback": () => { tsToken = ""; syncReqSend(); say(elReqState, L.captchaExpired, "err"); },
+        "error-callback": () => { failed(); },
+      });
+    } catch (e) { failed(); }
   };
   const s = document.createElement("script");
   s.src = "https://challenges.cloudflare.com/turnstile/v0/api.js?onload=onMurmurTurnstile&render=explicit";
   s.async = true; s.defer = true;
+  s.onerror = failed;
   document.head.appendChild(s);
+  setTimeout(() => { if (!rendered) failed(); }, 15000);
 }
 
 // ── 接线 ──────────────────────────────────────────────────────────────────

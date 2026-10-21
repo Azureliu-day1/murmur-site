@@ -1,3 +1,4 @@
+import { TURNSTILE_SITEKEY } from "../turnstile-key.js";
 // 技能页「试一句」(SEC-FIX-A L3:原来是页内内联 <script type="module">,搬出来是为了 CSP 去掉 script-src 'unsafe-inline')。
 // 本文件和页面在同一目录,里面的相对路径(SDK)解析结果和内联时一样。
 // ── 提示词技能页「试一句」的前端 ──────────────────────────────────────────────
@@ -14,10 +15,9 @@ const FN       = SUPA_URL + "/functions/v1/murmur-web";
 const SDK      = "../vendor/supabase-js-2.116.0.mjs"; // SITEFIX-3:同 try 页自托管,版本写死(来源与 sha256 见 vendor/SOURCES.txt);相对本页解析
 const LANG     = "zh";
 const MAXLEN   = 600;
-// ⬇️ 同 try 页:人机验证的 site key 填好之前,匿名那条路在页面上也是关的。
-const TURNSTILE_SITEKEY = "";
-// ⚠️ 填上 site key 时,同时把 https://challenges.cloudflare.com 加回本页 CSP 的 script-src / connect-src / frame-src
-//    (SEC-FIX-A L3 在 Turnstile 没启用时把它们拿掉了;不加回去,脚本会被 CSP 拦下)。
+// ⬇️ 同 try 页:人机验证的 site key(turnstile-key.js)填好之前,匿名那条路在页面上也是关的。
+// TURNSTILE(10-21):site key 收到全站一处 —— turnstile-key.js(import 在文件顶上)。
+// 本页 CSP 的 script-src / frame-src 已放行 https://challenges.cloudflare.com(Cloudflare 文档要求的就这两项;connect-src 只有 pre-clearance 才要)。
 
 const L = {
   quotaLoading: "正在查额度…",
@@ -199,7 +199,7 @@ function paintTrial() {
 
 // ── 人机验证(同 try 页;action 也是 web-trial,服务端 /skill 的匿名那条路认的就是它)──
 function mountTurnstile() {
-  if (!TURNSTILE_SITEKEY || token) return;
+  if (!TURNSTILE_SITEKEY || token || !trial.enabled) return;   // TURNSTILE(10-21):试整理关着就不挂验证框(开着那天自己出来)
   elTs.hidden = false;
   window.onMurmurTurnstile = () => {
     window.turnstile.render(elTs, {

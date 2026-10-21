@@ -1,3 +1,4 @@
+import { TURNSTILE_SITEKEY } from "../../turnstile-key.js";
 // ── 试一试页的前端 ────────────────────────────────────────────────────────
 // 三条纪律:
 //  ① 模型输出一律 textContent,⛔ 不碰 innerHTML —— 那段字是模型生成的,
@@ -20,11 +21,10 @@ const FN       = SUPA_URL + "/functions/v1/murmur-web";
 const SDK      = "../../vendor/supabase-js-2.116.0.mjs"; // SEC-L5:自托管,版本写死(来源与 sha256 见 vendor/SOURCES.txt);相对本文件解析
 const LANG     = "en";
 const MAXLEN   = 600;
-// ⬇️ Wei 在 Cloudflare 后台建好 Turnstile widget 之后,把 site key 填这里。
+// ⬇️ Wei 在 Cloudflare 后台建好 Turnstile widget 之后,把 site key 填进 turnstile-key.js。
 //    空着 = 匿名那条路在页面上也是关的(服务端另有一道开关,两道都要开)。
-const TURNSTILE_SITEKEY = "";
-// ⚠️ 填上 site key 时,同时把 https://challenges.cloudflare.com 加回本页 CSP 的 script-src / connect-src / frame-src
-//    (SEC-FIX-A L3 在 Turnstile 没启用时把它们拿掉了;不加回去,脚本会被 CSP 拦下)。
+// TURNSTILE(10-21):site key 收到全站一处 —— turnstile-key.js(import 在文件顶上)。
+// 本页 CSP 的 script-src / frame-src 已放行 https://challenges.cloudflare.com(Cloudflare 文档要求的就这两项;connect-src 只有 pre-clearance 才要)。
 
 const L = {
   quotaLoading: "Checking your quota…",
@@ -218,7 +218,7 @@ function paintTrial() {
 
 // ── Turnstile(有 site key 才加载)────────────────────────────────────────
 function mountTurnstile() {
-  if (!TURNSTILE_SITEKEY || token) return;     // 登录态不需要人机验证
+  if (!TURNSTILE_SITEKEY || token || !trial.enabled) return;   // TURNSTILE(10-21):试整理关着就不挂验证框(开着那天自己出来)     // 登录态不需要人机验证
   elTs.hidden = false;
   window.onMurmurTurnstile = () => {
     window.turnstile.render(elTs, {
