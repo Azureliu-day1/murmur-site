@@ -77,6 +77,7 @@ const L = EN ? {
   yearAlt: (y, m) => `${y} a year, about ${m} a month`,
   yearPer: (m) => `About ${m} a month`,
   buy: (n) => `Get ${n}`,
+  loginBuy: (n) => `Sign in to get ${n}`,
   current: "Current plan",
   toPro: "Switch to Pro",
   mine: "Your plan",
@@ -144,6 +145,7 @@ const L = EN ? {
   yearAlt: (y, m) => `年付 ${y},折合每月 ${m}`,
   yearPer: (m) => `折合每月 ${m}`,
   buy: (n) => `开通 ${n}`,
+  loginBuy: (n) => `登录后开通 ${n}`,
   current: "当前方案",
   toPro: "换到 Pro",
   mine: "你在用",
@@ -174,7 +176,7 @@ let who = null;            // { id, email } 已登录才有(本地演示时 id �
 let me = null;             // 会员摘要(v2-nav.js 的 fromMe 形状);null = 没登录,或登录了但还没问到 / 没问到
 // 这一次 /me 的状态:out(没登录)/ loading(问着)/ ok(问到了)/ error(没问到)/ demo(本机演示)
 let state = "out";
-let cycle = "month";
+let cycle = new URLSearchParams(location.search).get("cycle") === "year" ? "year" : "month";   // 登录后带回来的那一档(10-22)
 
 // ── 小工具 ──────────────────────────────────────────────────────────────
 function el(tag, cls, text) {
@@ -443,6 +445,11 @@ function renderPlans() {
       disable(btn, state === "error" ? L.retryLater : L.checking);
     } else if (!link || plan === "pro" || plan === "max") {
       disable(btn, L.opening);
+    } else if (!who) {
+      // 10-22 首跑测试:没登录不放付款链接 —— 先登录(没账号就在登录页申请),登录完由 next 带回这一页再付。
+      //   这样付款一定带着账号(client_reference_id),不会出现「付了钱、却没有账号能认」的人。
+      btn.textContent = L.loginBuy(NAMES[k]);
+      btn.setAttribute("href", "../login/?next=" + encodeURIComponent(location.pathname + "?plan=" + k + "&cycle=" + cycle));
     } else {
       btn.textContent = L.buy(NAMES[k]);
       btn.setAttribute("href", payHref(link));
@@ -471,6 +478,7 @@ function mountCycle() {
     btns.forEach((x) => x.setAttribute("aria-pressed", x === b ? "true" : "false"));
     renderPlans();
   }));
+  btns.forEach((x) => x.setAttribute("aria-pressed", x.dataset.cycle === cycle ? "true" : "false"));
   box.hidden = false;
 }
 
