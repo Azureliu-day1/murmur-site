@@ -58,7 +58,7 @@ const L = {
   quotaTrialOut:"Today's anonymous trial is used up · come back tomorrow, or sign in",
   quotaTrialOff:"Anonymous trial is off · available once you sign in",
   // SITEFIX-1:匿名试用关着时,页头那句「不用下载,也不用注册」换成这句 + 申请入口(三段:前半 / 链接上的字 / 后半)。
-  trialLineOff: ["Sign in to try it. No account yet? ", "Request a seat", "."],
+  trialLineOff: ["Sign in to try it. No account yet? ", "Just sign in with your email", "."],
   busy:         "Cleaning up…",
   cleanBusy:    "Cleaning up…",
   rawEmpty:     "Type a sentence above, or pick one of the samples.",
