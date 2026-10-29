@@ -57,7 +57,7 @@
 <header class="head wrap">
   <p class="eyebrow">登录</p>
   <h1>用邮箱登录</h1>
-  <p class="sub">填邮箱,我们发一个 6 位码过去。不用设密码。</p>
+  <p class="sub">填邮箱,我们发一个 6 位码过去。不用设密码,第一次来也一样。</p>
 </header>
 
 <main class="wrap">
@@ -110,9 +110,9 @@
   <section class="request" id="reqSection">
     <p class="req-status" id="reqStatus" role="status" hidden></p>
     <details id="req">
-      <summary id="reqSummary">还没有名额?申请一个</summary>
+      <summary id="reqSummary">第一次来,没自动开通?点这里</summary>
       <div class="body">
-        <p class="note u-mt0">名额一个一个开,每条申请我都会看。提交后你<b>马上</b>会收到一个 6 位码,可以先登录,在网页上试整理。名额开了,会发信到这个邮箱。</p>
+        <p class="note u-mt0">第一次用的邮箱,上面没自动开通的话,在这里提交一次。提交后<b>马上</b>会收到一个 6 位码,填进去就登录了。</p>
         <p class="label u-mt18"><label for="reqEmail">邮箱</label></p>
         <input class="field" type="email" id="reqEmail" inputmode="email" autocomplete="email"
                placeholder="you@example.com" spellcheck="false" autocapitalize="none">
@@ -120,7 +120,7 @@
         <textarea class="field" id="reqNote" maxlength="200"
                   placeholder="例:每天要写很多中英夹杂的工作消息,打字太慢。"></textarea>
         <div id="turnstile" hidden></div>
-        <button class="btn btn-primary" id="reqSend" type="button">提交申请</button>
+        <button class="btn btn-primary" id="reqSend" type="button">提交</button>
         <p class="state" id="reqState"></p>
       </div>
     </details>

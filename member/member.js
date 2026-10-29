@@ -40,8 +40,8 @@ const L = EN ? {
   ledePaid: "Your plan renews automatically at the end of each period.",
   outText: "Sign in to see your plan, renewal date and usage.",
   outBtn: "Sign in to subscribe",
-  outNoAcct: "No account yet?",
-  outApply: "Request one",
+  outNoAcct: "First time here?",
+  outApply: "Just sign in with your email",
   tagFree: "Free",
   month: "Monthly", year: "Yearly",
   leftWeek: (n) => `${n} words of dictation left this week`,
@@ -108,8 +108,8 @@ const L = EN ? {
   ledePaid: "每期到期时自动续费。",
   outText: "登录后,这一页会显示你的档位、到期日和用量。",
   outBtn: "登录后开通",
-  outNoAcct: "还没有账号?",
-  outApply: "申请一个",
+  outNoAcct: "第一次来?",
+  outApply: "填邮箱就能登录,不用密码",
   tagFree: "免费",
   month: "月付", year: "年付",
   leftWeek: (n) => `本周还能听写 ${n} 字`,
@@ -275,7 +275,7 @@ function cardOut() {
   acts.appendChild(a("btn btn-primary", L.outBtn, loginHref()));
   const p = el("p", "m-note");
   p.appendChild(document.createTextNode(L.outNoAcct + " "));
-  p.appendChild(a("", L.outApply, loginHref("#apply")));
+  p.appendChild(a("", L.outApply, loginHref()));   // OPEN-LOGIN:公测填邮箱直接登录,不再指到申请表
   acts.appendChild(p);
   c.appendChild(acts);
   return c;

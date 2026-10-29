@@ -3,11 +3,11 @@ import { TURNSTILE_SITEKEY } from "../turnstile-key.js";
 // 一张卡三态:①填邮箱 → ②填 6 位码 → ③已经登录了。
 //
 // 四条纪律:
-//  ① 页面上零处「注册」。这站是邀请制的;对没名额的人,正确的下一步是
-//     「申请一个」,而服务端会在那一步给他建身份 —— 用户看到的始终是
-//     「申请 → 收码 → 进来」,不是「注册」。
+//  ① 页面上零处「注册」。OPEN-LOGIN(10-29,公测「填邮箱直接登录」):第一次来的邮箱发码时 GoTrue 回
+//     「没有这个身份」,页面**自动**用同一个邮箱走申请(服务端那一步建身份 + 发码),直接进填码 ——
+//     用户看到的始终是「填邮箱 → 收码 → 进来」。下面那张申请表只留给拿不到人机验证票的人兜底。
 //  ② 一个失败对应一句人话,⛔ 不把状态码或者英文错误串摆给用户看。
-//     唯一需要认的机器码是 otp_disabled —— 它的意思是「这个邮箱还没有身份」,
+//     需要认的机器码只有 NO_IDENTITY_CODES 那三个 —— 意思是「这个邮箱还没有身份」(按 code 判,⛔ 不匹配英文 message),
 //     ⛔ 不许照字面说成「没有账号」(那是在告诉任何人「这个邮箱不是用户」)。
 //  ③ 页面上只有 publishable key,⛔ 没有别的密钥。
 //  ④ next 只接受站内的相对路径 —— 见 safeNext()。
@@ -39,6 +39,10 @@ const RESEND_SECONDS = 60;
 // TURNSTILE(10-21):site key 收到全站一处 —— turnstile-key.js(import 在文件顶上)。
 // 本页 CSP 的 script-src / frame-src 已放行 https://challenges.cloudflare.com(Cloudflare 文档要求的就这两项;connect-src 只有 pre-clearance 才要)。
 const TURNSTILE_ACTION  = "web-access";
+// OPEN-LOGIN:发码回这三个 code = 「这个邮箱还没有身份」→ 自动走申请。⛔ 只按 code 判,不匹配英文 message。
+const NO_IDENTITY_CODES = ["signup_disabled", "otp_disabled", "user_not_found"];
+// 自动申请等人机验证票最多这么久;等不到就停在申请区,按钮可点,提示「点一下验证再提交」。
+const AUTO_WAIT_MS = 15000;
 
 const L = {
   needEmail:   "先把邮箱填上。",
@@ -52,7 +56,8 @@ const L = {
   mailDown:    "邮件服务没回应,过一会儿再试。",
   offline:     "网络好像断了,连上后再试。",
   generic:     "这一步没成功,稍后再试。",
-  noIdentity:  "这个邮箱还不能登录。在下面申请名额,提交后马上会收到码。",
+  autoApplying: "第一次用这个邮箱,正在帮你开通…",
+  codeSentTo:  (e) => `已给 ${e} 发了 6 位码,去邮箱看看。`,
   resendIn:    (n) => `${n} 秒后可重发`,
   resendNow:   "重新发送",
   reqSending:  "正在提交…",
@@ -63,6 +68,7 @@ const L = {
   captchaWait:    "人机验证通过后就能提交。",
   captchaExpired: "验证过期了,再点一下验证框。",
   captchaFailed:  "验证没加载出来,刷新一下。",
+  captchaNudge:   "点一下验证再提交。",
   // 申请状态(/access/status):日期拿不到就不写括号,⛔ 不写「(Invalid Date)」
   reqStatusNew:      (d) => d ? `申请已收到(${d}),名额开了会发信到这个邮箱。` : "申请已收到,名额开了会发信到这个邮箱。",
   reqStatusDeclined: "这次没开名额。",
@@ -81,11 +87,29 @@ let pending = "";       // 正在等码的那个邮箱
 let busy = false;
 let tsToken = "";       // Turnstile 回执,一次一用
 let reqBusy = false;    // 申请那一发在飞(和登录那几步的 busy 分开:按钮可不可点只看这两样)
+let reqNudge = false;   // OPEN-LOGIN:自动申请等票超时 → 按钮放开可点(点了没票只提示「点一下验证再提交」)
+let autoApplying = false;   // 自动申请在等票 / 在飞:同一时刻只走一趟
+let tsWaiters = [];     // 等票的人(waitForToken);票到了逐个叫醒
 
 // TURNSTILE(10-21):有 site key 时,没拿到票提交按钮就不可点 —— ⛔ 不靠「点了再说先过验证」兜,
 //   也 ⛔ 不在验证没加载出来时静默放行(服务端开关开着时,不带票的申请一律 400)。
-function syncReqSend() { elReqSend.disabled = reqBusy || (!!TURNSTILE_SITEKEY && !tsToken); }
-const TS_HINTS = () => [L.captchaWait, L.captchaExpired, L.captchaFailed];
+function syncReqSend() { elReqSend.disabled = reqBusy || (!!TURNSTILE_SITEKEY && !tsToken && !reqNudge); }
+const TS_HINTS = () => [L.captchaWait, L.captchaExpired, L.captchaFailed, L.captchaNudge];
+
+/// 等一张人机验证票,最多 ms 毫秒。没有 site key(本站没开验证)= 不用等。回 true = 拿到了。
+function waitForToken(ms) {
+  if (!TURNSTILE_SITEKEY || tsToken) return Promise.resolve(true);
+  return new Promise((resolve) => {
+    const done = (v) => { clearTimeout(timer); tsWaiters = tsWaiters.filter((f) => f !== done); resolve(v); };
+    const timer = setTimeout(() => done(false), ms);
+    tsWaiters.push(done);
+  });
+}
+function gotToken(t) {
+  tsToken = t;
+  syncReqSend();
+  tsWaiters.slice().forEach((f) => f(true));
+}
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;   // 和服务端同一个口径
 
@@ -150,9 +174,9 @@ async function sendCode(email, fromResend) {
     // ⛔ 不照字面翻译成「没有这个账号」—— 那句话会把「谁是用户」告诉任何人。
     //    这里把它当成产品里的一个正常岔路:引到申请表,邮箱带过去。
     const code = error.code || error.error_code || "";
-    if (code === "otp_disabled" || code === "signup_disabled" || /signups? not allowed/i.test(error.message || "")) {
-      say(target, L.noIdentity, "err");
-      openRequest(email);
+    if (NO_IDENTITY_CODES.includes(code)) {
+      // OPEN-LOGIN:第一次来的邮箱 → 自动用同一个邮箱申请(申请那一步服务端已经发码,⛔ 这里不再发)
+      autoApply(email, target);
       return;
     }
     if (error.status === 429 || /rate/i.test(error.message || "")) { say(target, L.rate, "err"); startCooldown(); return; }
@@ -230,12 +254,31 @@ function openRequest(prefill) {
   (prefill ? elReqNote : elReqEmail).focus({ preventScroll: true });
 }
 
-async function submitRequest() {
+/// OPEN-LOGIN:发码回「没有身份」之后自动走申请。展开申请区、邮箱预填、等票(最多 AUTO_WAIT_MS);
+/// 拿到票就自动提交,拿不到就停在申请区:按钮放开、提示「点一下验证再提交」。
+async function autoApply(email, target) {
+  if (autoApplying) return;
+  autoApplying = true;
+  say(target, L.autoApplying, "busy");
+  openRequest(email);
+  const got = await waitForToken(AUTO_WAIT_MS);
+  say(target, "");
+  if (!got) {
+    autoApplying = false;
+    reqNudge = true; syncReqSend();
+    say(elReqState, L.captchaNudge, "err");
+    return;
+  }
+  await submitRequest(true);
+  autoApplying = false;
+}
+
+async function submitRequest(auto) {
   if (busy) return;
   const email = elReqEmail.value.trim();
   if (!email) { say(elReqState, L.needEmail, "err"); elReqEmail.focus(); return; }
   if (!EMAIL_RE.test(email)) { say(elReqState, L.badEmail, "err"); elReqEmail.focus(); return; }
-  if (TURNSTILE_SITEKEY && !tsToken) { say(elReqState, L.needCaptcha, "err"); return; }
+  if (TURNSTILE_SITEKEY && !tsToken) { say(elReqState, reqNudge ? L.captchaNudge : L.needCaptcha, "err"); return; }
 
   busy = true; reqBusy = true; syncReqSend();
   say(elReqState, L.reqSending, "busy");
@@ -271,7 +314,8 @@ async function submitRequest() {
   show("code");
   elReq.open = false;
   say(elReqState, "");
-  say(elState2, j.mailed === false ? L.reqNoMail : (j.message || L.sent), j.mailed === false ? "err" : "");
+  // OPEN-LOGIN:自动申请那一趟说「已给 xx 发了 6 位码」(申请那一步已经发过码,⛔ 不再重复发)
+  say(elState2, j.mailed === false ? L.reqNoMail : (auto === true ? L.codeSentTo(email) : (j.message || L.sent)), j.mailed === false ? "err" : "");
   startCooldown();
   elCode.focus();
   cardCode.scrollIntoView({ behavior: "smooth", block: "center" });
@@ -356,7 +400,7 @@ function mountTurnstile() {
     try {
       window.turnstile.render(elTs, {
         sitekey: TURNSTILE_SITEKEY, action: TURNSTILE_ACTION,
-        callback: (t) => { tsToken = t; syncReqSend(); clearHint(); },
+        callback: (t) => { gotToken(t); clearHint(); },
         "expired-callback": () => { tsToken = ""; syncReqSend(); say(elReqState, L.captchaExpired, "err"); },
         "timeout-callback": () => { tsToken = ""; syncReqSend(); say(elReqState, L.captchaExpired, "err"); },
         "error-callback": () => { failed(); },
@@ -393,8 +437,8 @@ elBack.addEventListener("click", () => {
   say(elState, "");
   elEmail.focus();
 });
-elReqSend.addEventListener("click", submitRequest);
-elReqEmail.addEventListener("keydown", (e) => { if (e.key === "Enter") submitRequest(); });
+elReqSend.addEventListener("click", () => submitRequest(false));
+elReqEmail.addEventListener("keydown", (e) => { if (e.key === "Enter") submitRequest(false); });
 // SEC-FIX-A L2:退出一律只退这个浏览器(scope "local")。默认的 global 会把这个人所有设备的
 //   refresh token 一起作废,Mac App 也得重新收码。
 async function signOutHere() {
