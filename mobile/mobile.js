@@ -176,10 +176,10 @@ function fit(dev, box, design, max) {
   ['pointerup', 'pointercancel', 'lostpointercapture'].forEach(function (n) { scr.addEventListener(n, holdUp); });
   scr.addEventListener('contextmenu', function (e) { if (state === 'recording' || state === 'holding') e.preventDefault(); });
   scr.addEventListener('keydown', function (e) {
-    if ((e.key === ' ' || e.key === 'Enter') && (state === 'recording' || state === 'holding')) {
-      e.preventDefault();
-      if (!e.repeat && !keyHeld) { keyHeld = true; holdDown(); }
-    }
+    if (e.key !== ' ' && e.key !== 'Enter') return;
+    if (e.target !== scr) return; // 橙键等子元素的按键照常(Enter 点橙键)
+    e.preventDefault(); // 表屏本身在任何状态都拦:按满一秒进「已保存」后手还按着,自动重复的 Space 会把整页滚走
+    if ((state === 'recording' || state === 'holding') && !e.repeat && !keyHeld) { keyHeld = true; holdDown(); }
   });
   scr.addEventListener('keyup', function (e) {
     if (e.key === ' ' || e.key === 'Enter') { keyHeld = false; holdUp(); }
