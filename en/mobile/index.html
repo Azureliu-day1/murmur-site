@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<!-- CSP: same as the demo page. No inline script or style here; styles live in mobile/mobile.css. -->
+<!-- CSP: same as the demo page. No inline script or style here; styles live in mobile/mobile.css, the demos in mobile/mobile.js. -->
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>iPhone and Apple Watch · Murmur</title>
@@ -71,11 +71,39 @@
         <div class="m-step"><b>03</b><div><strong>Who said what</strong>When you stop, the full transcript goes into your history, split by speaker. If something fails, the recording is kept.</div></div>
         <p class="m-fine">Once you sign in, you can record 3 minutes in total for free. To record more, <a href="../member/index.html">see membership →</a></p>
       </div>
-      <ul class="row" tabindex="0" aria-label="Murmur on iPhone, swipe sideways">
-        <li><img src="../../shots/mobile/lecture-2-recording-en.webp" width="780" height="1696" loading="lazy" alt="iPhone Record tab while recording, with text appearing line by line"><p class="cap">Recording, text line by line</p></li>
-        <li><img src="../../shots/mobile/lecture-3-done-en.webp" width="780" height="1696" loading="lazy" alt="iPhone Record tab after recording, with the full transcript"><p class="cap">Done, full transcript</p></li>
-        <li><img src="../../shots/mobile/lecture-5-detail-en.webp" width="780" height="1696" loading="lazy" alt="A recording in iPhone history, the transcript split by speaker"><p class="cap">In history, by speaker</p></li>
-      </ul>
+      <div class="dm dm-p" id="dmPhone" data-state="home" tabindex="-1">
+        <div class="dm-pcol">
+          <div class="ph" role="group" aria-label="iPhone you can try">
+            <span class="ph-key k1"></span><span class="ph-key k2"></span><span class="ph-key k3"></span>
+            <div class="ph-scr"><div class="ps">
+              <div class="p-sbar" aria-hidden="true"><span class="p-time">9:41</span><svg class="p-sig" width="19" height="12" viewBox="0 0 58 36"><rect x="0" y="24" width="10" height="12" rx="2.5"/><rect x="16" y="17" width="10" height="19" rx="2.5"/><rect x="32" y="9" width="10" height="27" rx="2.5"/><rect x="48" y="0" width="10" height="36" rx="2.5"/></svg><svg class="p-wifi" width="17" height="13" viewBox="0 0 52 40"><path d="M26 38 L18.5 30.2 A11 11 0 0 1 33.5 30.2 Z"/><path d="M12.4 24 A19.5 19.5 0 0 1 39.6 24" fill="none" stroke="#1B1B1F" stroke-width="6.2" stroke-linecap="round"/><path d="M5 16.4 A30 30 0 0 1 47 16.4" fill="none" stroke="#1B1B1F" stroke-width="6.2" stroke-linecap="round"/></svg><svg class="p-bat" width="27" height="12" viewBox="0 0 84 38"><rect x="1.5" y="1.5" width="72" height="35" rx="10" fill="none" stroke="#1B1B1F" stroke-opacity=".4" stroke-width="3"/><rect x="6" y="6" width="63" height="26" rx="6"/><path d="M78 13 v12 a5 5 0 0 0 0 -12z" fill-opacity=".45"/></svg></div><div class="p-island" aria-hidden="true"></div>
+              <div class="pv pv-rec">
+                <p class="p-title">Record</p>
+                <div class="p-card p-c1">
+                  <p class="p-label"><span class="p-caps">SESSION</span><span class="p-dot">·</span><span class="p-st st-home">Ready</span><span class="p-st st-rec">Recording</span><span class="p-st st-tr">Transcribing</span></p>
+                  <div class="p-timerrow"><p class="p-timer" data-p="timer">0:00</p><div class="p-bars" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
+                  <div class="p-btns p-home"><button class="p-pill p-black" type="button" data-act="start">Start recording</button></div>
+                  <div class="p-btns p-recb"><button class="p-pill p-black" type="button" data-act="stop">Stop and transcribe</button><button class="p-pill p-discard" type="button" data-act="discard">Discard</button></div>
+                  <p class="p-chips p-home" aria-hidden="true"><span class="on">Standard</span><span>Precision ·×2</span></p>
+                  <div class="p-cap p-recb"><p class="p-clabel">Live captions · preview</p><div class="p-lines" data-p="lines"></div></div>
+                  <p class="p-foot">The transcript goes into History when it's done, and a failed one keeps the audio.</p>
+                </div>
+                <div class="p-card p-c2"><p class="p-c2h">Nothing recorded yet</p><p>Long-form recording for meetings and lectures. An hour is fine, you don't have to babysit it. The transcript separates speakers, lands in History when it's done, and a failed one keeps the audio.</p><p class="p-small">Finished transcripts are saved to History too.</p></div>
+              </div>
+              <div class="pv pv-detail">
+                <span class="p-back" aria-hidden="true"><svg width="43" height="43" viewBox="0 0 131 131"><path d="M78 38 L50 65.5 L78 93" fill="none" stroke="#1B1B1F" stroke-width="7.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                <p class="p-navtitle">Recording</p>
+                <span class="p-navcap" aria-hidden="true">Copy<svg width="19" height="23" viewBox="0 0 58 72"><g fill="none" stroke="#E2531F" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"><path d="M29 4 V44"/><path d="M15 17 L29 3.5 L43 17"/><path d="M19 26 H10 a6 6 0 0 0 -6 6 V62 a6 6 0 0 0 6 6 H48 a6 6 0 0 0 6 -6 V32 a6 6 0 0 0 -6 -6 H39"/></g></svg></span>
+                <p class="p-meta w-num" data-p="meta">0:00</p>
+                <div class="p-body"><p><b>Speaker 1: </b>Good morning. Today we look at how supply and demand set the price.</p><p><b>Speaker 1: </b>When demand rises and supply stays put, the price keeps climbing. Until the two meet again.</p><p><b>Speaker 2: </b>Someone asked, what if supply rises too?</p><p><b>Speaker 1: </b>Good question. Then it depends on which rises faster.</p></div>
+              </div>
+              <div class="p-tabbar" aria-hidden="true"><span class="p-tabsel"></span><span class="p-tab t0"><svg width="23" height="23" viewBox="0 0 70 70"><g stroke="currentColor" stroke-width="5" stroke-linecap="round"><line x1="7" y1="29" x2="7" y2="41"/><line x1="17" y1="21" x2="17" y2="49"/><line x1="27" y1="10" x2="27" y2="60"/><line x1="37" y1="2" x2="37" y2="68"/><line x1="47" y1="14" x2="47" y2="56"/><line x1="57" y1="22" x2="57" y2="48"/><line x1="66" y1="30" x2="66" y2="40"/></g></svg><b>Record</b></span><span class="p-tab t1"><svg width="23" height="23" viewBox="0 0 70 70"><circle cx="35" cy="35" r="35" fill="currentColor"/><path d="M35 15 V36 H21" fill="none" stroke="#fff" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round"/></svg><b>History</b></span><span class="p-tab t2"><svg width="23" height="23" viewBox="0 0 70 70"><circle cx="35" cy="35" r="35" fill="currentColor"/><circle cx="35" cy="27" r="12.5" fill="#fff"/><path d="M12 58 a25 20 0 0 1 46 0 a33 33 0 0 1 -46 0z" fill="#fff"/></svg><b>You</b></span></div>
+            </div></div>
+          </div>
+          <p class="dm-hint"><span data-hint>Tap “Start recording”.</span> <button class="dm-again" type="button" hidden>Try again</button></p>
+        </div>
+        <p class="m-sr" aria-live="polite" data-live></p>
+      </div>
     </div>
   </section>
 
@@ -89,24 +117,51 @@
         <div class="m-step"><b>03</b><div><strong>Sent to your phone</strong>The recording is saved on the watch first, then sent to your phone when it is nearby. Your phone transcribes it.</div></div>
         <p class="m-fine">Sign in on your phone and the watch signs in too, with the same account.</p>
       </div>
-      <ul class="grid">
-        <li><div class="face"><img src="../../shots/mobile/watch-en-idle.webp" width="396" height="484" loading="lazy" alt="Watch home screen with a large record button and the last recording"></div><p class="cap">Tap to start</p></li>
-        <li><div class="face"><img src="../../shots/mobile/watch-en-recording.webp" width="396" height="484" loading="lazy" alt="Watch while recording, showing only the time and a small dot"></div><p class="cap">Recording</p></li>
-        <li><div class="face"><img src="../../shots/mobile/watch-en-hold.webp" width="396" height="484" loading="lazy" alt="Watch hold to stop, a thin ring filling around the dot"></div><p class="cap">Hold to stop</p></li>
-        <li><div class="face"><img src="../../shots/mobile/watch-en-sent.webp" width="396" height="484" loading="lazy" alt="Watch recording sent to your iPhone, read it on your phone"></div><p class="cap">Sent to iPhone</p></li>
-      </ul>
+      <div class="dm dm-w" id="dmWatch" data-state="idle">
+        <div class="dm-wrow">
+          <div class="dm-wcol">
+            <div class="wt" role="group" aria-label="Apple Watch you can try">
+              <div class="wt-band wt-top"></div><div class="wt-band wt-bot"></div>
+              <div class="wt-case"><div class="wt-glass">
+                <div class="ws-scr" tabindex="-1" aria-label="Watch screen. While recording, hold for a second to stop">
+                  <div class="ws ws-idle">
+                    <p class="w-pill w-top">Signed in</p>
+                    <button class="w-orb" type="button" aria-label="Start recording"><span class="w-h2"></span><span class="w-h1"></span><span class="w-core"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8.25" y="1.5" width="7.5" height="13" rx="3.75" fill="currentColor"/><path d="M5.25 10.75a6.75 6.75 0 0 0 13.5 0" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/><path d="M12 17.75V21.5M8.75 21.75h6.5" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/></svg></span></button>
+                    <p class="w-last"><i></i><b class="w-num" data-w="last">52:10</b><span>Uploaded</span></p>
+                  </div>
+                  <div class="ws ws-rec">
+                    <div class="w-dot"><span class="w-glow"></span><span class="w-dotc"></span><svg viewBox="0 0 44 44" aria-hidden="true"><circle cx="22" cy="22" r="20.5"/></svg></div>
+                    <div class="w-quad" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+                    <p class="w-clock w-num" data-w="clock">9:41</p>
+                  </div>
+                  <div class="ws ws-saved">
+                    <p class="w-pill w-top">Saved</p>
+                    <p class="w-dur w-num" data-w="dur">0:00</p>
+                    <p class="w-status w-sending"><svg class="w-spin" viewBox="0 0 24 24" aria-hidden="true"><g stroke="#A0A0A8" stroke-width="2.4" stroke-linecap="round"><path d="M12 2.5v5"/><path d="M18.7 5.3l-3.5 3.5" opacity=".88"/><path d="M21.5 12h-5" opacity=".76"/><path d="M18.7 18.7l-3.5-3.5" opacity=".64"/><path d="M12 21.5v-5" opacity=".52"/><path d="M5.3 18.7l3.5-3.5" opacity=".4"/><path d="M2.5 12h5" opacity=".3"/><path d="M5.3 5.3l3.5 3.5" opacity=".22"/></g></svg>Sending to your iPhone</p>
+                    <p class="w-status w-sent">Sent to your iPhone</p>
+                    <p class="w-under">Read it on your phone</p>
+                  </div>
+                </div>
+              </div></div>
+              <div class="wt-crown"></div><div class="wt-side"></div>
+            </div>
+            <p class="dm-hint" data-hint>Tap the orange button.</p>
+          </div>
+          <div class="dm-hist" role="group" aria-label="History on the phone">
+            <p class="dm-hist-h">History</p>
+            <ul class="dm-hist-list" data-hist>
+              <li class="dm-hi"><div class="dm-hrow"><b>Last Wed · 52:10</b><span><em class="ok">Transcribed</em></span></div></li>
+            </ul>
+          </div>
+        </div>
+        <p class="m-sr" aria-live="polite" data-live></p>
+      </div>
     </div>
   </section>
 
   <section class="m-sec" id="watch-to-phone">
     <h2>Recorded on the watch, read on the phone</h2>
-    <div class="m-split">
-      <p class="lead">Watch recordings go to your phone when it is nearby. Open one in your phone's history to read the full transcript.</p>
-      <ul class="row" tabindex="0" aria-label="Watch recordings on the phone, swipe sideways">
-        <li><img src="../../shots/mobile/phone-watch-2-done-en.webp" width="780" height="1696" loading="lazy" alt="Phone History tab, a recording from the watch that has been transcribed"><p class="cap">In history, from the watch</p></li>
-        <li><img src="../../shots/mobile/phone-watch-3-detail-en.webp" width="780" height="1696" loading="lazy" alt="A watch recording opened on the phone, with the full transcript"><p class="cap">Open it, read it all</p></li>
-      </ul>
-    </div>
+    <p class="lead">Watch recordings go to your phone when it is nearby. Open one in your phone's history to read the full transcript.</p>
   </section>
 
   <!-- Privacy: only wording already on the home page and the privacy page -->
@@ -142,5 +197,6 @@
 </footer>
 
 <script src="../../v2-nav.js" defer></script>
+<script src="../../mobile/mobile.js" defer></script>
 </body>
 </html>
