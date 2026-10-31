@@ -2,20 +2,18 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<!-- CSP: same as the demo page. No inline script or style here; styles live in mobile/mobile.css.
-     Not in the nav or the sitemap, and noindex for now (the app is not in the App Store yet). -->
+<!-- CSP: same as the demo page. No inline script or style here; styles live in mobile/mobile.css. -->
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="robots" content="noindex">
 <title>iPhone and Apple Watch · Murmur</title>
-<meta name="description" content="What Murmur looks like on iPhone and Apple Watch. Not in the App Store yet, so here are simulator screenshots.">
+<meta name="description" content="Long recordings on your phone. Raise your wrist to record on your watch. Coming soon to iPhone and Apple Watch.">
 <link rel="canonical" href="https://maobenbeginner.com/en/mobile/">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Murmur">
 <meta property="og:locale" content="en_US">
 <meta property="og:url" content="https://maobenbeginner.com/en/mobile/">
 <meta property="og:title" content="iPhone and Apple Watch · Murmur">
-<meta property="og:description" content="What Murmur looks like on iPhone and Apple Watch. Not in the App Store yet, so here are simulator screenshots.">
+<meta property="og:description" content="Long recordings on your phone. Raise your wrist to record on your watch. Coming soon to iPhone and Apple Watch.">
 <meta property="og:image" content="https://maobenbeginner.com/og-en.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -39,6 +37,7 @@
       <a href="../skills/index.html">Skills</a>
       <a class="nav-keep" href="../try/index.html">Try it</a>
       <a href="../index.html#pinyin">Input method</a>
+      <a class="nav-wide" href="../mobile/index.html" aria-current="page">Phone &amp; Watch</a>
       <a href="../demo/index.html">Pinyin demo</a>
       <a class="nav-keep" href="../../mobile/index.html" hreflang="zh-CN" lang="zh-CN">中文</a>
       <!-- class="nav-signin" is what v2-nav.js looks for (swapped for "Account" when signed in) -->
@@ -53,14 +52,14 @@
   <div class="t">
     <p class="eyebrow">iPhone and Watch</p>
     <h1>Murmur on your phone and watch</h1>
-    <p class="sub">Long recordings on the phone, one tap on the watch. Not in the App Store yet, so here are screenshots.</p>
+    <p class="sub">Long recordings on your phone. Raise your wrist to record on your watch. Coming soon to iPhone and Apple Watch.</p>
   </div>
 </header>
 
 <main class="wrap">
   <section class="shots">
     <h2>iPhone</h2>
-    <ul class="row" tabindex="0" aria-label="iPhone screenshots, swipe sideways">
+    <ul class="row" tabindex="0" aria-label="Murmur on iPhone, swipe sideways">
       <li><img src="../../shots/mobile/lecture-1-home-en.webp" width="780" height="1696" loading="lazy" alt="iPhone Record tab, ready to start"><p class="cap">Ready</p></li>
       <li><img src="../../shots/mobile/lecture-2-recording-en.webp" width="780" height="1696" loading="lazy" alt="iPhone Record tab while recording, with sample live captions"><p class="cap">Recording</p></li>
       <li><img src="../../shots/mobile/lecture-3-done-en.webp" width="780" height="1696" loading="lazy" alt="iPhone Record tab after recording, with a sample transcript"><p class="cap">Done</p></li>
@@ -83,24 +82,16 @@
   <section class="shots">
     <h2>Apple Watch</h2>
     <ul class="grid">
-      <li><div class="face"><img src="../../shots/mobile/45mm-en-consent.webp" width="396" height="484" loading="lazy" alt="Watch consent screen: ask the people there first"></div><p class="cap">Consent</p></li>
-      <li><div class="face"><img src="../../shots/mobile/45mm-en-idle.webp" width="396" height="484" loading="lazy" alt="Watch idle screen with a large record button"></div><p class="cap">Idle</p></li>
-      <li><div class="face"><img src="../../shots/mobile/45mm-en-recording.webp" width="396" height="484" loading="lazy" alt="Watch while recording, showing only the time"></div><p class="cap">Recording</p></li>
-      <li><div class="face"><img src="../../shots/mobile/45mm-en-peek.webp" width="396" height="484" loading="lazy" alt="Watch recording, raising the wrist to peek at the length"></div><p class="cap">Peek</p></li>
-      <li><div class="face"><img src="../../shots/mobile/45mm-en-sent.webp" width="396" height="484" loading="lazy" alt="Watch recording saved and sent to iPhone"></div><p class="cap">Sent</p></li>
-      <li><div class="face"><img src="../../shots/mobile/45mm-en-waiting.webp" width="396" height="484" loading="lazy" alt="Watch recording saved, waiting for iPhone to connect"></div><p class="cap">Waiting</p></li>
-      <li><div class="face"><img src="../../shots/mobile/45mm-en-interrupted.webp" width="396" height="484" loading="lazy" alt="Watch recording interrupted by a call, first part saved"></div><p class="cap">Interrupted</p></li>
-      <li><div class="face"><img src="../../shots/mobile/45mm-en-list.webp" width="396" height="484" loading="lazy" alt="Watch list of recordings"></div><p class="cap">List</p></li>
+      <li><div class="face"><img src="../../shots/mobile/watch-en-consent.webp" width="396" height="484" loading="lazy" alt="Watch consent screen: ask the people there first"></div><p class="cap">Consent</p></li>
+      <li><div class="face"><img src="../../shots/mobile/watch-en-idle.webp" width="396" height="484" loading="lazy" alt="Watch home screen with a large record button and the last recording"></div><p class="cap">Ready</p></li>
+      <li><div class="face"><img src="../../shots/mobile/watch-en-recording.webp" width="396" height="484" loading="lazy" alt="Watch while recording, showing only the time and a small dot"></div><p class="cap">Recording</p></li>
+      <li><div class="face"><img src="../../shots/mobile/watch-en-peek.webp" width="396" height="484" loading="lazy" alt="Watch recording, a quick look at the length so far"></div><p class="cap">Peek</p></li>
+      <li><div class="face"><img src="../../shots/mobile/watch-en-hold.webp" width="396" height="484" loading="lazy" alt="Watch hold to stop, a thin ring filling around the dot"></div><p class="cap">Hold to stop</p></li>
+      <li><div class="face"><img src="../../shots/mobile/watch-en-sending.webp" width="396" height="484" loading="lazy" alt="Watch recording saved and sending to your iPhone"></div><p class="cap">Sending</p></li>
+      <li><div class="face"><img src="../../shots/mobile/watch-en-sent.webp" width="396" height="484" loading="lazy" alt="Watch recording sent to your iPhone, read it on your phone"></div><p class="cap">Sent</p></li>
+      <li><div class="face"><img src="../../shots/mobile/watch-en-list.webp" width="396" height="484" loading="lazy" alt="Watch list of recordings"></div><p class="cap">List</p></li>
     </ul>
   </section>
-
-  <section class="shots design">
-    <h2>New watch design</h2>
-    <p class="lead">The new watch design, finalized on 2026-10-31. This is a design mockup. Real screenshots will follow once the simulator is back.</p>
-    <img src="../../shots/mobile/overview-v1.webp" width="1600" height="911" loading="lazy" alt="New watch design mockup, 12 screens: home, recording, saved, list and consent">
-  </section>
-
-  <p class="foot-note">Screenshots from the simulator, version 0.1.0.</p>
 </main>
 
 <footer class="wrap">

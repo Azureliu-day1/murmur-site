@@ -126,6 +126,16 @@ nav {
   .navlinks a[hreflang] { display: none; }
 }
 
+/* 「手机与手表」那一条(class="nav-wide",2026-10-31 进导航):820 以上才显示,但它让整排变长 ——
+   中文整排在 821–889 宽、英文在 821–1047 宽会顶出横向滚动条(实测 scrollWidth)。
+   这两段宽度里先收起它,其余照旧;820 以下本来就只留 nav-keep。 */
+@media (max-width: 900px) {
+  .navlinks a.nav-wide { display: none; }
+}
+@media (max-width: 1060px) {
+  html[lang="en"] .navlinks a.nav-wide { display: none; }
+}
+
 .eyebrow {
   font-size: 12px; font-weight: 600; letter-spacing: .18em;
   text-transform: uppercase; color: var(--faint); margin-bottom: 14px;

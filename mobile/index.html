@@ -2,20 +2,18 @@
 <html lang="zh-CN">
 <head>
 <meta charset="utf-8">
-<!-- CSP:同 demo 页那条。本页零脚本内联、零样式内联,样式全在 mobile.css;图都是本站的 webp。
-     本页不进导航、不进 sitemap,先 noindex(App 还没上架,要不要公开另定)。 -->
+<!-- CSP:同 demo 页那条。本页零脚本内联、零样式内联,样式全在 mobile.css;图都是本站的 webp。 -->
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="robots" content="noindex">
 <title>手机与手表 · Murmur</title>
-<meta name="description" content="Murmur 在 iPhone 和 Apple Watch 上的样子。还没上架,这里先放模拟器截图。">
+<meta name="description" content="长录音在手机上,抬腕就录在手表上。iPhone 和 Apple Watch 版本即将推出。">
 <link rel="canonical" href="https://maobenbeginner.com/mobile/">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Murmur">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:url" content="https://maobenbeginner.com/mobile/">
 <meta property="og:title" content="手机与手表 · Murmur">
-<meta property="og:description" content="Murmur 在 iPhone 和 Apple Watch 上的样子。还没上架,这里先放模拟器截图。">
+<meta property="og:description" content="长录音在手机上,抬腕就录在手表上。iPhone 和 Apple Watch 版本即将推出。">
 <meta property="og:image" content="https://maobenbeginner.com/og.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -39,6 +37,7 @@
       <a href="../skills/index.html">技能</a>
       <a class="nav-keep" href="../try/index.html">试一试</a>
       <a href="../index.html#pinyin">输入法</a>
+      <a class="nav-wide" href="../mobile/index.html" aria-current="page">手机与手表</a>
       <a href="../demo/index.html">拼音演示</a>
       <a class="nav-keep" href="../en/mobile/index.html" hreflang="en" lang="en">English</a>
       <!-- ⚠️ class="nav-signin" 是给 v2-nav.js 认的(本机有会话时换成「账户」) -->
@@ -53,14 +52,14 @@
   <div class="t">
     <p class="eyebrow">手机与手表</p>
     <h1>Murmur 在手机和手表上</h1>
-    <p class="sub">长录音在手机上,抬腕就录在手表上。还没上架,先放截图。</p>
+    <p class="sub">长录音在手机上,抬腕就录在手表上。iPhone 和 Apple Watch 版本即将推出。</p>
   </div>
 </header>
 
 <main class="wrap">
   <section class="shots">
     <h2>iPhone</h2>
-    <ul class="row" tabindex="0" aria-label="iPhone 截图,可以左右滑">
+    <ul class="row" tabindex="0" aria-label="iPhone 上的界面,可以左右滑">
       <li><img src="../shots/mobile/lecture-1-home-zh.webp" width="780" height="1696" loading="lazy" alt="iPhone 长录音页,准备好了"><p class="cap">准备好了</p></li>
       <li><img src="../shots/mobile/lecture-2-recording-zh.webp" width="780" height="1696" loading="lazy" alt="iPhone 长录音页,正在录,带样例实时字幕"><p class="cap">正在录</p></li>
       <li><img src="../shots/mobile/lecture-3-done-zh.webp" width="780" height="1696" loading="lazy" alt="iPhone 长录音页,录完了,下面是样例转写"><p class="cap">录完了</p></li>
@@ -72,7 +71,7 @@
 
   <section class="shots">
     <h2>手表录的,手机上看</h2>
-    <ul class="row" tabindex="0" aria-label="手表录音在手机上的截图,可以左右滑">
+    <ul class="row" tabindex="0" aria-label="手表录音在手机上的样子,可以左右滑">
       <li><img src="../shots/mobile/phone-watch-2-done-zh.webp" width="780" height="1696" loading="lazy" alt="手机历史页,手表录的一条已转写"><p class="cap">已转写</p></li>
       <li><img src="../shots/mobile/phone-watch-3-detail-zh.webp" width="780" height="1696" loading="lazy" alt="手机上看手表录音的样例转写"><p class="cap">这一节</p></li>
       <li><img src="../shots/mobile/phone-watch-4-failed-zh.webp" width="780" height="1696" loading="lazy" alt="手机历史页,手表录的一条转写失败,可以重试"><p class="cap">失败了</p></li>
@@ -83,24 +82,16 @@
   <section class="shots">
     <h2>Apple Watch</h2>
     <ul class="grid">
-      <li><div class="face"><img src="../shots/mobile/45mm-zh-consent.webp" width="396" height="484" loading="lazy" alt="手表同意页,录音前先问在场的人"></div><p class="cap">同意</p></li>
-      <li><div class="face"><img src="../shots/mobile/45mm-zh-idle.webp" width="396" height="484" loading="lazy" alt="手表待命页,大号录音按钮"></div><p class="cap">待命</p></li>
-      <li><div class="face"><img src="../shots/mobile/45mm-zh-recording.webp" width="396" height="484" loading="lazy" alt="手表录音中,只显示时间"></div><p class="cap">录音中</p></li>
-      <li><div class="face"><img src="../shots/mobile/45mm-zh-peek.webp" width="396" height="484" loading="lazy" alt="手表录音中抬腕看一眼已录时长"></div><p class="cap">看一眼</p></li>
-      <li><div class="face"><img src="../shots/mobile/45mm-zh-sent.webp" width="396" height="484" loading="lazy" alt="手表录完已传给 iPhone"></div><p class="cap">已传</p></li>
-      <li><div class="face"><img src="../shots/mobile/45mm-zh-waiting.webp" width="396" height="484" loading="lazy" alt="手表录完,等连上 iPhone 再传"></div><p class="cap">等连上</p></li>
-      <li><div class="face"><img src="../shots/mobile/45mm-zh-interrupted.webp" width="396" height="484" loading="lazy" alt="手表录音被来电打断,前一段已保存"></div><p class="cap">被打断</p></li>
-      <li><div class="face"><img src="../shots/mobile/45mm-zh-list.webp" width="396" height="484" loading="lazy" alt="手表录音列表"></div><p class="cap">列表</p></li>
+      <li><div class="face"><img src="../shots/mobile/watch-zh-consent.webp" width="396" height="484" loading="lazy" alt="手表同意页,录音前先问在场的人"></div><p class="cap">同意</p></li>
+      <li><div class="face"><img src="../shots/mobile/watch-zh-idle.webp" width="396" height="484" loading="lazy" alt="手表首屏,大号录音按钮和上一条录音"></div><p class="cap">待命</p></li>
+      <li><div class="face"><img src="../shots/mobile/watch-zh-recording.webp" width="396" height="484" loading="lazy" alt="手表录音中,只显示时刻和一颗小点"></div><p class="cap">录音中</p></li>
+      <li><div class="face"><img src="../shots/mobile/watch-zh-peek.webp" width="396" height="484" loading="lazy" alt="手表录音中,看一眼已录时长"></div><p class="cap">看一眼</p></li>
+      <li><div class="face"><img src="../shots/mobile/watch-zh-hold.webp" width="396" height="484" loading="lazy" alt="手表长按停止录音,小点外的细环在走"></div><p class="cap">长按停止</p></li>
+      <li><div class="face"><img src="../shots/mobile/watch-zh-sending.webp" width="396" height="484" loading="lazy" alt="手表录完已保存,正在传给 iPhone"></div><p class="cap">正在传</p></li>
+      <li><div class="face"><img src="../shots/mobile/watch-zh-sent.webp" width="396" height="484" loading="lazy" alt="手表录音已传给 iPhone,在手机上看转写"></div><p class="cap">已传</p></li>
+      <li><div class="face"><img src="../shots/mobile/watch-zh-list.webp" width="396" height="484" loading="lazy" alt="手表录音列表"></div><p class="cap">列表</p></li>
     </ul>
   </section>
-
-  <section class="shots design">
-    <h2>手表新版</h2>
-    <p class="lead">2026-10-31 定稿的新版手表界面,这是设计稿。真机截图等模拟器恢复后补上。</p>
-    <img src="../shots/mobile/overview-v1.webp" width="1600" height="911" loading="lazy" alt="新版手表界面设计稿,12 屏:首屏、录音中、已保存、列表与同意页">
-  </section>
-
-  <p class="foot-note">截图来自模拟器,版本 0.1.0。</p>
 </main>
 
 <footer class="wrap">

@@ -800,6 +800,16 @@ footer a:hover { color: var(--ink); text-decoration: none; }
   .navlinks a[hreflang] { display: none; }
 }
 
+/* 「手机与手表」那一条(class="nav-wide",2026-10-31 进导航):820 以上才显示,但它让整排变长 ——
+   中文整排在 821–889 宽、英文在 821–1047 宽会顶出横向滚动条(实测 scrollWidth)。
+   这两段宽度里先收起它,其余照旧;820 以下本来就只留 nav-keep。 */
+@media (max-width: 900px) {
+  .navlinks a.nav-wide { display: none; }
+}
+@media (max-width: 1060px) {
+  html[lang="en"] .navlinks a.nav-wide { display: none; }
+}
+
 /* ── SITE-V3 首页文案(COPY.md + round2 FINAL,2026-10-13) ── */
 .keys4 .feature { grid-template-columns: 240px 1fr auto; }
 .keys-foot { margin-top: 22px; color: var(--faint); font-size: 13.5px; }
@@ -947,6 +957,7 @@ footer a:hover { color: var(--ink); text-decoration: none; }
       <!-- ⭐ class="nav-keep" = stays visible on a phone (see the @media note) -->
       <a class="nav-keep" href="try/index.html">Try it</a>
       <a href="#pinyin">Input method</a>
+      <a class="nav-wide" href="mobile/index.html">Phone &amp; Watch</a>
       <a href="demo/index.html">Pinyin demo</a>
       <a class="nav-keep" href="../index.html" hreflang="zh-CN" lang="zh-CN">中文</a>
       <!-- ⚠️ class="nav-signin" is what v2-nav.js looks for: when this machine has a
