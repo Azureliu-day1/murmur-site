@@ -947,6 +947,14 @@ footer a:hover { color: var(--ink); text-decoration: none; }
   .navlinks a.nav-member { padding: 0 8px; }
   .nav-cta { padding: 6px 9px; }
 }
+/* ── #mobile(2026-10-31):首页「手机和手表上也能录」一节。图框借 pinyin.css 的 .py-shot;
+   比例由 .mb-frame 给(2400×1400),图还没到 / 没有时照样占位,页面不塌。
+   ⛔ 首页不引 v2.css,所以这一段写在页内(简报原写 v2.css 末尾,改到这里)。中英各一份。 */
+#mobile .mb-shot { margin-top: 36px; padding: 12px; }
+.mb-frame { aspect-ratio: 2400 / 1400; background: var(--paper); border-radius: 8px; overflow: hidden; }
+#mobile .mb-frame img { width: 100%; height: 100%; object-fit: cover; border-radius: 0; }
+#mobile .mb-link { margin-top: 20px; font-size: 14.5px; }
+@media (max-width: 600px) { #mobile .mb-shot { margin-top: 28px; padding: 8px; } }
 </style>
 </head>
 <body>
@@ -1210,6 +1218,14 @@ footer a:hover { color: var(--ink); text-decoration: none; }
   </div>
 </section>
 
+<!-- ── 手机与手表(2026-10-31):一节带图,指向 /mobile/。文案只用基调「文案红线」里可写的事实 ── -->
+<section class="wrap" id="mobile">
+  <h2 class="reveal">手机和手表上也能录。</h2>
+  <p class="sub reveal">上课、开会,点一下手表就开始,录完在手机上看完整转写。iPhone 和 Apple Watch 版本即将推出。</p>
+  <figure class="py-shot mb-shot reveal"><div class="mb-frame"><img src="shots/promo/hero-zh.webp" width="2400" height="1400" loading="lazy" alt="iPhone 正在长录音,一句句出字;旁边的 Apple Watch 正在录"></div></figure>
+  <p class="mb-link reveal"><a href="mobile/index.html">看看手机与手表 →</a></p>
+</section>
+
 <!-- ── 常见问题 ── -->
 <section class="wrap" id="faq">
   <h2 class="reveal">常见问题</h2>
@@ -1272,6 +1288,7 @@ footer a:hover { color: var(--ink); text-decoration: none; }
   <div class="links">
     <a href="https://othersstudio.tech">othersstudio.tech</a>
     <a href="guide/index.html">指南</a>
+    <a href="mobile/index.html">手机与手表</a>
     <a href="changelog/index.html">更新记录</a>
     <a href="privacy.html">隐私</a>
   <a href="tos.html">条款</a>

@@ -1,61 +1,110 @@
 /* ══════════════════════════════════════════════════════════════════════════
-   mobile.css · /mobile/ 与 /en/mobile/ 的页面局部样式(2026-10-31)
-   两页都引:../v2.css(共用零件)→ 这份。
+   mobile.css · /mobile/ 与 /en/mobile/ 的页面局部样式(2026-10-31 重做成产品页)
+   两页都引:../v2.css(共用零件:token / 顶栏 / .eyebrow / .btn / 页脚)→ 这份。
    ⛔ 不新增颜色:全部用 v2.css 的 token;手表卡片的黑底是表盘本身的颜色(表盘图的底就是纯黑)。
-   ⛔ 不要动画(简报定)。
+   ⛔ 不要动画(简报定)。本页零脚本,除 v2-nav.js。
    为什么单独一份外链而不是页内 <style>:两页共用,CSP 也只放 'self'。
+   结构:主图区 .m-hero → 每节 .m-sec(文字 .m-steps | 图)→ 行动区 .m-outro。
    ══════════════════════════════════════════════════════════════════════════ */
 
-/* ── 页头:配方同 demo/demo.css ──
-   ⛔ .head 不许写 padding 简写:会把 .wrap 的左右 32px 清零。 */
-.head { padding-block: 64px 0; display: flex; align-items: flex-start; gap: 24px; }
-.head .t { flex: 1; min-width: 0; }
-.head h1 { font-size: clamp(26px, 3.4vw, 34px); font-weight: 600; line-height: 1.35; letter-spacing: .01em; max-width: 12.5em; }
-.head .sub { color: var(--second); font-size: 15.5px; max-width: 38em; margin-top: 14px; }
+/* ── 主图区 ──
+   ⛔ .m-hero 不许写 padding 简写:会把 .wrap 的左右 32px 清零。 */
+.m-hero { padding-top: 64px; }
+.m-hero h1 { font-size: clamp(28px, 4vw, 42px); font-weight: 600; line-height: 1.3; letter-spacing: .01em; }
+.m-hero .sub { color: var(--second); font-size: 16px; max-width: 38em; margin-top: 16px; }
+.m-cta { margin-top: 28px; display: flex; gap: 14px; flex-wrap: wrap; }
+
+/* 图框:比例由框给(2400×1400),图还没到 / 没有时框照样占位,页面不塌。
+   卡片色 + --line2 边 + --shadow,同首页 .py-shot 的手感。 */
+.m-frame {
+  margin: 40px 0 0; background: var(--card); border: 1px solid var(--line2);
+  border-radius: 16px; padding: 12px; box-shadow: var(--shadow);
+}
+.m-frame .ratio { aspect-ratio: 2400 / 1400; background: var(--paper); border-radius: 8px; overflow: hidden; }
+.m-frame img { display: block; width: 100%; height: 100%; object-fit: cover; color: var(--faint); font-size: 13px; }
 
 /* ── 每一节 ── */
-.shots { margin-top: 56px; }
-.shots h2 { font-size: 20px; font-weight: 600; line-height: 1.4; }
-.shots .lead { color: var(--second); font-size: 14.5px; max-width: 40em; margin-top: 8px; }
+.m-sec { margin-top: 96px; }
+.m-sec .eyebrow { margin-bottom: 8px; }
+.m-sec h2 { font-size: clamp(24px, 3vw, 30px); font-weight: 600; line-height: 1.35; letter-spacing: .01em; }
+.m-sec .lead { color: var(--second); font-size: 15.5px; max-width: 34em; margin-top: 12px; }
+
+/* 文字 | 图 两栏;图那一栏按内容宽,文字吃剩下的 */
+.m-split {
+  display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 32px 48px;
+  align-items: start; margin-top: 28px;
+}
+.m-split > * { min-width: 0; }
+
+/* 一步:序号 | 说明(配方同首页 pinyin.css 的 .py-step) */
+.m-step {
+  display: grid; grid-template-columns: 40px 1fr; gap: 14px;
+  padding: 14px 0; border-top: 1px solid var(--line);
+}
+.m-step > b {
+  font-family: "Newsreader", serif; font-weight: 600; font-size: 22px;
+  color: var(--line2); line-height: 1.35;
+}
+.m-step > div { font-size: 14.5px; line-height: 1.75; color: var(--second); }
+.m-step > div strong { display: block; color: var(--ink); font-weight: 600; margin-bottom: 2px; }
+.m-fine { margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--line); font-size: 13.5px; color: var(--faint); }
 
 /* ── 手机界面图:横向一排,手机宽度下左右滑 ──
    min-width:0 + overflow-x:auto 只让这一排自己滚,页面不横向溢出。 */
 .row {
-  list-style: none; padding: 4px 0 14px; margin: 20px 0 0;
+  list-style: none; padding: 4px 0 14px; margin: 0;
   display: flex; gap: 18px; overflow-x: auto;
   scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch;
 }
-.row li { flex: 0 0 auto; width: 210px; scroll-snap-align: start; }
+.row li { flex: 0 0 auto; width: 180px; scroll-snap-align: start; }
 .row img {
-  display: block; width: 100%; height: auto;
-  border: 1px solid var(--line); border-radius: 28px;
+  display: block; width: 100%; height: auto; aspect-ratio: 780 / 1696;
+  border: 1px solid var(--line); border-radius: 26px;
   background: var(--card);
 }
 
-/* ── 手表界面图:两行四列,手机宽度两列;深色底卡片 ── */
+/* ── 手表界面图:宽屏两行两列在右栏,窄屏一行四列 / 手机两列;深色底卡片 ── */
 .grid {
-  list-style: none; padding: 0; margin: 20px 0 0;
-  display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 18px;
+  list-style: none; padding: 0; margin: 0;
+  display: grid; grid-template-columns: repeat(2, 170px); gap: 18px;
 }
 .grid li { min-width: 0; }
 .face {
   background: #000; border: 1px solid var(--line2); border-radius: 24px;
   padding: 10px;
 }
-.face img { display: block; width: 100%; height: auto; border-radius: 16px; }
+.face img { display: block; width: 100%; height: auto; aspect-ratio: 792 / 968; border-radius: 16px; }
 
 /* 每张图下面那一行小字 */
 .cap { margin-top: 8px; font-size: 13px; color: var(--second); text-align: center; }
 
+/* 录音在你手里:两三句 + 隐私页链接 */
+.m-plain { margin-top: 20px; display: grid; gap: 10px; max-width: 40em; }
+.m-plain p { color: var(--second); font-size: 15px; }
+.m-link { margin-top: 18px; font-size: 14.5px; }
+
+/* ── 行动区 ── */
+.m-outro { border-top: 1px solid var(--line); padding-top: 56px; }
+.m-outro .big { font-size: clamp(20px, 2.4vw, 24px); font-weight: 600; line-height: 1.5; max-width: 26em; }
+
+@media (max-width: 980px) {
+  .m-split { grid-template-columns: minmax(0, 1fr); }
+  .grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}
+
 @media (max-width: 820px) {
-  .head { padding-top: 44px; flex-direction: column; gap: 14px; }
-  .shots { margin-top: 44px; }
+  .m-hero { padding-top: 44px; }
+  .m-sec { margin-top: 72px; }
   /* 顶栏收起的那条,同 demo 页:只留 nav-keep 与「下载」 */
   .navlinks a:not(.nav-cta):not(.nav-keep), .navlinks .soon { display: none; }
 }
 
 @media (max-width: 600px) {
-  .row li { width: 168px; }
+  .m-hero { padding-top: 36px; }
+  .m-frame { margin-top: 28px; padding: 8px; border-radius: 14px; }
+  .m-sec { margin-top: 60px; }
+  .m-outro { padding-top: 44px; }
+  .row li { width: 160px; }
   .row img { border-radius: 22px; }
   .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
 }
