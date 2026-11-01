@@ -29,8 +29,9 @@ FORBIDDEN:第三方设备 / 窗口外框素材;无头 Chrome 必带 --use-mock-k
 ## 派工账
 | 队 | 模型 / 档 | 开始 | 结束 | 产出 |
 |---|---|---|---|---|
-| promo-ime | Opus high | 11-01 15:5x | | 14 张母版 + 8 个进站文件 shots/promo-ime/ |
+| promo-ime | Opus high | 11-01 15:5x | 11-01 16:4x(约 10 + 10 分钟) | 14 张母版 + 8 个进站文件 shots/promo-ime/(hero 按领导者裁定补 AI 卡重出) |
 | site-ime | Opus high | 11-01 15:5x | | /pinyin/ 两页 + 三个演示 + 首页入口 + 页脚 |
 
 ## 进度板
 - 11-01 15:5x 开工(两队并行)。
+- 11-01 16:4x promo-ime 交付,领导者看过 hero-zh:浅灰底 + 珊瑚小面积、CSS 画的窗口与卡,口号「打字也带 AI」与卡对得上;等 site-ime 合并后一起推。
