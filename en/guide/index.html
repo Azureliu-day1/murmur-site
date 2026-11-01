@@ -231,10 +231,11 @@
       <div>
         <div class="g-row"><span class="k">What it is</span><div>For long input, the cloud suggests one whole-sentence candidate. It is a preview for now.</div></div>
         <div class="g-row"><span class="k">How to use</span><div>
-          <p>There is a fixed cloud slot at the end of the candidate bar. A request is sent only when you click it or press <kbd>⌥↩</kbd>.</p>
-          <p>The result fills the same slot. Click it or press <kbd>⌥↩</kbd> again to commit. It takes no number key and never commits by itself. It does not work in password fields or in apps on the deny list.</p>
+          <p>There is a fixed cloud slot at the end of the candidate bar. Once it is on, a whole-sentence guess is requested when you pause; you can also click the slot or press <kbd>⌥↩</kbd>.</p>
+          <p>The result fills the same slot. Press <kbd>Tab</kbd> or <kbd>⌥↩</kbd> to commit it. It is not shown when it matches the on-device top candidate. It takes no number key and never commits by itself. It does not work in password fields or in apps on the deny list.</p>
+          <p>You can change the shortcut in Settings → Input Method → Shortcuts.</p>
         </div></div>
-        <div class="g-row"><span class="k">Where</span><div><b>Off by default. Sign-in required.</b> Turn it on in Settings → Input Method → Cloud candidates (preview). A confirmation page comes first. "Request automatically when I pause" is also off by default.</div></div>
+        <div class="g-row"><span class="k">Where</span><div><b>Off by default. Sign-in required.</b> Turn it on in Settings → Input Method → Cloud candidates (preview). A confirmation page comes first. "Request automatically when I pause" is on by default and can be turned off on its own.</div></div>
       </div>
       <!-- shot: ime-cloud-slot still missing: no existing render shows the cloud slot. The disclosure text stays. -->
       <figure class="py-shot"><p class="py-quote">Once this is on, the pinyin you have not committed yet is sent to the Murmur server and passed on to a third-party model service to guess the whole sentence; what you are typing can be inferred from it. Text you have already committed, your personal lexicon and which app you are in are not sent. After you turn it off, no new requests are sent; what has already been sent cannot be taken back.</p><figcaption>The text next to the switch in Settings.</figcaption></figure>
