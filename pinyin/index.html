@@ -1,0 +1,225 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<!-- CSP:同 demo 页那条。本页零脚本内联、零样式内联,样式全在 pinyin/pinyin.css;三个演示是外链的 pinyin/pinyin.js,
+     打字演示借 /demo/ 的词表与引擎(demo-words.js、demo.js,只读不改)。演示零网络。 -->
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>拼音输入法 · Murmur</title>
+<meta name="description" content="Murmur 自带一个拼音输入法:和听写共用一本词典,打到一半按一个键,让 AI 整理正在打的这句。">
+<link rel="canonical" href="https://maobenbeginner.com/pinyin/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Murmur">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:url" content="https://maobenbeginner.com/pinyin/">
+<meta property="og:title" content="拼音输入法 · Murmur">
+<meta property="og:description" content="Murmur 自带一个拼音输入法:和听写共用一本词典,打到一半按一个键,让 AI 整理正在打的这句。">
+<meta property="og:image" content="https://maobenbeginner.com/shots/promo-ime/og-zh.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Murmur 的拼音输入法:候选条和 AI 整理卡">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="alternate" hreflang="zh-CN" href="https://maobenbeginner.com/pinyin/">
+<link rel="alternate" hreflang="en" href="https://maobenbeginner.com/en/pinyin/">
+<link rel="alternate" hreflang="x-default" href="https://maobenbeginner.com/pinyin/">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<link rel="stylesheet" href="../v2.css">
+<link rel="stylesheet" href="../pinyin/pinyin.css">
+</head>
+<body>
+
+<nav>
+  <div class="wrap navrow">
+    <a class="brand" href="../index.html"><svg width="30" height="15" viewBox="0 0 200 100" aria-hidden="true"><path d="M12.0 50.0 L14.0 40.1 L16.0 31.7 L18.0 25.2 L20.0 21.0 L22.0 19.0 L24.0 19.2 L26.0 21.3 L28.0 25.2 L30.0 30.3 L32.0 36.2 L34.0 42.4 L36.0 48.5 L38.0 54.2 L40.0 59.0 L42.0 62.7 L44.0 65.2 L46.0 66.5 L48.0 66.5 L50.0 65.5 L52.0 63.5 L54.0 60.9 L56.0 57.8 L58.0 54.6 L60.0 51.5 L62.0 48.6 L64.0 46.2 L66.0 44.4 L68.0 43.2 L70.0 42.7 L72.0 42.7 L74.0 43.2 L76.0 44.1 L78.0 45.3 L80.0 46.7 L82.0 48.0 L84.0 49.2 L86.0 50.2 L88.0 51.0 L90.0 51.5 L92.0 51.8 L94.0 51.8 L96.0 51.6 L98.0 51.3 L100.0 50.9 L102.0 50.5 L104.0 50.2 L106.0 50.0 L190 50" fill="none" stroke="var(--coral)" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/></svg>Murmur</a>
+    <div class="navlinks">
+      <a href="../guide/index.html">指南</a>
+      <a href="../skills/index.html">技能</a>
+      <a class="nav-keep" href="../try/index.html">试一试</a>
+      <a href="index.html" aria-current="page">输入法</a>
+      <a class="nav-wide" href="../mobile/index.html">手机与手表</a>
+      <a href="../demo/index.html">拼音演示</a>
+      <a class="nav-keep" href="../en/pinyin/index.html" hreflang="en" lang="en">English</a>
+      <!-- ⚠️ class="nav-signin" 是给 v2-nav.js 认的(本机有会话时换成「账户」) -->
+      <a class="nav-signin nav-keep" href="../login/index.html">登录</a>
+      <a class="nav-member nav-keep" href="../member/index.html">会员订阅</a>
+      <a class="nav-cta" href="../index.html#download">下载</a>
+    </div>
+  </div>
+</nav>
+
+<!-- 文案只用 docs/BASELINE-site-ime.md「文案红线」里可写的事实,不扩 -->
+<header class="pn-hero wrap">
+  <p class="eyebrow">拼音输入法</p>
+  <h1>Murmur 自带一个拼音输入法</h1>
+  <p class="sub">和听写共用一本词典。打到一半,按一个键,AI 整理正在打的这句。</p>
+  <div class="pn-cta">
+    <a class="btn btn-primary" href="../index.html#download">下载 Mac 版</a>
+    <a class="btn btn-quiet" href="#type">先在这页试打</a>
+  </div>
+  <figure class="pn-frame"><div class="ratio"><img src="../shots/promo-ime/hero-zh.webp" width="2400" height="1350" alt="Murmur 拼音输入法的候选条,和 AI 整理这句的卡片"></div></figure>
+</header>
+
+<main class="wrap">
+  <section class="pn-sec" id="dict">
+    <p class="eyebrow">一本词典</p>
+    <h2>和听写共用一本词典</h2>
+    <div class="pn-steps pn-cols">
+      <div class="pn-step"><b>01</b><div><strong>教一次,两边都会</strong>你教它听对的名字,打字时出现在候选里。</div></div>
+      <div class="pn-step"><b>02</b><div><strong>打过的,说话也认得</strong>你打过的词,说话时它也认得。</div></div>
+      <div class="pn-step"><b>03</b><div><strong>越用越顺</strong>选过的词,下次排在前面。</div></div>
+    </div>
+  </section>
+
+  <section class="pn-sec" id="type">
+    <p class="eyebrow">打字</p>
+    <h2>打得准</h2>
+    <div class="pn-split">
+      <div class="pn-steps">
+        <div class="pn-step"><b>01</b><div><strong>第一个就对</strong>我们拿自己准备的 125 句口语测过,第一个候选就对的有 80.0%。</div></div>
+        <div class="pn-step"><b>02</b><div><strong>全拼和双拼</strong>全拼、小鹤双拼、自然码双拼都能打。</div></div>
+        <div class="pn-step"><b>03</b><div><strong>一页五个</strong><kbd>1</kbd>到<kbd>5</kbd>选字,<kbd>空格</kbd>上屏,<kbd>退格</kbd>删拼音。</div></div>
+        <p class="pn-fine">网页里的词表只够演示,完整词库在 App 里。<a href="../demo/index.html">在网页里自由试打 →</a></p>
+      </div>
+      <div class="pn-dm" id="dmType">
+        <div class="pn-doc" data-box tabindex="0" role="textbox" aria-label="演示输入框。打拼音,1 到 5 选字,空格上屏" aria-describedby="typeHint"><span class="pn-out" data-out></span><span class="pn-comp" data-comp></span><span class="pn-caret"></span><span class="pn-ph" data-ph>点这里打拼音,或点下面一句</span></div>
+        <div class="pn-slot"><div class="pn-bar" data-bar hidden><span class="pn-py" data-py></span><span class="pn-cands" data-cands></span><span class="pn-pg" data-pg></span></div></div>
+        <div class="pn-presets" role="group" aria-label="预置的三句">
+          <button class="chip" type="button" data-preset="mingtianxiawukaihui">明天下午开会</button>
+          <button class="chip" type="button" data-preset="wanshangyiqichifan">晚上一起吃饭</button>
+          <button class="chip" type="button" data-preset="xiexienidebangzhu">谢谢你的帮助</button>
+          <button class="chip pn-quiet" type="button" data-clear>清空</button>
+        </div>
+        <p class="pn-hint" id="typeHint" data-hint>点一句,拼音会填进框里。按 1 到 5 选字,空格上屏。</p>
+        <p class="pn-sr" aria-live="polite" data-live></p>
+        <noscript><p class="pn-hint">这个演示要开 JavaScript 才能用。</p></noscript>
+      </div>
+    </div>
+  </section>
+
+  <section class="pn-sec" id="ai">
+    <p class="eyebrow">AI</p>
+    <h2>AI 整理这句</h2>
+    <div class="pn-split">
+      <div class="pn-steps">
+        <div class="pn-step"><b>01</b><div><strong>一个键</strong>打到一半,按 <kbd>⌥⇧Space</kbd>,AI 整理正在打的这句。按一次就出,再按一次用上。</div></div>
+        <div class="pn-step"><b>02</b><div><strong>六个动作</strong>整理、正式、随意、续写、英文、问。</div></div>
+        <div class="pn-step"><b>03</b><div><strong>键可以改</strong>快捷键可以在设置里改。</div></div>
+        <p class="pn-fine">登录后可用。</p>
+      </div>
+      <div class="pn-dm" id="dmAi" data-state="draft">
+        <div class="pn-doc pn-doc-ai" data-text>那个我们明天下午的会议可能要推一下因为老师那边临时有事</div>
+        <div class="pn-card" data-card hidden>
+          <p class="pn-card-h"><span class="pn-card-tag">AI</span><span data-cardh>正在整理…</span></p>
+          <div class="pn-card-body">
+            <p class="pn-busy" data-busy aria-hidden="true"><i></i><i></i><i></i></p>
+            <p class="pn-card-out" data-out></p>
+          </div>
+          <div class="pn-chips" role="group" aria-label="六个动作" data-chips>
+            <button type="button" class="pn-chip" data-chip="tidy" aria-pressed="true">整理</button>
+            <button type="button" class="pn-chip" data-chip="formal" aria-pressed="false">正式</button>
+            <button type="button" class="pn-chip" data-chip="casual" aria-pressed="false">随意</button>
+            <button type="button" class="pn-chip" data-chip="cont" aria-pressed="false">续写</button>
+            <button type="button" class="pn-chip" data-chip="en" aria-pressed="false">英文</button>
+            <button type="button" class="pn-chip" data-chip="ask" aria-pressed="false">问</button>
+          </div>
+        </div>
+        <div class="pn-acts">
+          <button class="btn btn-primary pn-btn" type="button" data-run>AI 整理这句</button>
+          <button class="btn btn-primary pn-btn" type="button" data-use hidden>用上</button>
+          <button class="btn btn-quiet pn-btn" type="button" data-again hidden>再来一次</button>
+        </div>
+        <p class="pn-hint" data-hint>点「AI 整理这句」,或按回车。</p>
+        <p class="pn-sr" aria-live="polite" data-live></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="pn-sec" id="cloud">
+    <p class="eyebrow">预览</p>
+    <h2>云候选(预览)</h2>
+    <div class="pn-split">
+      <div class="pn-steps">
+        <div class="pn-step"><b>01</b><div><strong>停顿就猜整句</strong>打开后,打字停顿时让云端猜整句,按 <kbd>Tab</kbd> 上屏。</div></div>
+        <div class="pn-step"><b>02</b><div><strong>不重复</strong>云端结果只在和本机不同时出现。</div></div>
+        <div class="pn-step"><b>03</b><div><strong>默认关</strong>默认关,要登录。</div></div>
+        <p class="pn-privacy">打开后,还没上屏的拼音会发到 Murmur 服务器并转给第三方模型服务来猜整句;默认关。</p>
+      </div>
+      <figure class="pn-dm pn-cloud" role="img" aria-label="候选条:本机候选在前,末尾一格是云端猜的整句,按 Tab 上屏">
+        <div class="pn-doc pn-doc-static"><span class="pn-comp">mingtianxiawukaihuima</span><span class="pn-caret"></span></div>
+        <div class="pn-slot"><div class="pn-bar pn-bar-static"><span class="pn-py">ming tian xia wu kai hui ma</span><span class="pn-cands"><span class="pn-cand on"><i>1</i>明天下午开会</span><span class="pn-cand"><i>2</i>明天</span><span class="pn-cand"><i>3</i>明</span></span><span class="pn-cloudslot"><i>Tab</i>明天下午开会吗</span></div></div>
+        <figcaption>末尾那一格是云端猜的整句。</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="pn-sec" id="small">
+    <p class="eyebrow">小东西</p>
+    <h2>顺手的小东西</h2>
+    <div class="pn-split">
+      <div class="pn-steps">
+        <div class="pn-step"><b>01</b><div><strong>退格退回</strong>上屏后 1.5 秒内按退格,整个词退回拼音重选。</div></div>
+        <div class="pn-step"><b>02</b><div><strong>智能标点</strong>中文标点用全角,数字后面用半角,网址和邮箱直接走英文。</div></div>
+        <div class="pn-step"><b>03</b><div><strong>双拼与模糊音</strong>全拼、小鹤、自然码。模糊音 9 对,只勾你分不清的。</div></div>
+        <div class="pn-step"><b>04</b><div><strong>候选窗外观</strong>字号、强调色、横排竖排,都能自己调。</div></div>
+        <div class="pn-step"><b>05</b><div><strong>Emoji 与快捷短语</strong>Emoji 面板和快捷短语默认关,快捷短语自己加。</div></div>
+        <div class="pn-step"><b>06</b><div><strong>Spotlight 里</strong>打开 Spotlight 时,自动切到苹果拼音。</div></div>
+      </div>
+      <div class="pn-dm" id="dmUndo" data-state="compose">
+        <div class="pn-doc" data-box tabindex="0" role="textbox" aria-label="演示输入框。上屏后 1.5 秒内按退格,整个词退回拼音" aria-describedby="undoHint"><span class="pn-out" data-out></span><span class="pn-comp" data-comp></span><span class="pn-caret"></span></div>
+        <div class="pn-timer" data-timer aria-hidden="true"><i data-tbar></i></div>
+        <div class="pn-slot"><div class="pn-bar" data-bar hidden><span class="pn-py" data-py></span><span class="pn-cands" data-cands></span><span class="pn-pg" data-pg></span></div></div>
+        <div class="pn-acts">
+          <button class="chip" type="button" data-commit>上屏「输入法」</button>
+          <button class="chip" type="button" data-bs>退格</button>
+          <button class="chip pn-quiet" type="button" data-reset>重来</button>
+        </div>
+        <p class="pn-hint" id="undoHint" data-hint>先上屏「输入法」,再在条走完之前按退格。</p>
+        <p class="pn-sr" aria-live="polite" data-live></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="pn-sec" id="install">
+    <p class="eyebrow">装法</p>
+    <h2>怎么装</h2>
+    <div class="pn-steps pn-cols">
+      <div class="pn-step"><b>01</b><div><strong>随包一起来</strong>输入法在 Mac 版里,不用另外下载。</div></div>
+      <div class="pn-step"><b>02</b><div><strong>一键装上</strong>在 设置 → 输入法 里一键安装、更新、卸载。</div></div>
+      <div class="pn-step"><b>03</b><div><strong>切换</strong>按 <kbd>⌃Space</kbd> 切到 Murmur。</div></div>
+    </div>
+    <p class="pn-fine">不装也不影响听写。</p>
+  </section>
+
+  <section class="pn-sec pn-outro" id="now">
+    <p class="big">下载 Mac 版,在 设置 → 输入法 里一键装上。</p>
+    <div class="pn-cta">
+      <a class="btn btn-primary" href="../index.html#download">下载 Mac 版</a>
+      <a class="btn btn-quiet" href="../demo/index.html">在网页里自由试打</a>
+    </div>
+  </section>
+</main>
+
+<footer class="wrap">
+  <span class="brand"><svg width="30" height="15" viewBox="0 0 200 100" aria-hidden="true"><path d="M12.0 50.0 L14.0 40.1 L16.0 31.7 L18.0 25.2 L20.0 21.0 L22.0 19.0 L24.0 19.2 L26.0 21.3 L28.0 25.2 L30.0 30.3 L32.0 36.2 L34.0 42.4 L36.0 48.5 L38.0 54.2 L40.0 59.0 L42.0 62.7 L44.0 65.2 L46.0 66.5 L48.0 66.5 L50.0 65.5 L52.0 63.5 L54.0 60.9 L56.0 57.8 L58.0 54.6 L60.0 51.5 L62.0 48.6 L64.0 46.2 L66.0 44.4 L68.0 43.2 L70.0 42.7 L72.0 42.7 L74.0 43.2 L76.0 44.1 L78.0 45.3 L80.0 46.7 L82.0 48.0 L84.0 49.2 L86.0 50.2 L88.0 51.0 L90.0 51.5 L92.0 51.8 L94.0 51.8 L96.0 51.6 L98.0 51.3 L100.0 50.9 L102.0 50.5 L104.0 50.2 L106.0 50.0 L190 50" fill="none" stroke="var(--coral)" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/></svg>Murmur</span>
+  <span>Others Studio 出品</span>
+  <div class="links">
+    <a href="https://othersstudio.tech">othersstudio.tech</a>
+    <a href="../mobile/index.html">手机与手表</a>
+    <a href="index.html" aria-current="page">拼音输入法</a>
+    <a href="../changelog/index.html">更新记录</a>
+    <a href="../privacy.html">隐私</a>
+    <a href="../tos.html">条款</a>
+    <!-- 顶栏的语言切换在手机上是收起来的,页脚这一份是它在手机上的落点 -->
+    <a href="../en/pinyin/index.html" hreflang="en" lang="en">English</a>
+  </div>
+</footer>
+
+<!-- 顺序有意义:defer 的脚本按出现顺序执行 —— 词表 → 引擎 → 页面 -->
+<script src="../v2-nav.js" defer></script>
+<script src="../demo/demo-words.js" defer></script>
+<script src="../demo/demo.js" defer></script>
+<script src="../pinyin/pinyin.js" defer></script>
+</body>
+</html>

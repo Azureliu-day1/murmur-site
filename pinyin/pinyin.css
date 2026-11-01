@@ -1,0 +1,201 @@
+/* ══════════════════════════════════════════════════════════════════════════
+   pinyin/pinyin.css · /pinyin/ 与 /en/pinyin/ 的页面局部样式(2026-11-01 新建)
+   两页都引:../v2.css(共用零件:token / 顶栏 / .eyebrow / .btn / .chip / 页脚)→ 这份。
+   ⛔ 和根目录的 /pinyin.css(首页 #pinyin 与 /demo/ 共用,类名 py-)不是一份:这里类名一律 pn- 开头,互不相干。
+   颜色只用 v2.css 的 token,不新增颜色。候选条照 shots/zh/ime-look-light.png 的样子:浅色玻璃、拼音灰字、
+   1–5 编号、当前候选珊瑚块;深色站点下跟 token 变深(候选窗外观本来就跟系统深浅色)。
+   动画只在演示里(AI 卡的「正在整理」三个点、倒计时条),减弱动效时全部停下(文件末尾 @media)。
+   为什么单独一份外链而不是页内 <style>:两页共用,CSP 也只放 'self'。
+   结构:主图区 .pn-hero → 每节 .pn-sec(文字 .pn-steps | 演示 .pn-dm)→ 行动区 .pn-outro。
+   ══════════════════════════════════════════════════════════════════════════ */
+
+/* ── 主图区 ── ⛔ .pn-hero 不许写 padding 简写:会把 .wrap 的左右 32px 清零。 */
+.pn-hero { padding-top: 64px; }
+.pn-hero h1 { font-size: clamp(28px, 4vw, 42px); font-weight: 600; line-height: 1.3; letter-spacing: .01em; }
+.pn-hero .sub { color: var(--second); font-size: 16px; max-width: 38em; margin-top: 16px; }
+.pn-cta { margin-top: 28px; display: flex; gap: 14px; flex-wrap: wrap; }
+
+/* 图框:比例由框给(2400×1350),图还没到时框照样占位,页面不塌 */
+.pn-frame {
+  margin: 40px 0 0; background: var(--card); border: 1px solid var(--line2);
+  border-radius: 16px; padding: 12px; box-shadow: var(--shadow);
+}
+.pn-frame .ratio { aspect-ratio: 2400 / 1350; background: var(--paper); border-radius: 8px; overflow: hidden; }
+.pn-frame img { display: block; width: 100%; height: 100%; object-fit: cover; color: var(--faint); font-size: 13px; }
+
+/* ── 每一节 ── */
+.pn-sec { margin-top: 96px; scroll-margin-top: 84px; }
+.pn-sec .eyebrow { margin-bottom: 8px; }
+.pn-sec h2 { font-size: clamp(24px, 3vw, 30px); font-weight: 600; line-height: 1.35; letter-spacing: .01em; }
+
+/* 文字 | 演示 两栏 */
+.pn-split {
+  display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 480px); gap: 32px 48px;
+  align-items: start; margin-top: 28px;
+}
+.pn-split > * { min-width: 0; }
+.pn-cols { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0 32px; margin-top: 28px; }
+
+/* 一步:序号 | 说明(配方同 /mobile/ 的 .m-step) */
+.pn-step {
+  display: grid; grid-template-columns: 40px 1fr; gap: 14px;
+  padding: 14px 0; border-top: 1px solid var(--line);
+}
+.pn-step > b {
+  font-family: "Newsreader", serif; font-weight: 600; font-size: 22px;
+  color: var(--line2); line-height: 1.35;
+}
+.pn-step > div { font-size: 14.5px; line-height: 1.75; color: var(--second); }
+.pn-step > div strong { display: block; color: var(--ink); font-weight: 600; margin-bottom: 2px; }
+.pn-fine { margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--line); font-size: 13.5px; color: var(--faint); }
+.pn-privacy {
+  margin-top: 16px; padding: 12px 14px; border: 1px solid var(--line2); border-radius: 10px;
+  background: var(--card); font-size: 13.5px; line-height: 1.75; color: var(--second);
+}
+
+kbd {
+  font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: 12px; color: var(--ink);
+  background: var(--card); border: 1px solid var(--line2); border-bottom-width: 2px;
+  border-radius: 5px; padding: 0 6px; margin: 0 2px; white-space: nowrap;
+}
+
+/* ── 演示的外框:卡片色 + --line2 边 + --shadow ── */
+.pn-dm {
+  margin: 0; background: var(--card); border: 1px solid var(--line2);
+  border-radius: 16px; padding: 20px 20px 16px; box-shadow: var(--shadow);
+}
+.pn-dm:focus { outline: none; }
+
+/* 一行「文档」:上屏的字 + 组合中的拼音 + 光标 */
+.pn-doc {
+  position: relative; display: flex; align-items: center; flex-wrap: wrap;
+  min-height: 52px; padding: 8px 12px; border: 1px solid var(--line2); border-radius: 12px;
+  background: var(--paper); font-size: 19px; line-height: 1.5; color: var(--ink);
+  overflow-wrap: anywhere; cursor: text;
+}
+.pn-doc[tabindex]:focus-visible, .pn-doc[tabindex]:focus { outline: none; border-color: var(--coral); box-shadow: 0 0 0 3px var(--focus); }
+.pn-comp {
+  color: var(--second); text-decoration: underline; text-decoration-style: dotted;
+  text-underline-offset: 4px; font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: 16px;
+}
+.pn-caret { flex: none; width: 2px; height: 1.15em; margin-left: 1px; background: var(--coral); }
+.pn-doc:not(:focus) .pn-caret { opacity: .35; }
+.pn-ph { color: var(--faint); font-size: 15px; margin-left: 6px; }
+.pn-ph[hidden] { display: none; }
+.pn-doc-ai { cursor: default; font-size: 16.5px; line-height: 1.7; }
+.pn-doc-static { cursor: default; }
+
+/* 候选条:浅色玻璃,圆角胶囊(照 ime-look-light.png) */
+.pn-slot { min-height: 64px; padding-top: 12px; }
+.pn-bar {
+  display: inline-flex; align-items: center; flex-wrap: wrap; gap: 6px 14px; max-width: 100%;
+  padding: 8px 18px; border-radius: 22px; background: var(--capsule);
+  border: 1px solid var(--line2); box-shadow: 0 6px 18px rgba(27,27,31,.10);
+  font-family: -apple-system, "PingFang SC", sans-serif; line-height: 1.3;
+}
+.pn-bar[hidden] { display: none; }
+.pn-py { font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: 14px; color: var(--faint); white-space: nowrap; }
+.pn-next .pn-py { font-family: inherit; font-size: 12.5px; }
+.pn-cands { display: flex; flex-wrap: wrap; gap: 6px 14px; }
+.pn-cand {
+  display: inline-flex; align-items: center; gap: 7px; white-space: nowrap;
+  font: inherit; font-size: 16px; color: var(--ink); background: none; border: 0; padding: 0; cursor: pointer;
+}
+.pn-cand i {
+  font-style: normal; font-family: "IBM Plex Mono", ui-monospace, monospace; font-weight: 600; font-size: 13px;
+  width: 20px; height: 24px; border-radius: 5px; display: inline-flex; align-items: center; justify-content: center;
+  color: var(--faint); flex: none;
+}
+.pn-cand.on { font-weight: 600; }
+.pn-cand.on i { background: var(--coral); color: #fff; }
+.pn-cand:hover i { color: var(--ink); }
+.pn-cand.on:hover i { color: #fff; }
+.pn-pg { font-size: 13px; color: var(--faint); font-variant-numeric: tabular-nums; margin-left: auto; white-space: nowrap; }
+.pn-pg:empty { display: none; }
+
+/* 云候选的那一格:候选条末尾,虚线框 + Tab 键帽 */
+.pn-cloudslot {
+  display: inline-flex; align-items: center; gap: 7px; white-space: nowrap; font-size: 16px; color: var(--ink);
+  padding: 2px 10px 2px 4px; border: 1px dashed var(--coral); border-radius: 8px; background: var(--coral-tint);
+}
+.pn-cloudslot i {
+  font-style: normal; font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: 11px; font-weight: 600;
+  color: var(--coral-ink); border: 1px solid var(--coral); border-radius: 4px; padding: 0 5px; line-height: 18px;
+}
+.pn-cloud figcaption { margin-top: 4px; font-size: 12.5px; color: var(--faint); }
+
+.pn-presets, .pn-acts { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin-top: 4px; }
+.pn-acts { margin-top: 14px; }
+.chip.pn-quiet { color: var(--faint); }
+.pn-hint { margin-top: 12px; font-size: 13px; color: var(--faint); min-height: 1.7em; }
+.pn-hint.err { color: var(--danger); }
+.pn-sr {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+}
+.pn-btn { padding: 10px 22px; font-size: 14.5px; }
+.pn-btn[hidden] { display: none; }
+
+/* ── AI 卡 ── */
+.pn-card {
+  margin-top: 12px; padding: 14px 16px; border: 1px solid var(--line2); border-radius: 14px;
+  background: var(--capsule); box-shadow: 0 6px 18px rgba(27,27,31,.08);
+}
+.pn-card[hidden] { display: none; }
+.pn-card-h { display: flex; align-items: center; gap: 8px; font-size: 12.5px; color: var(--faint); }
+.pn-card-tag {
+  font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: 11px; font-weight: 600;
+  color: var(--coral-ink); background: var(--coral-tint); border-radius: 999px; padding: 1px 8px;
+}
+.pn-card-body { min-height: 5.2em; margin-top: 8px; }
+.pn-card-out { font-size: 15.5px; line-height: 1.75; color: var(--ink); }
+.pn-busy { display: none; gap: 6px; padding-top: 10px; }
+.pn-busy i { width: 7px; height: 7px; border-radius: 50%; background: var(--line2); animation: pn-dot 1s ease-in-out infinite; }
+.pn-busy i:nth-child(2) { animation-delay: .15s; }
+.pn-busy i:nth-child(3) { animation-delay: .3s; }
+@keyframes pn-dot { 0%, 100% { opacity: .35; } 50% { opacity: 1; background: var(--coral); } }
+.pn-dm[data-state="busy"] .pn-busy { display: flex; }
+.pn-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--line); }
+.pn-chip {
+  font-family: inherit; font-size: 13px; color: var(--second); background: var(--card);
+  border: 1px solid var(--line2); border-radius: 999px; padding: 4px 12px; cursor: pointer;
+  transition: border-color .12s ease, color .12s ease;
+}
+.pn-chip:hover { color: var(--ink); border-color: var(--coral); }
+.pn-chip[aria-pressed="true"] { color: var(--coral-ink); border-color: var(--coral); background: var(--coral-tint); }
+.pn-chip:disabled { opacity: .45; cursor: default; }
+.pn-chip:focus-visible, .pn-cand:focus-visible { outline: 2px solid var(--coral); outline-offset: 2px; }
+
+/* ── 退格退回的倒计时条:1.5 秒窗口,缩短的宽度由 pinyin.js 用 transform 给 ── */
+.pn-timer { height: 3px; margin-top: 8px; border-radius: 2px; background: var(--line); overflow: hidden; }
+.pn-timer i { display: block; height: 100%; background: var(--coral); transform-origin: left center; transform: scaleX(0); }
+.pn-dm[data-state="late"] .pn-timer i { transform: scaleX(0); }
+
+/* ── 行动区 ── */
+.pn-outro { border-top: 1px solid var(--line); padding-top: 56px; }
+.pn-outro .big { font-size: clamp(20px, 2.4vw, 24px); font-weight: 600; line-height: 1.5; max-width: 26em; }
+
+@media (max-width: 980px) {
+  .pn-split { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 820px) {
+  .pn-hero { padding-top: 44px; }
+  .pn-sec { margin-top: 72px; }
+  .pn-cols { grid-template-columns: minmax(0, 1fr); }
+  /* 顶栏收起的那条,同 demo 页:只留 nav-keep 与「下载」 */
+  .navlinks a:not(.nav-cta):not(.nav-keep), .navlinks .soon { display: none; }
+}
+@media (max-width: 600px) {
+  .pn-hero { padding-top: 36px; }
+  .pn-frame { margin-top: 28px; padding: 8px; border-radius: 14px; }
+  .pn-sec { margin-top: 60px; }
+  .pn-dm { padding: 16px 14px 12px; }
+  .pn-doc { font-size: 17px; }
+  .pn-bar { padding: 8px 12px; border-radius: 16px; gap: 6px 10px; }
+  .pn-cands { gap: 6px 10px; }
+  .pn-outro { padding-top: 44px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .pn-busy i { animation: none; opacity: .7; }
+  .pn-chip { transition: none; }
+}

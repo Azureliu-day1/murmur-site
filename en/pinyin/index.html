@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<!-- CSP: same as the demo page. No inline script or style here; styles live in pinyin/pinyin.css, the three demos in pinyin/pinyin.js.
+     The typing demo borrows the word list and engine from /demo/ (demo-words.js, demo.js, read only). The demos make no network requests. -->
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pinyin input method · Murmur</title>
+<meta name="description" content="Murmur includes a Pinyin input method. It shares one dictionary with dictation, and one key lets AI tidy the sentence you are typing.">
+<link rel="canonical" href="https://maobenbeginner.com/en/pinyin/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Murmur">
+<meta property="og:locale" content="en_US">
+<meta property="og:url" content="https://maobenbeginner.com/en/pinyin/">
+<meta property="og:title" content="Pinyin input method · Murmur">
+<meta property="og:description" content="Murmur includes a Pinyin input method. It shares one dictionary with dictation, and one key lets AI tidy the sentence you are typing.">
+<meta property="og:image" content="https://maobenbeginner.com/shots/promo-ime/og-en.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Murmur's Pinyin input method: the candidate bar and the AI card">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="alternate" hreflang="zh-CN" href="https://maobenbeginner.com/pinyin/">
+<link rel="alternate" hreflang="en" href="https://maobenbeginner.com/en/pinyin/">
+<link rel="alternate" hreflang="x-default" href="https://maobenbeginner.com/pinyin/">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="../../apple-touch-icon.png">
+<link rel="stylesheet" href="../../v2.css">
+<link rel="stylesheet" href="../../pinyin/pinyin.css">
+</head>
+<body>
+
+<nav>
+  <div class="wrap navrow">
+    <a class="brand" href="../index.html"><svg width="30" height="15" viewBox="0 0 200 100" aria-hidden="true"><path d="M12.0 50.0 L14.0 40.1 L16.0 31.7 L18.0 25.2 L20.0 21.0 L22.0 19.0 L24.0 19.2 L26.0 21.3 L28.0 25.2 L30.0 30.3 L32.0 36.2 L34.0 42.4 L36.0 48.5 L38.0 54.2 L40.0 59.0 L42.0 62.7 L44.0 65.2 L46.0 66.5 L48.0 66.5 L50.0 65.5 L52.0 63.5 L54.0 60.9 L56.0 57.8 L58.0 54.6 L60.0 51.5 L62.0 48.6 L64.0 46.2 L66.0 44.4 L68.0 43.2 L70.0 42.7 L72.0 42.7 L74.0 43.2 L76.0 44.1 L78.0 45.3 L80.0 46.7 L82.0 48.0 L84.0 49.2 L86.0 50.2 L88.0 51.0 L90.0 51.5 L92.0 51.8 L94.0 51.8 L96.0 51.6 L98.0 51.3 L100.0 50.9 L102.0 50.5 L104.0 50.2 L106.0 50.0 L190 50" fill="none" stroke="var(--coral)" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/></svg>Murmur</a>
+    <div class="navlinks">
+      <a href="../guide/index.html">Guide</a>
+      <a href="../skills/index.html">Skills</a>
+      <a class="nav-keep" href="../try/index.html">Try it</a>
+      <a href="index.html" aria-current="page">Input method</a>
+      <a class="nav-wide" href="../mobile/index.html">Phone &amp; Watch</a>
+      <a href="../demo/index.html">Pinyin demo</a>
+      <a class="nav-keep" href="../../pinyin/index.html" hreflang="zh-CN" lang="zh-CN">中文</a>
+      <!-- class="nav-signin" is what v2-nav.js looks for (swapped for "Account" when signed in) -->
+      <a class="nav-signin nav-keep" href="../login/index.html">Sign in</a>
+      <a class="nav-member nav-keep" href="../member/index.html">Membership</a>
+      <a class="nav-cta" href="../index.html#download">Download</a>
+    </div>
+  </div>
+</nav>
+
+<!-- Copy uses only the facts in docs/BASELINE-site-ime.md "copy red lines". Nothing more. -->
+<header class="pn-hero wrap">
+  <p class="eyebrow">Pinyin input method</p>
+  <h1>Murmur comes with a Pinyin input method</h1>
+  <p class="sub">It shares one dictionary with dictation. Halfway through a sentence, press one key and AI tidies what you are typing.</p>
+  <div class="pn-cta">
+    <a class="btn btn-primary" href="../index.html#download">Download for Mac</a>
+    <a class="btn btn-quiet" href="#type">Try it on this page</a>
+  </div>
+  <figure class="pn-frame"><div class="ratio"><img src="../../shots/promo-ime/hero-en.webp" width="2400" height="1350" alt="The candidate bar of Murmur's Pinyin input method, next to the card that tidies this sentence with AI"></div></figure>
+</header>
+
+<main class="wrap">
+  <section class="pn-sec" id="dict">
+    <p class="eyebrow">One dictionary</p>
+    <h2>One dictionary with dictation</h2>
+    <div class="pn-steps pn-cols">
+      <div class="pn-step"><b>01</b><div><strong>Teach it once</strong>Names you teach it to hear show up as candidates when you type.</div></div>
+      <div class="pn-step"><b>02</b><div><strong>Typed words, heard too</strong>Words you type, it also recognises when you speak.</div></div>
+      <div class="pn-step"><b>03</b><div><strong>Learns your picks</strong>Words you have picked come first next time.</div></div>
+    </div>
+  </section>
+
+  <section class="pn-sec" id="type">
+    <p class="eyebrow">Typing</p>
+    <h2>Gets it right</h2>
+    <div class="pn-split">
+      <div class="pn-steps">
+        <div class="pn-step"><b>01</b><div><strong>Right the first time</strong>On 125 conversational sentences we prepared ourselves, the first candidate was right 80.0% of the time.</div></div>
+        <div class="pn-step"><b>02</b><div><strong>Full and double Pinyin</strong>Full Pinyin, Xiaohe and Ziranma double Pinyin.</div></div>
+        <div class="pn-step"><b>03</b><div><strong>Five per page</strong><kbd>1</kbd> to <kbd>5</kbd> picks, <kbd>Space</kbd> commits, <kbd>Delete</kbd> removes Pinyin.</div></div>
+        <p class="pn-fine">The word list here is only enough for a demo. The full dictionary is in the app. <a href="../demo/index.html">Type freely in your browser →</a></p>
+      </div>
+      <div class="pn-dm" id="dmType">
+        <div class="pn-doc" data-box tabindex="0" role="textbox" aria-label="Demo text field. Type Pinyin, 1 to 5 picks, Space commits" aria-describedby="typeHint"><span class="pn-out" data-out></span><span class="pn-comp" data-comp></span><span class="pn-caret"></span><span class="pn-ph" data-ph>Click here and type Pinyin, or pick a phrase below</span></div>
+        <div class="pn-slot"><div class="pn-bar" data-bar hidden><span class="pn-py" data-py></span><span class="pn-cands" data-cands></span><span class="pn-pg" data-pg></span></div></div>
+        <div class="pn-presets" role="group" aria-label="Three ready-made phrases">
+          <button class="chip" type="button" data-preset="mingtianxiawukaihui" lang="zh-CN">明天下午开会</button>
+          <button class="chip" type="button" data-preset="wanshangyiqichifan" lang="zh-CN">晚上一起吃饭</button>
+          <button class="chip" type="button" data-preset="xiexienidebangzhu" lang="zh-CN">谢谢你的帮助</button>
+          <button class="chip pn-quiet" type="button" data-clear>Clear</button>
+        </div>
+        <p class="pn-hint" id="typeHint" data-hint>Pick a phrase and its Pinyin goes into the box. Press 1 to 5 to pick, Space to commit.</p>
+        <p class="pn-sr" aria-live="polite" data-live></p>
+        <noscript><p class="pn-hint">This demo needs JavaScript.</p></noscript>
+      </div>
+    </div>
+  </section>
+
+  <section class="pn-sec" id="ai">
+    <p class="eyebrow">AI</p>
+    <h2>AI tidies this sentence</h2>
+    <div class="pn-split">
+      <div class="pn-steps">
+        <div class="pn-step"><b>01</b><div><strong>One key</strong>Halfway through, press <kbd>⌥⇧Space</kbd> and AI tidies the sentence you are typing. Press once to see it, again to use it.</div></div>
+        <div class="pn-step"><b>02</b><div><strong>Six actions</strong>Tidy, Formal, Casual, Continue, English, Ask.</div></div>
+        <div class="pn-step"><b>03</b><div><strong>Your key</strong>You can change the shortcut in Settings.</div></div>
+        <p class="pn-fine">Available after you sign in.</p>
+      </div>
+      <div class="pn-dm" id="dmAi" data-state="draft">
+        <div class="pn-doc pn-doc-ai" data-text lang="zh-CN">那个我们明天下午的会议可能要推一下因为老师那边临时有事</div>
+        <div class="pn-card" data-card hidden>
+          <p class="pn-card-h"><span class="pn-card-tag">AI</span><span data-cardh>Tidying…</span></p>
+          <div class="pn-card-body">
+            <p class="pn-busy" data-busy aria-hidden="true"><i></i><i></i><i></i></p>
+            <p class="pn-card-out" data-out></p>
+          </div>
+          <div class="pn-chips" role="group" aria-label="Six actions" data-chips>
+            <button type="button" class="pn-chip" data-chip="tidy" aria-pressed="true">Tidy</button>
+            <button type="button" class="pn-chip" data-chip="formal" aria-pressed="false">Formal</button>
+            <button type="button" class="pn-chip" data-chip="casual" aria-pressed="false">Casual</button>
+            <button type="button" class="pn-chip" data-chip="cont" aria-pressed="false">Continue</button>
+            <button type="button" class="pn-chip" data-chip="en" aria-pressed="false">English</button>
+            <button type="button" class="pn-chip" data-chip="ask" aria-pressed="false">Ask</button>
+          </div>
+        </div>
+        <div class="pn-acts">
+          <button class="btn btn-primary pn-btn" type="button" data-run>Tidy this sentence</button>
+          <button class="btn btn-primary pn-btn" type="button" data-use hidden>Use it</button>
+          <button class="btn btn-quiet pn-btn" type="button" data-again hidden>Again</button>
+        </div>
+        <p class="pn-hint" data-hint>Click “Tidy this sentence”, or press Return.</p>
+        <p class="pn-sr" aria-live="polite" data-live></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="pn-sec" id="cloud">
+    <p class="eyebrow">Preview</p>
+    <h2>Cloud candidates (preview)</h2>
+    <div class="pn-split">
+      <div class="pn-steps">
+        <div class="pn-step"><b>01</b><div><strong>Pause, get a sentence</strong>Once on, pause while typing and the cloud guesses the whole sentence. Press <kbd>Tab</kbd> to commit it.</div></div>
+        <div class="pn-step"><b>02</b><div><strong>No repeats</strong>A cloud result appears only when it differs from the local one.</div></div>
+        <div class="pn-step"><b>03</b><div><strong>Off by default</strong>Off by default. Sign-in required.</div></div>
+        <p class="pn-privacy">Once on, Pinyin you have not committed yet is sent to the Murmur server and passed on to a third-party model service to guess the whole sentence. Off by default.</p>
+      </div>
+      <figure class="pn-dm pn-cloud" role="img" aria-label="Candidate bar: local candidates first, and a last slot with the cloud's whole-sentence guess, committed with Tab">
+        <div class="pn-doc pn-doc-static"><span class="pn-comp">mingtianxiawukaihuima</span><span class="pn-caret"></span></div>
+        <div class="pn-slot"><div class="pn-bar pn-bar-static" lang="zh-CN"><span class="pn-py">ming tian xia wu kai hui ma</span><span class="pn-cands"><span class="pn-cand on"><i>1</i>明天下午开会</span><span class="pn-cand"><i>2</i>明天</span><span class="pn-cand"><i>3</i>明</span></span><span class="pn-cloudslot"><i>Tab</i>明天下午开会吗</span></div></div>
+        <figcaption>The last slot is the cloud's guess at the whole sentence.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="pn-sec" id="small">
+    <p class="eyebrow">Small things</p>
+    <h2>Small things that help</h2>
+    <div class="pn-split">
+      <div class="pn-steps">
+        <div class="pn-step"><b>01</b><div><strong>Delete to undo</strong>Press Delete within 1.5 seconds of committing and the whole word goes back to Pinyin to choose again.</div></div>
+        <div class="pn-step"><b>02</b><div><strong>Smart punctuation</strong>Chinese punctuation is full-width, after digits it is half-width, and web and email addresses stay in English.</div></div>
+        <div class="pn-step"><b>03</b><div><strong>Double and fuzzy Pinyin</strong>Full Pinyin, Xiaohe, Ziranma. Nine fuzzy pairs; tick only the ones you mix up.</div></div>
+        <div class="pn-step"><b>04</b><div><strong>Candidate window</strong>Set the font size, accent colour, and horizontal or vertical layout.</div></div>
+        <div class="pn-step"><b>05</b><div><strong>Emoji and quick phrases</strong>The Emoji panel and quick phrases are off by default. You add your own quick phrases.</div></div>
+        <div class="pn-step"><b>06</b><div><strong>In Spotlight</strong>Open Spotlight and it switches to Apple Pinyin by itself.</div></div>
+      </div>
+      <div class="pn-dm" id="dmUndo" data-state="compose">
+        <div class="pn-doc" data-box tabindex="0" role="textbox" aria-label="Demo text field. Press Delete within 1.5 seconds of committing and the word goes back to Pinyin" aria-describedby="undoHint"><span class="pn-out" data-out></span><span class="pn-comp" data-comp></span><span class="pn-caret"></span></div>
+        <div class="pn-timer" data-timer aria-hidden="true"><i data-tbar></i></div>
+        <div class="pn-slot"><div class="pn-bar" data-bar hidden><span class="pn-py" data-py></span><span class="pn-cands" data-cands></span><span class="pn-pg" data-pg></span></div></div>
+        <div class="pn-acts">
+          <button class="chip" type="button" data-commit>Commit <span lang="zh-CN">输入法</span></button>
+          <button class="chip" type="button" data-bs>Delete</button>
+          <button class="chip pn-quiet" type="button" data-reset>Start over</button>
+        </div>
+        <p class="pn-hint" id="undoHint" data-hint>Commit <span lang="zh-CN">输入法</span> first, then press Delete before the bar runs out.</p>
+        <p class="pn-sr" aria-live="polite" data-live></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="pn-sec" id="install">
+    <p class="eyebrow">Install</p>
+    <h2>How to install</h2>
+    <div class="pn-steps pn-cols">
+      <div class="pn-step"><b>01</b><div><strong>Comes with the app</strong>The input method is inside the Mac app. Nothing else to download.</div></div>
+      <div class="pn-step"><b>02</b><div><strong>One click</strong>Install, update or uninstall it in Settings → Input Method.</div></div>
+      <div class="pn-step"><b>03</b><div><strong>Switch</strong>Press <kbd>⌃Space</kbd> to switch to Murmur.</div></div>
+    </div>
+    <p class="pn-fine">Dictation works the same whether or not you install it.</p>
+  </section>
+
+  <section class="pn-sec pn-outro" id="now">
+    <p class="big">Download the Mac app, then install it in one click in Settings → Input Method.</p>
+    <div class="pn-cta">
+      <a class="btn btn-primary" href="../index.html#download">Download for Mac</a>
+      <a class="btn btn-quiet" href="../demo/index.html">Type freely in your browser</a>
+    </div>
+  </section>
+</main>
+
+<footer class="wrap">
+  <span class="brand"><svg width="30" height="15" viewBox="0 0 200 100" aria-hidden="true"><path d="M12.0 50.0 L14.0 40.1 L16.0 31.7 L18.0 25.2 L20.0 21.0 L22.0 19.0 L24.0 19.2 L26.0 21.3 L28.0 25.2 L30.0 30.3 L32.0 36.2 L34.0 42.4 L36.0 48.5 L38.0 54.2 L40.0 59.0 L42.0 62.7 L44.0 65.2 L46.0 66.5 L48.0 66.5 L50.0 65.5 L52.0 63.5 L54.0 60.9 L56.0 57.8 L58.0 54.6 L60.0 51.5 L62.0 48.6 L64.0 46.2 L66.0 44.4 L68.0 43.2 L70.0 42.7 L72.0 42.7 L74.0 43.2 L76.0 44.1 L78.0 45.3 L80.0 46.7 L82.0 48.0 L84.0 49.2 L86.0 50.2 L88.0 51.0 L90.0 51.5 L92.0 51.8 L94.0 51.8 L96.0 51.6 L98.0 51.3 L100.0 50.9 L102.0 50.5 L104.0 50.2 L106.0 50.0 L190 50" fill="none" stroke="var(--coral)" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/></svg>Murmur</span>
+  <span>Made by Others Studio</span>
+  <div class="links">
+    <a href="https://othersstudio.tech">othersstudio.tech</a>
+    <a href="../mobile/index.html">Phone &amp; Watch</a>
+    <a href="index.html" aria-current="page">Pinyin input method</a>
+    <a href="../changelog/index.html">Changelog</a>
+    <a href="../privacy.html">Privacy</a>
+    <a href="../tos.html">Terms</a>
+    <a href="../../pinyin/index.html" hreflang="zh-CN" lang="zh-CN">中文</a>
+  </div>
+</footer>
+
+<!-- Order matters: deferred scripts run in order. Word list, then engine, then page. -->
+<script src="../../v2-nav.js" defer></script>
+<script src="../../demo/demo-words.js" defer></script>
+<script src="../../demo/demo.js" defer></script>
+<script src="../../pinyin/pinyin.js" defer></script>
+</body>
+</html>
