@@ -158,10 +158,11 @@
 
 /* 线下面那块能按的手表 */
 .m-try {
-  margin-top: 44px; display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 20px 40px; align-items: center;
-  background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 22px 28px;
+  /* 按内容宽、居中:左一段字,右边表 + 历史卡,三块挨着,不留半边空 */
+  margin: 44px auto 0; width: fit-content; max-width: 100%; display: flex; align-items: center; gap: 36px;
+  background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 20px 28px 16px;
 }
-.m-try-t { font-size: 14.5px; line-height: 1.75; color: var(--second); max-width: 22em; }
+.m-try-t { flex: 0 1 15em; font-size: 14.5px; line-height: 1.75; color: var(--second); }
 /* 键盘那句只给有键盘、有鼠标的设备 */
 @media (hover: none) { .m-kb { display: none; } }
 .m-try-t strong { display: block; color: var(--ink); font-size: 15.5px; font-weight: 600; margin-bottom: 4px; }
@@ -192,7 +193,10 @@
   .m-n { margin-top: 4px; }
   .m-n::after { display: none; }
   .m-line h3 { margin-top: 6px; }
-  .m-try { grid-template-columns: minmax(0, 1fr); }
+  .m-try { width: auto; flex-direction: column; align-items: center; gap: 16px; }
+  .m-try .dm-w { align-self: stretch; }
+  .m-try .dm-wrow { justify-content: center; }
+  .m-try-t { flex: none; max-width: 30em; text-align: center; }
 }
 
 @media (max-width: 820px) {
@@ -232,7 +236,7 @@
    --k 由 mobile.js 按 .dm-wcol 的宽给(最大 .34);屏内一律按 396×484 排(V1 的 1pt = 2px),整块 scale(--k)。
    外壳比例抄宣传图 comp.css 的 .watch(表带 + 表身 + 表冠),--w = 屏宽。 */
 .dm { position: relative; outline: none; }
-.dm-hint { margin-top: 12px; min-height: 3.2em; font-size: 13.5px; line-height: 1.6; color: var(--second); text-align: center; }
+.dm-hint { margin-top: 10px; min-height: 3.2em; font-size: 13.5px; line-height: 1.6; color: var(--second); text-align: center; }
 .dm-w { --k: .34; }
 .dm-wrow { display: flex; gap: 28px; align-items: center; }
 .dm-wcol { flex: 0 1 170px; min-width: 0; }
@@ -314,7 +318,7 @@ button.w-orb:active .w-core { transform: translate(-50%, -50%) scale(.95); }
 
 /* 旁边那张「手机历史」卡:页面配色,跟深浅色走 */
 .dm-hist {
-  flex: 0 1 260px; width: 260px; min-width: 0;
+  flex: 0 0 236px; width: 236px; min-width: 0;
   background: var(--paper); border: 1px solid var(--line2); border-radius: 14px; padding: 14px 16px 6px;
 }
 .dm-hist-h { font-size: 14.5px; font-weight: 600; margin-bottom: 4px; }
