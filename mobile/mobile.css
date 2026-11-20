@@ -26,10 +26,10 @@
 .m-cta { margin-top: 30px; display: flex; gap: 14px; flex-wrap: wrap; }
 .m-soon { color: var(--coral-ink); }
 
-/* 设备台:按 400×680 设计,窄屏整块缩(--s);盒子按缩后的尺寸占位,横向不溢出 */
+/* 设备台:按 400×712 设计,窄屏整块缩(--s);盒子按缩后的尺寸占位,横向不溢出 */
 .m-stage-box { --s: 1; width: calc(400px * var(--s)); margin: 0 auto; }
-.m-stage-in { height: calc(680px * var(--s)); }
-.m-stage { position: relative; width: 400px; height: 680px; transform: scale(var(--s)); transform-origin: 0 0; margin: 0; }
+.m-stage-in { height: calc(712px * var(--s)); }
+.m-stage { position: relative; width: 400px; height: 712px; transform: scale(var(--s)); transform-origin: 0 0; margin: 0; }
 .m-stage-cap {
   margin-top: 12px; text-align: center; font-family: "IBM Plex Mono", ui-monospace, monospace;
   font-size: 12px; color: var(--faint); letter-spacing: .02em;
@@ -90,7 +90,7 @@
 .hp-tab b { display: block; font-size: 8.5px; font-weight: 600; line-height: 11px; margin-top: 3px; }
 
 /* 首屏的手表:与演示同一套 .wt / .ws 零件,固定在待命画面。表壳宽 164px(真机 39 mm,与上面 iPhone 同比例) */
-.hw { --k: .351; position: absolute; left: 0; top: 330px; }
+.hw { --k: .351; position: absolute; left: -4px; top: 392px; }
 .hw .ws-idle { display: block; }
 .hw .wt { margin: 0; }
 .hw .wt-case { box-shadow: inset 0 0 0 1px rgba(255,255,255,.18), 0 0 0 1px #1B1B1F, 0 2px 4px rgba(27,27,31,.1), 0 24px 44px rgba(27,27,31,.28); }
@@ -98,7 +98,7 @@
 /* ── 每一节 ── */
 .m-sec { margin-top: 112px; }
 .m-sec h2 { font-size: clamp(24px, 3vw, 30px); font-weight: 600; line-height: 1.35; letter-spacing: .01em; }
-.m-sec .lead { color: var(--second); font-size: 16px; line-height: 1.75; max-width: 36em; margin-top: 12px; }
+.m-sec .lead { color: var(--second); font-size: 16px; line-height: 1.75; max-width: 42em; margin-top: 12px; }
 
 /* 「怎么用」:一条线五步,每步上面一块设备局部 */
 .m-line {
@@ -150,9 +150,9 @@
 .mc-ph-scr::before { content: ""; position: absolute; left: 50%; top: 7px; width: 44px; height: 13px; margin-left: -22px; border-radius: 7px; background: #0E0E10; }
 /* 第 5 步:手机上半截,历史里的一条全文(分说话人) */
 .mc-detail .mc-ph { left: 50%; width: 176px; margin-left: -88px; top: 16px; height: 150px; }
-.mc-meta { position: absolute; left: 14px; top: 30px; font-size: 10px; color: #8D8D95; font-variant-numeric: tabular-nums; }
-.mc-body { position: absolute; left: 14px; right: 12px; top: 46px; }
-.mc-body p { font-size: 11.5px; line-height: 16px; margin-bottom: 7px; white-space: nowrap; }
+.mc-meta { position: absolute; left: 14px; top: 26px; font-size: 10px; color: #8D8D95; font-variant-numeric: tabular-nums; }
+.mc-body { position: absolute; left: 14px; right: 10px; top: 41px; }
+.mc-body p { font-size: 11.5px; line-height: 15px; margin-bottom: 6px; }
 .mc-body b { font-weight: 600; }
 
 /* 线下面那块能按的手表 */
