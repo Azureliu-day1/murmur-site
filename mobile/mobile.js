@@ -1,34 +1,25 @@
-// /mobile/ 与 /en/mobile/ 共用的两台设备(#dmWatch 手表、#dmPhone iPhone)。文案按 <html lang> 选;固定的字在 HTML,这里只放会变的。
-// 计时只在设备看得见时走(IntersectionObserver + visibilitychange)。减弱动效:状态照切,样子在 mobile.css。
+// /mobile/ 与 /en/mobile/ 共用:首屏 iPhone 的计时(在走的那个 23:41)+ 「怎么用」下面那块能按的手表(#dmWatch)。
+// 2026-11-20 v2:iPhone 长录音演示删了(首屏那台手机已经停在录到一半),只留手表。
+// 文案按 <html lang> 选;固定的字在 HTML,这里只放会变的。
+// 计时只在设备看得见时走(IntersectionObserver + visibilitychange)。减弱动效:首屏计时不走;演示状态照切,样子在 mobile.css。
 (function () {
 'use strict';
 var T = {
   zh: {
-    w: { idle: '点一下橙色的键。', recording: '在录。按住屏幕一秒,停。', holding: '按住,别松手。',
-         saved: '已保存,正在传给手机。', sent: '传到手机了。再点一下橙键,再录一次。' },
-    wLive: { back: '松早了,还在录。', saved: '已保存,时长 {d}。', sent: '已传到手机,历史里多了一条。' },
+    w: { idle: '点中间的橙色圆,开始录。', recording: '在录了。按住屏幕一秒就停。', holding: '别松手。',
+         saved: '存好了,在往手机上传。', sent: '传过去了。想再录,再点一下橙色圆。' },
+    wLive: { back: '松早了,还在录。', saved: '已保存,时长 {d}。', sent: '传到手机了,历史里多了一条。' },
     h: { now: '刚刚', from: '从手表传来', ing: '转写中', done: '已转写',
-         x: ['说话人 1:大家早上好。', '今天讲供给和需求怎么决定价格。'] },
-    p: { home: '点「开始录音」。', recording: '在录。点「结束并转写」。', transcribing: '转写中。',
-         done: '录完了,分出谁在说。' },
-    pLive: { discard: '丢弃了,回到开始。', done: '录完了,时长 {d},分出谁在说。' },
-    cap: ['大家早上好。', '今天讲供给和需求怎么决定价格。', '需求上升、供给不变的时候,价格会一直涨。',
-          '直到两边重新相等。', '有同学问,那供给也涨呢?'],
+         x: ['说话人 1:今天想跟大家聊聊老房子怎么改。', '说话人 2:能先说说大概要花多少钱吗?'] },
     h12: false
   },
   en: {
-    w: { idle: 'Tap the orange button.', recording: 'Recording. Press and hold the screen for a second to stop.',
-         holding: 'Keep holding.', saved: 'Saved. Sending to your phone.',
-         sent: 'Sent to your phone. Tap the orange button to record again.' },
-    wLive: { back: 'Let go too early. Still recording.', saved: 'Saved, {d} long.', sent: 'Sent to your phone. A new recording is in History.' },
+    w: { idle: 'Tap the circle in the middle to start.', recording: 'Recording. Hold the screen for a second to stop.',
+         holding: 'Keep holding.', saved: 'Saved. Sending it over now.',
+         sent: 'Your phone has it. Tap again for another one.' },
+    wLive: { back: 'You let go early. Still recording.', saved: 'Saved, {d} long.', sent: 'Sent. One more item in History.' },
     h: { now: 'Just now', from: 'From your watch', ing: 'Transcribing', done: 'Transcribed',
-         x: ['Speaker 1: Good morning.', 'Today we look at how supply and demand set the price.'] },
-    p: { home: 'Tap “Start recording”.', recording: 'Recording. Tap “Stop and transcribe”.',
-         transcribing: 'Transcribing.', done: 'Done, split by speaker.' },
-    pLive: { discard: 'Discarded. Back to the start.', done: 'Done, {d} long, split by speaker.' },
-    cap: ['Good morning.', 'Today we look at how supply and demand set the price.',
-          'When demand rises and supply stays put, the price keeps climbing.', 'Until the two meet again.',
-          'Someone asked, what if supply rises too?'],
+         x: ['Speaker 1: Today I want to talk about fixing up old houses.', 'Speaker 2: Could you start with roughly what it costs?'] },
     h12: true
   }
 }[/^zh/.test(document.documentElement.lang) ? 'zh' : 'en'];
@@ -74,7 +65,37 @@ function fit(dev, box, design, max) {
   new ResizeObserver(go).observe(box); go();
 }
 
-/* ── 演示 A:手表 ── */
+// 进视口才让 CSS 动画跑:.m-anim 加 / 去 .run(mobile.css 里没 .run 的一律暂停)
+(function () {
+  var els = document.querySelectorAll('.m-anim');
+  if (!('IntersectionObserver' in window)) { for (var i = 0; i < els.length; i++) els[i].classList.add('run'); return; }
+  var io = new IntersectionObserver(function (es) {
+    es.forEach(function (e) { e.target.classList.toggle('run', e.isIntersecting); });
+  }, { threshold: 0.1 });
+  for (var j = 0; j < els.length; j++) io.observe(els[j]);
+})();
+
+/* ── 首屏:iPhone 上那只在走的钟(23:41 起)。看得见才走;减弱动效时不走 ── */
+(function () {
+  var el = document.querySelector('[data-hero-timer]');
+  if (!el || reduced) return;
+  var stage = el.closest('.m-stage') || el, bars = document.querySelectorAll('[data-hero-bars] i');
+  var sec = parseInt(el.getAttribute('data-start'), 10) || 0, iv = 0, seen = false;
+  function tick() {
+    sec++;
+    el.textContent = mss(sec * 1000);
+    for (var i = 0; i < bars.length; i++) bars[i].style.height = (6 + Math.round(Math.random() * 16)) + 'px';
+  }
+  function sync() {
+    var want = seen && !document.hidden;
+    if (want && !iv) iv = setInterval(tick, 1000);
+    else if (!want && iv) { clearInterval(iv); iv = 0; }
+  }
+  new IntersectionObserver(function (es) { seen = es[0].isIntersecting; sync(); }, { threshold: 0.2 }).observe(stage);
+  document.addEventListener('visibilitychange', sync);
+})();
+
+/* ── 演示:手表 ── */
 (function () {
   var root = document.getElementById('dmWatch');
   if (!root) return;
@@ -83,7 +104,7 @@ function fit(dev, box, design, max) {
   var list = $(root, '[data-hist]'), quads = root.querySelectorAll('.w-quad i');
   var state = 'idle', t0 = 0, recMs = 0, holdTimer = 0, holdIv = 0, holdAt = 0, keyHeld = false;
   var clk = Clock(root, function () { if (state === 'recording' || state === 'holding') paintClock(); });
-  fit(root, $(root, '.dm-wcol'), 396 * 1.18, 0.56);
+  fit(root, $(root, '.dm-wcol'), 396 * 1.18, 0.34);
 
   function paintClock() {
     var d = new Date(), h = d.getHours();
@@ -187,65 +208,4 @@ function fit(dev, box, design, max) {
   scr.addEventListener('blur', function () { keyHeld = false; holdUp(); });
 })();
 
-/* ── 演示 B:iPhone ── */
-(function () {
-  var root = document.getElementById('dmPhone');
-  if (!root) return;
-  var hint = $(root, '[data-hint]'), live = $(root, '[data-live]'), again = $(root, '.dm-again');
-  var timer = $(root, '[data-p=timer]'), meta = $(root, '[data-p=meta]'), lines = $(root, '[data-p=lines]');
-  var bars = root.querySelectorAll('.p-bars i');
-  var bStart = $(root, '[data-act=start]'), bStop = $(root, '[data-act=stop]'), bDiscard = $(root, '[data-act=discard]');
-  var state = 'home', t0 = 0, n = 0, ticks = 0;
-  var clk = Clock(root, function (vt) {
-    if (state !== 'recording') return;
-    timer.textContent = mss(vt - t0);
-    if (!reduced && (++ticks % 2 === 0)) jitter();
-  });
-  fit(root, $(root, '.dm-pcol'), 423, 0.74);
-
-  function jitter() {
-    for (var i = 0; i < bars.length; i++) bars[i].style.height = (6 + Math.round(Math.random() * 18)) + 'px';
-  }
-  function set(s, liveText) {
-    state = s; root.dataset.state = s;
-    hint.textContent = T.p[s];
-    again.hidden = s !== 'done';
-    if (liveText) say(live, liveText);
-    clk.busy(s === 'recording');
-  }
-  function inside() { return root.contains(document.activeElement); }
-  function nextLine() {
-    if (state !== 'recording') return;
-    var p = document.createElement('p'); p.textContent = T.cap[n % T.cap.length]; n++;
-    lines.appendChild(p);
-    while (lines.children.length > 3) lines.removeChild(lines.firstChild);
-    clk.after(1600 + Math.random() * 800, nextLine);
-  }
-  function home(liveText) {
-    var f = inside();
-    clk.clear(); timer.textContent = '0:00'; lines.textContent = '';
-    set('home', liveText);
-    if (f) bStart.focus({ preventScroll: true });
-  }
-  bStart.addEventListener('click', function () {
-    var f = inside();
-    clk.clear(); t0 = clk.now(); n = 0; ticks = 0; lines.textContent = ''; timer.textContent = '0:00';
-    set('recording', T.p.recording);
-    if (f) bStop.focus({ preventScroll: true });
-    clk.after(1000, nextLine);
-  });
-  bDiscard.addEventListener('click', function () { home(T.pLive.discard); });
-  bStop.addEventListener('click', function () {
-    var f = inside(), d = mss(clk.now() - t0);
-    clk.clear(); timer.textContent = d; meta.textContent = d;
-    set('transcribing', T.p.transcribing);
-    if (f) root.focus({ preventScroll: true });
-    clk.after(1500, function () {
-      root.classList.add('had');
-      set('done', T.pLive.done.replace('{d}', d));
-      if (inside()) again.focus({ preventScroll: true });
-    });
-  });
-  again.addEventListener('click', function () { home(T.p.home); });
-})();
 })();

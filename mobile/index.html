@@ -2,18 +2,18 @@
 <html lang="zh-CN">
 <head>
 <meta charset="utf-8">
-<!-- CSP:同 demo 页那条。本页零脚本内联、零样式内联,样式全在 mobile.css;演示脚本是外链的 mobile.js。 -->
+<!-- CSP:同 demo 页那条。本页零脚本内联、零样式内联,样式全在 mobile.css;首屏计时与手表演示是外链的 mobile.js。 -->
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>手机与手表 · Murmur</title>
-<meta name="description" content="长录音在手机上,抬腕就录在手表上。iPhone 和 Apple Watch 版本即将推出。">
+<meta name="description" content="在 iPhone 上开着录,录完的全文分出谁在说;Apple Watch 上点一下就录,之后传回手机。手机版和手表版即将推出。">
 <link rel="canonical" href="https://maobenbeginner.com/mobile/">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Murmur">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:url" content="https://maobenbeginner.com/mobile/">
 <meta property="og:title" content="手机与手表 · Murmur">
-<meta property="og:description" content="长录音在手机上,抬腕就录在手表上。iPhone 和 Apple Watch 版本即将推出。">
+<meta property="og:description" content="在 iPhone 上开着录,录完的全文分出谁在说;Apple Watch 上点一下就录,之后传回手机。手机版和手表版即将推出。">
 <meta property="og:image" content="https://maobenbeginner.com/shots/promo/og-zh.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -49,75 +49,100 @@
 </nav>
 
 <header class="m-hero wrap">
-  <p class="eyebrow">手机与手表</p>
-  <h1>Murmur 在手机和手表上</h1>
-  <p class="sub">长录音在 iPhone,抬腕就录在 Apple Watch。即将推出,先在 Mac 上用。</p>
-  <div class="m-cta">
-    <a class="btn btn-primary" href="../index.html#download">下载 Mac 版</a>
-    <a class="btn btn-quiet" href="../member/index.html">看会员订阅</a>
+  <div class="m-hero-t">
+    <p class="eyebrow">iPhone 和 Apple Watch · <span class="m-soon">即将推出</span></p>
+    <h1>手机和手表上的 Murmur</h1>
+    <p class="sub">在 iPhone 上开着录,大家说的话会一句句出现在屏幕上,先给你看个大概。手腕上的 Apple Watch 点一下也能录,录好的东西之后会自己回到手机里。</p>
+    <div class="m-cta">
+      <a class="btn btn-primary" href="../index.html#download">先用 Mac 版</a>
+      <a class="btn btn-quiet" href="#how">看看怎么用</a>
+    </div>
   </div>
-  <figure class="m-frame"><div class="ratio"><img src="../shots/promo/hero-zh.webp" width="2400" height="1400" alt="iPhone 正在长录音,一句句出字;旁边的 Apple Watch 正在录"></div></figure>
+  <!-- 设备台:CSS 画的 iPhone(后)+ 手表(前),照真机比例。手机停在录到一半;手表停在待命,免得被读成「手表把字推给手机」(review A-02) -->
+  <div class="m-stage-box">
+    <div class="m-stage-in">
+      <div class="m-stage m-anim" role="img" aria-label="iPhone 正在录一段两个人的对话,屏幕上已经出了几句字;前面的 Apple Watch 停在待命画面">
+        <div class="hp">
+          <div class="hp-scr">
+            <div class="hp-sbar"><span class="hp-time">9:41</span><span class="hp-island"></span><svg class="hp-sig" width="15" height="10" viewBox="0 0 58 36"><rect x="0" y="24" width="10" height="12" rx="2.5"/><rect x="16" y="17" width="10" height="19" rx="2.5"/><rect x="32" y="9" width="10" height="27" rx="2.5"/><rect x="48" y="0" width="10" height="36" rx="2.5"/></svg><svg class="hp-wifi" width="14" height="11" viewBox="0 0 52 40"><path d="M26 38 L18.5 30.2 A11 11 0 0 1 33.5 30.2 Z"/><path d="M12.4 24 A19.5 19.5 0 0 1 39.6 24" fill="none" stroke="#1B1B1F" stroke-width="6.2" stroke-linecap="round"/><path d="M5 16.4 A30 30 0 0 1 47 16.4" fill="none" stroke="#1B1B1F" stroke-width="6.2" stroke-linecap="round"/></svg><svg class="hp-bat" width="23" height="10" viewBox="0 0 84 38"><rect x="1.5" y="1.5" width="72" height="35" rx="10" fill="none" stroke="#1B1B1F" stroke-opacity=".4" stroke-width="3"/><rect x="6" y="6" width="63" height="26" rx="6"/><path d="M78 13 v12 a5 5 0 0 0 0 -12z" fill-opacity=".45"/></svg></div>
+            <p class="hp-title">长录音</p>
+            <div class="hp-card">
+              <p class="hp-label"><span class="hp-caps">SESSION</span>·<b>正在录</b></p>
+              <div class="hp-timerrow"><p class="hp-timer" data-hero-timer data-start="1421">23:41</p><div class="hp-bars" data-hero-bars><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
+              <div class="hp-btns"><span class="hp-pill hp-black">结束并转写</span><span class="hp-pill hp-discard">丢弃</span></div>
+              <div class="hp-cap">
+                <p class="hp-clabel">实时字幕 · 预览</p>
+                <p>报价我昨天又跟他们对了一遍。</p>
+                <p>那还能再往下谈吗?</p>
+                <p>能谈,但交货要往后推。</p>
+                <p class="hp-vol">我先问问产品那边等不等得了</p>
+              </div>
+            </div>
+            <div class="hp-tabbar"><span class="hp-tabsel"></span><span class="hp-tab t0"><svg width="18" height="18" viewBox="0 0 70 70"><g stroke="currentColor" stroke-width="5" stroke-linecap="round"><line x1="7" y1="29" x2="7" y2="41"/><line x1="17" y1="21" x2="17" y2="49"/><line x1="27" y1="10" x2="27" y2="60"/><line x1="37" y1="2" x2="37" y2="68"/><line x1="47" y1="14" x2="47" y2="56"/><line x1="57" y1="22" x2="57" y2="48"/><line x1="66" y1="30" x2="66" y2="40"/></g></svg><b>长录音</b></span><span class="hp-tab t1"><svg width="18" height="18" viewBox="0 0 70 70"><circle cx="35" cy="35" r="35" fill="currentColor"/><path d="M35 15 V36 H21" fill="none" stroke="#fff" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round"/></svg><b>历史</b></span><span class="hp-tab t2"><svg width="18" height="18" viewBox="0 0 70 70"><circle cx="35" cy="35" r="35" fill="currentColor"/><circle cx="35" cy="27" r="12.5" fill="#fff"/><path d="M12 58 a25 20 0 0 1 46 0 a33 33 0 0 1 -46 0z" fill="#fff"/></svg><b>我的</b></span></div>
+          </div>
+        </div>
+        <div class="hw">
+          <div class="wt">
+            <div class="wt-band wt-top"></div><div class="wt-band wt-bot"></div>
+            <div class="wt-case"><div class="wt-glass">
+              <div class="ws-scr">
+                <div class="ws ws-idle">
+                  <p class="w-pill w-top">已登录</p>
+                  <span class="w-orb"><span class="w-h2"></span><span class="w-h1"></span><span class="w-core"><svg viewBox="0 0 24 24"><rect x="8.25" y="1.5" width="7.5" height="13" rx="3.75" fill="currentColor"/><path d="M5.25 10.75a6.75 6.75 0 0 0 13.5 0" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/><path d="M12 17.75V21.5M8.75 21.75h6.5" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/></svg></span></span>
+                  <p class="w-last"><i></i><b class="w-num">41:06</b><span>已传</span></p>
+                </div>
+              </div>
+            </div></div>
+            <div class="wt-crown"></div><div class="wt-side"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <p class="m-stage-cap" aria-hidden="true"><i></i>iPhone 在录 · 手表待命</p>
+  </div>
 </header>
 
 <main class="wrap">
-  <!-- iPhone:可写的事实只照基调「文案红线」那几条 -->
-  <section class="m-sec" id="iphone">
-    <p class="eyebrow">iPhone</p>
-    <h2>开着就录</h2>
-    <div class="m-split">
-      <div class="m-steps">
-        <div class="m-step"><b>01</b><div><strong>一小时不用管</strong>开始长录音,手机放一边,一小时不用管。</div></div>
-        <div class="m-step"><b>02</b><div><strong>一句句出字</strong>录的时候一句句出字,先看个大概。完整的在录完。</div></div>
-        <div class="m-step"><b>03</b><div><strong>分出谁在说</strong>录完,完整转写进历史,分出谁在说。失败也留着录音。</div></div>
-        <p class="m-fine">登录后可以免费试录一次,最长 3 分钟。想多录,<a href="../member/index.html">看会员订阅 →</a></p>
-      </div>
-      <div class="dm dm-p" id="dmPhone" data-state="home" tabindex="-1">
-        <div class="dm-pcol">
-          <div class="ph" role="group" aria-label="iPhone,可以点">
-            <span class="ph-key k1"></span><span class="ph-key k2"></span><span class="ph-key k3"></span>
-            <div class="ph-scr"><div class="ps">
-              <div class="p-sbar" aria-hidden="true"><span class="p-time">9:41</span><svg class="p-sig" width="19" height="12" viewBox="0 0 58 36"><rect x="0" y="24" width="10" height="12" rx="2.5"/><rect x="16" y="17" width="10" height="19" rx="2.5"/><rect x="32" y="9" width="10" height="27" rx="2.5"/><rect x="48" y="0" width="10" height="36" rx="2.5"/></svg><svg class="p-wifi" width="17" height="13" viewBox="0 0 52 40"><path d="M26 38 L18.5 30.2 A11 11 0 0 1 33.5 30.2 Z"/><path d="M12.4 24 A19.5 19.5 0 0 1 39.6 24" fill="none" stroke="#1B1B1F" stroke-width="6.2" stroke-linecap="round"/><path d="M5 16.4 A30 30 0 0 1 47 16.4" fill="none" stroke="#1B1B1F" stroke-width="6.2" stroke-linecap="round"/></svg><svg class="p-bat" width="27" height="12" viewBox="0 0 84 38"><rect x="1.5" y="1.5" width="72" height="35" rx="10" fill="none" stroke="#1B1B1F" stroke-opacity=".4" stroke-width="3"/><rect x="6" y="6" width="63" height="26" rx="6"/><path d="M78 13 v12 a5 5 0 0 0 0 -12z" fill-opacity=".45"/></svg></div><div class="p-island" aria-hidden="true"></div>
-              <div class="pv pv-rec">
-                <p class="p-title">长录音</p>
-                <div class="p-card p-c1">
-                  <p class="p-label"><span class="p-caps">SESSION</span><span class="p-dot">·</span><span class="p-st st-home">准备好了</span><span class="p-st st-rec">正在录</span><span class="p-st st-tr">转写中</span></p>
-                  <div class="p-timerrow"><p class="p-timer" data-p="timer">0:00</p><div class="p-bars" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
-                  <div class="p-btns p-home"><button class="p-pill p-black" type="button" data-act="start">开始录音</button></div>
-                  <div class="p-btns p-recb"><button class="p-pill p-black" type="button" data-act="stop">结束并转写</button><button class="p-pill p-discard" type="button" data-act="discard">丢弃</button></div>
-                  <p class="p-chips p-home" aria-hidden="true"><span class="on">标准</span><span>精准 ·×2</span></p>
-                  <div class="p-cap p-recb"><p class="p-clabel">实时字幕 · 预览</p><div class="p-lines" data-p="lines"></div></div>
-                  <p class="p-foot">转写完自动落进历史,失败也留着录音。</p>
-                </div>
-                <div class="p-card p-c2"><p class="p-c2h">还没录过</p><p>长时间录音,适合会议和讲座,一小时也不用管它。转写时会分出谁在说话,录完自动进「历史」,失败也留着录音。</p><p class="p-small">录完的完整文字也会存进「历史」。</p></div>
-              </div>
-              <div class="pv pv-detail">
-                <span class="p-back" aria-hidden="true"><svg width="43" height="43" viewBox="0 0 131 131"><path d="M78 38 L50 65.5 L78 93" fill="none" stroke="#1B1B1F" stroke-width="7.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-                <p class="p-navtitle">这一节</p>
-                <span class="p-navcap" aria-hidden="true">复制<svg width="19" height="23" viewBox="0 0 58 72"><g fill="none" stroke="#E2531F" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"><path d="M29 4 V44"/><path d="M15 17 L29 3.5 L43 17"/><path d="M19 26 H10 a6 6 0 0 0 -6 6 V62 a6 6 0 0 0 6 6 H48 a6 6 0 0 0 6 -6 V32 a6 6 0 0 0 -6 -6 H39"/></g></svg></span>
-                <p class="p-meta w-num" data-p="meta">0:00</p>
-                <div class="p-body"><p><b>说话人 1:</b>大家早上好。今天讲供给和需求怎么决定价格。</p><p><b>说话人 1:</b>需求上升、供给不变的时候,价格会一直涨。直到两边重新相等。</p><p><b>说话人 2:</b>有同学问,那供给也涨呢?</p><p><b>说话人 1:</b>好问题,那价格就看谁涨得快。</p></div>
-              </div>
-              <div class="p-tabbar" aria-hidden="true"><span class="p-tabsel"></span><span class="p-tab t0"><svg width="23" height="23" viewBox="0 0 70 70"><g stroke="currentColor" stroke-width="5" stroke-linecap="round"><line x1="7" y1="29" x2="7" y2="41"/><line x1="17" y1="21" x2="17" y2="49"/><line x1="27" y1="10" x2="27" y2="60"/><line x1="37" y1="2" x2="37" y2="68"/><line x1="47" y1="14" x2="47" y2="56"/><line x1="57" y1="22" x2="57" y2="48"/><line x1="66" y1="30" x2="66" y2="40"/></g></svg><b>长录音</b></span><span class="p-tab t1"><svg width="23" height="23" viewBox="0 0 70 70"><circle cx="35" cy="35" r="35" fill="currentColor"/><path d="M35 15 V36 H21" fill="none" stroke="#fff" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round"/></svg><b>历史</b></span><span class="p-tab t2"><svg width="23" height="23" viewBox="0 0 70 70"><circle cx="35" cy="35" r="35" fill="currentColor"/><circle cx="35" cy="27" r="12.5" fill="#fff"/><path d="M12 58 a25 20 0 0 1 46 0 a33 33 0 0 1 -46 0z" fill="#fff"/></svg><b>我的</b></span></div>
-            </div></div>
-          </div>
-          <p class="dm-hint"><span data-hint>点「开始录音」。</span> <button class="dm-again" type="button" hidden>再来一次</button></p>
-        </div>
-        <p class="m-sr" aria-live="polite" data-live></p>
-      </div>
-    </div>
-  </section>
+  <section class="m-sec" id="how">
+    <h2>怎么用</h2>
+    <p class="lead">拿手表走一遍是下面这样。用 iPhone 录的话更直接,开始、结束都在手机屏幕上点。</p>
+    <ol class="m-line">
+      <li>
+        <div class="mc" aria-hidden="true"><div class="mc-case"><div class="mc-glass"><span class="mc-orb"><svg viewBox="0 0 24 24"><rect x="8.25" y="1.5" width="7.5" height="13" rx="3.75" fill="currentColor"/><path d="M5.25 10.75a6.75 6.75 0 0 0 13.5 0" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/><path d="M12 17.75V21.5M8.75 21.75h6.5" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/></svg></span></div></div></div>
+        <p class="m-n">1</p>
+        <h3>点表上的橙色键</h3>
+        <p>听讲座坐在后排,不方便掏手机,抬手点一下就开始录了。</p>
+      </li>
+      <li>
+        <div class="mc" aria-hidden="true"><div class="mc-case"><div class="mc-glass"><span class="mc-mic"></span><span class="mc-dim">10:09</span></div></div></div>
+        <p class="m-n">2</p>
+        <h3>屏幕暗了也在录</h3>
+        <p>手放下来,表屏暗下去,录音不会停。声音先存在手表里,所以手机不在身边也没关系。</p>
+      </li>
+      <li>
+        <div class="mc" aria-hidden="true"><div class="mc-case"><div class="mc-glass"><svg class="mc-ring" viewBox="0 0 40 40"><circle class="bg" cx="20" cy="20" r="18"/><circle class="fg" cx="20" cy="20" r="18" transform="rotate(-90 20 20)"/></svg><span class="mc-quad"><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span></div></div></div>
+        <p class="m-n">3</p>
+        <h3>长按表屏结束</h3>
+        <p>想停的时候,手指压住表屏,等它显示「已保存」再松手。</p>
+      </li>
+      <li>
+        <div class="mc" aria-hidden="true"><div class="mc-case"><div class="mc-glass"><svg class="mc-spin" viewBox="0 0 24 24"><g stroke="#A0A0A8" stroke-width="2.4" stroke-linecap="round"><path d="M12 2.5v5"/><path d="M18.7 5.3l-3.5 3.5" opacity=".88"/><path d="M21.5 12h-5" opacity=".76"/><path d="M18.7 18.7l-3.5-3.5" opacity=".64"/><path d="M12 21.5v-5" opacity=".52"/><path d="M5.3 18.7l3.5-3.5" opacity=".4"/><path d="M2.5 12h5" opacity=".3"/><path d="M5.3 5.3l3.5 3.5" opacity=".22"/></g></svg><span class="mc-send">正在传给 iPhone</span></div></div></div>
+        <p class="m-n">4</p>
+        <h3>走回手机旁边</h3>
+        <p>手表靠近你的 iPhone 时,会自己把录音传过去,你什么都不用点。</p>
+      </li>
+      <li>
+        <div class="mc mc-detail" aria-hidden="true"><div class="mc-ph"><div class="mc-ph-scr"><span class="mc-meta">38:12</span><div class="mc-body"><p><b>说话人 1:</b>为什么想自己开店?</p><p><b>说话人 2:</b>一开始没想太多。</p></div></div></div></div>
+        <p class="m-n">5</p>
+        <h3>打开手机看全文</h3>
+        <p>手机收到以后去转写,转好的全文放在历史里,点开就能看。</p>
+      </li>
+    </ol>
 
-  <section class="m-sec" id="watch">
-    <p class="eyebrow">Apple Watch</p>
-    <h2>抬腕一点</h2>
-    <div class="m-split">
-      <div class="m-steps">
-        <div class="m-step"><b>01</b><div><strong>点一下开始</strong>手表上点一下就开始录,熄屏接着录。</div></div>
-        <div class="m-step"><b>02</b><div><strong>长按停止</strong>想停的时候,长按一下。</div></div>
-        <div class="m-step"><b>03</b><div><strong>自动传到手机</strong>录音先存在手表上,到手机附近自动传过去,手机转写。</div></div>
-        <p class="m-fine">手机登录后,手表自动登录,同一个账号。</p>
-      </div>
-      <div class="dm dm-w" id="dmWatch" data-state="idle">
+    <!-- 唯一保留的演示:手表(点录 / 按住停 / 传到手机历史)。iPhone 长录音那个演示 v2 删了,首屏那台手机已经停在录到一半 -->
+    <div class="m-try">
+      <p class="m-try-t"><strong>在这块表上按一遍</strong>上面第 1 到第 4 步都能在这里试。<span class="m-kb">键盘也行:Tab 到橙键按回车,再按住空格。</span></p>
+      <div class="dm dm-w m-anim" id="dmWatch" data-state="idle">
         <div class="dm-wrow">
           <div class="dm-wcol">
             <div class="wt" role="group" aria-label="手表,可以点">
@@ -145,7 +170,7 @@
               </div></div>
               <div class="wt-crown"></div><div class="wt-side"></div>
             </div>
-            <p class="dm-hint" data-hint>点一下橙色的键。</p>
+            <p class="dm-hint" data-hint>点中间的橙色圆,开始录。</p>
           </div>
           <div class="dm-hist" role="group" aria-label="手机上的历史">
             <p class="dm-hist-h">历史</p>
@@ -159,23 +184,33 @@
     </div>
   </section>
 
-  <section class="m-sec" id="watch-to-phone">
-    <h2>手表录的,手机上看</h2>
-    <p class="lead">手表录的,到手机附近自动传过去。转写好的那一节在手机的历史里,点开看全文。</p>
-  </section>
-
-  <!-- 隐私:只用首页与隐私页已有的说法,不造新承诺 -->
-  <section class="m-sec" id="yours">
-    <h2>录音在你手里</h2>
-    <div class="m-plain">
-      <p>录音和历史,存在你自己的设备上。</p>
-      <p>出了错,录音还在:转写失败,也留着录音。</p>
+  <!-- 四格事实。隐私那格只用首页与隐私页已有的说法,不造新承诺 -->
+  <section class="m-sec" id="facts">
+    <h2>你可能想问</h2>
+    <div class="m-facts">
+      <div class="m-fact">
+        <h3>能录多久</h3>
+        <p>手机上开着长录音,一小时的会放在桌上录完就行,中途不用去看它。</p>
+      </div>
+      <div class="m-fact">
+        <h3>分不分得出谁在说</h3>
+        <p>录完转写出来的全文会按人分开,标成说话人 1、说话人 2,采访这种一问一答的最用得上。录的时候屏幕上出的字只是预览,还不分人。</p>
+      </div>
+      <div class="m-fact">
+        <h3>转写失败了怎么办</h3>
+        <p>录音会留着。转写没成功,声音也不会跟着丢。</p>
+      </div>
+      <div class="m-fact">
+        <h3>录音存在哪</h3>
+        <p>录音和历史,存在你自己的设备上。</p>
+        <a href="../privacy.html">交给了哪类服务商、它们在哪个国家、东西留多久,写在隐私页 →</a>
+      </div>
     </div>
-    <p class="m-link"><a href="../privacy.html">交给了哪类服务商、它们在哪个国家、东西留多久,写在隐私页 →</a></p>
   </section>
 
   <section class="m-sec m-outro" id="now">
-    <p class="big">iPhone 和 Apple Watch 版本即将推出。现在先用 Mac 版,同一个账号。</p>
+    <p class="big">手机版和手表版现在还没上线,Mac 版已经能用了。账号是同一个,以后手机上一登录,手表也会跟着登好。</p>
+    <p class="fine">手机版出来以后,登录就能免费试录一次,最长 3 分钟,想多录要开会员。</p>
     <div class="m-cta">
       <a class="btn btn-primary" href="../index.html#download">下载 Mac 版</a>
       <a class="btn btn-quiet" href="../member/index.html">看会员订阅</a>

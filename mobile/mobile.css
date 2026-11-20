@@ -1,81 +1,221 @@
 /* ══════════════════════════════════════════════════════════════════════════
-   mobile.css · /mobile/ 与 /en/mobile/ 的页面局部样式(2026-10-31 重做成产品页)
-   两页都引:../v2.css(共用零件:token / 顶栏 / .eyebrow / .btn / 页脚)→ 这份。
-   页面部分不新增颜色:全部用 v2.css 的 token。两台设备(.dm-w 手表、.dm-p iPhone)的屏幕用设备自己的固定色
-   (手表 V1 深色、iPhone 浅色界面),不跟页面深浅色走,因为它们画的是真界面。
-   2026-10-31 起两节各有一台能上手的设备,脚本是 mobile.js(两页共用,外链);动画只在设备里,
-   减弱动效时全部停下(最后一段 @media)。除此之外页面不动。
-   为什么单独一份外链而不是页内 <style>:两页共用,CSP 也只放 'self'。
-   结构:主图区 .m-hero → 每节 .m-sec(文字 .m-steps | 演示 .dm)→ 行动区 .m-outro。
+   mobile.css · /mobile/ 与 /en/mobile/ 的页面局部样式
+   2026-11-20 v2 重做(Wei:「UI 不好看,文字太 AI」):
+     首屏 = 页面本身(左字右设备,CSS 画的 iPhone + 手表同框,不再贴海报图);
+     「怎么用」一条线五步,每步一个设备局部;线下面一块能按的手表(唯一保留的演示);
+     四格事实;结尾一句实话。
+   两页都引:../v2.css(token / 顶栏 / .eyebrow / .btn / 页脚)→ 这份。页面部分不新增颜色,全部用 v2.css 的 token;
+   设备屏幕用设备自己的固定色(iPhone 浅色界面、手表深色),不跟页面深浅色走,因为它们画的是真界面。
+   动画:只在设备里;.m-anim 进视口才加 .run(mobile.js 的 IntersectionObserver),没 .run 时一律暂停;
+   减弱动效时全部停下(最后一段 @media)。
    ══════════════════════════════════════════════════════════════════════════ */
 
-/* ── 主图区 ──
-   ⛔ .m-hero 不许写 padding 简写:会把 .wrap 的左右 32px 清零。 */
-.m-hero { padding-top: 64px; }
-.m-hero h1 { font-size: clamp(28px, 4vw, 42px); font-weight: 600; line-height: 1.3; letter-spacing: .01em; }
-.m-hero .sub { color: var(--second); font-size: 16px; max-width: 38em; margin-top: 16px; }
-.m-cta { margin-top: 28px; display: flex; gap: 14px; flex-wrap: wrap; }
-
-/* 图框:比例由框给(2400×1400),图还没到 / 没有时框照样占位,页面不塌。
-   卡片色 + --line2 边 + --shadow,同首页 .py-shot 的手感。 */
-.m-frame {
-  margin: 40px 0 0; background: var(--card); border: 1px solid var(--line2);
-  border-radius: 16px; padding: 12px; box-shadow: var(--shadow);
+/* 窄屏左右留白 20px(同顶栏);只管本页的三块,不动 v2.css */
+@media (max-width: 600px) {
+  .m-hero.wrap, main.wrap, footer.wrap { padding-left: 20px; padding-right: 20px; }
 }
-.m-frame .ratio { aspect-ratio: 2400 / 1400; background: var(--paper); border-radius: 8px; overflow: hidden; }
-.m-frame img { display: block; width: 100%; height: 100%; object-fit: cover; color: var(--faint); font-size: 13px; }
+
+/* ── 首屏 ──
+   ⛔ .m-hero 不许写 padding 简写:会把 .wrap 的左右留白清零。 */
+.m-hero {
+  padding-top: 56px; display: grid; grid-template-columns: minmax(0, 1fr) 400px;
+  gap: 40px 64px; align-items: center;
+}
+.m-hero h1 { font-size: clamp(30px, 4.2vw, 44px); font-weight: 600; line-height: 1.25; letter-spacing: .01em; }
+.m-hero .sub { color: var(--second); font-size: 17px; line-height: 1.75; max-width: 30em; margin-top: 18px; }
+.m-cta { margin-top: 30px; display: flex; gap: 14px; flex-wrap: wrap; }
+.m-soon { color: var(--coral-ink); }
+
+/* 设备台:按 400×680 设计,窄屏整块缩(--s);盒子按缩后的尺寸占位,横向不溢出 */
+.m-stage-box { --s: 1; width: calc(400px * var(--s)); margin: 0 auto; }
+.m-stage-in { height: calc(680px * var(--s)); }
+.m-stage { position: relative; width: 400px; height: 680px; transform: scale(var(--s)); transform-origin: 0 0; margin: 0; }
+.m-stage-cap {
+  margin-top: 12px; text-align: center; font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-size: 12px; color: var(--faint); letter-spacing: .02em;
+}
+.m-stage-cap i { display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--coral); margin-right: 8px; vertical-align: 2px; }
+
+/* iPhone(真机 71.5 × 149.6 mm → 300 × 628 px):屏里的字按真像素写,不缩,1280 宽下正文 14px */
+.hp {
+  position: absolute; right: 0; top: 0; width: 300px; height: 628px; padding: 11px;
+  background: #0E0E10; border-radius: 50px;
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,.22), 0 0 0 1px #2A2A2E, 0 2px 4px rgba(27,27,31,.08), 0 30px 60px rgba(27,27,31,.14);
+}
+.hp-scr {
+  position: relative; width: 278px; height: 606px; border-radius: 40px; overflow: hidden;
+  background: #F7F7F8; color: #1B1B1F; font-family: -apple-system, "SF Pro Text", "PingFang SC", sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+.hp-sbar { position: absolute; left: 0; top: 0; width: 278px; height: 40px; }
+.hp-time { position: absolute; left: 36px; top: 15px; font-size: 14px; font-weight: 600; line-height: 14px; }
+.hp-island { position: absolute; left: 96px; top: 9px; width: 86px; height: 25px; border-radius: 13px; background: #0E0E10; }
+.hp-sbar svg { position: absolute; top: 17px; fill: #1B1B1F; }
+.hp-sig { left: 196px; } .hp-wifi { left: 215px; top: 16px !important; } .hp-bat { left: 235px; }
+.hp-title { position: absolute; left: 16px; top: 66px; font-size: 25px; font-weight: 700; line-height: 30px; }
+.hp-card {
+  position: absolute; left: 12px; right: 12px; top: 106px;
+  background: #fff; border: 1px solid #E9E9EC; border-radius: 14px; padding: 13px 13px 14px;
+}
+.hp-label { font-size: 10.5px; line-height: 12px; color: #8E8E96; white-space: nowrap; }
+.hp-caps { letter-spacing: .22em; font-weight: 500; margin-right: 4px; }
+.hp-label b { font-weight: 500; color: #E2531F; margin-left: 4px; }
+.hp-timerrow { position: relative; margin-top: 8px; height: 34px; }
+.hp-timer {
+  font-family: ui-serif, "New York", "Newsreader", Georgia, serif; font-weight: 600;
+  font-variant-numeric: lining-nums tabular-nums; font-size: 32px; line-height: 34px; letter-spacing: -.3px; color: #E2531F;
+}
+.hp-bars { position: absolute; right: 4px; top: 6px; width: 42px; height: 22px; display: flex; align-items: center; justify-content: space-between; }
+.hp-bars i { width: 4px; height: 12px; border-radius: 2px; background: #E2531F; transition: height .12s ease; }
+.hp-bars i:nth-child(1) { height: 7px; } .hp-bars i:nth-child(2) { height: 13px; } .hp-bars i:nth-child(3) { height: 19px; }
+.hp-bars i:nth-child(4) { height: 11px; } .hp-bars i:nth-child(5) { height: 17px; } .hp-bars i:nth-child(6) { height: 9px; }
+.hp-bars i:nth-child(7) { height: 14px; }
+.hp-btns { display: flex; gap: 7px; margin-top: 10px; }
+.hp-pill { height: 28px; border-radius: 14px; padding: 0 14px; font-size: 12.5px; font-weight: 500; line-height: 28px; white-space: nowrap; }
+.hp-black { background: #1B1B1F; color: #fff; }
+.hp-discard { background: #F9ECEA; color: #B3402E; }
+.hp-cap { margin-top: 14px; background: #F1F1F3; border-radius: 10px; padding: 10px 11px 11px; }
+.hp-clabel { font-size: 10.5px; line-height: 13px; color: #8E8E96; margin-bottom: 5px; }
+.hp-cap p:not(.hp-clabel) { font-size: 15px; line-height: 22px; }
+.hp-cap p + p:not(.hp-clabel) { margin-top: 3px; }
+.hp-cap .hp-vol { color: #8E8E96; }
+.hp-tabbar {
+  position: absolute; left: 44px; top: 546px; width: 190px; height: 44px; border-radius: 22px;
+  background: #FDFDFE; box-shadow: 0 3px 13px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.04);
+}
+.hp-tabsel { position: absolute; left: 3px; top: 3px; width: 64px; height: 38px; border-radius: 19px; background: #EBEBEC; }
+.hp-tab { position: absolute; top: 0; width: 60px; height: 44px; color: #1B1B1F; text-align: center; }
+.hp-tab.t0 { left: 5px; color: #E2531F; } .hp-tab.t1 { left: 65px; } .hp-tab.t2 { left: 125px; }
+.hp-tab svg { display: block; margin: 7px auto 0; }
+.hp-tab b { display: block; font-size: 8.5px; font-weight: 600; line-height: 11px; margin-top: 3px; }
+
+/* 首屏的手表:与演示同一套 .wt / .ws 零件,固定在待命画面。表壳宽 164px(真机 39 mm,与上面 iPhone 同比例) */
+.hw { --k: .351; position: absolute; left: 0; top: 330px; }
+.hw .ws-idle { display: block; }
+.hw .wt { margin: 0; }
+.hw .wt-case { box-shadow: inset 0 0 0 1px rgba(255,255,255,.18), 0 0 0 1px #1B1B1F, 0 2px 4px rgba(27,27,31,.1), 0 24px 44px rgba(27,27,31,.28); }
 
 /* ── 每一节 ── */
-.m-sec { margin-top: 96px; }
-.m-sec .eyebrow { margin-bottom: 8px; }
+.m-sec { margin-top: 112px; }
 .m-sec h2 { font-size: clamp(24px, 3vw, 30px); font-weight: 600; line-height: 1.35; letter-spacing: .01em; }
-.m-sec .lead { color: var(--second); font-size: 15.5px; max-width: 34em; margin-top: 12px; }
+.m-sec .lead { color: var(--second); font-size: 16px; line-height: 1.75; max-width: 36em; margin-top: 12px; }
 
-/* 文字 | 图 两栏;图那一栏按内容宽,文字吃剩下的 */
-.m-split {
-  display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 32px 48px;
-  align-items: start; margin-top: 28px;
+/* 「怎么用」:一条线五步,每步上面一块设备局部 */
+.m-line {
+  list-style: none; padding: 0; margin: 36px 0 0; position: relative;
+  display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 0 18px;
 }
-.m-split > * { min-width: 0; }
-
-/* 一步:序号 | 说明(配方同首页 pinyin.css 的 .py-step) */
-.m-step {
-  display: grid; grid-template-columns: 40px 1fr; gap: 14px;
-  padding: 14px 0; border-top: 1px solid var(--line);
+.m-line > li { position: relative; min-width: 0; }
+.m-line h3 { font-size: 15.5px; font-weight: 600; line-height: 1.45; margin-top: 16px; }
+.m-line p { font-size: 14.5px; line-height: 1.75; color: var(--second); margin-top: 6px; }
+.m-n {
+  display: flex; align-items: center; gap: 10px; margin-top: 18px;
+  font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: 12px; color: var(--faint);
 }
-.m-step > b {
-  font-family: "Newsreader", serif; font-weight: 600; font-size: 22px;
-  color: var(--line2); line-height: 1.35;
+.m-n::before { content: ""; width: 9px; height: 9px; border-radius: 50%; background: var(--card); border: 2px solid var(--coral); flex: none; }
+.m-n::after { content: ""; height: 1px; background: var(--line2); flex: 1; }
+.m-line > li:last-child .m-n::after { background: transparent; }
+
+/* 设备局部:一块浅底小格,设备从底边探出来(只露一截) */
+.mc {
+  position: relative; height: 128px; border-radius: 12px; overflow: hidden;
+  background: var(--stage-a); border: 1px solid var(--line);
 }
-.m-step > div { font-size: 14.5px; line-height: 1.75; color: var(--second); }
-.m-step > div strong { display: block; color: var(--ink); font-weight: 600; margin-bottom: 2px; }
-.m-fine { margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--line); font-size: 13.5px; color: var(--faint); }
+.mc-case {
+  position: absolute; left: 50%; top: 18px; width: 112px; height: 132px; margin-left: -56px;
+  background: #2E2E33; border-radius: 34px; padding: 9px;
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,.16), 0 10px 24px rgba(27,27,31,.16);
+}
+.mc-glass { position: relative; width: 94px; height: 114px; border-radius: 26px; background: #000; overflow: hidden; color: #F2F2F4; }
+.mc-orb { position: absolute; left: 50%; top: 44px; width: 60px; height: 60px; margin: -30px 0 0 -30px; border-radius: 50%; background: rgba(255,107,53,.16); }
+.mc-orb::before { content: ""; position: absolute; inset: 6px; border-radius: 50%; background: #FF6B35; }
+.mc-orb svg { position: absolute; left: 50%; top: 50%; width: 20px; height: 20px; margin: -10px 0 0 -10px; color: #000; }
+.mc-dim { position: absolute; left: 0; right: 0; top: 40px; text-align: center; font: 600 26px/26px "SF Pro Rounded", ui-rounded, -apple-system, sans-serif; color: #5C5C63; font-variant-numeric: tabular-nums; }
+.mc-mic { position: absolute; left: 50%; top: 14px; width: 7px; height: 7px; margin-left: -3.5px; border-radius: 50%; background: #FF6B35; }
+.mc-ring { position: absolute; left: 50%; top: 22px; width: 40px; height: 40px; margin-left: -20px; }
+.mc-ring circle { fill: none; stroke-width: 3; }
+.mc-ring .bg { stroke: #2A2A2F; }
+.mc-ring .fg { stroke: #E2531F; stroke-linecap: round; stroke-dasharray: 113; stroke-dashoffset: 34; }
+.mc-ring::after { content: ""; position: absolute; left: 50%; top: 50%; width: 10px; height: 10px; margin: -5px 0 0 -5px; border-radius: 50%; background: #E2531F; }
+.mc-quad { position: absolute; left: 0; right: 0; top: 74px; display: flex; justify-content: center; gap: 4px; }
+.mc-quad i { width: 13px; height: 4px; border-radius: 2px; background: #2A2A2F; }
+.mc-quad i.on { background: #E2531F; }
+/* 第 4 步:表上在转圈,往手机传 */
+.mc-spin { position: absolute; left: 50%; top: 26px; width: 24px; height: 24px; margin-left: -12px; }
+.mc-send { position: absolute; left: 0; right: 0; top: 58px; text-align: center; font-size: 10px; line-height: 13px; color: #A0A0A8; white-space: nowrap; }
+.mc-ph {
+  position: absolute; padding: 7px; background: #0E0E10; border-radius: 30px; box-shadow: 0 10px 24px rgba(27,27,31,.16);
+}
+.mc-ph-scr { position: relative; height: 100%; border-radius: 24px; background: #fff; overflow: hidden; color: #1B1B1F; font-family: -apple-system, "PingFang SC", sans-serif; }
+.mc-ph-scr::before { content: ""; position: absolute; left: 50%; top: 7px; width: 44px; height: 13px; margin-left: -22px; border-radius: 7px; background: #0E0E10; }
+/* 第 5 步:手机上半截,历史里的一条全文(分说话人) */
+.mc-detail .mc-ph { left: 50%; width: 176px; margin-left: -88px; top: 16px; height: 150px; }
+.mc-meta { position: absolute; left: 14px; top: 30px; font-size: 10px; color: #8D8D95; font-variant-numeric: tabular-nums; }
+.mc-body { position: absolute; left: 14px; right: 12px; top: 46px; }
+.mc-body p { font-size: 11.5px; line-height: 16px; margin-bottom: 7px; white-space: nowrap; }
+.mc-body b { font-weight: 600; }
 
-/* 录音在你手里:两三句 + 隐私页链接 */
-.m-plain { margin-top: 20px; display: grid; gap: 10px; max-width: 40em; }
-.m-plain p { color: var(--second); font-size: 15px; }
-.m-link { margin-top: 18px; font-size: 14.5px; }
+/* 线下面那块能按的手表 */
+.m-try {
+  margin-top: 44px; display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 20px 40px; align-items: center;
+  background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 22px 28px;
+}
+.m-try-t { font-size: 14.5px; line-height: 1.75; color: var(--second); max-width: 22em; }
+/* 键盘那句只给有键盘、有鼠标的设备 */
+@media (hover: none) { .m-kb { display: none; } }
+.m-try-t strong { display: block; color: var(--ink); font-size: 15.5px; font-weight: 600; margin-bottom: 4px; }
 
-/* ── 行动区 ── */
+/* 四格事实 */
+.m-facts { margin-top: 32px; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
+.m-fact { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 20px 20px 22px; }
+.m-fact h3 { font-size: 15.5px; font-weight: 600; line-height: 1.45; }
+.m-fact p { font-size: 14.5px; line-height: 1.75; color: var(--second); margin-top: 8px; }
+.m-fact a { display: inline-block; margin-top: 8px; font-size: 14px; }
+
+/* 结尾 */
 .m-outro { border-top: 1px solid var(--line); padding-top: 56px; }
-.m-outro .big { font-size: clamp(20px, 2.4vw, 24px); font-weight: 600; line-height: 1.5; max-width: 26em; }
+.m-outro .big { font-size: clamp(20px, 2.4vw, 25px); font-weight: 600; line-height: 1.55; max-width: 27em; }
+.m-outro .fine { margin-top: 12px; font-size: 15px; color: var(--second); max-width: 36em; }
 
-@media (max-width: 980px) {
-  .m-split { grid-template-columns: minmax(0, 1fr); }
+@media (max-width: 1000px) {
+  .m-facts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+/* 线在窄一点的屏上改成竖排:左边局部,右边字 */
+@media (max-width: 900px) {
+  .m-hero { grid-template-columns: minmax(0, 1fr); }
+  .m-stage-box { margin-top: 8px; }
+  .m-line { grid-template-columns: minmax(0, 1fr); gap: 0; }
+  .m-line > li { display: grid; grid-template-columns: 150px minmax(0, 1fr); gap: 0 20px; padding-bottom: 22px; }
+  .m-line > li .mc { grid-row: 1 / span 3; height: 116px; }
+  .m-n { margin-top: 4px; }
+  .m-n::after { display: none; }
+  .m-line h3 { margin-top: 6px; }
+  .m-try { grid-template-columns: minmax(0, 1fr); }
 }
 
 @media (max-width: 820px) {
-  .m-hero { padding-top: 44px; }
-  .m-sec { margin-top: 72px; }
+  .m-hero { padding-top: 40px; }
+  .m-sec { margin-top: 80px; }
   /* 顶栏收起的那条,同 demo 页:只留 nav-keep 与「下载」 */
   .navlinks a:not(.nav-cta):not(.nav-keep), .navlinks .soon { display: none; }
 }
 
 @media (max-width: 600px) {
-  .m-hero { padding-top: 36px; }
-  .m-frame { margin-top: 28px; padding: 8px; border-radius: 14px; }
-  .m-sec { margin-top: 60px; }
+  .m-hero { padding-top: 32px; }
+  .m-hero .sub { font-size: 16px; }
+  .m-stage-box { --s: .82; }
+  .m-sec { margin-top: 64px; }
+  .m-line > li { grid-template-columns: 112px minmax(0, 1fr); gap: 0 16px; }
+  .m-line > li .mc { height: 104px; }
+  .mc-case { transform: scale(.8); transform-origin: 50% 0; }
+  .mc-detail .mc-ph { transform: scale(.8); transform-origin: 50% 0; }
+  .m-try { padding: 20px; }
+  .m-facts { grid-template-columns: minmax(0, 1fr); gap: 12px; }
   .m-outro { padding-top: 44px; }
+}
+@media (max-width: 374px) {
+  .m-stage-box { --s: .7; }
 }
 
 /* 屏幕阅读器才读的一行(演示的状态播报) */
@@ -84,21 +224,17 @@
   overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
 }
 
-/* ══ 演示共用:设备下面那行提示 ══ */
-.dm { position: relative; outline: none; }
-.dm-hint { margin-top: 14px; min-height: 3.2em; font-size: 13.5px; line-height: 1.6; color: var(--second); text-align: center; }
-.dm-again {
-  border: 0; background: none; padding: 0 2px; font: inherit; color: var(--coral-ink); cursor: pointer;
-  text-decoration: underline; text-underline-offset: 3px;
-}
-.dm-again:focus-visible { outline: 2px solid var(--coral); outline-offset: 2px; border-radius: 4px; }
+/* 动画只在看得见时跑:.m-anim 没有 .run 就整块暂停 */
+.m-anim:not(.run) *, .m-anim:not(.run) *::before, .m-anim:not(.run) *::after { animation-play-state: paused !important; }
 
-/* ══ 演示 A:手表 ══
-   --k 由 mobile.js 按 .dm-wcol 的宽给(最大 .56);屏内一律按 396×484 排(V1 的 1pt = 2px),整块 scale(--k)。
+/* ══ 演示:手表(点录 / 按住停 / 传到手机历史) ══
+   --k 由 mobile.js 按 .dm-wcol 的宽给(最大 .34);屏内一律按 396×484 排(V1 的 1pt = 2px),整块 scale(--k)。
    外壳比例抄宣传图 comp.css 的 .watch(表带 + 表身 + 表冠),--w = 屏宽。 */
-.dm-w { --k: .56; width: 560px; max-width: 100%; }
-.dm-wrow { display: flex; gap: 28px; align-items: flex-start; }
-.dm-wcol { flex: 0 1 262px; min-width: 0; }
+.dm { position: relative; outline: none; }
+.dm-hint { margin-top: 12px; min-height: 3.2em; font-size: 13.5px; line-height: 1.6; color: var(--second); text-align: center; }
+.dm-w { --k: .34; }
+.dm-wrow { display: flex; gap: 28px; align-items: center; }
+.dm-wcol { flex: 0 1 170px; min-width: 0; }
 .wt { --w: calc(var(--k) * 396px); position: relative; width: calc(var(--w) * 1.18); height: calc(var(--w) * 2.162); margin: 0 auto; }
 .wt-band { position: absolute; left: 50%; transform: translateX(-50%); width: calc(var(--w) * .8); height: calc(var(--w) * .42); background: #2A2A2F; }
 .wt-top { top: 0; border-radius: calc(var(--w) * .06) calc(var(--w) * .06) 0 0; }
@@ -130,11 +266,12 @@
   position: absolute; top: 26px; left: 50%; transform: translateX(-50%); white-space: nowrap;
   border-radius: 999px; background: #1A1A1D; color: #A0A0A8; font-size: 23px; line-height: 28px; padding: 8px 20px;
 }
-/* 待命:大橙圆(两圈光晕 + 芯),它是一个 <button> */
+/* 待命:大橙圆(两圈光晕 + 芯);演示里它是一个 <button>,首屏那块是 <span> */
 .w-orb {
   position: absolute; left: 50%; top: 222px; width: 256px; height: 256px; transform: translate(-50%, -50%);
   border: 0; padding: 0; background: none; border-radius: 50%; cursor: pointer; color: #000; -webkit-tap-highlight-color: transparent;
 }
+.hw .w-orb { cursor: default; }
 .w-orb > span { position: absolute; left: 50%; top: 50%; border-radius: 50%; transform: translate(-50%, -50%); }
 .w-h2 { width: 256px; height: 256px; background: rgba(255,107,53,.09); }
 .w-h1 { width: 224px; height: 224px; background: rgba(255,107,53,.18); animation: w-halo 2.4s ease-in-out infinite; }
@@ -143,7 +280,7 @@
   background: radial-gradient(circle at 30% 26%, rgba(255,255,255,.08) 0, rgba(255,255,255,.05) 22%, rgba(255,255,255,0) 52%), #FF6B35;
 }
 .w-core svg { width: 68px; height: 68px; }
-.w-orb:active .w-core { transform: translate(-50%, -50%) scale(.95); }
+button.w-orb:active .w-core { transform: translate(-50%, -50%) scale(.95); }
 .w-orb:focus-visible { outline: 6px solid #F2F2F4; outline-offset: 4px; }
 @keyframes w-halo { 0%, 100% { opacity: 1; } 50% { opacity: .55; } }
 .w-last {
@@ -176,10 +313,10 @@
 
 /* 旁边那张「手机历史」卡:页面配色,跟深浅色走 */
 .dm-hist {
-  flex: 1 1 240px; max-width: 270px; min-width: 0; margin-top: 28px;
-  background: var(--card); border: 1px solid var(--line2); border-radius: 16px; padding: 16px 16px 6px; box-shadow: var(--shadow);
+  flex: 0 1 260px; width: 260px; min-width: 0;
+  background: var(--paper); border: 1px solid var(--line2); border-radius: 14px; padding: 14px 16px 6px;
 }
-.dm-hist-h { font-size: 15px; font-weight: 600; margin-bottom: 6px; }
+.dm-hist-h { font-size: 14.5px; font-weight: 600; margin-bottom: 4px; }
 .dm-hist-list { list-style: none; padding: 0; margin: 0; }
 .dm-hi + .dm-hi { border-top: 1px solid var(--line); }
 .dm-new { animation: dm-in .32s ease; }
@@ -199,116 +336,16 @@ button.dm-hrow:focus-visible { outline: 2px solid var(--coral); outline-offset: 
 .dm-hx { padding: 0 0 12px; }
 .dm-hx p { font-size: 13px; line-height: 1.65; color: var(--ink); }
 
-/* ══ 演示 B:iPhone ══
-   内容按 393×852 pt 排(版式量自 promo/phone-mock.html 的 1206 像素稿 ÷3.07 与 10-09 真截图),整块 scale(--k);
-   --k 由 mobile.js 按 .dm-pcol 的宽给(最大 .74)。外壳同宣传图的 .iphone:黑边 + 外沿高光。 */
-.dm-p { --k: .74; }
-.dm-pcol { width: 320px; max-width: 100%; }
-.ph {
-  position: relative; width: calc(var(--k) * 423px); margin: 0 auto; padding: calc(var(--k) * 15px);
-  background: #0E0E10; border-radius: calc(var(--k) * 70px);
-  box-shadow: inset 0 0 0 1px rgba(255,255,255,.22), 0 0 0 1px #2A2A2E, 0 2px 4px rgba(27,27,31,.08), 0 30px 60px rgba(27,27,31,.14);
-}
-.ph-key { position: absolute; width: 3px; background: #1E1E21; border-radius: 2px; }
-.ph-key.k1 { left: -3px; top: 26%; height: 7%; }
-.ph-key.k2 { left: -3px; top: 35%; height: 7%; }
-.ph-key.k3 { right: -3px; top: 30%; height: 11%; }
-.ph-scr { position: relative; width: calc(var(--k) * 393px); height: calc(var(--k) * 852px); border-radius: calc(var(--k) * 55px); overflow: hidden; background: #F7F7F8; }
-.ps {
-  position: absolute; left: 0; top: 0; width: 393px; height: 852px; transform: scale(var(--k)); transform-origin: 0 0;
-  background: #F7F7F8; color: #1B1B1F; font-family: -apple-system, "SF Pro Text", "PingFang SC", sans-serif; -webkit-font-smoothing: antialiased;
-}
-.p-sbar { position: absolute; left: 0; top: 0; width: 393px; height: 50px; z-index: 2; }  /* 详情页是白底整屏,状态栏要压在它上面 */
-.p-sbar svg { position: absolute; fill: #1B1B1F; }
-.p-time { position: absolute; left: 55px; top: 22px; font-size: 19px; font-weight: 600; line-height: 19px; }
-.p-sig { left: 283px; top: 26px; }
-.p-wifi { left: 307px; top: 25px; }
-.p-bat { left: 332px; top: 26px; }
-.p-island { position: absolute; left: 135.5px; top: 11px; width: 122px; height: 36px; border-radius: 18px; background: #0E0E10; z-index: 2; }
-
-.pv { position: absolute; inset: 0; }
-.pv-rec { padding: 119px 16px 0; }
-.p-title { font-size: 32px; font-weight: 700; line-height: 36px; letter-spacing: .2px; margin: 0 1px 9px; }
-.p-card { background: #fff; border: 1px solid #E9E9EC; border-radius: 14px; padding: 16px 15px 14px; }
-.p-label { font-size: 11px; line-height: 12px; color: #8E8E96; white-space: nowrap; }
-.p-caps { font-weight: 500; letter-spacing: .25em; font-size: 11.4px; }
-.p-dot { margin: 0 5px 0 1px; }
-.p-st { display: none; }
-.p-timerrow { position: relative; height: 37px; margin-top: 11px; }
-.p-timer { font-family: ui-serif, "New York", "Newsreader", Georgia, serif; font-weight: 600; font-variant-numeric: lining-nums tabular-nums; font-size: 36.5px; line-height: 37px; letter-spacing: -.3px; }
-.p-bars { position: absolute; right: 12px; top: -8px; width: 45px; height: 24px; display: none; align-items: center; justify-content: space-between; }
-.p-bars i { width: 4px; height: 12px; border-radius: 2px; background: #E2531F; transition: height .12s ease; }
-.p-bars i:nth-child(1) { height: 6px; } .p-bars i:nth-child(2) { height: 9px; } .p-bars i:nth-child(3) { height: 12px; }
-.p-bars i:nth-child(4) { height: 15px; } .p-bars i:nth-child(5) { height: 18px; } .p-bars i:nth-child(6) { height: 21px; }
-.p-bars i:nth-child(7) { height: 23px; }
-.p-btns { display: none; gap: 8px; margin-top: 10px; }
-.p-pill {
-  height: 31px; border: 0; border-radius: 16px; padding: 0 17px; font: 500 13.5px/31px -apple-system, "SF Pro Text", "PingFang SC", sans-serif;
-  white-space: nowrap; cursor: pointer; -webkit-tap-highlight-color: transparent; transition: transform .1s ease;
-}
-.p-pill:active { transform: scale(.97); }
-.p-pill:focus-visible { outline: 3px solid #E2531F; outline-offset: 3px; }
-.p-black { background: #1B1B1F; color: #fff; }
-.p-discard { background: #F9ECEA; color: #B3402E; }
-.p-chips { display: none; gap: 6px; margin-top: 32px; }
-.p-chips span { font-size: 11px; line-height: 16px; padding: 1px 6px; border-radius: 6px; border: 1px solid #E9E9EC; }
-.p-chips span.on { background: #1B1B1F; border-color: #1B1B1F; color: #fff; }
-.p-cap { display: none; margin-top: 18px; background: #F1F1F3; border-radius: 10px; padding: 12px 12px 11px; transition: opacity .4s ease; }
-.p-clabel { font-size: 10px; line-height: 12px; color: #8E8E96; }
-.p-lines { min-height: 66px; margin-top: 4px; }
-.p-lines p { font-size: 13px; line-height: 20.5px; animation: p-in .35s ease; }
-@keyframes p-in { from { opacity: 0; transform: translateY(3px); } to { opacity: 1; transform: none; } }
-.p-foot { font-size: 11px; line-height: 18px; color: #8E8E96; margin-top: 14px; }
-.p-c2 { margin-top: 25px; padding: 15px 15px 13px; }
-.p-c2 p { font-size: 12.7px; line-height: 19.2px; color: #55555C; margin-top: 5px; }
-.p-c2 .p-c2h { font-size: 14.7px; font-weight: 600; line-height: 18px; color: #1B1B1F; margin-top: 0; }
-.p-c2 .p-small { font-size: 10.7px; line-height: 14.3px; color: #8E8E96; margin-top: 4px; }
-
-/* 详情页(录完):照 phone-mock 的 detail */
-.pv-detail { display: none; background: #fff; }
-.p-back { position: absolute; left: 16px; top: 61px; width: 43px; height: 43px; border-radius: 22px; background: #fff; box-shadow: 0 2px 10px rgba(0,0,0,.07); }
-.p-back svg { display: block; }
-.p-navtitle { position: absolute; left: 0; width: 393px; top: 73px; text-align: center; font-size: 15.6px; font-weight: 600; line-height: 19px; }
-.p-navcap { position: absolute; right: 16px; top: 61px; height: 43px; border-radius: 22px; background: #fff; box-shadow: 0 2px 10px rgba(0,0,0,.07); display: flex; align-items: center; gap: 22px; padding: 0 13px 0 15px; color: #E2531F; font-size: 15.3px; font-weight: 500; }
-.p-meta { position: absolute; left: 17px; top: 130px; font-size: 12px; color: #8D8D95; }
-.p-body { position: absolute; left: 16px; top: 158px; width: 361px; font-size: 14.3px; line-height: 22.5px; }
-.p-body p { margin-bottom: 22.5px; }
-.p-body b { font-weight: inherit; }
-
-/* 底栏胶囊 */
-.p-tabbar { position: absolute; left: 63px; top: 772px; width: 267px; height: 60px; border-radius: 30px; background: #FDFDFE; box-shadow: 0 3px 13px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.04); }
-.p-tabsel { position: absolute; top: 4px; left: 4px; width: 92px; height: 52px; border-radius: 26px; background: #EBEBEC; }
-.p-tab { position: absolute; top: 0; width: 85px; height: 60px; color: #1B1B1F; }
-.p-tab.t0 { left: 7px; color: #E2531F; } .p-tab.t1 { left: 91px; } .p-tab.t2 { left: 175px; }
-.p-tab svg { position: absolute; left: 31px; top: 11px; }
-.p-tab b { position: absolute; left: 0; right: 0; top: 38px; text-align: center; font-size: 9.2px; font-weight: 600; line-height: 12px; }
-
-/* 状态 → 屏上哪些东西出现 */
-.dm-p[data-state="home"] .st-home, .dm-p[data-state="recording"] .st-rec, .dm-p[data-state="transcribing"] .st-tr { display: inline; }
-.dm-p[data-state="home"] .p-home { display: flex; }
-.dm-p[data-state="recording"] .p-btns.p-recb { display: flex; }
-.dm-p[data-state="recording"] .p-cap, .dm-p[data-state="transcribing"] .p-cap { display: block; }
-.dm-p[data-state="transcribing"] .p-cap { opacity: .35; }
-.dm-p[data-state="recording"] .p-bars { display: flex; }
-.dm-p[data-state="recording"] .p-timer, .dm-p[data-state="transcribing"] .p-timer { color: #E2531F; }
-.dm-p:not([data-state="home"]) .p-c2, .dm-p.had .p-c2 { display: none; }
-.dm-p[data-state="done"] .pv-rec { display: none; }
-.dm-p[data-state="done"] .pv-detail { display: block; }
-.dm-p[data-state="done"] .p-tabsel { left: 88px; }
-.dm-p[data-state="done"] .p-tab.t0 { color: #1B1B1F; }
-.dm-p[data-state="done"] .p-tab.t1 { color: #E2531F; }
-
 @media (max-width: 600px) {
   .dm-wrow { flex-direction: column; align-items: center; gap: 4px; }
-  .dm-wcol { flex: none; width: 262px; max-width: 100%; }
-  .dm-hist { flex: none; width: 100%; max-width: 360px; margin-top: 0; }
-  .dm-pcol { margin: 0 auto; }
+  .dm-wcol { flex: none; width: 170px; max-width: 100%; }
+  .dm-hist { flex: none; width: 100%; max-width: 360px; }
 }
 
-/* 减弱动效:状态照切、计时照走;呼吸 / 光晕 / 环 / 淡入全停,长按改成 4 格 */
+/* 减弱动效:状态照切、计时照走(演示);首屏计时不走。呼吸 / 光晕 / 环 / 淡入全停,长按改成 4 格 */
 @media (prefers-reduced-motion: reduce) {
-  .w-glow, .w-h1, .w-spin, .dm-new, .p-lines p { animation: none; }
-  .w-core, .p-pill, .p-bars i, .p-cap, button.dm-hrow::after { transition: none; }
+  .w-glow, .w-h1, .w-spin, .dm-new { animation: none; }
+  .w-core, .hp-bars i, button.dm-hrow::after { transition: none; }
   .w-dot svg { display: none; }
   .dm-w[data-state="holding"] .w-quad { display: flex; }
 }
