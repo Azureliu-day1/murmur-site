@@ -144,17 +144,14 @@
 /* 第 4 步:表上在转圈,往手机传 */
 .mc-spin { position: absolute; left: 50%; top: 26px; width: 24px; height: 24px; margin-left: -12px; }
 .mc-send { position: absolute; left: 0; right: 0; top: 58px; text-align: center; font-size: 10px; line-height: 13px; color: #A0A0A8; white-space: nowrap; }
-.mc-ph {
-  position: absolute; padding: 7px; background: #0E0E10; border-radius: 30px; box-shadow: 0 10px 24px rgba(27,27,31,.16);
-}
-.mc-ph-scr { position: relative; height: 100%; border-radius: 24px; background: #fff; overflow: hidden; color: #1B1B1F; font-family: -apple-system, "PingFang SC", sans-serif; }
-.mc-ph-scr::before { content: ""; position: absolute; left: 50%; top: 7px; width: 44px; height: 13px; margin-left: -22px; border-radius: 7px; background: #0E0E10; }
-/* 第 5 步:手机上半截,历史里的一条全文(分说话人) */
-.mc-detail .mc-ph { left: 50%; width: 176px; margin-left: -88px; top: 16px; height: 150px; }
-.mc-meta { position: absolute; left: 14px; top: 26px; font-size: 10px; color: #8D8D95; font-variant-numeric: tabular-nums; }
-.mc-body { position: absolute; left: 14px; right: 10px; top: 41px; }
-.mc-body p { font-size: 11.5px; line-height: 15px; margin-bottom: 6px; }
-.mc-body b { font-weight: 600; }
+/* 第 5 步:手机上半截。外壳、顶距、高度、阴影都和前 4 张的表壳同一套(.mc-case),只是宽一点、屏是 App 的浅色界面;
+   屏里只放两行完整的短句,一行一个说话人,不折行(review C-01:旧图裁掉半行、折出孤字) */
+.mc-case.mc-phone { width: 160px; margin-left: -80px; border-radius: 30px; }
+.mc-phone .mc-glass { width: 142px; border-radius: 22px; background: #F7F7F8; color: #1B1B1F; font-family: -apple-system, "PingFang SC", sans-serif; }
+.mc-phone .mc-glass::before { content: ""; position: absolute; left: 50%; top: 7px; width: 40px; height: 12px; margin-left: -20px; border-radius: 6px; background: #0E0E10; }
+.mc-line { position: absolute; left: 10px; right: 8px; font-size: 10.5px; line-height: 14px; white-space: nowrap; }
+.mc-line b { font-weight: 600; }
+.mc-line.l1 { top: 36px; } .mc-line.l2 { top: 58px; }
 
 /* 线下面那块能按的手表 */
 .m-try {
@@ -214,7 +211,6 @@
   .m-line > li { grid-template-columns: 112px minmax(0, 1fr); gap: 0 16px; }
   .m-line > li .mc { height: 104px; }
   .mc-case { transform: scale(.8); transform-origin: 50% 0; }
-  .mc-detail .mc-ph { transform: scale(.8); transform-origin: 50% 0; }
   .m-try { padding: 20px; }
   .m-facts { grid-template-columns: minmax(0, 1fr); gap: 12px; }
   .m-outro { padding-top: 44px; }
