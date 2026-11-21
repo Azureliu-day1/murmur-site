@@ -236,7 +236,8 @@
    --k 由 mobile.js 按 .dm-wcol 的宽给(最大 .34);屏内一律按 396×484 排(V1 的 1pt = 2px),整块 scale(--k)。
    外壳比例抄宣传图 comp.css 的 .watch(表带 + 表身 + 表冠),--w = 屏宽。 */
 .dm { position: relative; outline: none; }
-.dm-hint { margin-top: 10px; min-height: 3.2em; font-size: 13.5px; line-height: 1.6; color: var(--second); text-align: center; }
+/* 提示行定高三行(按最长那条留):切状态时整块不跳(review U-02,英文录音提示折三行把整块推下 22px) */
+.dm-hint { margin-top: 10px; height: 4.8em; overflow: hidden; font-size: 13.5px; line-height: 1.6; color: var(--second); text-align: center; }
 .dm-w { --k: .34; }
 .dm-wrow { display: flex; gap: 28px; align-items: center; }
 /* 表那一栏定宽:--k 按这一栏的宽算,栏宽不能跟着下面提示字的长短变(review U-01:按住时提示最短,栏收窄,整块表缩到 59%) */
