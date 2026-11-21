@@ -239,7 +239,8 @@
 .dm-hint { margin-top: 10px; min-height: 3.2em; font-size: 13.5px; line-height: 1.6; color: var(--second); text-align: center; }
 .dm-w { --k: .34; }
 .dm-wrow { display: flex; gap: 28px; align-items: center; }
-.dm-wcol { flex: 0 1 170px; min-width: 0; }
+/* 表那一栏定宽:--k 按这一栏的宽算,栏宽不能跟着下面提示字的长短变(review U-01:按住时提示最短,栏收窄,整块表缩到 59%) */
+.dm-wcol { flex: 0 0 170px; width: 170px; min-width: 0; }
 .wt { --w: calc(var(--k) * 396px); position: relative; width: calc(var(--w) * 1.18); height: calc(var(--w) * 2.162); margin: 0 auto; }
 .wt-band { position: absolute; left: 50%; transform: translateX(-50%); width: calc(var(--w) * .8); height: calc(var(--w) * .42); background: #2A2A2F; }
 .wt-top { top: 0; border-radius: calc(var(--w) * .06) calc(var(--w) * .06) 0 0; }
