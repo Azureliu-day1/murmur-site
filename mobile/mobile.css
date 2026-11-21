@@ -18,7 +18,7 @@
 /* ── 首屏 ──
    ⛔ .m-hero 不许写 padding 简写:会把 .wrap 的左右留白清零。 */
 .m-hero {
-  padding-top: 56px; display: grid; grid-template-columns: minmax(0, 1fr) 420px;
+  padding-top: 56px; display: grid; grid-template-columns: minmax(0, 1fr) 440px;
   gap: 40px 56px; align-items: center;
 }
 .m-hero h1 { font-size: clamp(30px, 4.2vw, 44px); font-weight: 600; line-height: 1.25; letter-spacing: .01em; }
@@ -26,11 +26,11 @@
 .m-cta { margin-top: 30px; display: flex; gap: 14px; flex-wrap: wrap; }
 .m-soon { color: var(--coral-ink); }
 
-/* 设备台:按 420×712 设计,窄屏整块缩(--s);盒子按缩后的尺寸占位,横向不溢出。
-   宽 420:手机靠右(左边缘 x=120,底栏从 x=175 起),手表表壳 + 表冠到 x≈166,两台同框但手表不压手机底栏 */
-.m-stage-box { --s: 1; width: calc(420px * var(--s)); margin: 0 auto; }
+/* 设备台:按 440×712 设计(手表压在手机左下,不压字幕卡、不压底栏),窄屏整块缩(--s);盒子按缩后的尺寸占位,横向不溢出。
+   宽 440:手机靠右(左边缘 x=140,字幕卡从 x=163、底栏从 x=195 起),手表表壳 + 表冠到 x≈162,两台同框但手表不压字幕卡和底栏 */
+.m-stage-box { --s: 1; width: calc(440px * var(--s)); margin: 0 auto; }
 .m-stage-in { height: calc(712px * var(--s)); }
-.m-stage { position: relative; width: 420px; height: 712px; transform: scale(var(--s)); transform-origin: 0 0; margin: 0; }
+.m-stage { position: relative; width: 440px; height: 712px; transform: scale(var(--s)); transform-origin: 0 0; margin: 0; }
 .m-stage-cap {
   margin-top: 12px; text-align: center; font-family: "IBM Plex Mono", ui-monospace, monospace;
   font-size: 12px; color: var(--faint); letter-spacing: .02em;
@@ -77,9 +77,11 @@
 .hp-discard { background: #F9ECEA; color: #B3402E; }
 .hp-cap { margin-top: 14px; background: #F1F1F3; border-radius: 10px; padding: 10px 11px 11px; }
 .hp-clabel { font-size: 10.5px; line-height: 13px; color: #8E8E96; margin-bottom: 5px; }
-.hp-cap p:not(.hp-clabel) { font-size: 15px; line-height: 22px; }
+.hp-cap p:not(.hp-clabel) { font-size: 15px; line-height: 24px; }
 .hp-cap p + p:not(.hp-clabel) { margin-top: 3px; }
 .hp-cap .hp-vol { color: #8E8E96; }
+/* 卡片底下一行小字(照 App 录音页原文),和多出的两句字幕一起把下半屏排满(review U-04:原来卡片底到标签栏空着约 170px) */
+.hp-foot { font-size: 11px; line-height: 16px; color: #8E8E96; margin-top: 12px; }
 .hp-tabbar {
   position: absolute; left: 44px; top: 546px; width: 190px; height: 44px; border-radius: 22px;
   background: #FDFDFE; box-shadow: 0 3px 13px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.04);
@@ -206,7 +208,7 @@
 @media (max-width: 600px) {
   .m-hero { padding-top: 32px; }
   .m-hero .sub { font-size: 16px; }
-  .m-stage-box { --s: .8; }
+  .m-stage-box { --s: .76; }
   .m-sec { margin-top: 64px; }
   .m-line > li { grid-template-columns: 112px minmax(0, 1fr); gap: 0 16px; }
   .m-line > li .mc { height: 104px; }
@@ -216,7 +218,7 @@
   .m-outro { padding-top: 44px; }
 }
 @media (max-width: 374px) {
-  .m-stage-box { --s: .66; }
+  .m-stage-box { --s: .63; }
 }
 
 /* 屏幕阅读器才读的一行(演示的状态播报) */
