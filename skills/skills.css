@@ -29,7 +29,7 @@
   --vb-term-box:  #3A3A41;
   --vb-term-ink:  #F2F2F4;
   --vb-term-dim:  #A0A0A8;
-  --vb-term-faint:#6E6E76;
+  --vb-term-faint:#8A8A92;   /* 体检 #21:原 #6E6E76 在终端底上 3.4:1;现在终端底 5.01、深色 4.85、对话框底 4.58 */
   --vb-ease: cubic-bezier(.2, .7, .2, 1);
 }
 @media (prefers-color-scheme: dark) {
@@ -176,7 +176,7 @@
   transition: color .2s ease, border-color .2s ease, background-color .2s ease;
 }
 .sk-scenes button:hover { color: var(--ink); }
-.sk-scenes button.on { color: var(--coral-ink); border-color: var(--coral); background: var(--coral-tint); }
+.sk-scenes button.on { color: var(--coral-text); border-color: var(--coral); background: var(--coral-tint); }
 .sk-scenes button:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
 
 /* ── 原话:只在静态对照里出现(动画里原话在录音条的字幕卡上) ── */
@@ -239,7 +239,7 @@
   padding: 22px 24px 24px; margin-top: 26px;
 }
 .panel .head-row { display: flex; align-items: baseline; gap: 12px; margin-bottom: 14px; }
-.panel .tag { font-size: 12px; letter-spacing: .16em; text-transform: uppercase; color: var(--coral); font-weight: 600; }
+.panel .tag { font-size: 12px; letter-spacing: .16em; text-transform: uppercase; color: var(--coral-text); font-weight: 600; }
 .panel .meta { margin-left: auto; font-family: "IBM Plex Mono", monospace; font-size: 11.5px; color: var(--faint); }
 .panel p.txt { font-size: 15px; line-height: 1.8; white-space: pre-wrap; overflow-wrap: anywhere; min-height: 3.6em; color: var(--ink); }
 .panel p.txt.placeholder { color: var(--faint); }
@@ -248,7 +248,7 @@
 .sk-result[hidden] { display: none; }
 .sk-chip {
   display: inline-flex; align-items: center; gap: 6px;
-  font-size: 12.5px; color: var(--coral-ink); background: var(--coral-tint);
+  font-size: 12.5px; color: var(--coral-text); background: var(--coral-tint);
   border-radius: 999px; padding: 2px 10px;
 }
 .sk-chip::before { content: ""; width: 5px; height: 5px; border-radius: 50%; background: var(--coral); }

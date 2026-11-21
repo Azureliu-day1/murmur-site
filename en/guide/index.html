@@ -82,9 +82,6 @@
     </div>
   </section>
 
-    <!-- Facts (plan C, murmur-ime skills5 4745d296): PromptSkillSettings.swift PromptSkillAuto.minUnits = 15 (no skill call below it), maxWait 4 s ·
-       PromptSkills.swift PromptSkillApproach.minScalars = 40 (threshold for adding steps) · codeIDs / chatIDs (7 coding / 5 chat) · method-conflicts.json v4 ·
-       skill names from the name field of Resources/prompt-skills/*.json. What lands = the plain cleanup plus, optionally, steps 3 to 5 of the skill. No more slots. -->
   <section class="g-sec" id="prompt-skills">
     <h2>Prompt skills</h2>
     <div class="g-body">
@@ -113,7 +110,6 @@
     </div>
   </section>
 
-  <!-- Facts: SceneSettingsSection.swift:47-76 · AppSettings.swift:484-488 (on by default) -->
   <section class="g-sec" id="scene">
     <h2>Cleanup by scene</h2>
     <div class="g-body">
@@ -170,7 +166,6 @@
     </div>
   </section>
 
-  <!-- Facts: IMEFuzzySection.swift:29-37 · RimeEngineDoublePinyin.swift:40-46 · RimeEngineFuzzy.swift:55-79 -->
   <section class="g-sec" id="fuzzy">
     <h2>Double and fuzzy pinyin</h2>
     <div class="g-body">
@@ -187,7 +182,6 @@
     </div>
   </section>
 
-  <!-- Facts: IMESmartInputSection.swift:31-77 · SmartPunctuation.swift:46-58 (defaults as read there) -->
   <section class="g-sec" id="smart">
     <h2>Smart punctuation and URLs</h2>
     <div class="g-body">
@@ -206,7 +200,6 @@
     </div>
   </section>
 
-  <!-- Facts: IMELookSection.swift:19-24, 37-56, 91 · IMEStyle.swift:13 (light and dark) -->
   <section class="g-sec" id="look">
     <h2>Candidate window</h2>
     <div class="g-body">
@@ -219,12 +212,10 @@
         <div class="g-row"><span class="k">Where</span><div>Settings → Input Method → Candidate window look. Standard, Coral and horizontal are the defaults. The card has a preview, and changes apply right away with no restart.</div></div>
       </div>
       <!-- Real screenshot ime-look: only the preview on the card (INT render 2026-10-01). The preview has no interface text, so the zh files are used, light and dark. -->
-      <figure class="py-shot"><picture><source srcset="../../shots/zh/ime-look-dark.png" media="(prefers-color-scheme: dark)"><img src="../../shots/zh/ime-look-light.png" width="900" height="156" loading="lazy" alt="The candidate window preview in Settings: shu ru fa, candidates 1 输入法 2 书入法 3 数入法 4 输入 5 书, with the second one highlighted."></picture><figcaption>The preview on the Candidate window card, with the defaults: standard size, coral, horizontal.</figcaption></figure>
+      <figure class="py-shot"><picture><source srcset="../../shots/zh/ime-look-dark.png" media="(prefers-color-scheme: dark)"><img src="../../shots/zh/ime-look-light.png" width="900" height="156" loading="lazy" alt="Screenshot from the Chinese version of Settings: the candidate window preview, shu ru fa, candidates 1 输入法 2 书入法 3 数入法 4 输入 5 书, with the second one highlighted."></picture><figcaption>The preview on the Candidate window card, with the defaults: standard size, coral, horizontal.</figcaption></figure>
     </div>
   </section>
 
-  <!-- Facts: IMECloudSection.swift:23-40 · CloudCandidates.swift:67.
-       ⛔ The .py-quote text is the English disclosure string from IMECloudSection.swift, word for word. -->
   <section class="g-sec" id="cloud">
     <h2>Cloud candidates</h2>
     <div class="g-body">
@@ -241,7 +232,6 @@
     </div>
   </section>
 
-  <!-- Facts: PersonalLexiconSection.swift:157-170, 362-364 (input method) · DictionaryView.swift:155-160 (dictation) -->
   <section class="g-sec" id="phrases">
     <h2>Shortcut phrases</h2>
     <div class="g-body">
