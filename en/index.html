@@ -945,14 +945,13 @@ footer a:hover { color: var(--ink); text-decoration: none; }
   .navlinks a.nav-member { padding: 0 8px; }
   .nav-cta { padding: 6px 9px; }
 }
-/* ── #mobile(2026-10-31):首页「手机和手表上也能录」一节。图框借 pinyin.css 的 .py-shot;
-   比例由 .mb-frame 给(2400×1400),图还没到 / 没有时照样占位,页面不塌。
-   ⛔ 首页不引 v2.css,所以这一段写在页内(简报原写 v2.css 末尾,改到这里)。中英各一份。 */
-#mobile .mb-shot { margin-top: 36px; padding: 12px; }
-.mb-frame { aspect-ratio: 2400 / 1400; background: var(--paper); border-radius: 8px; overflow: hidden; }
-#mobile .mb-frame img { width: 100%; height: 100%; object-fit: cover; border-radius: 0; }
+/* ── #mobile(2026-10-31;2026-11-21 review U-03 改):首页「手机和手表上也能录」一节。
+   配图只画设备(不带说明字),底色就是页面色,所以不再套 .py-shot 白卡和 .mb-frame 灰底两层框;
+   深色用 <picture> + prefers-color-scheme 换暗底那张。⛔ 首页不引 v2.css,这一段写在页内。中英各一份。 */
+#mobile .mb-pic { margin: 28px auto 0; max-width: 720px; }
+#mobile .mb-pic img { display: block; width: 100%; height: auto; }
 #mobile .mb-link { margin-top: 20px; font-size: 14.5px; }
-@media (max-width: 600px) { #mobile .mb-shot { margin-top: 28px; padding: 8px; } }
+@media (max-width: 600px) { #mobile .mb-pic { margin-top: 20px; } }
 </style>
 </head>
 <body>
@@ -1220,7 +1219,7 @@ footer a:hover { color: var(--ink); text-decoration: none; }
 <section class="wrap" id="mobile">
   <h2 class="reveal">Record on your phone and watch, too.</h2>
   <p class="sub reveal">In a meeting or an interview, tap your watch to start, then read the full transcript on your phone. iPhone and Apple Watch versions are coming soon.</p>
-  <figure class="py-shot mb-shot reveal"><div class="mb-frame"><img src="../shots/mobile/home-en.webp" width="2400" height="1400" loading="lazy" alt="An iPhone recording a conversation with text appearing line by line, and an Apple Watch on standby in front of it"></div></figure>
+  <figure class="mb-pic reveal"><picture><source srcset="../shots/mobile/home-en-dark.webp" media="(prefers-color-scheme: dark)"><img src="../shots/mobile/home-en-light.webp" width="1800" height="1240" loading="lazy" alt="An iPhone recording a conversation with text appearing line by line, and an Apple Watch on standby in front of it"></picture></figure>
   <p class="mb-link reveal"><a href="mobile/index.html">See Phone &amp; Watch →</a></p>
 </section>
 
