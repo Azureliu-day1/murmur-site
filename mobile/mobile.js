@@ -104,7 +104,7 @@ function fit(dev, box, design, max) {
   var list = $(root, '[data-hist]'), quads = root.querySelectorAll('.w-quad i');
   var state = 'idle', t0 = 0, recMs = 0, holdTimer = 0, holdIv = 0, holdAt = 0, keyHeld = false;
   var clk = Clock(root, function () { if (state === 'recording' || state === 'holding') paintClock(); });
-  fit(root, $(root, '.dm-wcol'), 396 * 1.18, 0.34);
+  fit(root, $(root, '.dm-wcol'), 396 * 1.18, 0.38);
 
   function paintClock() {
     var d = new Date(), h = d.getHours();

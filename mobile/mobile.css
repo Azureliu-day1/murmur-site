@@ -231,15 +231,15 @@
 .m-anim:not(.run) *, .m-anim:not(.run) *::before, .m-anim:not(.run) *::after { animation-play-state: paused !important; }
 
 /* ══ 演示:手表(点录 / 按住停 / 传到手机历史) ══
-   --k 由 mobile.js 按 .dm-wcol 的宽给(最大 .34);屏内一律按 396×484 排(V1 的 1pt = 2px),整块 scale(--k)。
+   --k 由 mobile.js 按 .dm-wcol 的宽给(最大 .38);表屏上的状态字 30px × .38 ≈ 11.4px(review U-06);屏内一律按 396×484 排(V1 的 1pt = 2px),整块 scale(--k)。
    外壳比例抄宣传图 comp.css 的 .watch(表带 + 表身 + 表冠),--w = 屏宽。 */
 .dm { position: relative; outline: none; }
 /* 提示行定高三行(按最长那条留):切状态时整块不跳(review U-02,英文录音提示折三行把整块推下 22px) */
 .dm-hint { margin-top: 10px; height: 4.8em; overflow: hidden; font-size: 13.5px; line-height: 1.6; color: var(--second); text-align: center; }
-.dm-w { --k: .34; }
+.dm-w { --k: .38; }
 .dm-wrow { display: flex; gap: 28px; align-items: center; }
 /* 表那一栏定宽:--k 按这一栏的宽算,栏宽不能跟着下面提示字的长短变(review U-01:按住时提示最短,栏收窄,整块表缩到 59%) */
-.dm-wcol { flex: 0 0 170px; width: 170px; min-width: 0; }
+.dm-wcol { flex: 0 0 180px; width: 180px; min-width: 0; }
 .wt { --w: calc(var(--k) * 396px); position: relative; width: calc(var(--w) * 1.18); height: calc(var(--w) * 2.162); margin: 0 auto; }
 .wt-band { position: absolute; left: 50%; transform: translateX(-50%); width: calc(var(--w) * .8); height: calc(var(--w) * .42); background: #2A2A2F; }
 .wt-top { top: 0; border-radius: calc(var(--w) * .06) calc(var(--w) * .06) 0 0; }
@@ -269,7 +269,7 @@
 .w-num { font-family: "SF Pro Rounded", ui-rounded, -apple-system, "PingFang SC", sans-serif; font-variant-numeric: tabular-nums; }
 .w-pill {
   position: absolute; top: 26px; left: 50%; transform: translateX(-50%); white-space: nowrap;
-  border-radius: 999px; background: #1A1A1D; color: #A0A0A8; font-size: 23px; line-height: 28px; padding: 8px 20px;
+  border-radius: 999px; background: #1A1A1D; color: #A0A0A8; font-size: 30px; line-height: 36px; padding: 8px 22px;
 }
 /* 待命:大橙圆(两圈光晕 + 芯);演示里它是一个 <button>,首屏那块是 <span> */
 .w-orb {
@@ -290,11 +290,11 @@ button.w-orb:active .w-core { transform: translate(-50%, -50%) scale(.95); }
 @keyframes w-halo { 0%, 100% { opacity: 1; } 50% { opacity: .55; } }
 .w-last {
   position: absolute; left: 20px; right: 20px; bottom: 20px; display: flex; align-items: center;
-  background: #1A1A1D; border-radius: 28px; padding: 20px 24px;
+  background: #1A1A1D; border-radius: 28px; padding: 18px 24px;
 }
 .w-last i { width: 12px; height: 12px; border-radius: 50%; background: #FF6B35; margin-right: 14px; flex: none; }
-.w-last b { font-size: 32px; line-height: 38px; font-weight: 500; }
-.w-last span { margin-left: auto; font-size: 24px; color: #6E6E76; white-space: nowrap; }
+.w-last b { font-size: 36px; line-height: 42px; font-weight: 500; }
+.w-last span { margin-left: auto; font-size: 30px; color: #8A8A92; white-space: nowrap; }
 
 /* 录音中:小点呼吸 + 大号时刻;长按时小点外一圈细环 1 秒走满 */
 .w-dot { position: absolute; left: 50%; top: 146px; width: 44px; height: 44px; transform: translate(-50%, -50%); display: flex; align-items: center; justify-content: center; }
@@ -311,10 +311,10 @@ button.w-orb:active .w-core { transform: translate(-50%, -50%) scale(.95); }
 
 /* 已保存:时长当主角,下面一行状态 */
 .w-dur { position: absolute; left: 0; right: 0; top: 176px; text-align: center; font-size: 88px; line-height: 88px; font-weight: 600; white-space: nowrap; }
-.w-status { position: absolute; left: 0; right: 0; top: 282px; display: flex; justify-content: center; align-items: center; gap: 10px; font-size: 24px; line-height: 30px; color: #A0A0A8; white-space: nowrap; }
-.w-spin { width: 24px; height: 24px; animation: w-spin 1s steps(8) infinite; }
+.w-status { position: absolute; left: 0; right: 0; top: 280px; display: flex; justify-content: center; align-items: center; gap: 10px; font-size: 30px; line-height: 36px; color: #A0A0A8; white-space: nowrap; }
+.w-spin { width: 30px; height: 30px; animation: w-spin 1s steps(8) infinite; }
 @keyframes w-spin { to { transform: rotate(360deg); } }
-.w-under { position: absolute; left: 0; right: 0; top: 320px; text-align: center; font-size: 23px; line-height: 28px; color: #6E6E76; white-space: nowrap; }
+.w-under { position: absolute; left: 0; right: 0; top: 326px; text-align: center; font-size: 30px; line-height: 36px; color: #8A8A92; white-space: nowrap; }
 
 /* 旁边那张「手机历史」卡:页面配色,跟深浅色走 */
 .dm-hist {
@@ -343,7 +343,7 @@ button.dm-hrow:focus-visible { outline: 2px solid var(--coral); outline-offset: 
 
 @media (max-width: 600px) {
   .dm-wrow { flex-direction: column; align-items: center; gap: 4px; }
-  .dm-wcol { flex: none; width: 170px; max-width: 100%; }
+  .dm-wcol { flex: none; width: 180px; max-width: 100%; }
   .dm-hist { flex: none; width: 100%; max-width: 360px; }
 }
 
