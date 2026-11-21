@@ -170,7 +170,7 @@ class Page(html.parser.HTMLParser):
             # 否则搬出去的文案会悄悄不再被查。外站(http / //)不读。
             src = a.get("src") if tag == "script" else None
             if src and not re.match(r"^(https?:)?//", src):
-                path = os.path.normpath(os.path.join(self.base, src))
+                path = os.path.normpath(src.lstrip("/") if src.startswith("/") else os.path.join(self.base, src))
                 self.scripts.append(open(path, encoding="utf-8").read()); self.srcs.append(path)
             self.flush(); self.skip = tag; self._script = [] ; return
         if tag not in INLINE: self.flush()
