@@ -151,9 +151,10 @@
 .mc-case.mc-phone { width: 160px; margin-left: -80px; border-radius: 30px; }
 .mc-phone .mc-glass { width: 142px; border-radius: 22px; background: #F7F7F8; color: #1B1B1F; font-family: -apple-system, "PingFang SC", sans-serif; }
 .mc-phone .mc-glass::before { content: ""; position: absolute; left: 50%; top: 7px; width: 40px; height: 12px; margin-left: -20px; border-radius: 6px; background: #0E0E10; }
-.mc-line { position: absolute; left: 10px; right: 8px; font-size: 10.5px; line-height: 14px; white-space: nowrap; }
-.mc-line b { font-weight: 600; }
-.mc-line.l1 { top: 36px; } .mc-line.l2 { top: 58px; }
+/* 写成 .m-line .mc-line:要压过「.m-line p」那条正文样式(14.5px、--second 色),否则深色模式下白屏上的字变成浅灰 */
+.m-line .mc-line { position: absolute; left: 10px; right: 8px; margin: 0; font-size: 12px; line-height: 15px; color: #1B1B1F; white-space: nowrap; }
+.m-line .mc-line b { font-weight: 600; }
+.m-line .mc-line.l1 { top: 34px; } .m-line .mc-line.l2 { top: 58px; }
 
 /* 线下面那块能按的手表 */
 .m-try {
