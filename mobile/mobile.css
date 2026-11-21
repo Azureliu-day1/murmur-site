@@ -163,7 +163,9 @@
 }
 .m-try-t { flex: 0 1 15em; font-size: 14.5px; line-height: 1.75; color: var(--second); }
 /* 键盘那句只给有键盘、有鼠标的设备 */
-@media (hover: none) { .m-kb { display: none; } }
+@media (hover: none), (max-width: 600px) { .m-kb { display: none; } }
+/* 正文段落避免末行孤字(review U-08:「点。」「系。」) */
+.m-hero .sub, .m-line li > p, .m-fact p, .m-try-t, .m-outro .fine { text-wrap: pretty; }   /* 只管正文;缩略图里的 .mc-line 是 nowrap,text-wrap 会把它覆盖掉 */
 .m-try-t strong { display: block; color: var(--ink); font-size: 15.5px; font-weight: 600; margin-bottom: 4px; }
 
 /* 四格事实 */
