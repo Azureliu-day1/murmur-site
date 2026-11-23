@@ -36,15 +36,11 @@
     <div class="navlinks">
       <a href="guide/index.html">Guide</a>
       <a href="skills/index.html">Skills</a>
-      <!-- ⭐ class="nav-keep" = stays visible on a phone (see the @media note) -->
       <a class="nav-keep" href="try/index.html">Try it</a>
       <a href="#pinyin">Input method</a>
       <a class="nav-wide" href="mobile/index.html">Phone &amp; Watch</a>
       <a href="demo/index.html">Pinyin demo</a>
       <a class="nav-keep" href="../index.html" hreflang="zh-CN" lang="zh-CN">中文</a>
-      <!-- ⚠️ class="nav-signin" is what v2-nav.js looks for: when this machine has a
-           session it swaps this one item for a fixed-width "Account". The bar is
-           static HTML; JS never builds it. -->
       <a class="nav-signin nav-keep" href="login/index.html">Sign in</a>
       <a class="nav-member nav-keep" href="member/index.html">Membership</a>
       <a class="nav-cta" href="#download">Download</a>
@@ -52,11 +48,9 @@
   </div>
 </nav>
 
-<!-- ── Hero:全页最大的一场动画只留给「说完,字落下」── -->
 <header class="hero wrap" id="top">
   <h1 class="reveal" data-hero-title>An AI voice typing agent <br>built around the way you talk.</h1>
   <p class="lede reveal" data-hero-lede>When you're thinking something through, saying it is far faster than writing it. <br>Unlike typing or handwriting, speaking lets you think and record at the same time, so ideas don't get lost at the keyboard.</p>
-  <!-- SITEFIX-7 → SITE-V3:手机(≤820px)上 Mac 版装不了 → 主按钮换成「用邮箱登录」(OPEN-LOGIN 10-29:原「申请账号」),「下载 Mac 版」收起;关于 Windows 版、看演示照留。 -->
   <div class="cta-row reveal">
     <a class="btn btn-primary cta-dl" href="#download">Download for Mac</a>
     <a class="btn btn-primary cta-apply" href="login/index.html">Sign in with email</a>
@@ -64,7 +58,6 @@
     <a class="btn btn-quiet cta-demo" href="#demo">Watch the demo</a>
   </div>
   <p class="req reveal">Free · macOS 26 or later · Apple silicon</p>
-  <!-- ⭐ The path for someone on a phone: the Mac app does not install there. Shown at phone widths only. -->
   <p class="mobile-path only-phone reveal">For now, Murmur runs on the Mac only. On your phone, paste a sentence the way you would say it and <a href="try/index.html">see how it comes out →</a></p>
 
   <div class="stage reveal" id="demo">
@@ -74,7 +67,6 @@
   </div>
 </header>
 
-<!-- ── 少改一遍:打字 vs 说话,双演示对照 ── -->
 <section class="wrap">
   <h2 class="reveal">Write it once.</h2>
   <div class="compare reveal">
@@ -101,9 +93,6 @@
   <p class="subtract-note reveal">On the left, typing: half a line, deleted, typed again. On the right, speaking: one more tap at the end and the whole sentence is at the cursor.</p>
 </section>
 
-<!-- ── Talking to AI tools: ramble, and a relayed prompt lands (SITE-VIBE 2026-10-13).
-     Default markup = the final frame; with no JS or reduced motion it stays here. Animation in vibe.js.
-     The spoken original lives in data-ex (copy-lint skips data-ex: it is the "before" half). ── -->
 <section class="wrap vb" id="vibe">
   <h2 class="reveal">Think out loud.<br>The prompt comes out structured.</h2>
   <p class="sub reveal">With Prompt skills on, tell your AI tool what you want in the order it occurs to you. The prompt it receives has the filler removed, one request per line, and your constraints kept exactly as you said them.</p>
@@ -153,7 +142,6 @@
         </div>
       </div>
 
-      <!-- 录音条 = 共享组件 MurmurCapsule(site-capsule/component/capsule.js),和首屏同一份;vibe.js 挂载 -->
       <div class="vb-hud" aria-hidden="true"><div class="capsule-mount" data-caption="above"></div></div>
     </div>
 
@@ -168,7 +156,6 @@
   </ul>
 </section>
 
-<!-- ── 四个键:先记住一个 ── -->
 <section class="wrap" id="features">
   <h2 class="reveal">Learn one key first.</h2>
   <p class="sub reveal">Right ⌘ is dictation, and on its own it will cover you for a long time. Learn the other three when you need them.</p>
@@ -215,7 +202,6 @@
   </div>
 </section>
 
-<!-- ── 数据在哪(round2 定稿):首页只讲用的人关心的三件事;服务商类别、国家、留多久在隐私页。不点厂商名、不讲本机 / 云端。 ── -->
 <section class="wrap" id="local">
   <h2 class="reveal">Your recordings and history <br>are kept on your own device.</h2>
   <div class="local-body reveal">
@@ -226,7 +212,6 @@
   <p class="local-link reveal"><a href="privacy.html">The privacy page lists the kinds of providers involved, the countries they are in, and how long data is kept →</a></p>
 </section>
 
-<!-- ── 出了错:三条故障时的行为(原「四条承诺」) ── -->
 <section class="wrap" id="promises">
   <h2 class="reveal">If it goes wrong, the recording is still there.</h2>
   <div class="promises">
@@ -245,10 +230,6 @@
   </div>
 </section>
 
-<!-- ── Long recording: live captions (lectures / online meetings / meetings in another language) + full transcript with speakers.
-     Checked against murmur-ime ime-mac HEAD bbdf8251: the floating caption window and second-column translation exist only in
-     own-key sessions; the sponsored session (free trial once, up to 3 minutes / Pro without a key) shows live text inside the
-     recording page instead (LectureView.swift:169, 229). Speaker labels are in the finished transcript only. Free policy B, Wei 10-18. ── -->
 <section class="wrap" id="lecture">
   <h2 class="reveal">Lectures, meetings, calls in another language.<br>Text appears as you record.</h2>
   <p class="sub reveal">Start a long recording and the text appears on the recording page as people speak, whether it is an online lecture, a video meeting or a meeting in another language. When you stop, the full transcript goes into your history, split by speaker so you can tell who said what. If you use your own recognition service key, the captions can also float above all other windows, even over a full-screen lecture, and for a meeting in another language you can open a second column with the translation. The captions are only a preview; the recording keeps running underneath.</p>
@@ -259,7 +240,6 @@
   <p class="stage-note reveal lec-note">Once you sign in, you get one free long recording of up to 3 minutes. It stops on its own at 3 minutes and keeps what was recorded. To record more, <a href="member/index.html">see membership →</a></p>
 </section>
 
-<!-- ── 识别(round2 定稿,版本 A):照平时的样子说。不报档位、不讲本机 / 云端 ── -->
 <section class="wrap" id="models">
   <h2 class="reveal">Speak the way you normally do.</h2>
   <div class="plain-list reveal">
@@ -272,7 +252,6 @@
 </section>
 
 
-<!-- ── 拼音输入法(只随 0.53 上线):不方便出声的时候。打字演示的样式在 pinyin.css ── -->
 <section class="wrap" id="pinyin">
   <h2 class="reveal">When you can't speak out loud.</h2>
   <p class="sub reveal">In a meeting room or a library, you still need to type. Murmur includes a Pinyin input method that shares one dictionary with dictation: names you have taught it to hear show up as candidates when you type, and words you type help it recognise you when you speak.</p>
@@ -290,7 +269,6 @@
   </div>
 </section>
 
-<!-- ── Phone & Watch (2026-10-31): one section with a picture, pointing to /en/mobile/. Only facts from the baseline copy red line ── -->
 <section class="wrap" id="mobile">
   <h2 class="reveal">Record on your phone and watch, too.</h2>
   <p class="sub reveal">In a meeting or an interview, tap your watch to start, then read the full transcript on your phone. iPhone and Apple Watch versions are coming soon.</p>
@@ -298,7 +276,6 @@
   <p class="mb-link reveal"><a href="mobile/index.html">See Phone &amp; Watch →</a></p>
 </section>
 
-<!-- ── 常见问题 ── -->
 <section class="wrap" id="faq">
   <h2 class="reveal">Frequently asked questions</h2>
   <div class="faq reveal">
@@ -333,7 +310,6 @@
   </div>
 </section>
 
-<!-- ── 收尾:下载 ── -->
 <section class="wrap outro" id="download">
   <h2 class="reveal">Install it, press right ⌘, and talk.</h2>
   <div class="cta-row reveal">
@@ -347,7 +323,6 @@
     <p>Unzip and drag Murmur into Applications. On first launch it asks for microphone and Accessibility access. Accessibility is what lets it type at your cursor.</p>
     <p>Upgrading from 0.52: quit the old version first, then drag the new download into Applications to replace it. <a href="changelog/index.html">What changed in this version →</a></p>
   </details>
-  <!-- ⭐ Windows 版(Wei 10-12):只说在测试、预计两个月内。不写日期、不列功能、不收申请。首屏「关于 Windows 版」跳到这里。 -->
   <div class="win-note reveal" id="windows">
     <h3>Windows</h3>
     <p>A Windows version is in testing. We expect to release it within two months.</p>

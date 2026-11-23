@@ -37,14 +37,11 @@
     <div class="navlinks">
       <a href="guide/index.html">指南</a>
       <a href="skills/index.html">技能</a>
-      <!-- ⭐ class="nav-keep" = 手机上也要留着的项(见 @media 里的说明) -->
       <a class="nav-keep" href="try/index.html">试一试</a>
       <a href="#pinyin">输入法</a>
       <a class="nav-wide" href="mobile/index.html">手机与手表</a>
       <a href="demo/index.html">拼音演示</a>
       <a class="nav-keep" href="en/index.html" hreflang="en" lang="en">English</a>
-      <!-- ⚠️ class="nav-signin" 是给 v2-nav.js 认的:本机有会话时它把这一项
-           换成一枚固定宽度的「账户」。⛔ 顶栏静态写着「登录」,不靠 JS 生成。 -->
       <a class="nav-signin nav-keep" href="login/index.html">登录</a>
       <a class="nav-member nav-keep" href="member/index.html">会员订阅</a>
       <a class="nav-cta" href="#download">下载</a>
@@ -52,11 +49,9 @@
   </div>
 </nav>
 
-<!-- ── Hero:全页最大的一场动画只留给「说完,字落下」── -->
 <header class="hero wrap" id="top">
   <h1 class="reveal" data-hero-title>符合你的 <br>AI 智能语音输入体。</h1>
   <p class="lede reveal" data-hero-lede>想事情的时候,说出来比写下来快得多。<br>比起打字和手写,说话让思考和记录同时发生,想法不会在敲键盘时丢掉。</p>
-  <!-- SITEFIX-7 → SITE-V3:手机(≤820px)上 Mac 版装不了 → 主按钮换成「用邮箱登录」(OPEN-LOGIN 10-29:原「申请账号」),「下载 Mac 版」收起;关于 Windows 版、看演示照留。 -->
   <div class="cta-row reveal">
     <a class="btn btn-primary cta-dl" href="#download">下载 Mac 版</a>
     <a class="btn btn-primary cta-apply" href="login/index.html">用邮箱登录</a>
@@ -64,7 +59,6 @@
     <a class="btn btn-quiet cta-demo" href="#demo">看演示</a>
   </div>
   <p class="req reveal">免费 · macOS 26 及以上 · M 系列芯片</p>
-  <!-- ⭐ 手机上的那条路:从微信 / 小红书点进来的人多数在手机上,Mac 版装不了,这一行是他们能走的路。只在手机宽度显示。 -->
   <p class="mobile-path only-phone reveal">现在能下载的是 Mac 版。在手机上,可以先粘一句平时说的话,<a href="try/index.html">看它改成什么样 →</a></p>
 
   <div class="stage reveal" id="demo">
@@ -74,7 +68,6 @@
   </div>
 </header>
 
-<!-- ── 少改一遍:打字 vs 说话,双演示对照 ── -->
 <section class="wrap">
   <h2 class="reveal">少改一遍。</h2>
   <div class="compare reveal">
@@ -101,9 +94,6 @@
   <p class="subtract-note reveal">左边打字:打一半,删掉,重打。右边说话:说完再按一下,整句出现在光标处。</p>
 </section>
 
-<!-- ── 对着 AI 说话:说一段乱话,落下转达版提示词(SITE-VIBE 2026-10-13)。
-     默认标记 = 最终一帧;没有 JS / 减弱动效时就停在这里。动画在 vibe.js。
-     口语原话放在 data-ex 里(copy-lint 对 data-ex 豁免:那是「整理之前」的一半)。 ── -->
 <section class="wrap vb" id="vibe">
   <h2 class="reveal">说得乱,<br>落下来是清楚的。</h2>
   <p class="sub reveal">打开提示词技能,对 AI 工具想到哪说到哪,落下的提示词去掉口头禅、拆好条,限制原样保留。</p>
@@ -153,7 +143,6 @@
         </div>
       </div>
 
-      <!-- 录音条 = 共享组件 MurmurCapsule(site-capsule/component/capsule.js),和首屏同一份;vibe.js 挂载 -->
       <div class="vb-hud" aria-hidden="true"><div class="capsule-mount" data-caption="above"></div></div>
     </div>
 
@@ -168,7 +157,6 @@
   </ul>
 </section>
 
-<!-- ── 四个键:先记住一个 ── -->
 <section class="wrap" id="features">
   <h2 class="reveal">先记住一个键。</h2>
   <p class="sub reveal">右 ⌘ 是听写,够你用很久。另外三个,用到再学。</p>
@@ -215,7 +203,6 @@
   </div>
 </section>
 
-<!-- ── 数据在哪(round2 定稿):首页只讲用的人关心的三件事;服务商类别、国家、留多久在隐私页。不点厂商名、不讲本机 / 云端。 ── -->
 <section class="wrap" id="local">
   <h2 class="reveal">录音和历史,存在<br>你自己的设备上。</h2>
   <div class="local-body reveal">
@@ -226,7 +213,6 @@
   <p class="local-link reveal"><a href="privacy.html">交给了哪类服务商、它们在哪个国家、东西留多久,写在隐私页 →</a></p>
 </section>
 
-<!-- ── 出了错:三条故障时的行为(原「四条承诺」) ── -->
 <section class="wrap" id="promises">
   <h2 class="reveal">出了错,录音还在。</h2>
   <div class="promises">
@@ -245,10 +231,6 @@
   </div>
 </section>
 
-<!-- ── 长录音:实时字幕(网课 / 线上会议 / 外语会议)+ 整段转写(说话人分离)。
-     能力对过 murmur-ime ime-mac HEAD bbdf8251:字幕浮窗跨全屏(LectureCaptionPanel fullScreenAuxiliary)、第二栏译文(translateOn)
-     只在自带密钥的场次有 —— 代付那场(免费试用一次 · 最长 3 分钟 / Pro 无 Key)不给浮窗,实时字写在录音页里(LectureView.swift:169、229)。
-     说话人分段在录完的整段转写里(代付场次也开 diarize),实时字幕里没有,所以演示卡不标说话人。Wei 10-18 定免费长录音政策 B。 ── -->
 <section class="wrap" id="lecture">
   <h2 class="reveal">网课、会议、外语会议,<br>边录边出字。</h2>
   <p class="sub reveal">开长录音,录音页里说一句出一句,网课、线上会议、外语会议都能用。录完,完整转写进历史,按说话人分段,谁说的分得清。用你自己的识别服务密钥时,字幕还能浮在所有窗口上面,全屏网课时盖在画面上;外语会议打开第二栏看译文。字幕只是预览,底下的录音一直在录。</p>
@@ -259,7 +241,6 @@
   <p class="stage-note reveal lec-note">登录后,可以免费试录一次,最长 3 分钟;到时自动停,录下的部分照常保存。想多录,<a href="member/index.html">看会员订阅 →</a></p>
 </section>
 
-<!-- ── 识别(round2 定稿,版本 A):照平时的样子说。不报档位、不讲本机 / 云端 ── -->
 <section class="wrap" id="models">
   <h2 class="reveal">照你平时的样子说。</h2>
   <div class="plain-list reveal">
@@ -272,7 +253,6 @@
 </section>
 
 
-<!-- ── 拼音输入法(只随 0.53 上线):不方便出声的时候。打字演示的样式在 pinyin.css ── -->
 <section class="wrap" id="pinyin">
   <h2 class="reveal">不方便出声的时候。</h2>
   <p class="sub reveal">会议室里、图书馆里,还是得打字。Murmur 带一个拼音输入法,和听写共用一本词典:你教它听对的名字,打字时出现在候选里;你打过的词,说话时它也认得。</p>
@@ -290,7 +270,6 @@
   </div>
 </section>
 
-<!-- ── 手机与手表(2026-10-31):一节带图,指向 /mobile/。文案只用基调「文案红线」里可写的事实 ── -->
 <section class="wrap" id="mobile">
   <h2 class="reveal">手机和手表上也能录。</h2>
   <p class="sub reveal">开会或者采访,点一下手表就开始录,录完在手机上看完整转写。iPhone 和 Apple Watch 版本即将推出。</p>
@@ -298,7 +277,6 @@
   <p class="mb-link reveal"><a href="mobile/index.html">看看手机与手表 →</a></p>
 </section>
 
-<!-- ── 常见问题 ── -->
 <section class="wrap" id="faq">
   <h2 class="reveal">常见问题</h2>
   <div class="faq reveal">
@@ -333,7 +311,6 @@
   </div>
 </section>
 
-<!-- ── 收尾:下载 ── -->
 <section class="wrap outro" id="download">
   <h2 class="reveal">装好以后,按右 ⌘ 说一句。</h2>
   <div class="cta-row reveal">
@@ -347,7 +324,6 @@
     <p>解压后把 Murmur 拖进「应用程序」。第一次打开会请求麦克风和辅助功能权限,后者用来把字写进光标处。</p>
     <p>从 0.52 升级:先退出旧版,再把新下载的拖进「应用程序」替换。<a href="changelog/index.html">这一版更新了什么 →</a></p>
   </details>
-  <!-- ⭐ Windows 版(Wei 10-12):只说在测试、预计两个月内。不写日期、不列功能、不收申请。首屏「关于 Windows 版」跳到这里。 -->
   <div class="win-note reveal" id="windows">
     <h3>Windows 版</h3>
     <p>Windows 版正在测试,预计两个月内发布。</p>
@@ -364,7 +340,6 @@
     <a href="changelog/index.html">更新记录</a>
     <a href="privacy.html">隐私</a>
   <a href="tos.html">条款</a>
-    <!-- 顶栏的语言切换在手机上是收起来的,页脚这一份是它在手机上的落点 -->
     <a href="en/index.html" hreflang="en" lang="en">English</a>
   </div>
 </footer>
