@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'none'; style-src 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'none'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Terms of Use · Murmur</title>
 <meta name="description" content="Murmur&#x27;s terms of use: scope, accounts, acceptable use, allowances, subscriptions and payment, liability, and governing law.">
@@ -23,103 +23,7 @@
 <link rel="alternate" hreflang="zh-CN" href="https://maobenbeginner.com/tos.html">
 <link rel="alternate" hreflang="en" href="https://maobenbeginner.com/en/tos.html">
 <link rel="alternate" hreflang="x-default" href="https://maobenbeginner.com/tos.html">
-<style>
-@font-face { font-family: 'Newsreader'; font-style: normal; font-weight: 500 600; font-display: swap;
-  src: url('../fonts/Newsreader-normal-500-latin.woff2') format('woff2'); }
-@font-face { font-family: 'IBM Plex Mono'; font-style: normal; font-weight: 400; font-display: swap;
-  src: url('../fonts/IBMPlexMono-normal-400-latin.woff2') format('woff2'); }
-
-:root {
-  --paper: #F7F7F8; --card: #FFFFFF; --ink: #1B1B1F; --body: #2E2E33; --second: #55555C;
-  --faint: #6F6F78; --coral-ink: #C44719; --line: #E9E9EC; --line2: #D6D6DC; --coral: #E2531F; --code: #EFEFF2;
-}
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --paper: #161618; --card: #1E1E21; --ink: #F2F2F4; --body: #D9D9DE; --second: #A0A0A8;
-    --faint: #86868E; --coral-ink: #FF6B35; --line: #2C2C31; --line2: #3A3A41; --coral: #FF6B35; --code: #26262A;
-  }
-}
-:root[data-theme="dark"] {
-  --paper: #161618; --card: #1E1E21; --ink: #F2F2F4; --body: #D9D9DE; --second: #A0A0A8;
-  --faint: #86868E; --coral-ink: #FF6B35; --line: #2C2C31; --line2: #3A3A41; --coral: #FF6B35; --code: #26262A;
-}
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { -webkit-text-size-adjust: 100%; }
-body {
-  background: var(--paper); color: var(--body);
-  font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", "PingFang SC", "Hiragino Sans GB", "Helvetica Neue", sans-serif;
-  font-size: 16px; line-height: 1.8; -webkit-font-smoothing: antialiased;
-}
-a { color: var(--coral-ink); text-decoration: none; }
-a:hover { text-decoration: underline; text-underline-offset: 3px; }
-.wrap { max-width: 760px; margin: 0 auto; padding: 0 32px; }
-
-nav { position: sticky; top: 0; z-index: 10; border-bottom: 1px solid var(--line);
-  background: color-mix(in srgb, var(--paper) 88%, transparent);
-  backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); }
-.navrow { display: flex; align-items: center; height: 56px; }
-.brand { display: flex; align-items: center; gap: 9px; font-family: "Newsreader", Georgia, serif;
-  font-weight: 600; font-size: 19px; color: var(--ink); }
-.brand:hover { text-decoration: none; }
-.dot { width: 9px; height: 9px; border-radius: 50%; background: var(--coral); }
-.navlinks { margin-left: auto; display: flex; align-items: center; gap: 22px; font-size: 14px; }
-.navlinks a { color: var(--second); }
-.navlinks a[aria-current] { color: var(--ink); font-weight: 500; }
-.navlinks .sep { width: 1px; height: 14px; background: var(--line2); }
-
-header.page { padding-top: 72px; }
-h1 { font-size: clamp(30px, 4.6vw, 40px); font-weight: 600; line-height: 1.25; color: var(--ink); letter-spacing: -0.01em; }
-.updated { margin-top: 12px; font-size: 14px; color: var(--faint); }
-
-.summary { margin-top: 40px; background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 24px 28px; }
-.summary .label { font-size: 13px; font-weight: 600; color: var(--faint); margin-bottom: 8px; }
-.summary p, .summary li { color: var(--ink); font-size: 15.5px; }
-.summary ul { margin-top: 6px; }
-
-main { padding-bottom: 24px; }
-h2 { margin-top: 64px; padding-top: 28px; border-top: 1px solid var(--line);
-  font-size: 21px; font-weight: 600; line-height: 1.4; color: var(--ink); }
-h3 { margin-top: 36px; font-size: 17px; font-weight: 600; line-height: 1.45; color: var(--ink); }
-.num { display: inline-block; min-width: 1.8em; color: var(--faint); font-weight: 500; font-variant-numeric: tabular-nums; }
-h3 .num { min-width: 2.6em; }
-main p { margin-top: 14px; }
-main h2 + p, main h3 + p, main h2 + ul, main h3 + ul { margin-top: 16px; }
-ul { margin-top: 12px; padding-left: 1.2em; }
-li { margin-top: 8px; padding-left: 2px; }
-li::marker { color: var(--faint); }
-strong { color: var(--ink); font-weight: 600; }
-code { font-family: "IBM Plex Mono", ui-monospace, Menlo, monospace; font-size: 0.86em; background: var(--code);
-  border-radius: 4px; padding: 1px 5px; overflow-wrap: anywhere; }
-
-.tbl { margin-top: 20px; overflow-x: auto; -webkit-overflow-scrolling: touch; }
-table { width: 100%; border-collapse: collapse; font-size: 14px; line-height: 1.65; }
-th { text-align: left; font-weight: 600; color: var(--faint); font-size: 13px; padding: 0 16px 10px 0; border-bottom: 1px solid var(--line2); }
-td { padding: 12px 16px 12px 0; border-bottom: 1px solid var(--line); vertical-align: top; }
-td:first-child { color: var(--ink); font-weight: 500; white-space: nowrap; }
-th:last-child, td:last-child { padding-right: 0; }
-
-footer { margin-top: 88px; border-top: 1px solid var(--line); padding: 28px 0 48px;
-  display: flex; flex-wrap: wrap; gap: 8px 24px; font-size: 13px; color: var(--faint); }
-footer a { color: var(--second); }
-footer .grow { margin-left: auto; }
-
-@media (max-width: 640px) {
-  .wrap { padding: 0 16px; }
-  header.page { padding-top: 44px; }
-  .navlinks { gap: 16px; }
-  .summary { padding: 20px; margin-top: 32px; }
-  h2 { margin-top: 48px; padding-top: 24px; font-size: 19px; }
-  .tbl { overflow: visible; }
-  table, tbody, tr, td { display: block; width: 100%; }
-  thead { display: none; }
-  tr { padding: 14px 0; border-bottom: 1px solid var(--line); }
-  tr:first-child { border-top: 1px solid var(--line2); }
-  td { border: 0; padding: 2px 0; white-space: normal; }
-  td:first-child { font-size: 15px; padding-bottom: 6px; white-space: normal; }
-  td[data-label]:not(:first-child)::before { content: attr(data-label); display: block; font-size: 12px; font-weight: 600; color: var(--faint); margin-top: 6px; }
-  footer .grow { margin-left: 0; }
-}
-</style>
+<link rel="stylesheet" href="/legal.css">
 </head>
 <body>
 <nav>
